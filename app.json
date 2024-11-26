@@ -11,8 +11,11 @@
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
+    "scheme": "errands",
+    "platforms": ["ios", "android"],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.anonymous.Errands"
     },
     "android": {
       "adaptiveIcon": {
@@ -21,7 +24,13 @@
       }
     },
     "web": {
-      "favicon": "./assets/favicon.png"
-    }
+      "favicon": "./assets/favicon.png",
+      "web": {
+        "bundler": "metro"
+      }
+    },
+    "plugins": [
+      "expo-router"
+    ]
   }
 }
