@@ -1,6 +1,6 @@
 import { View, Text, TextInput, Pressable, ScrollView } from "react-native";
 import { useState } from "react";
-import { useRouter, useGlobalSearchParams } from "expo-router";
+import { useRouter, useGlobalSearchParams, useLocalSearchParams } from "expo-router";
 
 import Octicons from "react-native-vector-icons/Octicons";
 import Ionicons from "react-native-vector-icons/Ionicons";
@@ -9,6 +9,9 @@ import formatErrandDate from "../../constants/formatErrandDate";
 import formatCompletedErrandDate from "../../constants/formatCompletedErrandDate";
 
 import errandsData from "../../errands";
+import { themes } from "../../constants/themes";
+import { themeAtom } from "../../constants/storeAtoms";
+import { useAtom } from "jotai";
 
 let initialListas = [
   { title: "Personal", icon: "person", color: "blue" },
@@ -20,7 +23,9 @@ let initialListas = [
 const userId = "user123";
 
 function ListTasks() {
-  const { lista } = useGlobalSearchParams();
+  const [theme, setTheme] = useAtom(themeAtom);
+
+  const { listId } = useLocalSearchParams();
 
   const [errands, setErrands] = useState(errandsData);
   const [showCompleted, setShowCompleted] = useState(false);
@@ -28,23 +33,31 @@ function ListTasks() {
   const router = useRouter();
 
   return (
-    <View className="h-full">
+    <View className={`h-full bg-[${themes[theme].background}]`}>
       <View className="w-full flex-row items-center justify-between mb-2">
         <Pressable
           className="flex-row items-center px-1"
           onPress={() => router.push("/")}
         >
-          <Ionicons name="chevron-back" size={26} color="#0033ff" />
-          <Text className="text-[#0033ff] text-xl">Listas</Text>
+          <Ionicons
+            name="chevron-back"
+            size={26}
+            color={themes[theme].blueHeadText}
+          />
+          <Text className={`text-[${themes[theme].blueHeadText}] text-xl`}>
+            Listas
+          </Text>
         </Pressable>
         <Pressable>
-          <Text className="text-[#0033ff] text-xl">{lista}</Text>
+          <Text className={`text-[${themes[theme].blueHeadText}] text-xl`}>
+            {listId}
+          </Text>
         </Pressable>
         <Ionicons
           className="px-3 ml-9"
           name="options"
           size={26}
-          color="#0033ff"
+          color={themes[theme].blueHeadText}
         />
       </View>
       <ScrollView>
@@ -73,20 +86,24 @@ function ListTasks() {
                 </View>
                 <View className="flex-1 pl-3">
                   <TextInput
-                    className="text-[#161618]"
+                    className={`text-[${themes[theme].taskTitle}]`}
                     defaultValue={errand.title}
                   />
                   {userId !== errand.creatorId &&
                     userId === errand.assignedId && (
                       <View className="flex-row">
-                        <View className="flex-row px-2 p-1 bg-[#CDC9FB] rounded-lg items-center gap-2">
+                        <View
+                          className={`flex-row my-0.5 px-2 p-1 bg-[${themes[theme].taskReceivedFromBg}] rounded-lg items-center gap-2`}
+                        >
                           <Ionicons
                             name="send"
                             size={10}
                             color="#6E727A"
                             style={{ transform: [{ rotateY: "180deg" }] }}
                           />
-                          <Text className="text-sm text-[#6E727A]">
+                          <Text
+                            className={`text-sm text-[${themes[theme].taskSecondText}]`}
+                          >
                             {errand.creatorId}
                           </Text>
                         </View>
@@ -95,9 +112,13 @@ function ListTasks() {
                   {errand.creatorId === userId &&
                     userId !== errand.assignedId && (
                       <View className="flex-row">
-                        <View className="flex-row px-2 p-1 bg-[#CDE7E2] rounded-lg items-center gap-2">
+                        <View
+                          className={`flex-row my-0.5 px-2 p-1 bg-[${themes[theme].taskSentToBg}] rounded-lg items-center gap-2`}
+                        >
                           <Ionicons name="send" size={10} color="#6E727A" />
-                          <Text className="text-sm text-[#6E727A]">
+                          <Text
+                            className={`text-sm text-[${themes[theme].taskSecondText}]`}
+                          >
                             {errand.assignedId}
                           </Text>
                         </View>
@@ -105,7 +126,9 @@ function ListTasks() {
                     )}
                   {errand.description && (
                     <View>
-                      <Text className="text-sm text-[#6E727A]">
+                      <Text
+                        className={`text-sm text-[${themes[theme].taskSecondText}]`}
+                      >
                         {errand.description}
                       </Text>
                     </View>
@@ -119,7 +142,7 @@ function ListTasks() {
                               `${errand.dateErrand}T${errand.timeErrand || "24:00"}`
                             ) < new Date()
                               ? "text-red-600"
-                              : "text-[#6E727A]"
+                              : `text-[${themes[theme].taskSecondText}]`
                           }`}
                         >
                           {formatErrandDate(errand)}
@@ -129,7 +152,9 @@ function ListTasks() {
                     {errand.repeat && errand.repeat !== "never" && (
                       <View className="flex-row items-center ml-2">
                         <Ionicons name="repeat" size={16} color="#6E727A" />
-                        <Text className="text-sm text-[#6E727A] ml-1">
+                        <Text
+                          className={`text-sm text-[${themes[theme].taskSecondText}] ml-1`}
+                        >
                           {errand.repeat}
                         </Text>
                       </View>
@@ -153,7 +178,9 @@ function ListTasks() {
                   />
                 </View>
               </View>
-              <View className={`h-[1px] w-full bg-gray-200 ml-11`} />
+              <View
+                className={`h-[0.5px] w-full bg-[${themes[theme].listsSeparator}] ml-11`}
+              />
             </View>
           ))}
 
@@ -166,17 +193,12 @@ function ListTasks() {
             <TextInput
               className="text-[#161618]"
               placeholder="Añadir recordatorio"
+              placeholderTextColor={themes[theme].addNewTaskText}
             />
             {/* <View className="justify-center">
                   <Text className="text-sm text-[#6E727A]">Notas</Text>
                 </View> */}
           </View>
-          <Ionicons
-            className="ml-1"
-            name="information-circle-outline"
-            size={26}
-            color="#6E727A"
-          />
         </View>
         <View className="flex-row w-full justify-center mt-9 mb-3">
           <Pressable
@@ -225,14 +247,18 @@ function ListTasks() {
                       {userId !== errand.creatorId &&
                         userId === errand.assignedId && (
                           <View className="flex-row">
-                            <View className="flex-row px-2 p-1 bg-[#CDC9FB] rounded-lg items-center gap-2">
+                            <View
+                              className={`flex-row my-0.5 px-2 p-1 bg-[${themes[theme].taskReceivedFromBg}] rounded-lg items-center gap-2`}
+                            >
                               <Ionicons
                                 name="send"
                                 size={10}
                                 color="#6E727A"
                                 style={{ transform: [{ rotateY: "180deg" }] }}
                               />
-                              <Text className="text-sm text-[#6E727A]">
+                              <Text
+                                className={`text-sm text-[${themes[theme].taskSecondText}]`}
+                              >
                                 {errand.creatorId}
                               </Text>
                             </View>
@@ -241,9 +267,13 @@ function ListTasks() {
                       {errand.creatorId === userId &&
                         userId !== errand.assignedId && (
                           <View className="flex-row">
-                            <View className="flex-row px-2 p-1 bg-[#CDE7E2] rounded-lg items-center gap-2">
+                            <View
+                              className={`flex-row my-0.5 px-2 p-1 bg-[${themes[theme].taskSentToBg}] rounded-lg items-center gap-2`}
+                            >
                               <Ionicons name="send" size={10} color="#6E727A" />
-                              <Text className="text-sm text-[#6E727A]">
+                              <Text
+                                className={`text-sm text-[${themes[theme].taskSecondText}]`}
+                              >
                                 {errand.assignedId}
                               </Text>
                             </View>
@@ -251,7 +281,9 @@ function ListTasks() {
                         )}
                       {errand.description && (
                         <View>
-                          <Text className="text-sm text-[#6E727A]">
+                          <Text
+                            className={`text-sm text-[${themes[theme].taskSecondText}]`}
+                          >
                             {errand.description}
                           </Text>
                         </View>
@@ -259,7 +291,9 @@ function ListTasks() {
                       <View className="flex-row">
                         {errand.dateErrand && (
                           <View className="flex-row items-center">
-                            <Text className="text-sm text-[#6E727A]">
+                            <Text
+                              className={`text-sm text-[${themes[theme].taskSecondText}]`}
+                            >
                               {`${formatErrandDate(errand)}, ${errand.timeErrand}`}
                             </Text>
                           </View>
@@ -267,14 +301,18 @@ function ListTasks() {
                         {errand.repeat && errand.repeat !== "never" && (
                           <View className="flex-row items-center ml-2">
                             <Ionicons name="repeat" size={16} color="#6E727A" />
-                            <Text className="text-sm text-[#6E727A] ml-1">
+                            <Text
+                              className={`text-sm text-[${themes[theme].taskSecondText}] ml-1`}
+                            >
                               {errand.repeat}
                             </Text>
                           </View>
                         )}
                       </View>
                       <View className="flex-row items-center">
-                        <Text className="text-sm text-[#6E727A]">
+                        <Text
+                          className={`text-sm text-[${themes[theme].taskSecondText}]`}
+                        >
                           {`Completado: ${formatCompletedErrandDate(errand)}, ${errand.completedTimeErrand}`}
                         </Text>
                       </View>
@@ -296,7 +334,9 @@ function ListTasks() {
                       />
                     </View>
                   </View>
-                  <View className={`h-[1px] w-full bg-gray-200 ml-11`} />
+                  <View
+                    className={`h-[0.5px] w-full bg-[${themes[theme].listsSeparator}] ml-11`}
+                  />
                 </View>
               ))}
           </View>
@@ -308,15 +348,19 @@ function ListTasks() {
             className="pb-2"
             name="add-circle"
             size={24}
-            color="#045BEB"
+            color={themes[theme].blueHeadText}
           />
-          <Text className="text-lg text-[#045BEB] text font-bold">
+          <Text
+            className={`text-lg text-[${themes[theme].blueHeadText}] text font-bold`}
+          >
             Nuevo recordatorio
           </Text>
         </Pressable>
         <Pressable className="flex-row gap-2">
           <Ionicons className="pb-2" name="send" size={22} color="#3F3F3F" />
-          <Text className="text-lg text-[#3F3F3F] text font-bold">
+          <Text
+            className={`text-lg text-[${themes[theme].sendTaskButtonText}] text font-bold`}
+          >
             Enviar recordatorio
           </Text>
         </Pressable>
