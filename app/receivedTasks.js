@@ -1,12 +1,6 @@
-import { View } from "react-native";
-
 import ReceivedTasks from "../components/ReceivedTasks/ReceivedTasks";
 
 function receivedTasks() {
-  return (
-    <View>
-      <ReceivedTasks />
-    </View>
-  );
+  return <ReceivedTasks />;
 }
 export default receivedTasks;

@@ -1,12 +1,6 @@
-import { View } from "react-native";
-
 import MarkedTasks from "../components/MarkedTasks/MarkedTasks";
 
 function markedTasks() {
-  return (
-    <View>
-      <MarkedTasks />
-    </View>
-  );
+  return <MarkedTasks />;
 }
 export default markedTasks;

@@ -1,18 +1,41 @@
 import { Text, TextInput, View } from "react-native";
-import { themes } from "./themes";
 
-import { themeAtom } from "./storeAtoms";
+import { contactsAtom, themeAtom, userAtom } from "./storeAtoms";
 import { useAtom } from "jotai";
 
 import Octicons from "react-native-vector-icons/Octicons";
 import Ionicons from "react-native-vector-icons/Ionicons";
-import formatErrandDate from "./formatErrandDate";
-import formatCompletedErrandDate from "./formatCompletedErrandDate";
 
-const userId = "user123";
+import formatCompletedErrandDate from "./formatCompletedErrandDate";
+import formatErrandDate from "./formatErrandDate";
+import { themes } from "./themes";
+
+const repeatOptions = [
+  { label: "Nunca", value: "never" },
+  { label: "Todos los días", value: "daily" },
+  { label: "Entre semana", value: "weekDays" },
+  { label: "Los fines de semana", value: "weekendDays" },
+  { label: "Todas las semanas", value: "weekly" },
+  { label: "Todos los meses", value: "monthly" },
+  { label: "Todos los años", value: "yearly" },
+];
 
 function CompletedErrand({ errand }) {
+  const [user] = useAtom(userAtom);
+  const [contacts] = useAtom(contactsAtom);
   const [theme] = useAtom(themeAtom);
+
+  const assignedContact = contacts.find(
+    (contact) => contact.id.toString() === errand.assignedId.toString()
+  );
+
+  const creatorContact = contacts.find(
+    (contact) => contact.id.toString() === errand.ownerId.toString()
+  );
+
+  const repeatOptionSelected = repeatOptions.find(
+    (option) => option.value === errand.repeat
+  );
 
   return (
     <View key={errand.id}>
@@ -22,7 +45,7 @@ function CompletedErrand({ errand }) {
         </View>
         <View className="flex-1 pl-3">
           <TextInput className="text-[#6E727A]" defaultValue={errand.title} />
-          {userId !== errand.creatorId && userId === errand.assignedId && (
+          {user.id !== errand.ownerId && user.id === errand.assignedId && (
             <View className="flex-row">
               <View
                 className={`flex-row my-0.5 px-2 p-1 bg-[${themes[theme].taskReceivedFromBg}] rounded-lg items-center gap-2`}
@@ -38,21 +61,21 @@ function CompletedErrand({ errand }) {
                 <Text
                   className={`text-sm text-[${themes[theme].taskSecondText}]`}
                 >
-                  {errand.creatorId}
+                  {creatorContact.name} {creatorContact.surname}
                 </Text>
               </View>
             </View>
           )}
-          {errand.creatorId === userId && userId !== errand.assignedId && (
+          {errand.ownerId === user.id && user.id !== errand.assignedId && (
             <View className="flex-row">
               <View
-                className={`flex-row my-0.5 px-2 p-1 bg-[${themes[theme].taskSentToBg}] rounded-lg items-center gap-2`}
+                className={`flex-row my-0.5 px-2 p-1 bg-[${themes[theme].submittedTaskToBg}] rounded-lg items-center gap-2`}
               >
                 <Ionicons name="send" size={10} color="#6E727A" />
                 <Text
                   className={`text-sm text-[${themes[theme].taskSecondText}]`}
                 >
-                  {errand.assignedId}
+                  {assignedContact.name} {assignedContact.surname}
                 </Text>
               </View>
             </View>
@@ -82,7 +105,7 @@ function CompletedErrand({ errand }) {
                 <Text
                   className={`text-sm text-[${themes[theme].taskSecondText}] ml-1`}
                 >
-                  {errand.repeat}
+                  {repeatOptionSelected.label}
                 </Text>
               </View>
             )}

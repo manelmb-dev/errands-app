@@ -1,227 +1,170 @@
 import { View, Text, TextInput, Pressable, ScrollView } from "react-native";
-import { useState } from "react";
-import { useRouter } from "expo-router";
+import { useEffect, useMemo, useState } from "react";
+import { useNavigation, useRouter } from "expo-router";
 
 import Octicons from "react-native-vector-icons/Octicons";
 import Ionicons from "react-native-vector-icons/Ionicons";
 
-import errandsData from "../../errands";
 import { themes } from "../../constants/themes";
-import { themeAtom } from "../../constants/storeAtoms";
+import { errandsAtom, themeAtom, userAtom } from "../../constants/storeAtoms";
 import { useAtom } from "jotai";
 import FullErrand from "../../constants/fullErrand";
 import CompletedErrand from "../../constants/CompletedErrand";
 
-let initialListas = [
-  { title: "Personal", icon: "person", color: "blue" },
-  { title: "Supermercado", icon: "restaurant", color: "red" },
-  { title: "Trabajo", icon: "business", color: "gray" },
-  { title: "Cumpleaños", icon: "balloon", color: "orange" },
-  { title: "Universidad", icon: "book", color: "green" },
-];
-const userId = "user123";
-
 function TodayTasks() {
+  const navigation = useNavigation();
+
+  const [user] = useAtom(userAtom);
   const [theme, setTheme] = useAtom(themeAtom);
+  const [errands, setErrands] = useAtom(errandsAtom);
 
-  const [listas, setListas] = useState(initialListas);
+  const [selectedTab, setSelectedTab] = useState("pending");
 
-  const [errands, setErrands] = useState(errandsData);
-  const [showCompletedOwn, setShowCompletedOwn] = useState(false);
-  const [showCompletedSent, setShowCompletedSent] = useState(false);
+  const sortByDate = (a, b) =>
+    new Date(`${a.dateErrand}T${a.timeErrand || "20:00"}`) -
+    new Date(`${b.dateErrand}T${b.timeErrand || "20:00"}`);
 
-  const router = useRouter();
+  useEffect(() => {
+    navigation.setOptions({
+      title: "Hoy",
+      headerBackTitle: "Listas",
+      headerTitleStyle: {
+        color: themes[theme].text,
+      },
+      headerStyle: {
+        backgroundColor: themes[theme].background,
+      },
+      headerShadowVisible: false,
+      headerRight: () => (
+        <Ionicons name="options" color={themes[theme].blueHeadText} size={24} />
+      ),
+    });
+  }, [navigation, theme]);
+
+  const tabs = [
+    {
+      label: "Pendientes",
+      value: "pending",
+      errandsList: errands.filter((errand) => !errand.completed),
+      emptyListText: "No tienes tareas pendientes",
+    },
+    {
+      label: "Completados",
+      value: "completed",
+      errandsList: errands.filter((errand) => errand.completed),
+      emptyListText: "No hay tareas completadas",
+    },
+  ];
+
+  const selectedTabObj = tabs.find((tab) => tab.value === selectedTab);
+
+  const errandsAssignedToMe = useMemo(() => {
+    return (
+      selectedTabObj?.errandsList
+        ?.filter(
+          (errand) =>
+            new Date(errand.dateErrand).toISOString().split("T")[0] <=
+            new Date().toISOString().split("T")[0],
+        )
+        .filter((errand) => errand.assignedId === user.id) || []
+    );
+  }, [selectedTabObj, user.id]);
+
+  const errandsSubmittedFromMe = useMemo(() => {
+    return (
+      selectedTabObj?.errandsList
+        ?.filter(
+          (errand) =>
+            new Date(errand.dateErrand).toISOString().split("T")[0] <=
+            new Date().toISOString().split("T")[0],
+        )
+        .filter((errand) => errand.ownerId === user.id)
+        .filter((errand) => errand.assignedId !== user.id) || []
+    );
+  }, [selectedTabObj, user.id]);
 
   return (
-    <View className="h-full">
-      <View className="w-full flex-row items-center justify-between mb-2">
-        <Pressable
-          className="flex-row items-center px-1"
-          onPress={() => router.push("/")}
-        >
-          <Ionicons
-            name="chevron-back"
-            size={26}
-            color={themes[theme].blueHeadText}
-          />
-          <Text className={`text-[${themes[theme].blueHeadText}] text-xl`}>
-            Listas
-          </Text>
-        </Pressable>
-        <Text className={`text-[${themes[theme].blueHeadText}] text-xl`}>
-          Hoy
-        </Text>
-        <Ionicons
-          className="px-3 ml-9"
-          name="options"
-          size={26}
-          color={themes[theme].blueHeadText}
-        />
+    <View className={`h-full bg-[${themes[theme].background}]`}>
+      <View className="mb-4 flex-row justify-center gap-3">
+        {tabs.map((tab) => (
+          <Pressable
+            key={tab.value}
+            onPress={() => {
+              setSelectedTab(tab.value);
+            }}
+            className={`px-4 py-2 rounded-full ${
+              selectedTab === tab.value
+                ? "bg-blue-300"
+                : `bg-[${themes[theme].buttonMenuBackground}]`
+            }`}
+          >
+            <Text
+              className={`text-[${themes[theme].text}] text-lg font-semibold ${
+                selectedTab === tab.value ? "text-blue-900" : ""
+              }`}
+            >
+              {tab.label}
+            </Text>
+          </Pressable>
+        ))}
       </View>
-      <ScrollView>
-        {/* Own tasks */}
-        <View className="flex-row justify-center items-center gap-2 my-1">
-          <Ionicons name="list" size={21} color="#161618" />
-          <Text
-            className={`text-[${themes[theme].listTitle}] text-2xl font-bold`}
-          >
-            Mis recordatorios
-          </Text>
-        </View>
-        {errands
-          .filter((errand) => !errand.completed)
-          .filter((errand) => errand.assignedId === userId)
-          .filter(
-            (errand) =>
-              new Date(errand.dateErrand).toISOString().split("T")[0] <=
-              new Date().toISOString().split("T")[0]
-          )
-          .sort((a, b) => {
-            const dateA = new Date(
-              `${a.dateErrand}T${a.timeErrand || "20:00"}`
-            );
-            const dateB = new Date(
-              `${b.dateErrand}T${b.timeErrand || "20:00"}`
-            );
-            return dateA - dateB;
-          })
-          .map((errand, index) => (
-            <FullErrand key={errand.id} errand={errand} />
-          ))}
-
-        {/* New reminder */}
-        <View className="flex-row rounded-xl pr-3 pt-3">
-          <View className="pl-4">
-            <Octicons name="plus-circle" size={18} color="#6E727A" />
-          </View>
-          <View className="flex-1 pl-3">
-            <TextInput
-              className="text-[#161618]"
-              placeholder="Añadir recordatorio"
-              placeholderTextColor={themes[theme].addNewTaskText}
-            />
-            {/* <View className="justify-center">
-                  <Text className="text-sm text-[#6E727A]">Notas</Text>
-                </View> */}
-          </View>
-        </View>
-        <View className="flex-row w-full justify-center mt-6 mb-3">
-          <Pressable
-            className="flex-row items-center bg-green-200 rounded-xl p-3 overflow-hidden gap-2"
-            onPress={() => setShowCompletedOwn(!showCompletedOwn)}
-          >
-            <Ionicons name={showCompletedOwn ? "eye-off" : "eye"} size={18} />
-            <Text>
-              {showCompletedOwn ? "Ocultar completados" : "Mostrar Completados"}
-            </Text>
-          </Pressable>
-        </View>
-
-        {/* Completed own tasks */}
-        {showCompletedOwn && (
-          <View>
-            {errands
-              .filter((errand) => errand.completed)
-              .filter((errand) => errand.assignedId === userId)
-              .filter(
-                (errand) =>
-                  new Date(errand.dateErrand).toISOString().split("T")[0] ===
-                  new Date().toISOString().split("T")[0]
+      <View>
+        <Text
+          className={`ml-5 mb-2 text-2xl font-semibold text-[${themes[theme].text}]`}
+        >
+          {new Date().toLocaleDateString("es-ES", {
+            weekday: "long",
+            day: "numeric",
+            month: "long",
+          })}
+        </Text>
+      </View>
+      <ScrollView
+        keyboardShouldPersistTaps="handled"
+        contentContainerStyle={{ flexGrow: 1 }}
+      >
+        <Pressable>
+          {errandsAssignedToMe.length > 0 ? (
+            errandsAssignedToMe
+              .sort(sortByDate)
+              .map((errand) =>
+                errand.completed ? (
+                  <CompletedErrand key={errand.id} errand={errand} />
+                ) : (
+                  <FullErrand key={errand.id} errand={errand} />
+                )
               )
-              .sort((a, b) => {
-                const dateA = new Date(
-                  `${a.dateErrand}T${a.timeErrand || "20:00"}`
-                );
-                const dateB = new Date(
-                  `${b.dateErrand}T${b.timeErrand || "20:00"}`
-                );
-                return dateB - dateA;
-              })
-              .map((errand, index) => (
-                <CompletedErrand key={errand.id} errand={errand} />
-              ))}
-          </View>
-        )}
-
-        {/* tasks sent */}
-        <View className="flex-row justify-center items-center gap-2 mb-2 mt-6">
-          <Ionicons name="send" size={21} color="#161618" />
-          <Text
-            className={`text-[${themes[theme].listTitle}] text-2xl font-bold`}
-          >
-            Enviados
-          </Text>
-        </View>
-        {errands
-          .filter((errand) => !errand.completed)
-          .filter((errand) => errand.creatorId === userId)
-          .filter((errand) => errand.assignedId !== userId)
-          .filter(
-            (errand) =>
-              new Date(errand.dateErrand).toISOString().split("T")[0] <=
-              new Date().toISOString().split("T")[0]
-          )
-          .map((errand, index) => (
-            <FullErrand key={errand.id} errand={errand} />
-          ))}
-
-        {/* New reminder */}
-        <View className="flex-row rounded-xl pr-3 pt-3">
-          <View className="pl-4">
-            <Octicons name="plus-circle" size={18} color="#6E727A" />
-          </View>
-          <View className="flex-1 pl-3">
-            <TextInput
-              className="text-[#161618]"
-              placeholder="Añadir recordatorio"
-              placeholderTextColor={themes[theme].addNewTaskText}
-            />
-            {/* <View className="justify-center">
-                  <Text className="text-sm text-[#6E727A]">Notas</Text>
-                </View> */}
-          </View>
-        </View>
-
-        {/* Reminders sent completed */}
-        <View className="flex-row w-full justify-center mt-6 mb-3">
-          <Pressable
-            className="flex-row items-center bg-green-200 rounded-xl p-3 overflow-hidden gap-2"
-            onPress={() => setShowCompletedSent(!showCompletedSent)}
-          >
-            <Ionicons name={showCompletedSent ? "eye-off" : "eye"} size={18} />
-            <Text>
-              {showCompletedSent
-                ? "Ocultar completados"
-                : "Mostrar Completados"}
+          ) : (
+            <Text
+              className={`w-full py-6 text-center text-2xl text-[${themes[theme].text}]`}
+            >
+              {selectedTabObj.emptyListText}
             </Text>
-          </Pressable>
-        </View>
+          )}
 
-        {/* Completed sent tasks */}
-        {showCompletedSent && (
-          <View>
-            {errands
-              .filter((errand) => errand.completed)
-              .filter((errand) => errand.assignedId !== userId)
-              .filter(
-                (errand) =>
-                  new Date(errand.dateErrand).toISOString().split("T")[0] ===
-                  new Date().toISOString().split("T")[0]
-              )
-              .sort((a, b) => {
-                const dateA = new Date(
-                  `${a.dateErrand}T${a.timeErrand || "20:00"}`
-                );
-                const dateB = new Date(
-                  `${b.dateErrand}T${b.timeErrand || "20:00"}`
-                );
-                return dateB - dateA;
-              })
-              .map((errand, index) => (
-                <CompletedErrand key={errand.id} errand={errand} />
-              ))}
-          </View>
-        )}
+          {/* Submitted tasks */}
+          {errandsSubmittedFromMe.length > 0 && (
+            <>
+              <View className="flex-row justify-center items-center gap-2 mb-2 mt-6">
+                <Ionicons name="send" size={21} color="#161618" />
+                <Text
+                  className={`text-[${themes[theme].listTitle}] text-2xl font-bold`}
+                >
+                  Enviados
+                </Text>
+              </View>
+              {errandsSubmittedFromMe
+                .sort(sortByDate)
+                .map((errand) =>
+                  errand.completed ? (
+                    <CompletedErrand key={errand.id} errand={errand} />
+                  ) : (
+                    <FullErrand key={errand.id} errand={errand} />
+                  )
+                )}
+            </>
+          )}
+        </Pressable>
       </ScrollView>
       <View className="flex-row justify-center w-full gap-6 mt-4">
         <Pressable className="flex-row gap-1">

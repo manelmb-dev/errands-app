@@ -1,12 +1,6 @@
-import { View } from "react-native";
-
 import OwnTasks from "../components/OwnTasks/OwnTasks";
 
 function ownTasks() {
-  return (
-    <View>
-      <OwnTasks />
-    </View>
-  );
+  return <OwnTasks />;
 }
 export default ownTasks;

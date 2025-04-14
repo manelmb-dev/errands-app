@@ -1,149 +1,196 @@
 import { View, Text, TextInput, Pressable, ScrollView } from "react-native";
-import { useState } from "react";
-import { useRouter } from "expo-router";
+import { useEffect, useMemo, useState } from "react";
+import { useNavigation } from "expo-router";
 
 import Octicons from "react-native-vector-icons/Octicons";
 import Ionicons from "react-native-vector-icons/Ionicons";
 
-import errandsData from "../../errands";
-import { themeAtom } from "../../constants/storeAtoms";
+import {
+  errandsAtom,
+  listsAtom,
+  themeAtom,
+  userAtom,
+} from "../../constants/storeAtoms";
 import { useAtom } from "jotai";
-import { themes } from "../../constants/themes";
-import FullErrand from "../../constants/fullErrand";
-let initialListas = [
-  { id: "1239dsf87", title: "Personal", icon: "person", color: "blue" },
-  { id: "1212439ñl", title: "Supermercado", icon: "restaurant", color: "red" },
-  { id: "1239dsmnb", title: "Trabajo", icon: "business", color: "steal" },
-  { id: "p979dsf87", title: "Cumpleaños", icon: "balloon", color: "orange" },
-  { id: "4239dwe32", title: "Universidad", icon: "book", color: "green" },
-  { id: "kds39dwe3", title: "Sin lista", icon: "list", color: "steal" },
-];
 
-const userId = "user123";
+import FullErrand from "../../constants/fullErrand";
+import { themes } from "../../constants/themes";
 
 function AllTasks() {
-  const [theme, setTheme] = useAtom(themeAtom);
+  const navigation = useNavigation();
 
-  const [listas, setListas] = useState(initialListas);
+  const [user] = useAtom(userAtom);
+  const [errands] = useAtom(errandsAtom);
+  const [lists] = useAtom(listsAtom);
+  const [theme] = useAtom(themeAtom);
 
-  const [errands, setErrands] = useState(errandsData);
+  const [selectedTab, setSelectedTab] = useState("all");
 
-  const router = useRouter();
+  const tabs = useMemo(() => {
+    return [
+      // {
+      //   label: "Pendientes",
+      //   value: "pending",
+      //   errandsList: errands.filter((errand) => !errand.completed),
+      // },
+      // {
+      //   label: "Completados",
+      //   value: "completed",
+      //   errandsList: errands.filter((errand) => errand.completed),
+      // },
+      // { label: "Hoy", value: "today" },
+      {
+        label: "Todos",
+        value: "all",
+        errandsList: errands.filter((errand) => !errand.completed),
+      },
+      {
+        label: "Míos",
+        value: "mine",
+        errandsList: errands.filter(
+          (errand) =>
+            user.id === errand.ownerId &&
+            user.id === errand.assignedId &&
+            !errand.completed
+        ),
+      },
+      {
+        label: "Recibidos",
+        value: "received",
+        errandsList: errands.filter(
+          (errand) =>
+            user.id !== errand.ownerId &&
+            user.id === errand.assignedId &&
+            !errand.completed
+        ),
+      },
+      {
+        label: "Enviados",
+        value: "submitted",
+        errandsList: errands.filter(
+          (errand) =>
+            user.id === errand.ownerId &&
+            user.id !== errand.assignedId &&
+            !errand.completed
+        ),
+      },
+      // { label: "Marcados", value: "marked" },
+    ];
+  }, [errands, user]);
 
-  const toggleTheme = () => {
-    setTheme((prev) => (prev === "light" ? "dark" : "light"));
-  };
+  useEffect(() => {
+    navigation.setOptions({
+      title: tabs.find((tab) => tab.value === selectedTab).label,
+      headerBackTitle: "Listas",
+      headerTitleStyle: {
+        color: themes[theme].text,
+      },
+      headerStyle: {
+        backgroundColor: themes[theme].background,
+      },
+      headerShadowVisible: false,
+      headerRight: () => (
+        <Ionicons name="options" color={themes[theme].blueHeadText} size={24} />
+      ),
+    });
+  }, [navigation, theme, selectedTab, tabs]);
 
-  const headerIndices = [];
+  // const headerIndices = [];
 
-  let currentIndex = 0;
-  listas.forEach((list) => {
-    headerIndices.push(currentIndex); // Agrega el índice del header
-    currentIndex += 1; // Cuenta el header
-    currentIndex += errands.filter(
-      (errand) => errand.list === list.title,
-    ).length; // Cuenta las tareas de la lista
-  });
+  // let currentIndex = 0;
+  // lists.forEach((list) => {
+  //   headerIndices.push(currentIndex); // Agrega el índice del header
+  //   currentIndex += 1; // Cuenta el header
+  //   currentIndex += errands.filter(
+  //     (errand) => errand.listId === list.id,
+  //   ).length; // Cuenta las tareas de la lista
+  // });
+
+  const selectedTabObj = tabs.find((tab) => tab.value === selectedTab);
 
   return (
-    <View className="h-full">
-      <View className="w-full flex-row items-center justify-between mb-2 mt-0.5">
-        <Pressable
-          className="flex-row items-center px-1"
-          onPress={() => router.push("/")}
-        >
-          <Ionicons
-            name="chevron-back"
-            size={26}
-            color={themes[theme].blueHeadText}
-          />
-          <Text className={`text-[${themes[theme].blueHeadText}] text-xl`}>
-            Listas
-          </Text>
-        </Pressable>
-        <Text className={`text-[${themes[theme].blueHeadText}] text-xl`}>
-          Todo
-        </Text>
-        <Pressable onPress={toggleTheme}>
-          <Ionicons
-            className="px-3 ml-9"
-            name="options"
-            size={26}
-            color={themes[theme].blueHeadText}
-          />
-        </Pressable>
+    <View className={`h-full bg-[${themes[theme].background}]`}>
+      <View className="mb-3 flex-row justify-center gap-3">
+        {tabs.map((tab) => (
+          <Pressable
+            key={tab.value}
+            onPress={() => {
+              setSelectedTab(tab.value);
+            }}
+            className={`px-4 py-2 rounded-full ${
+              selectedTab === tab.value
+                ? "bg-blue-300"
+                : `bg-[${themes[theme].buttonMenuBackground}]`
+            }`}
+          >
+            <Text
+              className={`text-[${themes[theme].text}] text-lg font-semibold ${
+                selectedTab === tab.value ? "text-blue-900" : ""
+              }`}
+            >
+              {tab.label}
+            </Text>
+          </Pressable>
+        ))}
       </View>
-      <ScrollView stickyHeaderIndices={[headerIndices]}>
-        {listas.map((list) => (
-          <View key={list.title}>
-            {/* Header list */}
+      <ScrollView contentContainerStyle={{ paddingBottom: 30 }}>
+        {lists.map(
+          (list) =>
+            selectedTabObj.errandsList.filter(
+              (errand) => errand.listId === list.id
+            ).length > 0 && (
+              <Pressable key={list.id} className="mb-4">
+                {/* Header list */}
+                <View className="flex-row justify-center items-center gap-1 mb-2">
+                  <Ionicons name={list.icon} size={19} color={list.color} />
+                  <Text
+                    className={`text-[${themes[theme].listTitle}] text-2xl font-bold`}
+                  >
+                    {list.title}
+                  </Text>
+                </View>
+                {/* List reminders */}
+                {selectedTabObj.errandsList
+                  .filter((errand) => errand.listId === list.id)
+                  .sort((a, b) => {
+                    const dateA = new Date(
+                      `${a.dateErrand}T${a.timeErrand || "20:00"}`
+                    );
+                    const dateB = new Date(
+                      `${b.dateErrand}T${b.timeErrand || "20:00"}`
+                    );
+                    return dateA - dateB;
+                  })
+                  .map((errand, index) => (
+                    <FullErrand key={errand.id} errand={errand} />
+                  ))}
+              </Pressable>
+            )
+        )}
+        {errands.filter((errand) => errand.listId === "" && !errand.completed)
+          .length > 0 && (
+          <View key="no-list">
             <View className="flex-row justify-center items-center gap-1 mb-2">
-              <Ionicons name={list.icon} size={21} color={list.color} />
+              <Ionicons name="list" size={19} color="stone" />
               <Text
-                className={`text-[${themes[theme].listTitle}] text-2xl font-bold`}
+                className={`text-[${themes[theme].listTitle}] text-xl font-bold`}
               >
-                {list.title}
+                Sin lista
               </Text>
             </View>
-            {/* List reminders */}
             {errands
-              .filter((errand) => !errand.completed)
-              .filter((errand) => errand.list === list.title)
-              .sort((a, b) => {
-                const dateA = new Date(
-                  `${a.dateErrand}T${a.timeErrand || "20:00"}`
-                );
-                const dateB = new Date(
-                  `${b.dateErrand}T${b.timeErrand || "20:00"}`
-                );
-                return dateA - dateB;
-              })
-              .map((errand, index) => (
+              .filter((errand) => errand.listId === "" && !errand.completed)
+              .sort(
+                (a, b) =>
+                  new Date(`${a.dateErrand}T${a.timeErrand || "20:00"}`) -
+                  new Date(`${b.dateErrand}T${b.timeErrand || "20:00"}`)
+              )
+              .map((errand) => (
                 <FullErrand key={errand.id} errand={errand} />
               ))}
-
-            {/* New reminder */}
-            <View className="flex-row rounded-xl pr-3 pt-3 pb-4">
-              <View className="pl-4">
-                <Octicons name="plus-circle" size={18} color="#6E727A" />
-              </View>
-              <View className="flex-1 pl-3">
-                <TextInput
-                  className="text-[#161618]"
-                  placeholder="Añadir recordatorio"
-                  placeholderTextColor={themes[theme].addNewTaskText}
-                />
-                {/* <View className="justify-center">
-                  <Text className="text-sm text-[#6E727A]">Notas</Text>
-                </View> */}
-              </View>
-            </View>
           </View>
-        ))}
+        )}
       </ScrollView>
-      <View className="flex-row justify-center w-full gap-6 mt-4">
-        <Pressable className="flex-row gap-1">
-          <Ionicons
-            className="pb-2"
-            name="add-circle"
-            size={24}
-            color={themes[theme].blueHeadText}
-          />
-          <Text
-            className={`text-lg text-[${themes[theme].blueHeadText}] text font-bold`}
-          >
-            Nuevo recordatorio
-          </Text>
-        </Pressable>
-        <Pressable className="flex-row gap-2">
-          <Ionicons className="pb-2" name="send" size={22} color="#3F3F3F" />
-          <Text
-            className={`text-lg text-[${themes[theme].sendTaskButtonText}] text font-bold`}
-          >
-            Enviar recordatorio
-          </Text>
-        </Pressable>
-      </View>
     </View>
   );
 }

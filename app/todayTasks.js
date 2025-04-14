@@ -1,12 +1,6 @@
-import { View } from "react-native";
-
 import TodayTasks from "../components/TodayTasks/TodayTasks";
 
 function todayTasks() {
-  return (
-    <View>
-      <TodayTasks />
-    </View>
-  );
+  return <TodayTasks />;
 }
 export default todayTasks;
