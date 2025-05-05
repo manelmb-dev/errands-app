@@ -1,8 +1,9 @@
-import { View, Text, TextInput, Pressable, ScrollView } from "react-native";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { View, Text, Pressable, ScrollView } from "react-native";
+import Animated, { LinearTransition } from "react-native-reanimated";
 import { useNavigation } from "expo-router";
 
-import Octicons from "react-native-vector-icons/Octicons";
+// import Octicons from "react-native-vector-icons/Octicons";
 import Ionicons from "react-native-vector-icons/Ionicons";
 
 import {
@@ -13,7 +14,7 @@ import {
 } from "../../constants/storeAtoms";
 import { useAtom } from "jotai";
 
-import FullErrand from "../../constants/fullErrand";
+import FullErrand from "../../Utils/fullErrand";
 import { themes } from "../../constants/themes";
 
 function AllTasks() {
@@ -23,6 +24,8 @@ function AllTasks() {
   const [errands] = useAtom(errandsAtom);
   const [lists] = useAtom(listsAtom);
   const [theme] = useAtom(themeAtom);
+
+  const openSwipeableRef = useRef(null);
 
   const [selectedTab, setSelectedTab] = useState("all");
 
@@ -109,15 +112,25 @@ function AllTasks() {
   const selectedTabObj = tabs.find((tab) => tab.value === selectedTab);
 
   return (
-    <View className={`h-full bg-[${themes[theme].background}]`}>
-      <View className="mb-3 flex-row justify-center gap-3">
+    <View
+      className={`h-full bg-[${themes[theme].background}]`}
+      onStartShouldSetResponder={() => {
+        if (openSwipeableRef.current) {
+          openSwipeableRef.current.close();
+          openSwipeableRef.current = null;
+          return true;
+        }
+        return false;
+      }}
+    >
+      <View className="mb-3 mt-1 flex-row justify-center gap-3">
         {tabs.map((tab) => (
           <Pressable
             key={tab.value}
             onPress={() => {
               setSelectedTab(tab.value);
             }}
-            className={`px-4 py-2 rounded-full ${
+            className={`px-4 py-2 rounded-full shadow ${theme === "light" ? "shadow-gray-200" : "shadow-neutral-950"} ${
               selectedTab === tab.value
                 ? "bg-blue-300"
                 : `bg-[${themes[theme].buttonMenuBackground}]`
@@ -162,13 +175,18 @@ function AllTasks() {
                     return dateA - dateB;
                   })
                   .map((errand, index) => (
-                    <FullErrand key={errand.id} errand={errand} />
+                    <FullErrand
+                      key={errand.id}
+                      errand={errand}
+                      openSwipeableRef={openSwipeableRef}
+                    />
                   ))}
               </Pressable>
             )
         )}
-        {errands.filter((errand) => errand.listId === "" && !errand.completed)
-          .length > 0 && (
+        {selectedTabObj.errandsList.filter(
+          (errand) => errand.listId === "" && !errand.completed
+        ).length > 0 && (
           <View key="no-list">
             <View className="flex-row justify-center items-center gap-1 mb-2">
               <Ionicons name="list" size={19} color="stone" />
@@ -178,15 +196,23 @@ function AllTasks() {
                 Sin lista
               </Text>
             </View>
-            {errands
+            {selectedTabObj.errandsList
               .filter((errand) => errand.listId === "" && !errand.completed)
-              .sort(
-                (a, b) =>
-                  new Date(`${a.dateErrand}T${a.timeErrand || "20:00"}`) -
-                  new Date(`${b.dateErrand}T${b.timeErrand || "20:00"}`)
-              )
-              .map((errand) => (
-                <FullErrand key={errand.id} errand={errand} />
+              .sort((a, b) => {
+                const dateA = new Date(
+                  `${a.dateErrand}T${a.timeErrand || "20:00"}`
+                );
+                const dateB = new Date(
+                  `${b.dateErrand}T${b.timeErrand || "20:00"}`
+                );
+                return dateA - dateB;
+              })
+              .map((errand, index) => (
+                <FullErrand
+                  key={errand.id}
+                  errand={errand}
+                  openSwipeableRef={openSwipeableRef}
+                />
               ))}
           </View>
         )}

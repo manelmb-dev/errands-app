@@ -7,75 +7,81 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		D20F1E992DAD651D002127B8 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = D20F1E982DAD651D002127B8 /* FirebaseAnalytics */; };
-		D20F1E9B2DAD651D002127B8 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = D20F1E9A2DAD651D002127B8 /* FirebaseAuth */; };
-		D20F1E9D2DAD651D002127B8 /* FirebaseCore in Frameworks */ = {isa = PBXBuildFile; productRef = D20F1E9C2DAD651D002127B8 /* FirebaseCore */; };
-		D20F1E9F2DAD651D002127B8 /* FirebaseDatabase in Frameworks */ = {isa = PBXBuildFile; productRef = D20F1E9E2DAD651D002127B8 /* FirebaseDatabase */; };
-		D20F1EA12DAD651D002127B8 /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = D20F1EA02DAD651D002127B8 /* FirebaseMessaging */; };
+		D27AA9032DAD78F000740EAE /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = D27AA9022DAD78F000740EAE /* FirebaseAnalytics */; };
+		D27AA9052DAD78F000740EAE /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = D27AA9042DAD78F000740EAE /* FirebaseAuth */; };
+		D27AA9072DAD78F000740EAE /* FirebaseCore in Frameworks */ = {isa = PBXBuildFile; productRef = D27AA9062DAD78F000740EAE /* FirebaseCore */; };
+		D27AA9092DAD78F000740EAE /* FirebaseDatabase in Frameworks */ = {isa = PBXBuildFile; productRef = D27AA9082DAD78F000740EAE /* FirebaseDatabase */; };
+		D27AA90B2DAD78F000740EAE /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = D27AA90A2DAD78F000740EAE /* FirebaseFirestore */; };
+		D27AA90D2DAD78F000740EAE /* FirebaseInAppMessaging-Beta in Frameworks */ = {isa = PBXBuildFile; productRef = D27AA90C2DAD78F000740EAE /* FirebaseInAppMessaging-Beta */; };
+		D27AA90F2DAD78F000740EAE /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = D27AA90E2DAD78F000740EAE /* FirebaseMessaging */; };
+		D27AA9112DAD78F000740EAE /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = D27AA9102DAD78F000740EAE /* FirebaseStorage */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		D20F1E7B2DAD606A002127B8 /* PBXContainerItemProxy */ = {
+		D27AA8E52DAD775A00740EAE /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = D20F1E622DAD6067002127B8 /* Project object */;
+			containerPortal = D27AA8CC2DAD775600740EAE /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = D20F1E692DAD6067002127B8;
-			remoteInfo = errands;
+			remoteGlobalIDString = D27AA8D32DAD775600740EAE;
+			remoteInfo = Errands;
 		};
-		D20F1E852DAD606A002127B8 /* PBXContainerItemProxy */ = {
+		D27AA8EF2DAD775B00740EAE /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = D20F1E622DAD6067002127B8 /* Project object */;
+			containerPortal = D27AA8CC2DAD775600740EAE /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = D20F1E692DAD6067002127B8;
-			remoteInfo = errands;
+			remoteGlobalIDString = D27AA8D32DAD775600740EAE;
+			remoteInfo = Errands;
 		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		D20F1E6A2DAD6067002127B8 /* errands.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = errands.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		D20F1E7A2DAD606A002127B8 /* errandsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = errandsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		D20F1E842DAD606A002127B8 /* errandsUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = errandsUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		D27AA8D42DAD775600740EAE /* Errands.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Errands.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		D27AA8E42DAD775A00740EAE /* ErrandsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ErrandsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		D27AA8EE2DAD775B00740EAE /* ErrandsUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ErrandsUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		D20F1E6C2DAD6067002127B8 /* errands */ = {
+		D27AA8D62DAD775600740EAE /* Errands */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			path = errands;
+			path = Errands;
 			sourceTree = "<group>";
 		};
-		D20F1E7D2DAD606A002127B8 /* errandsTests */ = {
+		D27AA8E72DAD775A00740EAE /* ErrandsTests */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			path = errandsTests;
+			path = ErrandsTests;
 			sourceTree = "<group>";
 		};
-		D20F1E872DAD606A002127B8 /* errandsUITests */ = {
+		D27AA8F12DAD775B00740EAE /* ErrandsUITests */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			path = errandsUITests;
+			path = ErrandsUITests;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		D20F1E672DAD6067002127B8 /* Frameworks */ = {
+		D27AA8D12DAD775600740EAE /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D20F1E992DAD651D002127B8 /* FirebaseAnalytics in Frameworks */,
-				D20F1E9D2DAD651D002127B8 /* FirebaseCore in Frameworks */,
-				D20F1EA12DAD651D002127B8 /* FirebaseMessaging in Frameworks */,
-				D20F1E9F2DAD651D002127B8 /* FirebaseDatabase in Frameworks */,
-				D20F1E9B2DAD651D002127B8 /* FirebaseAuth in Frameworks */,
+				D27AA9032DAD78F000740EAE /* FirebaseAnalytics in Frameworks */,
+				D27AA9072DAD78F000740EAE /* FirebaseCore in Frameworks */,
+				D27AA90F2DAD78F000740EAE /* FirebaseMessaging in Frameworks */,
+				D27AA9092DAD78F000740EAE /* FirebaseDatabase in Frameworks */,
+				D27AA90B2DAD78F000740EAE /* FirebaseFirestore in Frameworks */,
+				D27AA9112DAD78F000740EAE /* FirebaseStorage in Frameworks */,
+				D27AA9052DAD78F000740EAE /* FirebaseAuth in Frameworks */,
+				D27AA90D2DAD78F000740EAE /* FirebaseInAppMessaging-Beta in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		D20F1E772DAD606A002127B8 /* Frameworks */ = {
+		D27AA8E12DAD775A00740EAE /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		D20F1E812DAD606A002127B8 /* Frameworks */ = {
+		D27AA8EB2DAD775A00740EAE /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -85,22 +91,22 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		D20F1E612DAD6067002127B8 = {
+		D27AA8CB2DAD775600740EAE = {
 			isa = PBXGroup;
 			children = (
-				D20F1E6C2DAD6067002127B8 /* errands */,
-				D20F1E7D2DAD606A002127B8 /* errandsTests */,
-				D20F1E872DAD606A002127B8 /* errandsUITests */,
-				D20F1E6B2DAD6067002127B8 /* Products */,
+				D27AA8D62DAD775600740EAE /* Errands */,
+				D27AA8E72DAD775A00740EAE /* ErrandsTests */,
+				D27AA8F12DAD775B00740EAE /* ErrandsUITests */,
+				D27AA8D52DAD775600740EAE /* Products */,
 			);
 			sourceTree = "<group>";
 		};
-		D20F1E6B2DAD6067002127B8 /* Products */ = {
+		D27AA8D52DAD775600740EAE /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				D20F1E6A2DAD6067002127B8 /* errands.app */,
-				D20F1E7A2DAD606A002127B8 /* errandsTests.xctest */,
-				D20F1E842DAD606A002127B8 /* errandsUITests.xctest */,
+				D27AA8D42DAD775600740EAE /* Errands.app */,
+				D27AA8E42DAD775A00740EAE /* ErrandsTests.xctest */,
+				D27AA8EE2DAD775B00740EAE /* ErrandsUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -108,142 +114,145 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		D20F1E692DAD6067002127B8 /* errands */ = {
+		D27AA8D32DAD775600740EAE /* Errands */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = D20F1E8E2DAD606A002127B8 /* Build configuration list for PBXNativeTarget "errands" */;
+			buildConfigurationList = D27AA8F82DAD775B00740EAE /* Build configuration list for PBXNativeTarget "Errands" */;
 			buildPhases = (
-				D20F1E662DAD6067002127B8 /* Sources */,
-				D20F1E672DAD6067002127B8 /* Frameworks */,
-				D20F1E682DAD6067002127B8 /* Resources */,
+				D27AA8D02DAD775600740EAE /* Sources */,
+				D27AA8D12DAD775600740EAE /* Frameworks */,
+				D27AA8D22DAD775600740EAE /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
-				D20F1E6C2DAD6067002127B8 /* errands */,
+				D27AA8D62DAD775600740EAE /* Errands */,
 			);
-			name = errands;
+			name = Errands;
 			packageProductDependencies = (
-				D20F1E982DAD651D002127B8 /* FirebaseAnalytics */,
-				D20F1E9A2DAD651D002127B8 /* FirebaseAuth */,
-				D20F1E9C2DAD651D002127B8 /* FirebaseCore */,
-				D20F1E9E2DAD651D002127B8 /* FirebaseDatabase */,
-				D20F1EA02DAD651D002127B8 /* FirebaseMessaging */,
+				D27AA9022DAD78F000740EAE /* FirebaseAnalytics */,
+				D27AA9042DAD78F000740EAE /* FirebaseAuth */,
+				D27AA9062DAD78F000740EAE /* FirebaseCore */,
+				D27AA9082DAD78F000740EAE /* FirebaseDatabase */,
+				D27AA90A2DAD78F000740EAE /* FirebaseFirestore */,
+				D27AA90C2DAD78F000740EAE /* FirebaseInAppMessaging-Beta */,
+				D27AA90E2DAD78F000740EAE /* FirebaseMessaging */,
+				D27AA9102DAD78F000740EAE /* FirebaseStorage */,
 			);
-			productName = errands;
-			productReference = D20F1E6A2DAD6067002127B8 /* errands.app */;
+			productName = Errands;
+			productReference = D27AA8D42DAD775600740EAE /* Errands.app */;
 			productType = "com.apple.product-type.application";
 		};
-		D20F1E792DAD606A002127B8 /* errandsTests */ = {
+		D27AA8E32DAD775A00740EAE /* ErrandsTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = D20F1E912DAD606A002127B8 /* Build configuration list for PBXNativeTarget "errandsTests" */;
+			buildConfigurationList = D27AA8FB2DAD775B00740EAE /* Build configuration list for PBXNativeTarget "ErrandsTests" */;
 			buildPhases = (
-				D20F1E762DAD606A002127B8 /* Sources */,
-				D20F1E772DAD606A002127B8 /* Frameworks */,
-				D20F1E782DAD606A002127B8 /* Resources */,
+				D27AA8E02DAD775A00740EAE /* Sources */,
+				D27AA8E12DAD775A00740EAE /* Frameworks */,
+				D27AA8E22DAD775A00740EAE /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				D20F1E7C2DAD606A002127B8 /* PBXTargetDependency */,
+				D27AA8E62DAD775A00740EAE /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
-				D20F1E7D2DAD606A002127B8 /* errandsTests */,
+				D27AA8E72DAD775A00740EAE /* ErrandsTests */,
 			);
-			name = errandsTests;
+			name = ErrandsTests;
 			packageProductDependencies = (
 			);
-			productName = errandsTests;
-			productReference = D20F1E7A2DAD606A002127B8 /* errandsTests.xctest */;
+			productName = ErrandsTests;
+			productReference = D27AA8E42DAD775A00740EAE /* ErrandsTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		D20F1E832DAD606A002127B8 /* errandsUITests */ = {
+		D27AA8ED2DAD775A00740EAE /* ErrandsUITests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = D20F1E942DAD606A002127B8 /* Build configuration list for PBXNativeTarget "errandsUITests" */;
+			buildConfigurationList = D27AA8FE2DAD775B00740EAE /* Build configuration list for PBXNativeTarget "ErrandsUITests" */;
 			buildPhases = (
-				D20F1E802DAD606A002127B8 /* Sources */,
-				D20F1E812DAD606A002127B8 /* Frameworks */,
-				D20F1E822DAD606A002127B8 /* Resources */,
+				D27AA8EA2DAD775A00740EAE /* Sources */,
+				D27AA8EB2DAD775A00740EAE /* Frameworks */,
+				D27AA8EC2DAD775A00740EAE /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				D20F1E862DAD606A002127B8 /* PBXTargetDependency */,
+				D27AA8F02DAD775B00740EAE /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
-				D20F1E872DAD606A002127B8 /* errandsUITests */,
+				D27AA8F12DAD775B00740EAE /* ErrandsUITests */,
 			);
-			name = errandsUITests;
+			name = ErrandsUITests;
 			packageProductDependencies = (
 			);
-			productName = errandsUITests;
-			productReference = D20F1E842DAD606A002127B8 /* errandsUITests.xctest */;
+			productName = ErrandsUITests;
+			productReference = D27AA8EE2DAD775B00740EAE /* ErrandsUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
-		D20F1E622DAD6067002127B8 /* Project object */ = {
+		D27AA8CC2DAD775600740EAE /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1600;
 				LastUpgradeCheck = 1600;
 				TargetAttributes = {
-					D20F1E692DAD6067002127B8 = {
+					D27AA8D32DAD775600740EAE = {
 						CreatedOnToolsVersion = 16.0;
 					};
-					D20F1E792DAD606A002127B8 = {
+					D27AA8E32DAD775A00740EAE = {
 						CreatedOnToolsVersion = 16.0;
-						TestTargetID = D20F1E692DAD6067002127B8;
+						TestTargetID = D27AA8D32DAD775600740EAE;
 					};
-					D20F1E832DAD606A002127B8 = {
+					D27AA8ED2DAD775A00740EAE = {
 						CreatedOnToolsVersion = 16.0;
-						TestTargetID = D20F1E692DAD6067002127B8;
+						TestTargetID = D27AA8D32DAD775600740EAE;
 					};
 				};
 			};
-			buildConfigurationList = D20F1E652DAD6067002127B8 /* Build configuration list for PBXProject "errands" */;
+			buildConfigurationList = D27AA8CF2DAD775600740EAE /* Build configuration list for PBXProject "Errands" */;
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
 				Base,
 			);
-			mainGroup = D20F1E612DAD6067002127B8;
+			mainGroup = D27AA8CB2DAD775600740EAE;
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
-				D20F1E972DAD651D002127B8 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				D27AA9012DAD78F000740EAE /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 			);
 			preferredProjectObjectVersion = 77;
-			productRefGroup = D20F1E6B2DAD6067002127B8 /* Products */;
+			productRefGroup = D27AA8D52DAD775600740EAE /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				D20F1E692DAD6067002127B8 /* errands */,
-				D20F1E792DAD606A002127B8 /* errandsTests */,
-				D20F1E832DAD606A002127B8 /* errandsUITests */,
+				D27AA8D32DAD775600740EAE /* Errands */,
+				D27AA8E32DAD775A00740EAE /* ErrandsTests */,
+				D27AA8ED2DAD775A00740EAE /* ErrandsUITests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		D20F1E682DAD6067002127B8 /* Resources */ = {
+		D27AA8D22DAD775600740EAE /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		D20F1E782DAD606A002127B8 /* Resources */ = {
+		D27AA8E22DAD775A00740EAE /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		D20F1E822DAD606A002127B8 /* Resources */ = {
+		D27AA8EC2DAD775A00740EAE /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -253,21 +262,21 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		D20F1E662DAD6067002127B8 /* Sources */ = {
+		D27AA8D02DAD775600740EAE /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		D20F1E762DAD606A002127B8 /* Sources */ = {
+		D27AA8E02DAD775A00740EAE /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		D20F1E802DAD606A002127B8 /* Sources */ = {
+		D27AA8EA2DAD775A00740EAE /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -277,20 +286,20 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		D20F1E7C2DAD606A002127B8 /* PBXTargetDependency */ = {
+		D27AA8E62DAD775A00740EAE /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = D20F1E692DAD6067002127B8 /* errands */;
-			targetProxy = D20F1E7B2DAD606A002127B8 /* PBXContainerItemProxy */;
+			target = D27AA8D32DAD775600740EAE /* Errands */;
+			targetProxy = D27AA8E52DAD775A00740EAE /* PBXContainerItemProxy */;
 		};
-		D20F1E862DAD606A002127B8 /* PBXTargetDependency */ = {
+		D27AA8F02DAD775B00740EAE /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = D20F1E692DAD6067002127B8 /* errands */;
-			targetProxy = D20F1E852DAD606A002127B8 /* PBXContainerItemProxy */;
+			target = D27AA8D32DAD775600740EAE /* Errands */;
+			targetProxy = D27AA8EF2DAD775B00740EAE /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
-		D20F1E8C2DAD606A002127B8 /* Debug */ = {
+		D27AA8F62DAD775B00740EAE /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -353,7 +362,7 @@
 			};
 			name = Debug;
 		};
-		D20F1E8D2DAD606A002127B8 /* Release */ = {
+		D27AA8F72DAD775B00740EAE /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -409,14 +418,14 @@
 			};
 			name = Release;
 		};
-		D20F1E8F2DAD606A002127B8 /* Debug */ = {
+		D27AA8F92DAD775B00740EAE /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"errands/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"Errands/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
@@ -425,12 +434,13 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.mmb-dev.errands";
+				PRODUCT_BUNDLE_IDENTIFIER = com.mmbdev.errands;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -438,14 +448,14 @@
 			};
 			name = Debug;
 		};
-		D20F1E902DAD606A002127B8 /* Release */ = {
+		D27AA8FA2DAD775B00740EAE /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"errands/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"Errands/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
@@ -454,12 +464,13 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.mmb-dev.errands";
+				PRODUCT_BUNDLE_IDENTIFIER = com.mmbdev.errands;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -467,7 +478,7 @@
 			};
 			name = Release;
 		};
-		D20F1E922DAD606A002127B8 /* Debug */ = {
+		D27AA8FC2DAD775B00740EAE /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -476,16 +487,16 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.mmb-dev.errandsTests";
+				PRODUCT_BUNDLE_IDENTIFIER = com.mmbdev.errands.ErrandsTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/errands.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/errands";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Errands.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Errands";
 			};
 			name = Debug;
 		};
-		D20F1E932DAD606A002127B8 /* Release */ = {
+		D27AA8FD2DAD775B00740EAE /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -494,82 +505,82 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.mmb-dev.errandsTests";
+				PRODUCT_BUNDLE_IDENTIFIER = com.mmbdev.errands.ErrandsTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/errands.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/errands";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Errands.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Errands";
 			};
 			name = Release;
 		};
-		D20F1E952DAD606A002127B8 /* Debug */ = {
+		D27AA8FF2DAD775B00740EAE /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.mmb-dev.errandsUITests";
+				PRODUCT_BUNDLE_IDENTIFIER = com.mmbdev.errands.ErrandsUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = errands;
+				TEST_TARGET_NAME = Errands;
 			};
 			name = Debug;
 		};
-		D20F1E962DAD606A002127B8 /* Release */ = {
+		D27AA9002DAD775B00740EAE /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.mmb-dev.errandsUITests";
+				PRODUCT_BUNDLE_IDENTIFIER = com.mmbdev.errands.ErrandsUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = errands;
+				TEST_TARGET_NAME = Errands;
 			};
 			name = Release;
 		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		D20F1E652DAD6067002127B8 /* Build configuration list for PBXProject "errands" */ = {
+		D27AA8CF2DAD775600740EAE /* Build configuration list for PBXProject "Errands" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				D20F1E8C2DAD606A002127B8 /* Debug */,
-				D20F1E8D2DAD606A002127B8 /* Release */,
+				D27AA8F62DAD775B00740EAE /* Debug */,
+				D27AA8F72DAD775B00740EAE /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		D20F1E8E2DAD606A002127B8 /* Build configuration list for PBXNativeTarget "errands" */ = {
+		D27AA8F82DAD775B00740EAE /* Build configuration list for PBXNativeTarget "Errands" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				D20F1E8F2DAD606A002127B8 /* Debug */,
-				D20F1E902DAD606A002127B8 /* Release */,
+				D27AA8F92DAD775B00740EAE /* Debug */,
+				D27AA8FA2DAD775B00740EAE /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		D20F1E912DAD606A002127B8 /* Build configuration list for PBXNativeTarget "errandsTests" */ = {
+		D27AA8FB2DAD775B00740EAE /* Build configuration list for PBXNativeTarget "ErrandsTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				D20F1E922DAD606A002127B8 /* Debug */,
-				D20F1E932DAD606A002127B8 /* Release */,
+				D27AA8FC2DAD775B00740EAE /* Debug */,
+				D27AA8FD2DAD775B00740EAE /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		D20F1E942DAD606A002127B8 /* Build configuration list for PBXNativeTarget "errandsUITests" */ = {
+		D27AA8FE2DAD775B00740EAE /* Build configuration list for PBXNativeTarget "ErrandsUITests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				D20F1E952DAD606A002127B8 /* Debug */,
-				D20F1E962DAD606A002127B8 /* Release */,
+				D27AA8FF2DAD775B00740EAE /* Debug */,
+				D27AA9002DAD775B00740EAE /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -577,7 +588,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		D20F1E972DAD651D002127B8 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+		D27AA9012DAD78F000740EAE /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
 			requirement = {
@@ -588,32 +599,47 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		D20F1E982DAD651D002127B8 /* FirebaseAnalytics */ = {
+		D27AA9022DAD78F000740EAE /* FirebaseAnalytics */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = D20F1E972DAD651D002127B8 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			package = D27AA9012DAD78F000740EAE /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseAnalytics;
 		};
-		D20F1E9A2DAD651D002127B8 /* FirebaseAuth */ = {
+		D27AA9042DAD78F000740EAE /* FirebaseAuth */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = D20F1E972DAD651D002127B8 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			package = D27AA9012DAD78F000740EAE /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseAuth;
 		};
-		D20F1E9C2DAD651D002127B8 /* FirebaseCore */ = {
+		D27AA9062DAD78F000740EAE /* FirebaseCore */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = D20F1E972DAD651D002127B8 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			package = D27AA9012DAD78F000740EAE /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseCore;
 		};
-		D20F1E9E2DAD651D002127B8 /* FirebaseDatabase */ = {
+		D27AA9082DAD78F000740EAE /* FirebaseDatabase */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = D20F1E972DAD651D002127B8 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			package = D27AA9012DAD78F000740EAE /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseDatabase;
 		};
-		D20F1EA02DAD651D002127B8 /* FirebaseMessaging */ = {
+		D27AA90A2DAD78F000740EAE /* FirebaseFirestore */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = D20F1E972DAD651D002127B8 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			package = D27AA9012DAD78F000740EAE /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseFirestore;
+		};
+		D27AA90C2DAD78F000740EAE /* FirebaseInAppMessaging-Beta */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D27AA9012DAD78F000740EAE /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = "FirebaseInAppMessaging-Beta";
+		};
+		D27AA90E2DAD78F000740EAE /* FirebaseMessaging */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D27AA9012DAD78F000740EAE /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseMessaging;
+		};
+		D27AA9102DAD78F000740EAE /* FirebaseStorage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D27AA9012DAD78F000740EAE /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseStorage;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
-	rootObject = D20F1E622DAD6067002127B8 /* Project object */;
+	rootObject = D27AA8CC2DAD775600740EAE /* Project object */;
 }

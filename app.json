@@ -15,11 +15,12 @@
     "platforms": ["ios", "android"],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.mmb-dev.Errands",
+      "bundleIdentifier": "com.mmbdev.errands",
       "googleServicesFile": "./GoogleService-Info.plist"
     },
     "android": {
-      "package": "com.mmb-dev.errands",
+      "package": "com.mmbdev.errands",
+      "googleServicesFile": "./google-services.json",
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"

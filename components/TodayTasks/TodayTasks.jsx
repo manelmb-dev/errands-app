@@ -1,24 +1,37 @@
-import { View, Text, TextInput, Pressable, ScrollView } from "react-native";
-import { useEffect, useMemo, useState } from "react";
-import { useNavigation, useRouter } from "expo-router";
+import Swipeable from "react-native-gesture-handler/ReanimatedSwipeable";
+import { View, Text, Pressable, FlatList } from "react-native";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { useNavigation } from "expo-router";
 
 import Octicons from "react-native-vector-icons/Octicons";
 import Ionicons from "react-native-vector-icons/Ionicons";
 
-import { themes } from "../../constants/themes";
 import { errandsAtom, themeAtom, userAtom } from "../../constants/storeAtoms";
 import { useAtom } from "jotai";
-import FullErrand from "../../constants/fullErrand";
-import CompletedErrand from "../../constants/CompletedErrand";
+
+import UndoCompleteErrandButton from "../../Utils/UndoCompleteErrandButton";
+import SwipeableFullErrand from "../../Utils/SwipeableFullErrand";
+import { useErrandActions } from "../../hooks/useErrandActions";
+import CompletedErrand from "../../Utils/CompletedErrand";
+import { themes } from "../../constants/themes";
+import RenderRightActionsCompletedErrand from "../../Utils/RenderRightActionsCompletedErrand";
 
 function TodayTasks() {
   const navigation = useNavigation();
+  const openSwipeableRef = useRef(null);
+  const swipeableRefs = useRef({});
 
   const [user] = useAtom(userAtom);
-  const [theme, setTheme] = useAtom(themeAtom);
+  const [theme] = useAtom(themeAtom);
   const [errands, setErrands] = useAtom(errandsAtom);
 
   const [selectedTab, setSelectedTab] = useState("pending");
+  const [possibleUndoErrand, setPossibleUndoErrand] = useState(null);
+
+  const { onCompleteWithUndo, undoCompleteErrand } = useErrandActions({
+    setErrands,
+    setPossibleUndoErrand,
+  });
 
   const sortByDate = (a, b) =>
     new Date(`${a.dateErrand}T${a.timeErrand || "20:00"}`) -
@@ -45,14 +58,28 @@ function TodayTasks() {
     {
       label: "Pendientes",
       value: "pending",
-      errandsList: errands.filter((errand) => !errand.completed),
-      emptyListText: "No tienes tareas pendientes",
+      emptyListText: "Estás al día",
+      errandsList: errands
+        .filter((errand) => !errand.completed)
+        .filter(
+          (errand) =>
+            new Date(errand.dateErrand).toISOString().split("T")[0] <=
+            new Date().toISOString().split("T")[0]
+        ),
     },
     {
       label: "Completados",
       value: "completed",
-      errandsList: errands.filter((errand) => errand.completed),
       emptyListText: "No hay tareas completadas",
+      errandsList: errands
+        .filter((errand) => errand.completed)
+        .filter(
+          (errand) =>
+            new Date(errand.dateErrand).toISOString().split("T")[0] ===
+              new Date().toISOString().split("T")[0] ||
+            new Date(errand.completedDateErrand).toISOString().split("T")[0] ===
+              new Date().toISOString().split("T")[0]
+        ),
     },
   ];
 
@@ -60,39 +87,49 @@ function TodayTasks() {
 
   const errandsAssignedToMe = useMemo(() => {
     return (
-      selectedTabObj?.errandsList
-        ?.filter(
-          (errand) =>
-            new Date(errand.dateErrand).toISOString().split("T")[0] <=
-            new Date().toISOString().split("T")[0],
-        )
-        .filter((errand) => errand.assignedId === user.id) || []
+      selectedTabObj?.errandsList?.filter(
+        (errand) => errand.assignedId === user.id
+      ) || []
     );
   }, [selectedTabObj, user.id]);
 
   const errandsSubmittedFromMe = useMemo(() => {
     return (
       selectedTabObj?.errandsList
-        ?.filter(
-          (errand) =>
-            new Date(errand.dateErrand).toISOString().split("T")[0] <=
-            new Date().toISOString().split("T")[0],
-        )
-        .filter((errand) => errand.ownerId === user.id)
+        ?.filter((errand) => errand.ownerId === user.id)
         .filter((errand) => errand.assignedId !== user.id) || []
     );
   }, [selectedTabObj, user.id]);
 
+  const todayDateFormatted = new Date().toLocaleDateString("es-ES", {
+    weekday: "long",
+    day: "numeric",
+    month: "long",
+  });
+
   return (
-    <View className={`h-full bg-[${themes[theme].background}]`}>
-      <View className="mb-4 flex-row justify-center gap-3">
+    <View
+      className={`flex-1 bg-[${themes[theme].background}]`}
+      onStartShouldSetResponder={() => {
+        if (openSwipeableRef.current) {
+          openSwipeableRef.current.close();
+          openSwipeableRef.current = null;
+          return true;
+        }
+        return false;
+      }}
+    >
+      {/* Tabs */}
+      <View className="mb-4 mt-1 flex-row justify-center gap-3">
         {tabs.map((tab) => (
           <Pressable
             key={tab.value}
             onPress={() => {
               setSelectedTab(tab.value);
             }}
-            className={`px-4 py-2 rounded-full ${
+            className={`px-4 py-2 rounded-full shadow ${
+              theme === "light" ? "shadow-gray-200" : "shadow-neutral-950"
+            } ${
               selectedTab === tab.value
                 ? "bg-blue-300"
                 : `bg-[${themes[theme].buttonMenuBackground}]`
@@ -108,88 +145,122 @@ function TodayTasks() {
           </Pressable>
         ))}
       </View>
-      <View>
-        <Text
-          className={`ml-5 mb-2 text-2xl font-semibold text-[${themes[theme].text}]`}
-        >
-          {new Date().toLocaleDateString("es-ES", {
-            weekday: "long",
-            day: "numeric",
-            month: "long",
-          })}
-        </Text>
-      </View>
-      <ScrollView
-        keyboardShouldPersistTaps="handled"
-        contentContainerStyle={{ flexGrow: 1 }}
+
+      {/* Fecha */}
+      <Text
+        className={`ml-5 mb-2 text-2xl font-semibold text-[${themes[theme].text}]`}
       >
-        <Pressable>
-          {errandsAssignedToMe.length > 0 ? (
-            errandsAssignedToMe
-              .sort(sortByDate)
-              .map((errand) =>
-                errand.completed ? (
-                  <CompletedErrand key={errand.id} errand={errand} />
-                ) : (
-                  <FullErrand key={errand.id} errand={errand} />
-                )
-              )
-          ) : (
+        {todayDateFormatted}
+      </Text>
+
+      {/* Lista de tareas */}
+      <FlatList
+        data={[...errandsAssignedToMe].sort(sortByDate)}
+        keyExtractor={(item) => item.id}
+        ListEmptyComponent={() => (
+          <View className="flex-col items-center py-6 gap-1">
+            <Octicons name="check-circle-fill" size={20} color="green" />
             <Text
-              className={`w-full py-6 text-center text-2xl text-[${themes[theme].text}]`}
+              className={`w-full text-center text-2xl text-[${themes[theme].text}]`}
             >
               {selectedTabObj.emptyListText}
             </Text>
-          )}
-
-          {/* Submitted tasks */}
-          {errandsSubmittedFromMe.length > 0 && (
-            <>
-              <View className="flex-row justify-center items-center gap-2 mb-2 mt-6">
-                <Ionicons name="send" size={21} color="#161618" />
+          </View>
+        )}
+        renderItem={({ item }) =>
+          item.completed ? (
+            <Swipeable
+              ref={(ref) => (swipeableRefs.current[item.id] = ref)}
+              renderRightActions={() => (
+                <RenderRightActionsCompletedErrand
+                  errand={item}
+                  setErrands={setErrands}
+                />
+              )}
+              onSwipeableWillOpen={() => {
+                if (
+                  openSwipeableRef.current &&
+                  openSwipeableRef.current !== swipeableRefs.current[item.id]
+                ) {
+                  openSwipeableRef.current.close();
+                }
+                openSwipeableRef.current = swipeableRefs.current[item.id];
+              }}
+            >
+              <CompletedErrand errand={item} />
+            </Swipeable>
+          ) : (
+            <SwipeableFullErrand
+              errand={item}
+              setErrands={setErrands}
+              openSwipeableRef={openSwipeableRef}
+              swipeableRefs={swipeableRefs}
+              onCompleteWithUndo={onCompleteWithUndo}
+            />
+          )
+        }
+        ListFooterComponent={() =>
+          errandsSubmittedFromMe.length > 0 ? (
+            <View className="mt-6">
+              <View className="flex-row justify-center items-center gap-2 mb-2">
+                <Ionicons name="send" size={18} color="#161618" />
                 <Text
                   className={`text-[${themes[theme].listTitle}] text-2xl font-bold`}
                 >
                   Enviados
                 </Text>
               </View>
-              {errandsSubmittedFromMe
-                .sort(sortByDate)
-                .map((errand) =>
-                  errand.completed ? (
-                    <CompletedErrand key={errand.id} errand={errand} />
-                  ) : (
-                    <FullErrand key={errand.id} errand={errand} />
-                  )
-                )}
-            </>
-          )}
-        </Pressable>
-      </ScrollView>
-      <View className="flex-row justify-center w-full gap-6 mt-4">
-        <Pressable className="flex-row gap-1">
-          <Ionicons
-            className="pb-2"
-            name="add-circle"
-            size={24}
-            color={themes[theme].blueHeadText}
-          />
-          <Text
-            className={`text-lg text-[${themes[theme].blueHeadText}] text font-bold`}
-          >
-            Nuevo recordatorio
-          </Text>
-        </Pressable>
-        <Pressable className="flex-row gap-2">
-          <Ionicons className="pb-2" name="send" size={22} color="#3F3F3F" />
-          <Text
-            className={`text-lg text-[${themes[theme].sendTaskButtonText}] text font-bold`}
-          >
-            Enviar recordatorio
-          </Text>
-        </Pressable>
-      </View>
+              {errandsSubmittedFromMe.sort(sortByDate).map((errand) => {
+                return errand.completed ? (
+                  <Swipeable
+                    key={errand.id}
+                    ref={(ref) => (swipeableRefs.current[errand.id] = ref)}
+                    renderRightActions={() => (
+                      <RenderRightActionsCompletedErrand
+                        errand={errand}
+                        setErrands={setErrands}
+                      />
+                    )}
+                    onSwipeableWillOpen={() => {
+                      if (
+                        openSwipeableRef.current &&
+                        openSwipeableRef.current !==
+                          swipeableRefs.current[errand.id]
+                      ) {
+                        openSwipeableRef.current.close();
+                      }
+                      openSwipeableRef.current =
+                        swipeableRefs.current[errand.id];
+                    }}
+                  >
+                    <CompletedErrand errand={errand} />
+                  </Swipeable>
+                ) : (
+                  <SwipeableFullErrand
+                    key={errand.id}
+                    errand={errand}
+                    setErrandserrand={setErrands}
+                    openSwipeableRef={openSwipeableRef}
+                    swipeableRefs={swipeableRefs}
+                    onCompleteWithUndo={onCompleteWithUndo}
+                  />
+                );
+              })}
+            </View>
+          ) : null
+        }
+      />
+
+      {possibleUndoErrand && (
+        <UndoCompleteErrandButton
+          possibleUndoErrand={possibleUndoErrand}
+          undoCompleteErrand={undoCompleteErrand}
+          openSwipeableRef={openSwipeableRef}
+          setPossibleUndoErrand={setPossibleUndoErrand}
+        />
+      )}
     </View>
   );
 }
+
 export default TodayTasks;

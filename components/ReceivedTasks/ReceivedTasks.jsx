@@ -1,10 +1,9 @@
 import { View, Text, Pressable, ScrollView } from "react-native";
 import { useEffect, useState } from "react";
-import { useNavigation, useRouter } from "expo-router";
+import { useNavigation } from "expo-router";
 
 import Ionicons from "react-native-vector-icons/Ionicons";
 
-import { themes } from "../../constants/themes";
 import {
   errandsAtom,
   listsAtom,
@@ -12,8 +11,10 @@ import {
   userAtom,
 } from "../../constants/storeAtoms";
 import { useAtom } from "jotai";
-import FullErrand from "../../constants/fullErrand";
-import CompletedErrand from "../../constants/CompletedErrand";
+
+import CompletedErrand from "../../Utils/CompletedErrand";
+import { themes } from "../../constants/themes";
+import FullErrand from "../../Utils/fullErrand";
 
 function ReceivedTasks() {
   const navigation = useNavigation();

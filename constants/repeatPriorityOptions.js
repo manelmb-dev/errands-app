@@ -9,8 +9,8 @@ export const repeatOptions = [
 ];
 
 export const priorityOptions = [
-  { label: "No", value: "none" },
-  { label: "Baja", value: "low" },
-  { label: "Media", value: "medium" },
   { label: "Alta", value: "high" },
+  { label: "Media", value: "medium" },
+  { label: "Baja", value: "low" },
+  { label: "No", value: "none" },
 ];

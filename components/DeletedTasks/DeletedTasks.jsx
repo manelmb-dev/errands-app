@@ -7,8 +7,7 @@ import Ionicons from "react-native-vector-icons/Ionicons";
 import { errandsAtom, themeAtom } from "../../constants/storeAtoms";
 import { useAtom } from "jotai";
 
-import CompletedErrand from "../../constants/CompletedErrand";
-import FullErrand from "../../constants/fullErrand";
+import FullErrand from "../../Utils/fullErrand";
 import { themes } from "../../constants/themes";
 
 function DeletedTasks() {

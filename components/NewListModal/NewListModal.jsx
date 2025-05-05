@@ -102,7 +102,7 @@ const NewListModal = () => {
   // Function to handle cancel alert
   const handleCancelAlert = useCallback(() => {
     if (watch("title").length > 0) {
-      Alert.alert("Descartar nueva lista", "", [
+      Alert.alert("Se descartará la nueva lista", "", [
         {
           text: "Descartar",
           onPress: () => {
@@ -135,7 +135,7 @@ const NewListModal = () => {
       className={`flex-1 p-6 bg-[${themes[theme].background}] items-center`}
     >
       <View
-        className={`p-4 justify-center items-center bg-[${themes[theme].buttonMenuBackground}] mb-4 rounded-xl shadow ${theme === "light" ? "shadow-slate-200" : "shadow-neutral-950"}`}
+        className={`p-4 justify-center items-center bg-[${themes[theme].buttonMenuBackground}] mb-4 rounded-xl shadow ${theme === "light" ? "shadow-gray-300" : "shadow-neutral-950"}`}
       >
         <Ionicons
           name={assignedIcon}
@@ -144,7 +144,7 @@ const NewListModal = () => {
         ></Ionicons>
       </View>
       <View
-        className={`${showIconGrid && "flex-1"} bg-[${themes[theme].buttonMenuBackground}] mb-4 rounded-xl shadow ${theme === "light" ? "shadow-slate-200" : "shadow-neutral-950"} w-full`}
+        className={`${showIconGrid && "flex-1"} bg-[${themes[theme].buttonMenuBackground}] mb-4 rounded-xl shadow ${theme === "light" ? "shadow-gray-300" : "shadow-neutral-950"} w-full`}
       >
         <Controller
           control={control}

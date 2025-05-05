@@ -1,8 +1,8 @@
-import { View, Text, TextInput, Pressable, ScrollView } from "react-native";
-import { useEffect, useState } from "react";
+import Animated, { LinearTransition } from "react-native-reanimated";
+import { useEffect, useRef, useState } from "react";
 import { useNavigation } from "expo-router";
+import { View } from "react-native";
 
-import Octicons from "react-native-vector-icons/Octicons";
 import Ionicons from "react-native-vector-icons/Ionicons";
 
 import { useAtom } from "jotai";
@@ -13,19 +13,28 @@ import {
   userAtom,
 } from "../../constants/storeAtoms";
 
+import UndoCompleteErrandButton from "../../Utils/UndoCompleteErrandButton";
+import SwipeableFullErrand from "../../Utils/SwipeableFullErrand";
+import { useErrandActions } from "../../hooks/useErrandActions";
 import { themes } from "../../constants/themes";
-import FullErrand from "../../constants/fullErrand";
-import CompletedErrand from "../../constants/CompletedErrand";
 
 function MarkedTasks() {
   const navigation = useNavigation();
+  const openSwipeableRef = useRef(null);
+  const swipeableRefs = useRef({});
 
   const [user] = useAtom(userAtom);
-  const [theme, setTheme] = useAtom(themeAtom);
+  const [theme] = useAtom(themeAtom);
   const [errands, setErrands] = useAtom(errandsAtom);
   const [lists, setLists] = useAtom(listsAtom);
 
   const [showCompleted, setShowCompleted] = useState(false);
+  const [possibleUndoErrand, setPossibleUndoErrand] = useState(null);
+
+  const { onCompleteWithUndo, undoCompleteErrand } = useErrandActions({
+    setErrands,
+    setPossibleUndoErrand,
+  });
 
   useEffect(() => {
     navigation.setOptions({
@@ -44,109 +53,85 @@ function MarkedTasks() {
     });
   }, [navigation, theme]);
 
+  const markedActiveErrands = errands
+    .filter(
+      (errand) => errand.ownerId === user.id || user.id === errand.assignedId
+    )
+    .filter((errand) => errand.marked && !errand.completed)
+    .sort((a, b) => {
+      const dateA = new Date(`${a.dateErrand}T${a.timeErrand || "20:00"}`);
+      const dateB = new Date(`${b.dateErrand}T${b.timeErrand || "20:00"}`);
+      return dateA - dateB;
+    });
+
+  const markedCompletedErrands = errands
+    .filter(
+      (errand) => errand.ownerId === user.id || user.id === errand.assignedId
+    )
+    .filter((errand) => errand.marked && errand.completed)
+    .sort((a, b) => {
+      const dateA = new Date(`${a.dateErrand}T${a.timeErrand || "20:00"}`);
+      const dateB = new Date(`${b.dateErrand}T${b.timeErrand || "20:00"}`);
+      return dateB - dateA;
+    });
+
   return (
-    <View className={`flex-1 bg-[${themes[theme].background}]`}>
-      <ScrollView>
-        <Pressable>
-          {/* List reminders */}
-          {errands
-            .filter(
-              (errand) =>
-                errand.ownerId === user.id || user.id === errand.assignedId
-            )
-            .filter((errand) => errand.marked)
-            .filter((errand) => !errand.completed)
-            .sort((a, b) => {
-              const dateA = new Date(
-                `${a.dateErrand}T${a.timeErrand || "20:00"}`
-              );
-              const dateB = new Date(
-                `${b.dateErrand}T${b.timeErrand || "20:00"}`
-              );
-              return dateA - dateB;
-            })
-            .map((errand, index) => (
-              <FullErrand key={errand.id} errand={errand} />
-            ))}
-
-          {/* New reminder */}
-          <View className="flex-row rounded-xl pr-3 pt-3">
-            <View className="pl-4">
-              <Octicons name="plus-circle" size={18} color="#6E727A" />
-            </View>
-            <View className="flex-1 pl-3">
-              <TextInput
-                className="text-[#161618]"
-                placeholder="Añadir recordatorio"
-                placeholderTextColor={themes[theme].addNewTaskText}
-              />
-              {/* <View className="justify-center">
-                  <Text className="text-sm text-[#6E727A]">Notas</Text>
-                </View> */}
-            </View>
-          </View>
-
-          {/* Completed tasks */}
-          <View className="flex-row w-full justify-center mt-9 mb-3">
-            <Pressable
-              className="flex-row items-center bg-green-200 rounded-xl p-3 overflow-hidden gap-2"
-              onPress={() => setShowCompleted(!showCompleted)}
-            >
-              <Ionicons name={showCompleted ? "eye-off" : "eye"} size={18} />
-              <Text>
-                {showCompleted ? "Ocultar completados" : "Mostrar Completados"}
-              </Text>
-            </Pressable>
-          </View>
-
-          {showCompleted && (
-            <View>
-              {errands
-                .filter(
-                  (errand) =>
-                    errand.ownerId === user.id || user.id === errand.assignedId
-                )
-                .filter((errand) => errand.marked)
-                .filter((errand) => errand.completed)
-                .sort((a, b) => {
-                  const dateA = new Date(
-                    `${a.dateErrand}T${a.timeErrand || "20:00"}`
-                  );
-                  const dateB = new Date(
-                    `${b.dateErrand}T${b.timeErrand || "20:00"}`
-                  );
-                  return dateB - dateA;
-                })
-                .map((errand, index) => (
-                  <CompletedErrand key={errand.id} errand={errand} />
-                ))}
-            </View>
-          )}
-        </Pressable>
-      </ScrollView>
-      <View className="flex-row justify-center w-full gap-6 mt-4">
-        <Pressable className="flex-row gap-1">
-          <Ionicons
-            className="pb-2"
-            name="add-circle"
-            size={24}
-            color={themes[theme].blueHeadText}
+    <View
+      className={`flex-1 bg-[${themes[theme].background}]`}
+      onStartShouldSetResponder={() => {
+        if (openSwipeableRef.current) {
+          openSwipeableRef.current.close();
+          openSwipeableRef.current = null;
+          return true;
+        }
+        return false;
+      }}
+    >
+      <Animated.FlatList
+        itemLayoutAnimation={LinearTransition}
+        data={markedActiveErrands}
+        keyExtractor={(item) => item.id}
+        renderItem={({ item }) => (
+          <SwipeableFullErrand
+            errand={item}
+            setErrands={setErrands}
+            openSwipeableRef={openSwipeableRef}
+            swipeableRefs={swipeableRefs}
+            onCompleteWithUndo={onCompleteWithUndo}
           />
-          <Text
-            className={`text-lg text-[${themes[theme].blueHeadText}] text font-bold`}
-          >
-            Nuevo recordatorio
-          </Text>
-        </Pressable>
-        <Pressable className="flex-row gap-2">
-          <Ionicons className="pb-2" name="send" size={22} color="#3F3F3F" />
-          <Text
-            className={`text-lg text-[${themes[theme].sendTaskButtonText}] text font-bold`}
-          >
-            Enviar recordatorio
-          </Text>
-        </Pressable>
-      </View>
+        )}
+        // ListHeaderComponent={
+        //   <View className="flex-row w-full justify-center mt-9 mb-3">
+        //     <Pressable
+        //       className="flex-row items-center bg-green-200 rounded-xl p-3 overflow-hidden gap-2"
+        //       onPress={() => setShowCompleted(!showCompleted)}
+        //     >
+        //       <Ionicons name={showCompleted ? "eye-off" : "eye"} size={18} />
+        //       <Text>
+        //         {showCompleted ? "Ocultar completados" : "Mostrar Completados"}
+        //       </Text>
+        //     </Pressable>
+        //   </View>
+        // }
+        // ListFooterComponent={
+        //   showCompleted && (
+        //     <View>
+        //       {markedCompletedErrands.map((errand) => (
+        //         <CompletedErrand key={errand.id} errand={errand} />
+        //       ))}
+        //     </View>
+        //   )
+        // }
+      />
+
+      {possibleUndoErrand && (
+        <UndoCompleteErrandButton
+          possibleUndoErrand={possibleUndoErrand}
+          undoCompleteErrand={undoCompleteErrand}
+          openSwipeableRef={openSwipeableRef}
+          setPossibleUndoErrand={setPossibleUndoErrand}
+        />
+      )}
     </View>
   );
 }

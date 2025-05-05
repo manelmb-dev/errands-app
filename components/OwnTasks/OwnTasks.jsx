@@ -14,7 +14,7 @@ import {
 } from "../../constants/storeAtoms";
 
 import { themes } from "../../constants/themes";
-import FullErrand from "../../constants/fullErrand";
+import FullErrand from "../../Utils/fullErrand";
 
 function OwnTasks() {
   const navigation = useNavigation();

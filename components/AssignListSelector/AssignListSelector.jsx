@@ -9,12 +9,10 @@ import {
 import { useNavigation } from "expo-router";
 
 import FontAwesome6 from "react-native-vector-icons/FontAwesome6";
-import AntDesign from "react-native-vector-icons/AntDesign";
 import Ionicons from "react-native-vector-icons/Ionicons";
 
 import { useAtom } from "jotai";
 import {
-  contactsAtom,
   listAssignedAtom,
   listsAtom,
   themeAtom,

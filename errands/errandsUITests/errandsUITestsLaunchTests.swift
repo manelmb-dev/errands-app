@@ -1,13 +1,13 @@
 //
-//  errandsUITestsLaunchTests.swift
-//  errandsUITests
+//  ErrandsUITestsLaunchTests.swift
+//  ErrandsUITests
 //
 //  Created by Manel Martinez Bel on 14/4/25.
 //
 
 import XCTest
 
-final class errandsUITestsLaunchTests: XCTestCase {
+final class ErrandsUITestsLaunchTests: XCTestCase {
 
     override class var runsForEachTargetApplicationUIConfiguration: Bool {
         true

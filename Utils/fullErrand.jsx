@@ -1,14 +1,19 @@
 import { Pressable, Text, TextInput, View } from "react-native";
-import { Swipeable } from "react-native-gesture-handler";
+import Animated, { FadeOut } from "react-native-reanimated";
 
-import { contactsAtom, errandsAtom, themeAtom, userAtom } from "./storeAtoms";
+import {
+  contactsAtom,
+  errandsAtom,
+  themeAtom,
+  userAtom,
+} from "../constants/storeAtoms";
 import { useAtom } from "jotai";
 
 import Octicons from "react-native-vector-icons/Octicons";
 import Ionicons from "react-native-vector-icons/Ionicons";
 
-import formatErrandDate from "./formatErrandDate";
-import { themes } from "./themes";
+import formatErrandDate from "../constants/formatErrandDate";
+import { themes } from "../constants/themes";
 import { router } from "expo-router";
 
 const repeatOptions = [
@@ -21,7 +26,12 @@ const repeatOptions = [
   { label: "Todos los años", value: "yearly" },
 ];
 
-function FullErrand({ errand }) {
+function FullErrand({
+  errand,
+  openSwipeableRef,
+  swipeableRefs,
+  onCompleteWithUndo,
+}) {
   const [user] = useAtom(userAtom);
   const [, setErrands] = useAtom(errandsAtom);
   const [contacts] = useAtom(contactsAtom);
@@ -39,41 +49,61 @@ function FullErrand({ errand }) {
     (option) => option.value === errand.repeat
   );
 
-  const renderRightActions = () => (
-    <View className="flex-row h-full mr-1">
+  const completeErrand = () => {
+    const actualTime = new Date();
+    const formattedDate = actualTime.toISOString().split("T")[0];
+    const formattedTime = actualTime.toTimeString().slice(0, 5);
+
+    // Complete errand locally
+    setErrands((prev) =>
+      prev.map((e) =>
+        e.id === errand.id
+          ? {
+              ...e,
+              completed: true,
+              completedDateErrand: formattedDate,
+              completedTimeErrand: formattedTime,
+            }
+          : e
+      )
+    );
+
+    // Complete errand after timeout
+    onCompleteWithUndo({
+      ...errand,
+      completed: true,
+      completedDateErrand: formattedDate,
+      completedTimeErrand: formattedTime,
+    });
+  };
+
+  return (
+    <Animated.View exiting={FadeOut}>
       <Pressable
-        className="w-16 my-1 rounded-xl bg-blue-600 justify-center items-center"
+        className={`flex-row bg-[${themes[theme].buttonMenuBackground}] rounded-xl mx-4 my-1.5 pr-2 pt-3 pb-2 border-hairline ${theme === "light" ? "border-gray-300" : "border-neutral-950"} shadow ${theme === "light" ? "shadow-gray-200" : "shadow-neutral-950"}`}
         onPress={() => {
+          if (
+            openSwipeableRef.current &&
+            openSwipeableRef.current !== swipeableRefs.current[errand.id]
+          ) {
+            openSwipeableRef.current.close();
+            openSwipeableRef.current = null;
+            return;
+          }
           router.push({
             pathname: "Modals/editTaskModal",
-            params: {
-              errand: JSON.stringify(errand),
-            },
+            params: { errand: JSON.stringify(errand) },
           });
         }}
       >
-        <Ionicons name="list-circle" size={24} color="white" />
-      </Pressable>
-      <Pressable
-        className="w-16 my-1 rounded-xl bg-red-600 justify-center items-center"
-        onPress={() =>
-          setErrands((errands) => errands.filter((e) => e.id !== errand.id))
-        }
-      >
-        <Ionicons name="trash-outline" size={24} color="white" />
-      </Pressable>
-    </View>
-  );
-
-  return (
-    <Swipeable renderRightActions={renderRightActions}>
-      <View
-        className={`flex-row bg-[${themes[theme].buttonMenuBackground}] shadow shadow-slate-200 rounded-xl mx-4 my-1 pr-2 pt-3 pb-2 border-hairline ${theme === "light" ? "shadow-slate-200" : "shadow-neutral-950"}`}
-      >
-        <View className="pl-3">
-          <Octicons name="circle" size={18} color="#6E727A" />
-        </View>
-        <View className="flex-1 pl-3">
+        <Octicons
+          onPress={completeErrand}
+          className="px-2"
+          name={"circle"}
+          size={21}
+          color={"#6E727A"}
+        />
+        <View className="flex-1">
           <TextInput
             className={`text-[${themes[theme].taskTitle}]`}
             defaultValue={errand.title}
@@ -143,7 +173,9 @@ function FullErrand({ errand }) {
             {errand.repeat && errand.repeat !== "never" && (
               <View className="flex-row items-center ml-2">
                 <Ionicons name="repeat" size={16} color="#6E727A" />
-                <Text className="text-sm text-[#6E727A] ml-1">
+                <Text
+                  className={`text-sm text-[${themes[theme].taskSecondText}] ml-1`}
+                >
                   {repeatOptionSelected.label}
                 </Text>
               </View>
@@ -151,7 +183,7 @@ function FullErrand({ errand }) {
           </View>
         </View>
         <View className="flex-row justify-end">
-          {new Date(`${errand.dateErrand}T${errand.timeErrand || "24:00"}`) <
+          {/* {new Date(`${errand.dateErrand}T${errand.timeErrand || "24:00"}`) <
             new Date() && (
             <Pressable>
               <Ionicons
@@ -161,7 +193,7 @@ function FullErrand({ errand }) {
                 color="#dc2626"
               />
             </Pressable>
-          )}
+          )} */}
           {errand.marked && (
             <Ionicons
               className="mt-1 ml-1"
@@ -170,15 +202,15 @@ function FullErrand({ errand }) {
               color="#FFC402"
             />
           )}
-          <Ionicons
+          {/* <Ionicons
             className="ml-1"
             name="information-circle-outline"
             size={26}
             color="#6E727A"
-          />
+          /> */}
         </View>
-      </View>
-    </Swipeable>
+      </Pressable>
+    </Animated.View>
   );
 }
 

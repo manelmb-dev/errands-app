@@ -1,6 +1,6 @@
 //
 //  ContentView.swift
-//  errands
+//  Errands
 //
 //  Created by Manel Martinez Bel on 14/4/25.
 //

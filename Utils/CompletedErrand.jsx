@@ -1,14 +1,20 @@
-import { Text, TextInput, View } from "react-native";
-
-import { contactsAtom, themeAtom, userAtom } from "./storeAtoms";
-import { useAtom } from "jotai";
+import { Text, View } from "react-native";
+import Animated, { FadeOut } from "react-native-reanimated";
 
 import Octicons from "react-native-vector-icons/Octicons";
 import Ionicons from "react-native-vector-icons/Ionicons";
 
-import formatCompletedErrandDate from "./formatCompletedErrandDate";
-import formatErrandDate from "./formatErrandDate";
-import { themes } from "./themes";
+import formatCompletedErrandDate from "../constants/formatCompletedErrandDate";
+import formatErrandDate from "../constants/formatCompletedErrandDate";
+import { themes } from "../constants/themes";
+
+import { useAtom } from "jotai";
+import {
+  contactsAtom,
+  errandsAtom,
+  themeAtom,
+  userAtom,
+} from "../constants/storeAtoms";
 
 const repeatOptions = [
   { label: "Nunca", value: "never" },
@@ -22,29 +28,54 @@ const repeatOptions = [
 
 function CompletedErrand({ errand }) {
   const [user] = useAtom(userAtom);
+  const [, setErrands] = useAtom(errandsAtom);
   const [contacts] = useAtom(contactsAtom);
   const [theme] = useAtom(themeAtom);
 
   const assignedContact = contacts.find(
-    (contact) => contact.id.toString() === errand.assignedId.toString()
+    (contact) => contact.id.toString() === errand.assignedId.toString(),
   );
 
   const creatorContact = contacts.find(
-    (contact) => contact.id.toString() === errand.ownerId.toString()
+    (contact) => contact.id.toString() === errand.ownerId.toString(),
   );
 
   const repeatOptionSelected = repeatOptions.find(
-    (option) => option.value === errand.repeat
+    (option) => option.value === errand.repeat,
   );
 
+  const uncompleteErrand = () => {
+    // FIRESTONEEE UPDATE
+    setErrands((prevErrands) =>
+      prevErrands.map((e) => {
+        if (e.id === errand.id) {
+          return {
+            ...e,
+            completed: false,
+            completedDateErrand: "",
+            completedTimeErrand: "",
+          };
+        }
+        return e;
+      }),
+    );
+  };
+
   return (
-    <View key={errand.id}>
-      <View className="flex-row rounded-xl pr-3 pt-3 pb-2">
-        <View className="pl-4">
-          <Octicons name="check-circle-fill" size={18} color="green" />
-        </View>
-        <View className="flex-1 pl-3">
-          <TextInput className="text-[#6E727A]" defaultValue={errand.title} />
+    <Animated.View key={errand.id} exiting={FadeOut}>
+      <View
+        className={`flex-row rounded-xl pr-3 pt-3 pb-2 bg-[${themes[theme].background}]`}
+      >
+        <Octicons
+          className="px-3"
+          onPress={uncompleteErrand}
+          name="check-circle-fill"
+          size={22}
+          color="green"
+        />
+        <View className="flex-1">
+          {/* <TextInput className="text-[#6E727A]" defaultValue={errand.title} /> */}
+          <Text className="text-[#6E727A]">{errand.title}</Text>
           {user.id !== errand.ownerId && user.id === errand.assignedId && (
             <View className="flex-row">
               <View
@@ -125,18 +156,18 @@ function CompletedErrand({ errand }) {
               color="#FFC402"
             />
           )}
-          <Ionicons
+          {/* <Ionicons
             className="ml-1"
             name="information-circle-outline"
             size={26}
             color="#6E727A"
-          />
+          /> */}
         </View>
       </View>
       <View
-        className={`h-[0.5px] w-full bg-[${themes[theme].listsSeparator}] ml-11`}
+        className={`h-[0.5px] w-full bg-[${themes[theme].listsSeparator}] pl-11`}
       />
-    </View>
+    </Animated.View>
   );
 }
 

@@ -1,3 +1,4 @@
+import { SafeAreaView } from "react-native-safe-area-context";
 import {
   Pressable,
   ScrollView,
@@ -5,9 +6,8 @@ import {
   TouchableHighlight,
   View,
 } from "react-native";
-import { useEffect, useState } from "react";
 import { useNavigation, useRouter } from "expo-router";
-import { SafeAreaView } from "react-native-safe-area-context";
+import { useEffect, useState } from "react";
 
 import { useAtom } from "jotai";
 import {
@@ -20,12 +20,11 @@ import {
 import Octicons from "react-native-vector-icons/Octicons";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import Ionicons from "react-native-vector-icons/Ionicons";
-import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
-import { themes } from "../../constants/themes";
-import FullErrand from "../../constants/fullErrand";
-import CompletedErrand from "../../constants/CompletedErrand";
 import SettingsMainModal from "./SettingsMainModal/SettingsMainModal";
+import CompletedErrand from "../../Utils/CompletedErrand";
+import { themes } from "../../constants/themes";
+import FullErrand from "../../Utils/fullErrand";
 
 function Main() {
   const navigation = useNavigation();
@@ -140,7 +139,7 @@ function Main() {
 
       {taskSearchedInput ? (
         filteredErrands.length > 0 ? (
-          <SafeAreaView className="flex-row justify-between mb-2">
+          <View className="flex-row pt-40 mb-2">
             <ScrollView contentContainerStyle={{ height: "100%" }}>
               {lists.map((list) => {
                 const filteredErrandsList = filteredErrands.filter(
@@ -249,7 +248,7 @@ function Main() {
                 </Pressable>
               )}
             </ScrollView>
-          </SafeAreaView>
+          </View>
         ) : (
           <View className="flex-1 mt-4 items-center justify-between">
             <Text
@@ -289,17 +288,17 @@ function Main() {
             <ScrollView>
               <Pressable className="flex-row flex-wrap px-4 pb-0.5 justify-between">
                 <TouchableHighlight
-                  className={`my-1.5 rounded-xl w-[47.5%] h-20 shadow ${theme === "light" ? "shadow-slate-200" : "shadow-neutral-950"}`}
+                  className={`my-1.5 rounded-xl w-[47.5%] h-20 shadow ${theme === "light" ? "shadow-gray-300" : "shadow-neutral-950"}`}
                   onPress={() => router.push("/allTasks")}
                 >
                   <View
                     className={`flex-row justify-between bg-[${themes[theme].buttonMenuBackground}] p-3 rounded-xl w-full h-full`}
                   >
                     <View>
-                      <Octicons
-                        className="pb-3"
-                        name="inbox"
-                        size={27}
+                      <Ionicons
+                        className="pb-2"
+                        name="file-tray-full"
+                        size={31}
                         color="#black"
                       />
                       <Text
@@ -319,7 +318,7 @@ function Main() {
                 </TouchableHighlight>
 
                 <TouchableHighlight
-                  className={`my-1.5 rounded-xl w-[47.5%] h-20 shadow ${theme === "light" ? "shadow-slate-200" : "shadow-neutral-950"}`}
+                  className={`my-1.5 rounded-xl w-[47.5%] h-20 shadow ${theme === "light" ? "shadow-gray-300" : "shadow-neutral-950"}`}
                   onPress={() => router.push("/todayTasks")}
                 >
                   <View
@@ -348,8 +347,8 @@ function Main() {
                   </View>
                 </TouchableHighlight>
 
-                <TouchableHighlight
-                  className={`my-1.5 rounded-xl w-[47.5%] h-20 shadow ${theme === "light" ? "shadow-slate-200" : "shadow-neutral-950"}`}
+                {/* <TouchableHighlight
+                  className={`my-1.5 rounded-xl w-[47.5%] h-20 shadow ${theme === "light" ? "shadow-gray-300" : "shadow-neutral-950"}`}
                   onPress={() => router.push("/ownTasks")}
                 >
                   <View
@@ -376,33 +375,10 @@ function Main() {
                       </Text>
                     </View>
                   </View>
-                </TouchableHighlight>
+                </TouchableHighlight> */}
 
-                <TouchableHighlight
-                  className={`my-1.5 rounded-xl w-[47.5%] h-20 shadow ${theme === "light" ? "shadow-slate-200" : "shadow-neutral-950"}`}
-                  onPress={() => router.push("/calendarTasks")}
-                >
-                  <View
-                    className={`flex-row justify-between bg-[${themes[theme].buttonMenuBackground}] p-3 rounded-xl w-full h-full`}
-                  >
-                    <View>
-                      <MaterialIcons
-                        className="pb-2"
-                        name="calendar-month"
-                        size={30}
-                        color="#F6C467"
-                      />
-                      <Text
-                        className={`text-base font-bold text-[${themes[theme].listTitle}]`}
-                      >
-                        Calendario
-                      </Text>
-                    </View>
-                  </View>
-                </TouchableHighlight>
-
-                <TouchableHighlight
-                  className={`my-1.5 rounded-xl w-[47.5%] h-20 shadow ${theme === "light" ? "shadow-slate-200" : "shadow-neutral-950"}`}
+                {/* <TouchableHighlight
+                  className={`my-1.5 rounded-xl w-[47.5%] h-20 shadow ${theme === "light" ? "shadow-gray-300" : "shadow-neutral-950"}`}
                   onPress={() => router.push("/receivedTasks")}
                 >
                   <View
@@ -432,7 +408,7 @@ function Main() {
                 </TouchableHighlight>
 
                 <TouchableHighlight
-                  className={`my-1.5 rounded-xl w-[47.5%] h-20 shadow ${theme === "light" ? "shadow-slate-200" : "shadow-neutral-950"}`}
+                  className={`my-1.5 rounded-xl w-[47.5%] h-20 shadow ${theme === "light" ? "shadow-gray-300" : "shadow-neutral-950"}`}
                   onPress={() => router.push("/submittedTasks")}
                 >
                   <View
@@ -459,10 +435,10 @@ function Main() {
                       </Text>
                     </View>
                   </View>
-                </TouchableHighlight>
+                </TouchableHighlight> */}
 
                 <TouchableHighlight
-                  className={`my-1.5 rounded-xl w-[47.5%] h-20 shadow ${theme === "light" ? "shadow-slate-200" : "shadow-neutral-950"}`}
+                  className={`my-1.5 rounded-xl w-[47.5%] h-20 shadow ${theme === "light" ? "shadow-gray-300" : "shadow-neutral-950"}`}
                   onPress={() => router.push("/markedTasks")}
                 >
                   <View
@@ -492,7 +468,30 @@ function Main() {
                 </TouchableHighlight>
 
                 <TouchableHighlight
-                  className={`my-1.5 rounded-xl w-[47.5%] h-20 shadow ${theme === "light" ? "shadow-slate-200" : "shadow-neutral-950"}`}
+                  className={`my-1.5 rounded-xl w-[47.5%] h-20 shadow ${theme === "light" ? "shadow-gray-300" : "shadow-neutral-950"}`}
+                  onPress={() => router.push("/calendarTasks")}
+                >
+                  <View
+                    className={`flex-row justify-between bg-[${themes[theme].buttonMenuBackground}] p-3 rounded-xl w-full h-full`}
+                  >
+                    <View>
+                      <MaterialIcons
+                        className="pb-2"
+                        name="calendar-month"
+                        size={30}
+                        color="#F6C467"
+                      />
+                      <Text
+                        className={`text-base font-bold text-[${themes[theme].listTitle}]`}
+                      >
+                        Calendario
+                      </Text>
+                    </View>
+                  </View>
+                </TouchableHighlight>
+
+                <TouchableHighlight
+                  className={`my-1.5 rounded-xl w-[47.5%] h-20 shadow ${theme === "light" ? "shadow-gray-300" : "shadow-neutral-950"}`}
                   onPress={() => router.push("/completedTasks")}
                 >
                   <View
@@ -540,7 +539,7 @@ function Main() {
                   </Pressable>
                 </View>
                 <View
-                  className={`w-full bg-[${themes[theme].buttonMenuBackground}] rounded-t-xl rounded-b-xl shadow ${theme === "light" ? "shadow-slate-200" : "shadow-neutral-950"}`}
+                  className={`w-full bg-[${themes[theme].buttonMenuBackground}] rounded-t-xl rounded-b-xl shadow ${theme === "light" ? "shadow-gray-300" : "shadow-neutral-950"}`}
                 >
                   {lists.map((list, index) => (
                     <View

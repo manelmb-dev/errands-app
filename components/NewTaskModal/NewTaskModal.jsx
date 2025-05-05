@@ -17,6 +17,7 @@ import { useAtom } from "jotai";
 import {
   errandsAtom,
   listAssignedAtom,
+  listsAtom,
   themeAtom,
   userAssignedAtom,
   userAtom,
@@ -47,6 +48,7 @@ const NewTaskModal = () => {
 
   const [theme] = useAtom(themeAtom);
   const [, setErrands] = useAtom(errandsAtom);
+  const [lists] = useAtom(listsAtom);
 
   const [dateSwitchEnabled, SetDateSwitchEnabled] = useState(false);
   const [hourSwitchEnabled, SetHourSwitchEnabled] = useState(false);
@@ -76,7 +78,7 @@ const NewTaskModal = () => {
       timeErrand: "",
       completed: false,
       dateNotice: "",
-      hourNotice: "",
+      timeNotice: "",
       repeat: "never",
       marked: false,
       location: "",
@@ -89,6 +91,18 @@ const NewTaskModal = () => {
   });
 
   const watchedTitle = watch("title");
+
+  useEffect(() => {
+    if (!listAssigned) {
+      const noList = {
+        title: "Sin lista",
+        id: "",
+        icon: "list",
+        color: "slate",
+      };
+      setListAssigned(noList);
+    }
+  }, [listAssigned, setListAssigned]);
 
   useEffect(() => {
     navigation.setOptions({
@@ -118,14 +132,7 @@ const NewTaskModal = () => {
         </Pressable>
       ),
     });
-  }, [
-    navigation,
-    theme,
-    handleCancel,
-    handleAdd,
-    watchedTitle,
-    handleCancelAlert,
-  ]);
+  }, [navigation, theme, handleAdd, watchedTitle, handleCancelAlert]);
 
   useEffect(() => {
     setValue("assignedId", userAssigned.id);
@@ -137,6 +144,8 @@ const NewTaskModal = () => {
     if (dateSwitchEnabled) {
       setValue("dateErrand", "");
       setValue("timeErrand", "");
+      setValue("dateNotice", "");
+      setValue("timeNotice", "");
     } else {
       setIsDatePickerVisible(true);
     }
@@ -178,7 +187,7 @@ const NewTaskModal = () => {
   const toggleNoticeSwitch = () => {
     if (noticeSwitchEnabled) {
       setValue("dateNotice", "");
-      setValue("hourNotice", "");
+      setValue("timeNotice", "");
       SetNoticeSwitchEnabled(false);
     } else {
       setIsNoticePickerVisible(true);
@@ -193,7 +202,7 @@ const NewTaskModal = () => {
       hour: "2-digit",
       minute: "2-digit",
     });
-    setValue("hourNotice", hourString);
+    setValue("timeNotice", hourString);
     SetNoticeSwitchEnabled(true);
     setIsNoticePickerVisible(false);
   };
@@ -225,7 +234,7 @@ const NewTaskModal = () => {
   // Function to handle cancel alert
   const handleCancelAlert = useCallback(() => {
     if (watch("title").length > 0) {
-      Alert.alert("Descartar recordatorio", "", [
+      Alert.alert("Se descartará el recordatorio", "", [
         { text: "Descartar", onPress: handleCancel, style: "destructive" },
         {
           text: "Cancelar",
@@ -237,11 +246,11 @@ const NewTaskModal = () => {
   }, [watch, handleCancel]);
 
   // Function to handle add new errand
-  const handleAdd = handleSubmit((data) => {
-    console.log(data); // Set to FIRESTORE
+  const handleAdd = handleSubmit(async (data) => {
+    console.log(data); // Set to FIRESTOREEE
 
     // Add errand to DB
-    const newErrandWithId = setErrandToFS(data);
+    const newErrandWithId = await setErrandToFS(data);
     setErrands((prevErrands) => [...prevErrands, newErrandWithId]);
 
     setUserAssigned(user);
@@ -252,7 +261,7 @@ const NewTaskModal = () => {
   return (
     <View className={`p-6 bg-[${themes[theme].background}] h-full`}>
       <View
-        className={`bg-[${themes[theme].buttonMenuBackground}] mb-4 rounded-xl shadow ${theme === "light" ? "shadow-slate-200" : "shadow-neutral-950"} flex`}
+        className={`bg-[${themes[theme].buttonMenuBackground}] mb-4 rounded-xl shadow ${theme === "light" ? "shadow-gray-300" : "shadow-neutral-950"} flex`}
       >
         <Controller
           control={control}
@@ -290,7 +299,7 @@ const NewTaskModal = () => {
       </View>
 
       <View
-        className={`bg-[${themes[theme].buttonMenuBackground}] mb-4 rounded-xl shadow ${theme === "light" ? "shadow-slate-200" : "shadow-neutral-950"}`}
+        className={`bg-[${themes[theme].buttonMenuBackground}] mb-4 rounded-xl shadow ${theme === "light" ? "shadow-gray-300" : "shadow-neutral-950"}`}
       >
         {/* Assign errand */}
         <TouchableHighlight
@@ -322,7 +331,7 @@ const NewTaskModal = () => {
             >
               <FontAwesome6
                 name="arrows-up-down"
-                size={13}
+                size={12}
                 color={themes["light"].text}
               />
               <Text className={`text-lg text-[${themes[theme].text}]`}>
@@ -359,11 +368,11 @@ const NewTaskModal = () => {
               </View>
             </View>
             <View
-              className={`flex-row items-center ${theme === "light" ? "bg-slate-300" : "bg-slate-600"} px-3 py-1 rounded-2xl gap-1`}
+              className={`flex-row items-center ${listAssigned.id === "" || listAssigned === false ? `bg-[${themes[theme].buttonMenuBackground}]` : `${theme === "light" ? "bg-slate-300" : "bg-slate-600"}`} px-3 py-1 rounded-2xl gap-1`}
             >
               <FontAwesome6
                 name="arrows-up-down"
-                size={13}
+                size={12}
                 color={themes["light"].text}
               />
               <Text className={`text-lg text-[${themes[theme].text}]`}>
@@ -375,7 +384,7 @@ const NewTaskModal = () => {
       </View>
 
       <View
-        className={`bg-[${themes[theme].buttonMenuBackground}] mb-4 rounded-xl shadow ${theme === "light" ? "shadow-slate-200" : "shadow-neutral-950"}`}
+        className={`bg-[${themes[theme].buttonMenuBackground}] mb-4 rounded-xl shadow ${theme === "light" ? "shadow-gray-300" : "shadow-neutral-950"}`}
       >
         {/* Date */}
         <TouchableHighlight
@@ -468,7 +477,7 @@ const NewTaskModal = () => {
                     <Text
                       className={`text-[${themes[theme].blueHeadText}] text-base`}
                     >
-                      {formatDay(watch("dateNotice"))}, {watch("hourNotice")}
+                      {formatDay(watch("dateNotice"))}, {watch("timeNotice")}
                     </Text>
                   )}
                 </View>
@@ -504,11 +513,11 @@ const NewTaskModal = () => {
                 </View>
               </View>
               <View
-                className={`flex-row items-center ${theme === "light" ? "bg-violet-300" : "bg-violet-500"} px-3 py-1 rounded-2xl gap-1`}
+                className={`flex-row items-center ${watch("repeat") === "never" ? `bg-[${themes[theme].buttonMenuBackground}]` : `${theme === "light" ? "bg-violet-300" : "bg-violet-500"}`}  px-3 py-1 rounded-2xl gap-1`}
               >
                 <FontAwesome6
                   name="arrows-up-down"
-                  size={13}
+                  size={12}
                   color={themes["light"].text}
                 />
                 <Text className={`text-lg text-[${themes[theme].text}]`}>
@@ -525,7 +534,7 @@ const NewTaskModal = () => {
       </View>
 
       <View
-        className={`bg-[${themes[theme].buttonMenuBackground}] mb-4 rounded-xl shadow ${theme === "light" ? "shadow-slate-200" : "shadow-neutral-950"}`}
+        className={`bg-[${themes[theme].buttonMenuBackground}] mb-4 rounded-xl shadow ${theme === "light" ? "shadow-gray-300" : "shadow-neutral-950"}`}
       >
         {/* Marked */}
         <TouchableHighlight
@@ -577,11 +586,11 @@ const NewTaskModal = () => {
               </View>
             </View>
             <View
-              className={`flex-row items-center ${theme === "light" ? "bg-rose-300" : "bg-rose-500"} px-3 py-1 rounded-2xl gap-1`}
+              className={`flex-row items-center ${watch("priority") === "none" ? `bg-[${themes[theme].buttonMenuBackground}]` : `${theme === "light" ? "bg-rose-300" : "bg-rose-500"}`} px-3 py-1 rounded-2xl gap-1`}
             >
               <FontAwesome6
                 name="arrows-up-down"
-                size={13}
+                size={12}
                 color={themes["light"].text}
               />
               <Text className={`text-lg text-[${themes[theme].text}]`}>

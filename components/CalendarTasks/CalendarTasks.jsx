@@ -1,15 +1,19 @@
-import { useEffect, useState } from "react";
-import { View, Text, TouchableOpacity, FlatList } from "react-native";
-import { CalendarList, LocaleConfig } from "react-native-calendars";
+import Animated, { LinearTransition } from "react-native-reanimated";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
+import { CalendarList, LocaleConfig } from "react-native-calendars";
+import { View, Text, TouchableOpacity } from "react-native";
+import { useEffect, useRef, useState } from "react";
+import { useNavigation } from "expo-router";
 
 import { errandsAtom, listsAtom, themeAtom } from "../../constants/storeAtoms";
 import { useAtom } from "jotai";
+
+import UndoCompleteErrandButton from "../../Utils/UndoCompleteErrandButton";
+import SwipeableFullErrand from "../../Utils/SwipeableFullErrand";
+import { useErrandActions } from "../../hooks/useErrandActions";
 import { themes } from "../../constants/themes";
-import { useNavigation } from "expo-router";
 
 import Ionicons from "react-native-vector-icons/Ionicons";
-import FullErrand from "../../constants/fullErrand";
 
 LocaleConfig.locales["es"] = {
   monthNames: [
@@ -55,15 +59,23 @@ LocaleConfig.locales["es"] = {
 LocaleConfig.defaultLocale = "es";
 
 function CalendarTasks() {
-  const navigation = useNavigation();
   const today = new Date().toISOString().split("T")[0];
+  const navigation = useNavigation();
+  const openSwipeableRef = useRef(null);
+  const swipeableRefs = useRef({});
 
   const [theme] = useAtom(themeAtom);
   const [errands, setErrands] = useAtom(errandsAtom);
-  const [lists] = useAtom(listsAtom);
+
   const [selectedDate, setSelectedDate] = useState(today);
   const [currentMonth, setCurrentMonth] = useState(new Date());
   const [isDatePickerVisible, setIsDatePickerVisible] = useState(false);
+  const [possibleUndoErrand, setPossibleUndoErrand] = useState(null);
+
+  const { onCompleteWithUndo, undoCompleteErrand } = useErrandActions({
+    setErrands,
+    setPossibleUndoErrand,
+  });
 
   useEffect(() => {
     navigation.setOptions({
@@ -147,7 +159,17 @@ function CalendarTasks() {
   }, [selectedDate]);
 
   return (
-    <View className={`h-full bg-[${themes[theme].background}]`}>
+    <View
+      className={`h-full bg-[${themes[theme].background}]`}
+      onStartShouldSetResponder={() => {
+        if (openSwipeableRef.current) {
+          openSwipeableRef.current.close();
+          openSwipeableRef.current = null;
+          return true;
+        }
+        return false;
+      }}
+    >
       <CalendarList
         current={currentMonth.toISOString().split("T")[0]}
         renderHeader={customCalendarHeader}
@@ -221,7 +243,8 @@ function CalendarTasks() {
           <FullErrand key={errand.id} errand={errand} />
         ))} */}
 
-      <FlatList
+      <Animated.FlatList
+        itemLayoutAnimation={LinearTransition}
         data={
           errands
             .filter((errand) => errand.dateErrand === selectedDate)
@@ -236,9 +259,33 @@ function CalendarTasks() {
               return dateA - dateB;
             }) || []
         }
-        keyExtractor={(item) => item.id.toString()}
-        renderItem={({ item }) => <FullErrand key={item.id} errand={item} />}
+        keyExtractor={(item) => item.id}
+        renderItem={({ item }) => (
+          <SwipeableFullErrand
+            errand={item}
+            setErrands={setErrands}
+            openSwipeableRef={openSwipeableRef}
+            swipeableRefs={swipeableRefs}
+            onCompleteWithUndo={onCompleteWithUndo}
+          />
+        )}
+        ListEmptyComponent={
+          <View className="items-center mt-10">
+            <Text className={`text-[${themes[theme].taskSecondText}] text-lg`}>
+              No hay recordatorios para este día
+            </Text>
+          </View>
+        }
       />
+
+      {possibleUndoErrand && (
+        <UndoCompleteErrandButton
+          possibleUndoErrand={possibleUndoErrand}
+          undoCompleteErrand={undoCompleteErrand}
+          openSwipeableRef={openSwipeableRef}
+          setPossibleUndoErrand={setPossibleUndoErrand}
+        />
+      )}
 
       <DateTimePickerModal
         isVisible={isDatePickerVisible}

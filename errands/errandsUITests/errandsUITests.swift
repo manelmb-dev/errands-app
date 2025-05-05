@@ -1,13 +1,13 @@
 //
-//  errandsUITests.swift
-//  errandsUITests
+//  ErrandsUITests.swift
+//  ErrandsUITests
 //
 //  Created by Manel Martinez Bel on 14/4/25.
 //
 
 import XCTest
 
-final class errandsUITests: XCTestCase {
+final class ErrandsUITests: XCTestCase {
 
     override func setUpWithError() throws {
         // Put setup code here. This method is called before the invocation of each test method in the class.

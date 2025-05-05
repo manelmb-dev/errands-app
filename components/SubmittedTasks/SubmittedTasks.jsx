@@ -5,7 +5,6 @@ import { useNavigation } from "expo-router";
 import Octicons from "react-native-vector-icons/Octicons";
 import Ionicons from "react-native-vector-icons/Ionicons";
 
-import { themes } from "../../constants/themes";
 import { useAtom } from "jotai";
 import {
   errandsAtom,
@@ -13,8 +12,10 @@ import {
   themeAtom,
   userAtom,
 } from "../../constants/storeAtoms";
-import FullErrand from "../../constants/fullErrand";
-import CompletedErrand from "../../constants/CompletedErrand";
+
+import CompletedErrand from "../../Utils/CompletedErrand";
+import { themes } from "../../constants/themes";
+import FullErrand from "../../Utils/fullErrand";
 
 function SubmittedTasks() {
   const navigation = useNavigation();
