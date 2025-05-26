@@ -81,6 +81,7 @@ function ListTasks() {
         renderItem={({ item }) => {
           return (
             <SwipeableFullErrand
+              key={item.id}
               errand={item}
               setErrands={setErrands}
               openSwipeableRef={openSwipeableRef}

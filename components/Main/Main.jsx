@@ -1,3 +1,4 @@
+import Swipeable from "react-native-gesture-handler/ReanimatedSwipeable";
 import { SafeAreaView } from "react-native-safe-area-context";
 import {
   Pressable,
@@ -6,8 +7,9 @@ import {
   TouchableHighlight,
   View,
 } from "react-native";
+import Animated, { LinearTransition } from "react-native-reanimated";
 import { useNavigation, useRouter } from "expo-router";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 
 import { useAtom } from "jotai";
 import {
@@ -22,9 +24,12 @@ import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import Ionicons from "react-native-vector-icons/Ionicons";
 
 import SettingsMainModal from "./SettingsMainModal/SettingsMainModal";
+import SwipeableFullErrand from "../../Utils/SwipeableFullErrand";
+import { useErrandActions } from "../../hooks/useErrandActions";
 import CompletedErrand from "../../Utils/CompletedErrand";
 import { themes } from "../../constants/themes";
-import FullErrand from "../../Utils/fullErrand";
+import UndoCompleteErrandButton from "../../Utils/UndoCompleteErrandButton";
+import RenderRightActionsCompletedErrand from "../../Utils/RenderRightActionsCompletedErrand";
 
 function Main() {
   const navigation = useNavigation();
@@ -32,8 +37,18 @@ function Main() {
 
   const [user] = useAtom(userAtom);
   const [theme, setTheme] = useAtom(themeAtom);
-  const [errands] = useAtom(errandsAtom);
+  const [errands, setErrands] = useAtom(errandsAtom);
   const [lists] = useAtom(listsAtom);
+
+  const openSwipeableRef = useRef(null);
+  const swipeableRefs = useRef({});
+
+  const [possibleUndoErrand, setPossibleUndoErrand] = useState(null);
+
+  const { onCompleteWithUndo, undoCompleteErrand } = useErrandActions({
+    setErrands,
+    setPossibleUndoErrand,
+  });
 
   const [errandsNotCompleted, setErrandsNotCompleted] = useState(0);
   const [errandsToday, setErrandsToday] = useState(0);
@@ -43,7 +58,7 @@ function Main() {
   const [errandsMarked, setErrandsMarked] = useState(0);
 
   const [modalSettingsVisible, setModalSettingsVisible] = useState(false);
-  const [taskSearchedInput, setTaskSearchedInput] = useState("");
+  const [taskSearchInput, settaskSearchInput] = useState("");
   const [filteredErrands, setFilteredErrands] = useState(errands);
 
   useEffect(() => {
@@ -55,9 +70,9 @@ function Main() {
       headerShadowVisible: false,
       headerSearchBarOptions: {
         placeholder: "Buscar",
-        obscureBackground: taskSearchedInput ? false : true,
+        obscureBackground: taskSearchInput.length > 0 ? false : true,
         onChangeText: (event) => {
-          setTaskSearchedInput(event.nativeEvent.text);
+          settaskSearchInput(event.nativeEvent.text);
         },
       },
       headerRight: () => (
@@ -69,19 +84,47 @@ function Main() {
         />
       ),
     });
-  }, [navigation, theme, taskSearchedInput]);
+  }, [navigation, theme, taskSearchInput]);
 
   const toggleTheme = () => {
     setTheme((prev) => (prev === "light" ? "dark" : "light"));
   };
 
+  {
+    /* Filter errands*/
+  }
   useEffect(() => {
     setFilteredErrands(
       errands.filter((errand) =>
-        errand.title.toLowerCase().includes(taskSearchedInput.toLowerCase())
+        errand.title.toLowerCase().includes(taskSearchInput.toLowerCase())
       )
     );
-  }, [taskSearchedInput, errands]);
+  }, [taskSearchInput, errands]);
+
+  {
+    /* Prepare errands for FlatList */
+  }
+  const flatListData = useMemo(() => {
+    const items = lists
+      .map((list) => ({
+        ...list,
+        errands: filteredErrands.filter((errand) => errand.listId === list.id),
+      }))
+      .filter((list) => list.errands.length > 0);
+
+    const unlistedErrands = filteredErrands.filter((e) => e.listId === "");
+    if (unlistedErrands.length > 0) {
+      items.push({
+        id: "",
+        title: "Sin lista",
+        icon: "list",
+        color: "gray",
+        errands: unlistedErrands,
+      });
+    }
+
+    return items;
+  }, [filteredErrands, lists]);
 
   useEffect(() => {
     const notCompleted = errands.filter((errand) => !errand.completed);
@@ -129,7 +172,9 @@ function Main() {
   }, [errands, user]);
 
   return (
-    <View className={`flex-1 bg-[${themes[theme].background}] items-center`}>
+    <View
+      className={`flex-1 pt-40 bg-[${themes[theme].background}] items-center`}
+    >
       {/* Modal */}
       <SettingsMainModal
         modalSettingsVisible={modalSettingsVisible}
@@ -137,154 +182,108 @@ function Main() {
         toggleTheme={toggleTheme}
       />
 
-      {taskSearchedInput ? (
-        filteredErrands.length > 0 ? (
-          <View className="flex-row pt-40 mb-2">
-            <ScrollView contentContainerStyle={{ height: "100%" }}>
-              {lists.map((list) => {
-                const filteredErrandsList = filteredErrands.filter(
-                  (errand) => errand.listId === list.id
-                );
+      {taskSearchInput ? (
+        <View
+          className={`h-full w-full bg-[${themes[theme].background}]`}
+          onStartShouldSetResponder={() => {
+            if (openSwipeableRef.current) {
+              openSwipeableRef.current.close();
+              openSwipeableRef.current = null;
+              return true;
+            }
+            return false;
+          }}
+        >
+          <Animated.FlatList
+            itemLayoutAnimation={LinearTransition}
+            data={flatListData}
+            contentContainerStyle={{ paddingBottom: 30 }}
+            keyExtractor={(item) => item.id || "no-list"}
+            renderItem={({ item: list }) => (
+              <View key={list.id}>
+                {/* Header */}
+                <View className="flex-row justify-center items-center gap-1 mt-3 mb-2">
+                  <Ionicons name={list.icon} size={21} color={list.color} />
+                  <Text
+                    className={`text-[${themes[theme].listTitle}] text-2xl font-bold`}
+                  >
+                    {list.title}
+                  </Text>
+                </View>
 
-                if (filteredErrandsList.length === 0) {
-                  return null;
-                }
+                {/* Uncompleted */}
+                {list.errands
+                  .filter((errand) => !errand.completed)
+                  .sort((a, b) => {
+                    const dateA = new Date(
+                      `${a.dateErrand}T${a.timeErrand || "20:00"}`
+                    );
+                    const dateB = new Date(
+                      `${b.dateErrand}T${b.timeErrand || "20:00"}`
+                    );
+                    return dateA - dateB;
+                  })
+                  .map((errand) => (
+                    <SwipeableFullErrand
+                      key={errand.id}
+                      errand={errand}
+                      setErrands={setErrands}
+                      openSwipeableRef={openSwipeableRef}
+                      swipeableRefs={swipeableRefs}
+                      onCompleteWithUndo={onCompleteWithUndo}
+                    />
+                  ))}
 
-                return (
-                  <Pressable>
-                    <View key={list.id}>
-                      {/* Header list */}
-                      <View className="flex-row justify-center items-center gap-1 mt-3 mb-2">
-                        <Ionicons
-                          name={list.icon}
-                          size={21}
-                          color={list.color}
+                {/* Completed */}
+                {list.errands
+                  .filter((errand) => errand.completed)
+                  .sort((a, b) => {
+                    const dateA = new Date(
+                      `${a.dateErrand}T${a.timeErrand || "20:00"}`
+                    );
+                    const dateB = new Date(
+                      `${b.dateErrand}T${b.timeErrand || "20:00"}`
+                    );
+                    return dateB - dateA;
+                  })
+                  .map((errand) => (
+                    <Swipeable
+                      ref={(ref) => (swipeableRefs.current[errand.id] = ref)}
+                      renderRightActions={() => (
+                        <RenderRightActionsCompletedErrand
+                          errand={errand}
+                          setErrands={setErrands}
                         />
-                        <Text
-                          className={`text-[${themes[theme].listTitle}] text-2xl font-bold`}
-                        >
-                          {list.title}
-                        </Text>
-                      </View>
-                      {/* List tasks */}
-                      {filteredErrandsList
-                        .filter((errand) => !errand.completed)
-                        .filter((errand) => errand.listId === list.id)
-                        .sort((a, b) => {
-                          const dateA = new Date(
-                            `${a.dateErrand}T${a.timeErrand || "20:00"}`
-                          );
-                          const dateB = new Date(
-                            `${b.dateErrand}T${b.timeErrand || "20:00"}`
-                          );
-                          return dateA - dateB;
-                        })
-                        .map((errand, index) => (
-                          <FullErrand key={errand.id} errand={errand} />
-                        ))}
-                    </View>
-                    {/* Completed Tasks */}
-                    {filteredErrandsList
-                      .filter((errand) => errand.completed)
-                      .filter((errand) => errand.listId === list.id)
-                      .sort((a, b) => {
-                        const dateA = new Date(
-                          `${a.dateErrand}T${a.timeErrand || "20:00"}`
-                        );
-                        const dateB = new Date(
-                          `${b.dateErrand}T${b.timeErrand || "20:00"}`
-                        );
-                        return dateB - dateA;
-                      })
-                      .map((errand, index) => (
-                        <CompletedErrand key={errand.id} errand={errand} />
-                      ))}
-                  </Pressable>
-                );
-              })}
-              {filteredErrands
-                .filter((errand) => errand.listId === "")
-                .filter((errand) => !errand.completed) > 0 && (
-                <Pressable>
-                  <Pressable className="flex-row justify-center items-center gap-1 mt-3 mb-2">
-                    <Ionicons name="list" size={21} color="slate" />
-                    <Text
-                      className={`text-[${themes[theme].listTitle}] text-2xl font-bold`}
+                      )}
+                      onSwipeableWillOpen={() => {
+                        if (
+                          openSwipeableRef.current &&
+                          openSwipeableRef.current !==
+                            swipeableRefs.current[errand.id]
+                        ) {
+                          openSwipeableRef.current.close();
+                        }
+                        openSwipeableRef.current =
+                          swipeableRefs.current[errand.id];
+                      }}
                     >
-                      "Sin lista"
-                    </Text>
-                  </Pressable>
-                  {filteredErrands
-                    .filter((errand) => errand.listId === "")
-                    .filter((errand) => !errand.completed)
-                    .sort((a, b) => {
-                      const dateA = new Date(
-                        `${a.dateErrand}T${a.timeErrand || "20:00"}`
-                      );
-                      const dateB = new Date(
-                        `${b.dateErrand}T${b.timeErrand || "20:00"}`
-                      );
-                      return dateA - dateB;
-                    })
-                    .map((errand, index) => (
-                      <FullErrand key={errand.id} errand={errand} />
-                    ))}
-                  {/* Completed Tasks */}
-                  {filteredErrands
-                    .filter((errand) => errand.completed)
-                    .filter((errand) => errand.listId === "")
-                    .sort((a, b) => {
-                      const dateA = new Date(
-                        `${a.dateErrand}T${a.timeErrand || "20:00"}`
-                      );
-                      const dateB = new Date(
-                        `${b.dateErrand}T${b.timeErrand || "20:00"}`
-                      );
-                      return dateB - dateA;
-                    })
-                    .map((errand, index) => (
-                      <CompletedErrand key={errand.id} errand={errand} />
-                    ))}
-                </Pressable>
-              )}
-            </ScrollView>
-          </View>
-        ) : (
-          <View className="flex-1 mt-4 items-center justify-between">
-            <Text
-              className={`text-[${themes[theme].listTitle}] text-lg font-bold `}
-            >
-              No existen recordatorios con este título
-            </Text>
-            <TouchableHighlight
-              className="rounded-t-2xl"
-              onPress={() =>
-                router.push({
-                  pathname: "/Modals/newTaskModal",
-                })
-              }
-            >
-              <View
-                className={`flex-row pt-4 pb-5 px-6 gap-1 bg-[${themes[theme].background}] rounded-t-2xl`}
-              >
-                <Ionicons
-                  className="pb-2"
-                  name="add-circle"
-                  size={24}
-                  color={themes[theme].blueHeadText}
-                />
-                <Text
-                  className={`text-lg text-[${themes[theme].blueHeadText}] text font-bold`}
-                >
-                  Nuevo recordatorio
-                </Text>
+                      <CompletedErrand errand={errand} />
+                    </Swipeable>
+                  ))}
               </View>
-            </TouchableHighlight>
-          </View>
-        )
+            )}
+            ListEmptyComponent={
+              <Text
+                className={`text-[${themes[theme].listTitle}] text-lg font-bold text-center mt-40`}
+              >
+                No existen recordatorios con este título
+              </Text>
+            }
+          />
+        </View>
       ) : (
         <>
-          <View className="flex-1 pt-40">
+          <View className="flex-1">
             <ScrollView>
               <Pressable className="flex-row flex-wrap px-4 pb-0.5 justify-between">
                 <TouchableHighlight
@@ -690,6 +689,15 @@ function Main() {
             </View>
           </TouchableHighlight>
         </>
+      )}
+
+      {possibleUndoErrand && (
+        <UndoCompleteErrandButton
+          possibleUndoErrand={possibleUndoErrand}
+          undoCompleteErrand={undoCompleteErrand}
+          openSwipeableRef={openSwipeableRef}
+          setPossibleUndoErrand={setPossibleUndoErrand}
+        />
       )}
     </View>
   );

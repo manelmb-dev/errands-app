@@ -1,33 +1,43 @@
-import { useEffect, useMemo, useRef, useState } from "react";
-import { View, Text, Pressable, ScrollView } from "react-native";
 import Animated, { LinearTransition } from "react-native-reanimated";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { View, Text, Pressable } from "react-native";
 import { useNavigation } from "expo-router";
 
 // import Octicons from "react-native-vector-icons/Octicons";
 import Ionicons from "react-native-vector-icons/Ionicons";
 
+import { useAtom } from "jotai";
 import {
   errandsAtom,
   listsAtom,
   themeAtom,
   userAtom,
 } from "../../constants/storeAtoms";
-import { useAtom } from "jotai";
 
-import FullErrand from "../../Utils/fullErrand";
+import UndoCompleteErrandButton from "../../Utils/UndoCompleteErrandButton";
+import SwipeableFullErrand from "../../Utils/SwipeableFullErrand";
+import { useErrandActions } from "../../hooks/useErrandActions";
 import { themes } from "../../constants/themes";
 
 function AllTasks() {
   const navigation = useNavigation();
 
   const [user] = useAtom(userAtom);
-  const [errands] = useAtom(errandsAtom);
+  const [errands, setErrands] = useAtom(errandsAtom);
   const [lists] = useAtom(listsAtom);
   const [theme] = useAtom(themeAtom);
 
-  const openSwipeableRef = useRef(null);
-
   const [selectedTab, setSelectedTab] = useState("all");
+
+  const openSwipeableRef = useRef(null);
+  const swipeableRefs = useRef({});
+
+  const [possibleUndoErrand, setPossibleUndoErrand] = useState(null);
+
+  const { onCompleteWithUndo, undoCompleteErrand } = useErrandActions({
+    setErrands,
+    setPossibleUndoErrand,
+  });
 
   const tabs = useMemo(() => {
     return [
@@ -77,9 +87,10 @@ function AllTasks() {
             !errand.completed
         ),
       },
-      // { label: "Marcados", value: "marked" },
     ];
   }, [errands, user]);
+
+  const selectedTabObj = tabs.find((tab) => tab.value === selectedTab);
 
   useEffect(() => {
     navigation.setOptions({
@@ -98,22 +109,48 @@ function AllTasks() {
     });
   }, [navigation, theme, selectedTab, tabs]);
 
-  // const headerIndices = [];
+  const flatListData = useMemo(() => {
+    const items = lists
+      .map((list) => ({
+        ...list,
+        errands: selectedTabObj.errandsList
+          .filter((errand) => errand.listId === list.id)
+          .sort((a, b) => {
+            const dateA = new Date(
+              `${a.dateErrand}T${a.timeErrand || "20:00"}`
+            );
+            const dateB = new Date(
+              `${b.dateErrand}T${b.timeErrand || "20:00"}`
+            );
+            return dateA - dateB;
+          }),
+      }))
+      .filter((list) => list.errands.length > 0);
 
-  // let currentIndex = 0;
-  // lists.forEach((list) => {
-  //   headerIndices.push(currentIndex); // Agrega el índice del header
-  //   currentIndex += 1; // Cuenta el header
-  //   currentIndex += errands.filter(
-  //     (errand) => errand.listId === list.id,
-  //   ).length; // Cuenta las tareas de la lista
-  // });
+    const unlistedErrands = selectedTabObj.errandsList
+      .filter((e) => e.listId === "")
+      .sort((a, b) => {
+        const dateA = new Date(`${a.dateErrand}T${a.timeErrand || "20:00"}`);
+        const dateB = new Date(`${b.dateErrand}T${b.timeErrand || "20:00"}`);
+        return dateA - dateB;
+      });
 
-  const selectedTabObj = tabs.find((tab) => tab.value === selectedTab);
+    if (unlistedErrands.length > 0) {
+      items.push({
+        id: "",
+        title: "Sin lista",
+        icon: "list",
+        color: "gray",
+        errands: unlistedErrands,
+      });
+    }
+
+    return items;
+  }, [selectedTabObj, lists]);
 
   return (
     <View
-      className={`h-full bg-[${themes[theme].background}]`}
+      className={`h-full w-full bg-[${themes[theme].background}]`}
       onStartShouldSetResponder={() => {
         if (openSwipeableRef.current) {
           openSwipeableRef.current.close();
@@ -146,58 +183,26 @@ function AllTasks() {
           </Pressable>
         ))}
       </View>
-      <ScrollView contentContainerStyle={{ paddingBottom: 30 }}>
-        {lists.map(
-          (list) =>
-            selectedTabObj.errandsList.filter(
-              (errand) => errand.listId === list.id
-            ).length > 0 && (
-              <Pressable key={list.id} className="mb-4">
-                {/* Header list */}
-                <View className="flex-row justify-center items-center gap-1 mb-2">
-                  <Ionicons name={list.icon} size={19} color={list.color} />
-                  <Text
-                    className={`text-[${themes[theme].listTitle}] text-2xl font-bold`}
-                  >
-                    {list.title}
-                  </Text>
-                </View>
-                {/* List reminders */}
-                {selectedTabObj.errandsList
-                  .filter((errand) => errand.listId === list.id)
-                  .sort((a, b) => {
-                    const dateA = new Date(
-                      `${a.dateErrand}T${a.timeErrand || "20:00"}`
-                    );
-                    const dateB = new Date(
-                      `${b.dateErrand}T${b.timeErrand || "20:00"}`
-                    );
-                    return dateA - dateB;
-                  })
-                  .map((errand, index) => (
-                    <FullErrand
-                      key={errand.id}
-                      errand={errand}
-                      openSwipeableRef={openSwipeableRef}
-                    />
-                  ))}
-              </Pressable>
-            )
-        )}
-        {selectedTabObj.errandsList.filter(
-          (errand) => errand.listId === "" && !errand.completed
-        ).length > 0 && (
-          <View key="no-list">
-            <View className="flex-row justify-center items-center gap-1 mb-2">
-              <Ionicons name="list" size={19} color="stone" />
+      <Animated.FlatList
+        itemLayoutAnimation={LinearTransition}
+        data={flatListData}
+        keyExtractor={(item) => item.id}
+        contentContainerStyle={{ paddingBottom: 30 }}
+        renderItem={({ item: list }) => (
+          <View key={list.id}>
+            {/* Header */}
+            <View className="flex-row justify-center items-center gap-1 mt-3 mb-2">
+              <Ionicons name={list.icon} size={21} color={list.color} />
               <Text
-                className={`text-[${themes[theme].listTitle}] text-xl font-bold`}
+                className={`text-[${themes[theme].listTitle}] text-2xl font-bold`}
               >
-                Sin lista
+                {list.title}
               </Text>
             </View>
-            {selectedTabObj.errandsList
-              .filter((errand) => errand.listId === "" && !errand.completed)
+
+            {/* Uncompleted errands */}
+            {list.errands
+              .filter((errand) => !errand.completed)
               .sort((a, b) => {
                 const dateA = new Date(
                   `${a.dateErrand}T${a.timeErrand || "20:00"}`
@@ -207,16 +212,28 @@ function AllTasks() {
                 );
                 return dateA - dateB;
               })
-              .map((errand, index) => (
-                <FullErrand
+              .map((errand) => (
+                <SwipeableFullErrand
                   key={errand.id}
                   errand={errand}
+                  setErrands={setErrands}
                   openSwipeableRef={openSwipeableRef}
+                  swipeableRefs={swipeableRefs}
+                  onCompleteWithUndo={onCompleteWithUndo}
                 />
               ))}
           </View>
         )}
-      </ScrollView>
+      />
+
+      {possibleUndoErrand && (
+        <UndoCompleteErrandButton
+          possibleUndoErrand={possibleUndoErrand}
+          undoCompleteErrand={undoCompleteErrand}
+          openSwipeableRef={openSwipeableRef}
+          setPossibleUndoErrand={setPossibleUndoErrand}
+        />
+      )}
     </View>
   );
 }

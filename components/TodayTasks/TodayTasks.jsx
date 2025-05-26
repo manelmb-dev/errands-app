@@ -1,6 +1,7 @@
 import Swipeable from "react-native-gesture-handler/ReanimatedSwipeable";
-import { View, Text, Pressable, FlatList } from "react-native";
+import Animated, { LinearTransition } from "react-native-reanimated";
 import { useEffect, useMemo, useRef, useState } from "react";
+import { View, Text, Pressable } from "react-native";
 import { useNavigation } from "expo-router";
 
 import Octicons from "react-native-vector-icons/Octicons";
@@ -154,7 +155,8 @@ function TodayTasks() {
       </Text>
 
       {/* Lista de tareas */}
-      <FlatList
+      <Animated.FlatList
+        itemLayoutAnimation={LinearTransition}
         data={[...errandsAssignedToMe].sort(sortByDate)}
         keyExtractor={(item) => item.id}
         ListEmptyComponent={() => (
