@@ -7,19 +7,18 @@ import Ionicons from "react-native-vector-icons/Ionicons";
 import { errandsAtom, themeAtom } from "../../constants/storeAtoms";
 import { useAtom } from "jotai";
 
-import FullErrand from "../../Utils/fullErrand";
 import { themes } from "../../constants/themes";
 
 function DeletedTasks() {
   const navigation = useNavigation();
 
-  const [theme, setTheme] = useAtom(themeAtom);
+  const [theme] = useAtom(themeAtom);
   const [errands, setErrands] = useAtom(errandsAtom);
 
   useEffect(() => {
     navigation.setOptions({
       title: "Tareas eliminadas",
-      headerBackTitle: "Listas",
+      headerBackTitle: "Atrás",
       headerTitleStyle: {
         color: themes[theme].text,
       },

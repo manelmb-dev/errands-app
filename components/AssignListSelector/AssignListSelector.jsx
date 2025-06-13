@@ -16,7 +16,6 @@ import {
   listAssignedAtom,
   listsAtom,
   themeAtom,
-  userAtom,
 } from "../../constants/storeAtoms";
 
 import { themes } from "../../constants/themes";
@@ -24,7 +23,6 @@ import { themes } from "../../constants/themes";
 const AssignContactSelector = () => {
   const navigation = useNavigation();
 
-  const [user] = useAtom(userAtom);
   const [lists] = useAtom(listsAtom);
   const [listAssigned, setListAssigned] = useAtom(listAssignedAtom);
   const [theme] = useAtom(themeAtom);
@@ -50,62 +48,93 @@ const AssignContactSelector = () => {
     });
   }, [navigation, theme]);
 
-  const sortedLists = [
-    ...lists,
-    { title: "Sin lista", id: "", icon: "list", color: "slate" },
-  ];
-
   return (
     <View className={`flex-1 bg-[${themes[theme].background}]`}>
       <Text
-        className={`py-5 text-lg font-bold text-center text-[${themes[theme].text}] bg-blue-200  shadow-orange-200`}
+        className={`py-5 text-lg font-bold text-center text-[${themes[theme].text}] ${theme === "light" ? "bg-blue-300" : "bg-blue-700"}`}
       >
-        {listAssigned ? `${listAssigned.title}` : "Sin lista"}
+        {listAssigned ? `${listAssigned.title}` : "Compartidos"}
       </Text>
-      <Text className={`m-2 text-lg text-[${themes[theme].text}] font-bold`}>
+      <Text
+        className={`m-3 ml-5 text-lg text-[${themes[theme].text}] font-bold`}
+      >
         Selecciona una lista
       </Text>
-      <FlatList
-        data={sortedLists}
-        keyExtractor={(item) => item.id}
-        renderItem={({ item }) => (
-          <TouchableOpacity
-            className="h-16 border-b border-gray-300"
-            onPress={() => {
-              setListAssigned(item);
-              navigation.goBack();
-            }}
-          >
-            <View
-              className={`h-full px-3 flex-row gap-5 items-center ${
-                listAssigned.id === item.id ? `bg-slate-200` : ""
-              }`}
+      <View>
+        <FlatList
+          data={lists}
+          keyExtractor={(item) => item.id}
+          renderItem={({ item }) => (
+            <TouchableOpacity
+              className={`h-16 border-b border-[${themes[theme].listsSeparator}]`}
+              underlayColor={themes[theme].background}
+              onPress={() => {
+                setListAssigned(item);
+                navigation.goBack();
+              }}
             >
-              {/* Add profile photo below */}
-              <Ionicons
-                className="p-2"
-                name={item.icon}
-                size={22}
-                color={item.color}
-              />
-              <View className="flex-1 flex-row justify-between">
-                <Text className={`text-lg text-[${themes[theme].text}]`}>
-                  {item.title}
-                </Text>
-                <View className="flex-row gap-4">
-                  {listAssigned.id === item.id && (
-                    <FontAwesome6
-                      name="check"
-                      size={22}
-                      color={themes["light"].blueHeadText}
-                    />
-                  )}
+              <View
+                className={`h-full px-7 flex-row gap-5 items-center ${
+                  listAssigned.id === item.id &&
+                  `${theme === "light" ? "bg-slate-300" : "bg-gray-800"}`
+                }`}
+              >
+                {/* Add profile photo below */}
+                <Ionicons
+                  className={`bg-${item.color}-300 p-2 rounded-xl`}
+                  name={item.icon}
+                  size={22}
+                  color={`${themes[theme].text}`}
+                />
+                <View className="flex-1 flex-row justify-between">
+                  <Text className={`text-lg text-[${themes[theme].text}]`}>
+                    {item.title}
+                  </Text>
+                  <View className="flex-row gap-4">
+                    {listAssigned.id === item.id && (
+                      <FontAwesome6
+                        name="check"
+                        size={22}
+                        color={themes["light"].blueHeadText}
+                      />
+                    )}
+                  </View>
                 </View>
               </View>
+            </TouchableOpacity>
+          )}
+        />
+        <View
+          className={`h-16 px-7 flex-row gap-5 items-center ${
+            listAssigned?.id === ""
+              ? theme === "light"
+                ? "bg-slate-300"
+                : "bg-gray-800"
+              : ""
+          }`}
+        >
+          <Ionicons
+            className={`bg-slate-300 p-2 rounded-xl`}
+            name="people"
+            size={22}
+            color={`${themes[theme].text}`}
+          />
+          <View className="flex-1 flex-row justify-between">
+            <Text className={`text-lg text-[${themes[theme].text}]`}>
+              Compartidos
+            </Text>
+            <View className="flex-row gap-4">
+              {listAssigned.id === "" && (
+                <FontAwesome6
+                  name="check"
+                  size={22}
+                  color={themes["light"].blueHeadText}
+                />
+              )}
             </View>
-          </TouchableOpacity>
-        )}
-      />
+          </View>
+        </View>
+      </View>
     </View>
   );
 };

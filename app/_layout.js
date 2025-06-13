@@ -1,9 +1,10 @@
+import { Keyboard, TouchableWithoutFeedback, View } from "react-native";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { SafeAreaProvider } from "react-native-safe-area-context";
-import { GestureHandlerRootView } from "react-native-gesture-handler"; // 👈 Importante
+import { MenuProvider } from "react-native-popup-menu";
 import { StatusBar } from "expo-status-bar";
 import { Stack } from "expo-router";
 
-import { Keyboard, TouchableWithoutFeedback, View } from "react-native";
 import { useAtom } from "jotai";
 
 import { themeAtom } from "../constants/storeAtoms";
@@ -19,9 +20,11 @@ export default function Layout() {
       <SafeAreaProvider>
         <StatusBar style={theme === "dark" ? "light" : "dark"} />
         <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
-          <View className={`flex-1 bg-[${themes[theme].background}]`}>
-            <Stack />
-          </View>
+          <MenuProvider>
+            <View className={`flex-1 bg-[${themes[theme].background}]`}>
+              <Stack />
+            </View>
+          </MenuProvider>
         </TouchableWithoutFeedback>
       </SafeAreaProvider>
     </GestureHandlerRootView>

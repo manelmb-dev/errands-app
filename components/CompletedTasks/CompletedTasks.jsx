@@ -27,6 +27,7 @@ function CompletedTasks() {
     () =>
       errands
         .filter((errand) => errand.completed)
+        .filter((errand) => !errand.deleted)
         .sort((a, b) => {
           const dateA = new Date(`${a.dateErrand}T${a.timeErrand || "20:00"}`);
           const dateB = new Date(`${b.dateErrand}T${b.timeErrand || "20:00"}`);
@@ -37,17 +38,19 @@ function CompletedTasks() {
 
   const totalErrandsCompleted = completedErrands.length;
 
-  const totalErrandsCompletedOverAMonth = errands.filter((errand) => {
-    const oneMonthAgo = new Date();
-    oneMonthAgo.setMonth(oneMonthAgo.getMonth() - 1);
-    const errandCompletedDate = new Date(`${errand.completedDateErrand}`);
-    return errandCompletedDate < oneMonthAgo && errand.completed;
-  }).length;
+  const totalErrandsCompletedOverAMonth = errands
+    .filter((errand) => !errand.deleted)
+    .filter((errand) => {
+      const oneMonthAgo = new Date();
+      oneMonthAgo.setMonth(oneMonthAgo.getMonth() - 1);
+      const errandCompletedDate = new Date(`${errand.completedDateErrand}`);
+      return errandCompletedDate < oneMonthAgo && errand.completed;
+    }).length;
 
   useEffect(() => {
     navigation.setOptions({
       title: "Completados",
-      headerBackTitle: "Listas",
+      headerBackTitle: "Atrás",
       headerTitleStyle: {
         color: themes[theme].text,
       },
@@ -93,6 +96,7 @@ function CompletedTasks() {
       })
     );
   };
+  // REVISARRRRRR lo de arriba
 
   const confirmDeleteOverAMonth = () => {
     Alert.alert(

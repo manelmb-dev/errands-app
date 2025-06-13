@@ -41,7 +41,7 @@ function TodayTasks() {
   useEffect(() => {
     navigation.setOptions({
       title: "Hoy",
-      headerBackTitle: "Listas",
+      headerBackTitle: "Atrás",
       headerTitleStyle: {
         color: themes[theme].text,
       },
@@ -62,6 +62,7 @@ function TodayTasks() {
       emptyListText: "Estás al día",
       errandsList: errands
         .filter((errand) => !errand.completed)
+        .filter((errand) => !errand.deleted)
         .filter(
           (errand) =>
             new Date(errand.dateErrand).toISOString().split("T")[0] <=
@@ -74,6 +75,7 @@ function TodayTasks() {
       emptyListText: "No hay tareas completadas",
       errandsList: errands
         .filter((errand) => errand.completed)
+        .filter((errand) => !errand.deleted)
         .filter(
           (errand) =>
             new Date(errand.dateErrand).toISOString().split("T")[0] ===
@@ -94,7 +96,7 @@ function TodayTasks() {
     );
   }, [selectedTabObj, user.id]);
 
-  const errandsSubmittedFromMe = useMemo(() => {
+  const errandsOutgoingFromMe = useMemo(() => {
     return (
       selectedTabObj?.errandsList
         ?.filter((errand) => errand.ownerId === user.id)
@@ -202,7 +204,7 @@ function TodayTasks() {
           )
         }
         ListFooterComponent={() =>
-          errandsSubmittedFromMe.length > 0 ? (
+          errandsOutgoingFromMe.length > 0 ? (
             <View className="mt-6">
               <View className="flex-row justify-center items-center gap-2 mb-2">
                 <Ionicons name="send" size={18} color="#161618" />
@@ -212,7 +214,7 @@ function TodayTasks() {
                   Enviados
                 </Text>
               </View>
-              {errandsSubmittedFromMe.sort(sortByDate).map((errand) => {
+              {errandsOutgoingFromMe.sort(sortByDate).map((errand) => {
                 return errand.completed ? (
                   <Swipeable
                     key={errand.id}

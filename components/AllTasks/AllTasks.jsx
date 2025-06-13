@@ -27,11 +27,10 @@ function AllTasks() {
   const [lists] = useAtom(listsAtom);
   const [theme] = useAtom(themeAtom);
 
-  const [selectedTab, setSelectedTab] = useState("all");
-
   const openSwipeableRef = useRef(null);
   const swipeableRefs = useRef({});
 
+  const [selectedTab, setSelectedTab] = useState("all");
   const [possibleUndoErrand, setPossibleUndoErrand] = useState(null);
 
   const { onCompleteWithUndo, undoCompleteErrand } = useErrandActions({
@@ -44,48 +43,55 @@ function AllTasks() {
       // {
       //   label: "Pendientes",
       //   value: "pending",
-      //   errandsList: errands.filter((errand) => !errand.completed),
+      //   errandsList: errands.filter((errand) => !errand.deleted).filter((errand) => !errand.completed),
       // },
       // {
       //   label: "Completados",
       //   value: "completed",
-      //   errandsList: errands.filter((errand) => errand.completed),
+      //   errandsList: errands.filter((errand) => !errand.deleted).filter((errand) => errand.completed),
       // },
-      // { label: "Hoy", value: "today" },
       {
         label: "Todos",
         value: "all",
-        errandsList: errands.filter((errand) => !errand.completed),
+        errandsList: errands
+          .filter((errand) => !errand.deleted)
+          .filter((errand) => !errand.completed),
       },
       {
         label: "Míos",
         value: "mine",
-        errandsList: errands.filter(
-          (errand) =>
-            user.id === errand.ownerId &&
-            user.id === errand.assignedId &&
-            !errand.completed
-        ),
+        errandsList: errands
+          .filter((errand) => !errand.deleted)
+          .filter(
+            (errand) =>
+              user.id === errand.ownerId &&
+              user.id === errand.assignedId &&
+              !errand.completed
+          ),
       },
       {
         label: "Recibidos",
-        value: "received",
-        errandsList: errands.filter(
-          (errand) =>
-            user.id !== errand.ownerId &&
-            user.id === errand.assignedId &&
-            !errand.completed
-        ),
+        value: "incoming",
+        errandsList: errands
+          .filter((errand) => !errand.deleted)
+          .filter(
+            (errand) =>
+              user.id !== errand.ownerId &&
+              user.id === errand.assignedId &&
+              !errand.completed
+          ),
       },
       {
         label: "Enviados",
-        value: "submitted",
-        errandsList: errands.filter(
-          (errand) =>
-            user.id === errand.ownerId &&
-            user.id !== errand.assignedId &&
-            !errand.completed
-        ),
+        value: "outgoing",
+        errandsList: errands
+          .filter((errand) => !errand.deleted)
+          .filter(
+            (errand) =>
+              user.id === errand.ownerId &&
+              user.id !== errand.assignedId &&
+              !errand.completed
+          ),
       },
     ];
   }, [errands, user]);
@@ -95,7 +101,7 @@ function AllTasks() {
   useEffect(() => {
     navigation.setOptions({
       title: tabs.find((tab) => tab.value === selectedTab).label,
-      headerBackTitle: "Listas",
+      headerBackTitle: "Atrás",
       headerTitleStyle: {
         color: themes[theme].text,
       },
@@ -127,7 +133,8 @@ function AllTasks() {
       }))
       .filter((list) => list.errands.length > 0);
 
-    const unlistedErrands = selectedTabObj.errandsList
+    const sharedErrands = selectedTabObj.errandsList
+      .filter((errand) => !errand.deleted)
       .filter((e) => e.listId === "")
       .sort((a, b) => {
         const dateA = new Date(`${a.dateErrand}T${a.timeErrand || "20:00"}`);
@@ -135,13 +142,13 @@ function AllTasks() {
         return dateA - dateB;
       });
 
-    if (unlistedErrands.length > 0) {
+    if (sharedErrands.length > 0) {
       items.push({
-        id: "",
-        title: "Sin lista",
-        icon: "list",
-        color: "gray",
-        errands: unlistedErrands,
+        id: "sharedErrandsId",
+        title: "Compartidos",
+        icon: "people",
+        color: "slate",
+        errands: sharedErrands,
       });
     }
 
@@ -160,7 +167,7 @@ function AllTasks() {
         return false;
       }}
     >
-      <View className="mb-3 mt-1 flex-row justify-center gap-3">
+      <View className="mb-1.5 mt-1 flex-row justify-center gap-3">
         {tabs.map((tab) => (
           <Pressable
             key={tab.value}
@@ -186,13 +193,19 @@ function AllTasks() {
       <Animated.FlatList
         itemLayoutAnimation={LinearTransition}
         data={flatListData}
+        showsVerticalScrollIndicator={false}
         keyExtractor={(item) => item.id}
         contentContainerStyle={{ paddingBottom: 30 }}
         renderItem={({ item: list }) => (
           <View key={list.id}>
             {/* Header */}
-            <View className="flex-row justify-center items-center gap-1 mt-3 mb-2">
-              <Ionicons name={list.icon} size={21} color={list.color} />
+            <View className="flex-row justify-center items-center gap-2 mt-3 mb-2">
+              <Ionicons
+                className={`${theme === "light" ? `bg-${list.color}-300` : `bg-${list.color}-600`} p-1.5 rounded-xl`}
+                name={list.icon}
+                size={19}
+                color={`${themes[theme].text}`}
+              />
               <Text
                 className={`text-[${themes[theme].listTitle}] text-2xl font-bold`}
               >

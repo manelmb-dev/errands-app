@@ -93,16 +93,8 @@ const NewTaskModal = () => {
   const watchedTitle = watch("title");
 
   useEffect(() => {
-    if (!listAssigned) {
-      const noList = {
-        title: "Sin lista",
-        id: "",
-        icon: "list",
-        color: "slate",
-      };
-      setListAssigned(noList);
-    }
-  }, [listAssigned, setListAssigned]);
+    setListAssigned(lists[0]);
+  }, [lists, setListAssigned]);
 
   useEffect(() => {
     navigation.setOptions({
@@ -125,7 +117,7 @@ const NewTaskModal = () => {
       headerRight: () => (
         <Pressable onPress={handleAdd} disabled={!watchedTitle.trim()}>
           <Text
-            className={`text-2xl font-bold ${watchedTitle.trim() ? `text-[${themes[theme].blueHeadText}]` : `text-[${themes[theme].taskSecondText}]`}`}
+            className={`text-2xl font-semibold ${watchedTitle.trim() ? `text-[${themes[theme].blueHeadText}]` : `text-[${themes[theme].taskSecondText}]`}`}
           >
             Añadir
           </Text>
@@ -137,7 +129,7 @@ const NewTaskModal = () => {
   useEffect(() => {
     setValue("assignedId", userAssigned.id);
     setValue("listId", listAssigned.id);
-  }, [userAssigned, listAssigned, setValue, setUserAssigned, setListAssigned]);
+  }, [userAssigned, listAssigned, setValue]);
 
   // Function to handle date toggle
   const toggleDateSwitch = () => {
@@ -259,17 +251,17 @@ const NewTaskModal = () => {
   });
 
   return (
-    <View className={`p-6 bg-[${themes[theme].background}] h-full`}>
+    <View className={`p-6 gap-4 bg-[${themes[theme].background}] h-full`}>
       <View
-        className={`bg-[${themes[theme].buttonMenuBackground}] mb-4 rounded-xl shadow ${theme === "light" ? "shadow-gray-300" : "shadow-neutral-950"} flex`}
+        className={`bg-[${themes[theme].buttonMenuBackground}] rounded-xl border border-[${themes[theme].listsSeparator}] shadow-sm ${theme === "light" ? "shadow-gray-100" : "shadow-neutral-950"}`}
       >
         <Controller
           control={control}
           name="title"
           render={({ field: { onChange, value } }) => (
             <TextInput
-              className={`p-4 pl-4 text-lg border-b-hairline 
-                  ${theme === "light" ? "border-gray-300" : "border-neutral-950"} align-top
+              className={`p-4 pl-4 text-lg border-b 
+                  border-[${themes[theme].listsSeparator}] align-top
                   leading-tight text-[${themes[theme].text}]`}
               value={value}
               onChangeText={onChange}
@@ -299,108 +291,105 @@ const NewTaskModal = () => {
       </View>
 
       <View
-        className={`bg-[${themes[theme].buttonMenuBackground}] mb-4 rounded-xl shadow ${theme === "light" ? "shadow-gray-300" : "shadow-neutral-950"}`}
+        className={`bg-[${themes[theme].buttonMenuBackground}] rounded-xl border border-[${themes[theme].listsSeparator}] shadow-sm ${theme === "light" ? "shadow-gray-100" : "shadow-neutral-950"}`}
       >
         {/* Assign errand */}
         <TouchableHighlight
           className={`rounded-t-xl`}
+          underlayColor={themes[theme].background}
           onPress={() =>
             router.push({
               pathname: "/Modals/assignContactModal",
             })
           }
         >
-          <View
-            className={`pt-2 pb-2 px-4 flex-row justify-between items-center bg-[${themes[theme].buttonMenuBackground}] rounded-t-xl`}
-          >
-            <View className="flex-row gap-4 items-center">
-              <Ionicons
-                className="p-1 bg-blue-600 rounded-lg "
-                name="person"
-                size={22}
-                color={themes["light"].background}
-              />
-              <View>
-                <Text className={`text-[${themes[theme].text}] text-base`}>
-                  Encargado
+          <View className={`flex-row items-center rounded-t-xl`}>
+            <Ionicons
+              className="mx-4 p-1 bg-blue-500 rounded-lg"
+              name="person"
+              size={22}
+              color={themes["light"].background}
+            />
+            <View
+              className={`py-3 flex-1 flex-row justify-between gap-4 items-center border-b border-[${themes[theme].listsSeparator}]`}
+            >
+              <Text className={`text-[${themes[theme].text}] text-base`}>
+                Encargado
+              </Text>
+              <View
+                className={`mr-4 px-3 py-1 rounded-2xl gap-1 flex-row items-center ${theme === "light" ? "bg-blue-100" : "bg-blue-600"}`}
+              >
+                <FontAwesome6
+                  name="arrows-up-down"
+                  size={14}
+                  color={themes["light"].text}
+                />
+                <Text className={`text-lg text-[${themes[theme].text}]`}>
+                  {userAssigned.name} {userAssigned.surname}{" "}
+                  {userAssigned.id === user.id && "(Tú)"}
                 </Text>
               </View>
-            </View>
-            <View
-              className={`flex-row items-center ${theme === "light" ? "bg-blue-200" : "bg-blue-600"} px-3 py-1 rounded-2xl gap-1`}
-            >
-              <FontAwesome6
-                name="arrows-up-down"
-                size={12}
-                color={themes["light"].text}
-              />
-              <Text className={`text-lg text-[${themes[theme].text}]`}>
-                {userAssigned.name} {userAssigned.surname}{" "}
-                {userAssigned.id === user.id && "(Tú)"}
-              </Text>
             </View>
           </View>
         </TouchableHighlight>
 
         {/* List errand */}
         <TouchableHighlight
-          className={`rounded-b-xl ${theme === "light" ? "border-gray-300" : "border-neutral-950"}`}
+          className={`rounded-b-xl`}
+          underlayColor={themes[theme].background}
           onPress={() =>
             router.push({
               pathname: "/Modals/assignListModal",
             })
           }
         >
-          <View
-            className={`flex-row justify-between items-center bg-[${themes[theme].buttonMenuBackground}] pt-2 pb-2 px-4 rounded-b-xl`}
-          >
-            <View className="flex-row gap-4 items-center">
-              <Ionicons
-                className="p-1 bg-slate-500 rounded-lg "
-                name="list"
-                size={22}
-                color={themes["light"].background}
-              />
-              <View>
-                <Text className={`text-[${themes[theme].text}] text-base`}>
-                  Lista
+          <View className={`flex-row items-center rounded-b-xl`}>
+            <Ionicons
+              className="mx-4 p-1 bg-slate-500 rounded-lg "
+              name="list"
+              size={22}
+              color={themes["light"].background}
+            />
+            <View className="py-3 gap-4 flex-1 flex-row justify-between items-center">
+              <Text className={`text-[${themes[theme].text}] text-base`}>
+                Lista
+              </Text>
+              <View
+                className={`mr-4 px-3 py-1 gap-1 flex-row items-center ${listAssigned.id === "" || listAssigned === false ? `bg-[${themes[theme].buttonMenuBackground}]` : `${theme === "light" ? "bg-slate-300" : "bg-slate-600"}`} rounded-2xl`}
+              >
+                <FontAwesome6
+                  name="arrows-up-down"
+                  size={12}
+                  color={themes["light"].text}
+                />
+                <Text className={`text-lg text-[${themes[theme].text}]`}>
+                  {listAssigned ? `${listAssigned.title}` : "Compartidos"}
                 </Text>
               </View>
-            </View>
-            <View
-              className={`flex-row items-center ${listAssigned.id === "" || listAssigned === false ? `bg-[${themes[theme].buttonMenuBackground}]` : `${theme === "light" ? "bg-slate-300" : "bg-slate-600"}`} px-3 py-1 rounded-2xl gap-1`}
-            >
-              <FontAwesome6
-                name="arrows-up-down"
-                size={12}
-                color={themes["light"].text}
-              />
-              <Text className={`text-lg text-[${themes[theme].text}]`}>
-                {listAssigned ? `${listAssigned.title}` : "Sin lista"}
-              </Text>
             </View>
           </View>
         </TouchableHighlight>
       </View>
 
       <View
-        className={`bg-[${themes[theme].buttonMenuBackground}] mb-4 rounded-xl shadow ${theme === "light" ? "shadow-gray-300" : "shadow-neutral-950"}`}
+        className={`bg-[${themes[theme].buttonMenuBackground}] rounded-xl border border-[${themes[theme].listsSeparator}] shadow-sm ${theme === "light" ? "shadow-gray-100" : "shadow-neutral-950"}`}
       >
         {/* Date */}
         <TouchableHighlight
           className={`rounded-t-xl`}
+          underlayColor={themes[theme].background}
           onPress={() => setIsDatePickerVisible(true)}
         >
-          <View
-            className={`flex-row justify-between items-center bg-[${themes[theme].buttonMenuBackground}] pt-2 pb-2 px-4 rounded-t-xl`}
-          >
-            <View className="flex-row gap-4 items-center">
-              <Ionicons
-                className="p-1 bg-red-500 rounded-lg "
-                name="calendar-outline"
-                size={22}
-                color={themes["light"].background}
-              />
+          <View className={`flex-row items-center rounded-t-xl`}>
+            <Ionicons
+              className="mx-4 p-1 bg-red-500 rounded-lg "
+              name="calendar-outline"
+              size={22}
+              color={themes["light"].background}
+            />
+            <View
+              className={`py-2 flex-1 flex-row justify-between gap-4 items-center border-b border-[${themes[theme].listsSeparator}]`}
+            >
               <View>
                 <Text className={`text-[${themes[theme].text}] text-base`}>
                   Fecha
@@ -413,29 +402,33 @@ const NewTaskModal = () => {
                   </Text>
                 )}
               </View>
+              <Switch
+                className="mr-4"
+                value={watch("dateErrand") ? true : false}
+                onValueChange={toggleDateSwitch}
+              />
             </View>
-            <Switch
-              value={watch("dateErrand") ? true : false}
-              onValueChange={toggleDateSwitch}
-            />
           </View>
         </TouchableHighlight>
 
         {/* Time */}
         <TouchableHighlight
           className={`${!watch("dateErrand") && "rounded-b-xl"}`}
+          underlayColor={themes[theme].background}
           onPress={() => setIsHourPickerVisible(true)}
         >
           <View
-            className={`flex-row justify-between bg-[${themes[theme].buttonMenuBackground}] ${!watch("dateErrand") && "rounded-b-xl"} pt-2 pb-2 px-4`}
+            className={`flex-row items-center ${!watch("dateErrand") && "rounded-b-xl"}`}
           >
-            <View className="flex-row gap-4 items-center">
-              <Ionicons
-                className="my-1 p-1 bg-yellow-500 rounded-lg "
-                name="time-outline"
-                size={22}
-                color={themes["light"].background}
-              />
+            <Ionicons
+              className="mx-4 p-1 bg-yellow-500 rounded-lg"
+              name="time-outline"
+              size={23}
+              color={themes["light"].background}
+            />
+            <View
+              className={`py-2 flex-1 flex-row justify-between gap-4 items-center ${watch("dateErrand") && `border-b border-[${themes[theme].listsSeparator}]`} `}
+            >
               <View>
                 <Text className={`text-[${themes[theme].text}] text-base`}>
                   Hora
@@ -448,27 +441,31 @@ const NewTaskModal = () => {
                   </Text>
                 )}
               </View>
+              <Switch
+                className="mr-4"
+                value={watch("timeErrand") ? true : false}
+                onValueChange={toggleHourSwitch}
+              />
             </View>
-            <Switch
-              value={watch("timeErrand") ? true : false}
-              onValueChange={toggleHourSwitch}
-            />
           </View>
         </TouchableHighlight>
 
         {/* Notice */}
         {watch("dateErrand") && (
-          <TouchableHighlight onPress={() => setIsNoticePickerVisible(true)}>
-            <View
-              className={`flex-row justify-between bg-[${themes[theme].buttonMenuBackground}] pt-2 pb-2 px-4`}
-            >
-              <View className="flex-row gap-4 items-center">
-                <FontAwesome6
-                  className="p-1 px-1.5 bg-emerald-500 rounded-lg "
-                  name="bell"
-                  size={21}
-                  color={themes["light"].background}
-                />
+          <TouchableHighlight
+            underlayColor={themes[theme].background}
+            onPress={() => setIsNoticePickerVisible(true)}
+          >
+            <View className={`flex-row items-center`}>
+              <FontAwesome6
+                className="mx-4 p-1 px-1.5 bg-emerald-500 rounded-lg "
+                name="bell"
+                size={22}
+                color={themes["light"].background}
+              />
+              <View
+                className={`py-2 flex-1 flex-row justify-between gap-4 items-center ${watch("dateErrand") && `border-b border-[${themes[theme].listsSeparator}]`}`}
+              >
                 <View>
                   <Text className={`text-[${themes[theme].text}] text-base`}>
                     Aviso
@@ -481,11 +478,12 @@ const NewTaskModal = () => {
                     </Text>
                   )}
                 </View>
+                <Switch
+                  className="mr-4"
+                  value={noticeSwitchEnabled}
+                  onValueChange={toggleNoticeSwitch}
+                />
               </View>
-              <Switch
-                value={noticeSwitchEnabled}
-                onValueChange={toggleNoticeSwitch}
-              />
             </View>
           </TouchableHighlight>
         )}
@@ -494,30 +492,27 @@ const NewTaskModal = () => {
         {watch("dateErrand") && (
           <TouchableHighlight
             className={"rounded-b-xl"}
+            underlayColor={themes[theme].background}
             onPress={showRepeatActionSheet}
           >
-            <View
-              className={`flex-row justify-between bg-[${themes[theme].buttonMenuBackground}] pt-2 pb-2 px-4 rounded-b-xl`}
-            >
-              <View className="flex-row gap-4 items-center">
-                <Ionicons
-                  className="p-1 bg-violet-500 rounded-lg "
-                  name="repeat"
-                  size={22}
-                  color={themes["light"].background}
-                />
-                <View>
-                  <Text className={`text-[${themes[theme].text}] text-base`}>
-                    Repetir
-                  </Text>
-                </View>
+            <View className={`flex-row items-center rounded-b-xl`}>
+              <Ionicons
+                className="mx-4 p-1 bg-violet-500 rounded-lg "
+                name="repeat"
+                size={23}
+                color={themes["light"].background}
+              />
+              <View className="py-4 gap-4 flex-1 flex-row justify-between items-center">
+                <Text className={`text-[${themes[theme].text}] text-base`}>
+                  Repetir
+                </Text>
               </View>
               <View
-                className={`flex-row items-center ${watch("repeat") === "never" ? `bg-[${themes[theme].buttonMenuBackground}]` : `${theme === "light" ? "bg-violet-300" : "bg-violet-500"}`}  px-3 py-1 rounded-2xl gap-1`}
+                className={`mr-4 px-3 py-1 gap-1 flex-row items-center ${watch("repeat") === "never" ? `bg-[${themes[theme].buttonMenuBackground}]` : `${theme === "light" ? "bg-violet-300" : "bg-violet-500"}`} rounded-2xl`}
               >
                 <FontAwesome6
                   name="arrows-up-down"
-                  size={12}
+                  size={14}
                   color={themes["light"].text}
                 />
                 <Text className={`text-lg text-[${themes[theme].text}]`}>
@@ -534,63 +529,60 @@ const NewTaskModal = () => {
       </View>
 
       <View
-        className={`bg-[${themes[theme].buttonMenuBackground}] mb-4 rounded-xl shadow ${theme === "light" ? "shadow-gray-300" : "shadow-neutral-950"}`}
+        className={`bg-[${themes[theme].buttonMenuBackground}] rounded-xl border border-[${themes[theme].listsSeparator}] shadow-sm ${theme === "light" ? "shadow-gray-100" : "shadow-neutral-950"}`}
       >
         {/* Marked */}
         <TouchableHighlight
           className={`rounded-t-xl`}
+          underlayColor={themes[theme].background}
           onPress={() => setValue("marked", !watch("marked"))}
         >
-          <View
-            className={`flex-row justify-between items-center bg-[${themes[theme].buttonMenuBackground}] pt-2 pb-2 px-4 rounded-t-xl`}
-          >
-            <View className="flex-row gap-4 items-center">
-              <Ionicons
-                className="p-1 bg-orange-500 rounded-lg "
-                name="flag-sharp"
-                size={22}
-                color={themes["light"].background}
-              />
-              <View>
-                <Text className={`text-[${themes[theme].text}] text-base`}>
-                  Marcador
-                </Text>
-              </View>
-            </View>
-            <Switch
-              value={watch("marked")}
-              onChange={() => setValue("marked", !watch("marked"))}
+          <View className={`flex-row items-center rounded-t-xl`}>
+            <Ionicons
+              className="mx-4 p-1 bg-orange-500 rounded-lg "
+              name="flag-sharp"
+              size={22}
+              color={themes["light"].background}
             />
+            <View
+              className={`py-3 flex-1 flex-row justify-between gap-4 items-center border-b border-[${themes[theme].listsSeparator}]`}
+            >
+              <Text className={`text-[${themes[theme].text}] text-base`}>
+                Marcador
+              </Text>
+              <Switch
+                className="mr-4"
+                value={watch("marked")}
+                onChange={() => setValue("marked", !watch("marked"))}
+              />
+            </View>
           </View>
         </TouchableHighlight>
 
         {/* Priority */}
         <TouchableHighlight
           className={"rounded-b-xl"}
+          underlayColor={themes[theme].background}
           onPress={showPriorityActionSheet}
         >
-          <View
-            className={`flex-row justify-between bg-[${themes[theme].buttonMenuBackground}] pt-2 pb-2 px-4 rounded-b-xl`}
-          >
-            <View className="flex-row gap-4 items-center">
-              <MaterialIcons
-                className="p-1 bg-rose-500 rounded-lg "
-                name="priority-high"
-                size={22}
-                color={themes["light"].background}
-              />
-              <View>
-                <Text className={`text-[${themes[theme].text}] text-base`}>
-                  Prioridad
-                </Text>
-              </View>
+          <View className={`flex-row items-center rounded-b-xl`}>
+            <MaterialIcons
+              className="mx-4 p-1 bg-rose-500 rounded-lg "
+              name="priority-high"
+              size={22}
+              color={themes["light"].background}
+            />
+            <View className="py-4 gap-4 flex-1 flex-row justify-between items-center">
+              <Text className={`text-[${themes[theme].text}] text-base`}>
+                Prioridad
+              </Text>
             </View>
             <View
-              className={`flex-row items-center ${watch("priority") === "none" ? `bg-[${themes[theme].buttonMenuBackground}]` : `${theme === "light" ? "bg-rose-300" : "bg-rose-500"}`} px-3 py-1 rounded-2xl gap-1`}
+              className={`mr-4 px-3 py-1 gap-1 flex-row items-center ${watch("priority") === "none" ? `bg-[${themes[theme].buttonMenuBackground}]` : `${theme === "light" ? "bg-rose-300" : "bg-rose-500"}`} rounded-2xl`}
             >
               <FontAwesome6
                 name="arrows-up-down"
-                size={12}
+                size={14}
                 color={themes["light"].text}
               />
               <Text className={`text-lg text-[${themes[theme].text}]`}>

@@ -34,7 +34,7 @@ export default function formatErrandDate(dateErrand) {
     const date = new Date(year, month - 1, day);
 
     const options = {
-      weekday: "long",
+      weekday: "short",
       day: "numeric",
       month: "long",
       year: "numeric",

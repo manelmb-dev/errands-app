@@ -77,7 +77,7 @@ const NewListModal = () => {
       headerRight: () => (
         <Pressable onPress={handleAdd} disabled={!watchedTitle.trim()}>
           <Text
-            className={`text-2xl font-bold ${watchedTitle.trim() ? `text-[${themes[theme].blueHeadText}]` : `text-[${themes[theme].taskSecondText}]`}`}
+            className={`text-2xl font-semibold ${watchedTitle.trim() ? `text-[${themes[theme].blueHeadText}]` : `text-[${themes[theme].taskSecondText}]`}`}
           >
             Añadir
           </Text>
@@ -134,17 +134,18 @@ const NewListModal = () => {
     <View
       className={`flex-1 p-6 bg-[${themes[theme].background}] items-center`}
     >
+      {/* Icon and color preview */}
       <View
-        className={`p-4 justify-center items-center bg-[${themes[theme].buttonMenuBackground}] mb-4 rounded-xl shadow ${theme === "light" ? "shadow-gray-300" : "shadow-neutral-950"}`}
+        className={`p-4 justify-center items-center ${theme === "light" ? `bg-${assignedColor}-300` : `bg-${assignedColor}-600`} mb-4 rounded-2xl shadow ${theme === "light" ? "shadow-gray-200" : "shadow-neutral-950"}`}
       >
         <Ionicons
           name={assignedIcon}
           size={58}
-          color={assignedColor}
-        ></Ionicons>
+          color={`${themes[theme].text}`}
+        />
       </View>
       <View
-        className={`${showIconGrid && "flex-1"} bg-[${themes[theme].buttonMenuBackground}] mb-4 rounded-xl shadow ${theme === "light" ? "shadow-gray-300" : "shadow-neutral-950"} w-full`}
+        className={`w-full ${showIconGrid && "flex-1"} bg-[${themes[theme].buttonMenuBackground}] mb-4 rounded-xl border border-[${themes[theme].listsSeparator}] shadow-sm ${theme === "light" ? "shadow-gray-100" : "shadow-neutral-950"}`}
       >
         <Controller
           control={control}
@@ -171,9 +172,9 @@ const NewListModal = () => {
           >
             <View className="flex-row gap-4 items-center">
               <MaterialIcons
-                className="p-1 bg-slate-400 rounded-lg"
+                className="p-1.5 bg-slate-400 rounded-lg"
                 name="color-lens"
-                size={23}
+                size={24}
                 color={themes["light"].background}
               />
               <View>
@@ -189,8 +190,7 @@ const NewListModal = () => {
                 color={themes["light"].taskSecondText}
               />
               <View
-                className={`flex-row items-center py-4 px-8 rounded-2xl`}
-                style={{ backgroundColor: assignedColor }}
+                className={`flex-row items-center py-4 px-8 rounded-2xl ${theme === "light" ? `bg-${assignedColor}-300` : `bg-${assignedColor}-600`}`}
               />
             </View>
           </View>
@@ -214,9 +214,9 @@ const NewListModal = () => {
           >
             <View className="flex-row gap-4 items-center">
               <Ionicons
-                className="p-1 bg-slate-400 rounded-lg"
+                className="p-1.5 bg-slate-400 rounded-lg"
                 name="apps-outline"
-                size={23}
+                size={24}
                 color={themes["light"].background}
               />
               <View>
@@ -231,7 +231,11 @@ const NewListModal = () => {
                 size={22}
                 color={themes["light"].taskSecondText}
               />
-              <Ionicons name={assignedIcon} size={26} color={assignedColor} />
+              <Ionicons
+                name={assignedIcon}
+                size={29}
+                color={`${themes[theme].text}`}
+              />
             </View>
           </View>
         </TouchableHighlight>

@@ -1,7 +1,7 @@
 import Animated, { LinearTransition } from "react-native-reanimated";
 import { useLocalSearchParams, useNavigation } from "expo-router";
-import { useEffect, useRef, useState } from "react";
-import { View } from "react-native";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { Text, View } from "react-native";
 
 import Ionicons from "react-native-vector-icons/Ionicons";
 
@@ -35,7 +35,7 @@ function ListTasks() {
   useEffect(() => {
     navigation.setOptions({
       title: currentList.title,
-      headerBackTitle: "Listas",
+      headerBackTitle: "Atrás",
       headerTitleStyle: {
         color: themes[theme].text,
       },
@@ -48,6 +48,20 @@ function ListTasks() {
       ),
     });
   }, [navigation, theme, currentList]);
+
+  const flatListData = useMemo(
+    () =>
+      errands
+        .filter((errand) => !errand.deleted)
+        .filter((errand) => errand.listId === currentList.id)
+        .filter((errand) => !errand.completed)
+        .sort((a, b) => {
+          const dateA = new Date(`${a.dateErrand}T${a.timeErrand || "20:00"}`);
+          const dateB = new Date(`${b.dateErrand}T${b.timeErrand || "20:00"}`);
+          return dateA - dateB;
+        }),
+    [errands, currentList]
+  );
 
   return (
     <View
@@ -63,25 +77,12 @@ function ListTasks() {
     >
       <Animated.FlatList
         itemLayoutAnimation={LinearTransition}
-        data={errands
-          .filter(
-            (errand) => errand.listId === currentList.id && !errand.completed
-          )
-          .sort((a, b) => {
-            const dateA = new Date(
-              `${a.dateErrand}T${a.timeErrand || "20:00"}`
-            );
-            const dateB = new Date(
-              `${b.dateErrand}T${b.timeErrand || "20:00"}`
-            );
-            return dateA - dateB;
-          })}
+        data={flatListData}
         keyExtractor={(item) => item.id}
         keyboardShouldPersistTaps="handled"
         renderItem={({ item }) => {
           return (
             <SwipeableFullErrand
-              key={item.id}
               errand={item}
               setErrands={setErrands}
               openSwipeableRef={openSwipeableRef}
@@ -90,6 +91,13 @@ function ListTasks() {
             />
           );
         }}
+        ListEmptyComponent={
+          <Text
+            className={`text-[${themes[theme].listTitle}] text-lg font-bold text-center mt-20`}
+          >
+            No existen recordatorios en esta lista
+          </Text>
+        }
         // ListHeaderComponent={
         //   <View className="flex-row w-full justify-center mt-9 mb-3">
         //     <Pressable
@@ -107,10 +115,9 @@ function ListTasks() {
         //   showCompleted && (
         //     <View>
         //       {errands
-        //         .filter(
-        //           (errand) =>
-        //             errand.listId === currentList.id && errand.completed
-        //         )
+        //         .filter((errand) => !errand.deleted)
+        //         .filter((errand) => errand.listId === currentList.id)
+        //         .filter((errand) => errand.completed)
         //         .sort((a, b) => {
         //           const dateA = new Date(
         //             `${a.dateErrand}T${a.timeErrand || "20:00"}`
@@ -135,30 +142,6 @@ function ListTasks() {
           setPossibleUndoErrand={setPossibleUndoErrand}
         />
       )}
-
-      {/* <View className="flex-row justify-center w-full gap-6">
-        <Pressable className="flex-row gap-1">
-          <Ionicons
-            className="pb-2"
-            name="add-circle"
-            size={24}
-            color={themes[theme].blueHeadText}
-          />
-          <Text
-            className={`text-lg text-[${themes[theme].blueHeadText}] text font-bold`}
-          >
-            Nuevo recordatorio
-          </Text>
-        </Pressable>
-        <Pressable className="flex-row gap-2">
-          <Ionicons className="pb-2" name="send" size={22} color="#3F3F3F" />
-          <Text
-            className={`text-lg text-[${themes[theme].sendTaskButtonText}] text font-bold`}
-          >
-            Enviar recordatorio
-          </Text>
-        </Pressable>
-      </View> */}
     </View>
   );
 }

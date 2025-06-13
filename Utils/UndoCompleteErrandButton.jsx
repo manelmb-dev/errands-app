@@ -27,7 +27,7 @@ const UndoCompleteErrandButton = ({
       <Animated.View
         entering={FadeInDown}
         exiting={FadeOutDown}
-        className="flex-row items-center justify-between gap-4 px-4 py-3 mx-3 absolute bottom-10 rounded-2xl bg-white shadow border border-gray-200"
+        className={`flex-row items-center justify-between gap-4 px-4 py-3 mx-3 absolute bottom-10 rounded-2xl bg-white shadow shadow-[${themes[theme].popupShadow}] border border-[${themes[theme].listsSeparator}]`}
       >
         <View className="flex-1">
           <Text className="text-gray-800 text-base font-semibold">

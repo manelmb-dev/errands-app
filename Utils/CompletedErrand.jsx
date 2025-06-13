@@ -1,12 +1,8 @@
-import { Text, View } from "react-native";
+import { Pressable, Text, View } from "react-native";
 import Animated, { FadeOut } from "react-native-reanimated";
 
 import Octicons from "react-native-vector-icons/Octicons";
 import Ionicons from "react-native-vector-icons/Ionicons";
-
-import formatCompletedErrandDate from "../constants/formatCompletedErrandDate";
-import formatErrandDate from "../constants/formatCompletedErrandDate";
-import { themes } from "../constants/themes";
 
 import { useAtom } from "jotai";
 import {
@@ -15,6 +11,10 @@ import {
   themeAtom,
   userAtom,
 } from "../constants/storeAtoms";
+
+import formatCompletedErrandDate from "../constants/formatCompletedErrandDate";
+import formatErrandDate from "../constants/formatCompletedErrandDate";
+import { themes } from "../constants/themes";
 
 const repeatOptions = [
   { label: "Nunca", value: "never" },
@@ -63,14 +63,14 @@ function CompletedErrand({ errand }) {
 
   return (
     <Animated.View key={errand.id} exiting={FadeOut}>
-      <View
-        className={`flex-row rounded-xl pr-3 pt-3 pb-2 bg-[${themes[theme].background}]`}
+      <Pressable
+        className={`flex-row bg-[${themes[theme].background}] rounded-xl mx-4 my-1.5 pr-2 pt-3 pb-2  border border-[${themes[theme].listsSeparator}] shadow-sm ${theme === "light" ? "shadow-gray-100" : "shadow-neutral-950"}`}
       >
         <Octicons
           className="px-3"
           onPress={uncompleteErrand}
           name="check-circle-fill"
-          size={22}
+          size={21}
           color="green"
         />
         <View className="flex-1">
@@ -79,7 +79,7 @@ function CompletedErrand({ errand }) {
           {user.id !== errand.ownerId && user.id === errand.assignedId && (
             <View className="flex-row">
               <View
-                className={`flex-row my-0.5 px-2 p-1 bg-[${themes[theme].taskReceivedFromBg}] rounded-lg items-center gap-2`}
+                className={`flex-row my-0.5 px-2 p-1 bg-[${themes[theme].taskIncomingFromBg}] rounded-lg items-center gap-2`}
               >
                 <Ionicons
                   name="send"
@@ -100,7 +100,7 @@ function CompletedErrand({ errand }) {
           {errand.ownerId === user.id && user.id !== errand.assignedId && (
             <View className="flex-row">
               <View
-                className={`flex-row my-0.5 px-2 p-1 bg-[${themes[theme].submittedTaskToBg}] rounded-lg items-center gap-2`}
+                className={`flex-row my-0.5 px-2 p-1 bg-[${themes[theme].outgoingTaskToBg}] rounded-lg items-center gap-2`}
               >
                 <Ionicons name="send" size={10} color="#6E727A" />
                 <Text
@@ -163,10 +163,7 @@ function CompletedErrand({ errand }) {
             color="#6E727A"
           /> */}
         </View>
-      </View>
-      <View
-        className={`h-[0.5px] w-full bg-[${themes[theme].listsSeparator}] pl-11`}
-      />
+      </Pressable>
     </Animated.View>
   );
 }

@@ -15,6 +15,8 @@ import Ionicons from "react-native-vector-icons/Ionicons";
 import { useAtom } from "jotai";
 import {
   contactsAtom,
+  listAssignedAtom,
+  listsAtom,
   themeAtom,
   userAssignedAtom,
   userAtom,
@@ -28,7 +30,9 @@ const AssignContactSelector = () => {
 
   const [user] = useAtom(userAtom);
   const [contacts] = useAtom(contactsAtom);
+  const [lists] = useAtom(listsAtom);
   const [userAssigned, setUserAssigned] = useAtom(userAssignedAtom);
+  const [, setListAssigned] = useAtom(listAssignedAtom);
   const [theme] = useAtom(themeAtom);
 
   const [contactSearchedInput, setContactSearchedInput] = useState("");
@@ -92,14 +96,16 @@ const AssignContactSelector = () => {
   return (
     <SafeAreaView className={`flex-1 bg-[${themes[theme].background}]`}>
       <Text
-        className={`py-5 text-lg font-bold text-center text-[${themes[theme].text}] bg-blue-200  shadow-orange-200`}
+        className={`py-5 text-lg font-bold text-center text-[${themes[theme].text}]  ${theme === "light" ? "bg-blue-300" : "bg-blue-700"}`}
       >
         {userAssigned.id === user.id
           ? "Recordatorio para mi"
           : userAssigned.name + " " + userAssigned.surname}
       </Text>
       {filteredContacts.length > 0 && (
-        <Text className={`m-2 text-lg text-[${themes[theme].text}] font-bold`}>
+        <Text
+          className={`m-3 ml-5 text-lg text-[${themes[theme].text}] font-bold`}
+        >
           Selecciona un contacto
         </Text>
       )}
@@ -116,23 +122,29 @@ const AssignContactSelector = () => {
         }
         renderItem={({ item }) => (
           <TouchableOpacity
-            className="h-16 border-b border-gray-300"
+            className={`h-16 border-b border-[${themes[theme].listsSeparator}]`}
+            underlayColor={themes[theme].background}
             onPress={() => {
               setUserAssigned(item);
+              if (item.id === user.id) {
+                setListAssigned(lists[0]);
+              } else if (item.id !== user.id) {
+                setListAssigned("");
+              }
               navigation.goBack();
             }}
           >
             <View
-              className={`h-full px-3 flex-row gap-5 items-center ${
-                userAssigned.id === item.id ? `bg-slate-200` : ""
+              className={`h-full px-4 flex-row gap-5 items-center ${
+                userAssigned.id === item.id &&
+                `${theme === "light" ? "bg-slate-300" : "bg-gray-800"}`
               }`}
             >
               {/* Add profile photo below */}
               <Ionicons
-                className="p-2 bg-slate-500 rounded-full border border-gray-700"
-                name="person"
-                size={22}
-                color={themes["light"].background}
+                name="person-circle-outline"
+                size={38}
+                color={themes["light"].taskSecondText}
               />
               <View className="flex-1 flex-row justify-between">
                 <Text className={`text-lg text-[${themes[theme].text}]`}>

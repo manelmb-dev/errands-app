@@ -1,5 +1,9 @@
-import { Pressable, Text, TextInput, View } from "react-native";
+import DateTimePickerModal from "react-native-modal-datetime-picker";
 import Animated, { FadeOut } from "react-native-reanimated";
+import { Pressable, Text, View } from "react-native";
+import { useForm } from "react-hook-form";
+import { router } from "expo-router";
+import { useState } from "react";
 
 import {
   contactsAtom,
@@ -9,12 +13,11 @@ import {
 } from "../constants/storeAtoms";
 import { useAtom } from "jotai";
 
-import Octicons from "react-native-vector-icons/Octicons";
+import SimpleLineIcons from "react-native-vector-icons/SimpleLineIcons";
 import Ionicons from "react-native-vector-icons/Ionicons";
 
 import formatErrandDate from "../constants/formatErrandDate";
 import { themes } from "../constants/themes";
-import { router } from "expo-router";
 
 const repeatOptions = [
   { label: "Nunca", value: "never" },
@@ -32,10 +35,17 @@ function FullErrand({
   swipeableRefs,
   onCompleteWithUndo,
 }) {
+  const today = new Date().toISOString().split("T")[0];
   const [user] = useAtom(userAtom);
-  const [, setErrands] = useAtom(errandsAtom);
+  const [errands, setErrands] = useAtom(errandsAtom);
   const [contacts] = useAtom(contactsAtom);
   const [theme] = useAtom(themeAtom);
+
+  const [isDateTimePickerVisible, setIsDateTimePickerVisible] = useState(false);
+
+  const { handleSubmit, watch, setValue, getValues } = useForm({
+    defaultValues: { ...errand },
+  });
 
   const assignedContact = contacts.find(
     (contact) => contact.id.toString() === errand.assignedId.toString()
@@ -45,9 +55,38 @@ function FullErrand({
     (contact) => contact.id.toString() === errand.ownerId.toString()
   );
 
-  const repeatOptionSelected = repeatOptions.find(
-    (option) => option.value === errand.repeat
-  );
+  const handleDateTimeConfirm = (datetime) => {
+    const dateString = datetime.toISOString().split("T")[0];
+    setValue("dateErrand", dateString);
+    // const hourString = datetime.toLocaleTimeString([], {
+    //   hour: "2-digit",
+    //   minute: "2-digit",
+    // });
+    // setValue("timeErrand", hourString);
+
+    console.log("dateErrand", dateString);
+
+    const updatedErrand = {
+      ...errand,
+      dateErrand: dateString,
+      // timeErrand: hourString,
+    };
+
+    setErrands((prevErrands) =>
+      prevErrands.map((e) => (e.id === updatedErrand.id ? updatedErrand : e))
+    );
+
+    errands.sort((a, b) => {
+      const dateA = new Date(a.dateErrand);
+      const dateB = new Date(b.dateErrand);
+      return dateA - dateB;
+    });
+
+    // Modify errand to DB FIRESTOREEE
+    // await updateErrandInFirestore(updatedErrand);
+
+    setIsDateTimePickerVisible(false);
+  };
 
   const completeErrand = () => {
     const actualTime = new Date();
@@ -80,7 +119,7 @@ function FullErrand({
   return (
     <Animated.View exiting={FadeOut}>
       <Pressable
-        className={`flex-row bg-[${themes[theme].buttonMenuBackground}] rounded-xl mx-4 my-1.5 pr-2 pt-3 pb-2 border-hairline ${theme === "light" ? "border-gray-300" : "border-neutral-950"} shadow ${theme === "light" ? "shadow-gray-200" : "shadow-neutral-950"}`}
+        className={`pl-3 flex-row items-center justify-between bg-[${themes[theme].background}]`}
         onPress={() => {
           if (
             openSwipeableRef.current &&
@@ -90,126 +129,161 @@ function FullErrand({
             openSwipeableRef.current = null;
             return;
           }
-          router.push({
-            pathname: "Modals/editTaskModal",
-            params: { errand: JSON.stringify(errand) },
-          });
+          if (errand.ownerId === user.id) {
+            router.push({
+              pathname: "Modals/editTaskModal",
+              params: { errand: JSON.stringify(errand) },
+            });
+          } else {
+            router.push({
+              pathname: "Modals/viewIncomingTaskModal",
+              params: { errand: JSON.stringify(errand) },
+            });
+          }
         }}
       >
-        <Octicons
+        {/* Check icon */}
+        <SimpleLineIcons
           onPress={completeErrand}
-          className="px-2"
-          name={"circle"}
-          size={21}
+          className="p-3 self-center"
+          name={"check"}
+          size={22}
           color={"#6E727A"}
         />
-        <View className="flex-1">
-          <TextInput
-            className={`text-[${themes[theme].taskTitle}]`}
-            defaultValue={errand.title}
-          />
-          {user.id !== errand.ownerId && user.id === errand.assignedId && (
-            <View className="flex-row">
-              <View
-                className={`flex-row my-0.5 px-2 p-1 bg-[${themes[theme].taskReceivedFromBg}] rounded-xl items-center gap-2`}
-              >
-                <Ionicons
-                  name="send"
-                  size={10}
-                  color="#6E727A"
-                  style={{ transform: [{ rotateY: "180deg" }] }}
-                />
-                <Text
-                  className={`text-sm text-[${themes[theme].taskSecondText}]`}
+
+        {/* Content errand */}
+        <View
+          style={{ height: 61 }}
+          className={`px-1 flex-1 flex-row justify-between items-center border-b ${
+            theme === "light" ? "border-gray-300" : "border-neutral-700"
+          }`}
+        >
+          {/* Title & shared user */}
+          <View className="flex-1 flex-col px-1">
+            <Text
+              className={`text-[${themes[theme].taskTitle}] text-lg`}
+              numberOfLines={1}
+            >
+              {errand.title}
+            </Text>
+
+            {user.id !== errand.ownerId && user.id === errand.assignedId && (
+              <View className="flex-row">
+                <View
+                  className={`flex-row my-0.5 px-2 p-0.5 bg-[${themes[theme].taskIncomingFromBg}] rounded-lg items-center gap-2`}
                 >
-                  {creatorContact.name} {creatorContact.surname}
-                </Text>
+                  <Ionicons
+                    name="send"
+                    size={10}
+                    color="#6E727A"
+                    style={{ transform: [{ rotateY: "180deg" }] }}
+                  />
+                  <Text
+                    className={`text-sm text-[${themes[theme].taskSecondText}]`}
+                  >
+                    {creatorContact.name} {creatorContact.surname}
+                  </Text>
+                </View>
               </View>
-            </View>
-          )}
-          {errand.ownerId === user.id && user.id !== errand.assignedId && (
-            <View className="flex-row">
-              <View
-                className={`flex-row my-0.5 px-2 p-1 bg-[${themes[theme].submittedTaskToBg}] rounded-xl items-center gap-2`}
-              >
-                <Ionicons name="send" size={10} color="#6E727A" />
-                <Text
-                  className={`text-sm text-[${themes[theme].taskSecondText}]`}
+            )}
+
+            {errand.ownerId === user.id && user.id !== errand.assignedId && (
+              <View className="flex-row">
+                <View
+                  className={`flex-row my-0.5 px-2 p-0.5 bg-[${themes[theme].outgoingTaskToBg}] rounded-lg items-center gap-2`}
                 >
+                  <Ionicons name="send" size={10} color="#6E727A" />
                   <Text
                     className={`text-sm text-[${themes[theme].taskSecondText}]`}
                   >
                     {assignedContact.name} {assignedContact.surname}
                   </Text>
-                </Text>
+                </View>
               </View>
-            </View>
-          )}
-          {errand.description && (
-            <View>
-              <Text
-                className={`text-sm text-[${themes[theme].taskSecondText}]`}
+            )}
+          </View>
+
+          {/* Status icons */}
+          <View className="flex-row items-center gap-2 pr-4">
+            {errand.marked && (
+              <Ionicons name="flag" size={17} color="#FFC402" />
+            )}
+            {errand.repeat && errand.repeat !== "never" && (
+              <Ionicons name="repeat" size={17} color="#6E727A" />
+            )}
+            {errand.dateErrand ? (
+              <Pressable
+                className={`py-1 px-0.5 rounded-lg items-center justify-center min-w-[88px] ${
+                  new Date(
+                    `${errand.dateErrand}T${errand.timeErrand || "24:00"}`
+                  ) < new Date()
+                    ? `${theme === "light" ? "bg-red-100" : "bg-red-950 "}`
+                    : `${theme === "light" ? "bg-gray-200" : "bg-neutral-800 "}`
+                }`}
+                onPress={() => {
+                  if (errand.ownerId === user.id) {
+                    setIsDateTimePickerVisible(true);
+                  } else {
+                    router.push({
+                      pathname: "Modals/viewIncomingTaskModal",
+                      params: { errand: JSON.stringify(errand) },
+                    });
+                  }
+                }}
               >
-                {errand.description}
-              </Text>
-            </View>
-          )}
-          <View className="flex-row">
-            {errand.dateErrand && (
-              <View className="flex-row items-center">
                 <Text
-                  className={`text-sm ${
+                  className={` ${
                     new Date(
                       `${errand.dateErrand}T${errand.timeErrand || "24:00"}`
                     ) < new Date()
-                      ? "text-red-600"
+                      ? `${theme === "light" ? "text-red-400" : "text-red-500"}`
                       : `text-[${themes[theme].taskSecondText}]`
                   }`}
                 >
                   {formatErrandDate(errand)}
                 </Text>
-              </View>
-            )}
-            {errand.repeat && errand.repeat !== "never" && (
-              <View className="flex-row items-center ml-2">
-                <Ionicons name="repeat" size={16} color="#6E727A" />
-                <Text
-                  className={`text-sm text-[${themes[theme].taskSecondText}] ml-1`}
-                >
-                  {repeatOptionSelected.label}
-                </Text>
-              </View>
+              </Pressable>
+            ) : (
+              <Pressable
+                className={`py-2 px-2 rounded-full items-center justify-center border border-dashed ${theme === "light" ? "border-gray-400" : "border-neutral-700"}`}
+                onPress={() => {
+                  if (errand.ownerId === user.id) {
+                    setIsDateTimePickerVisible(true);
+                  } else {
+                    router.push({
+                      pathname: "Modals/viewIncomingTaskModal",
+                      params: { errand: JSON.stringify(errand) },
+                    });
+                  }
+                }}
+              >
+                <Ionicons
+                  name="calendar-outline"
+                  size={17}
+                  color={`${themes[theme].taskSecondText}`}
+                />
+              </Pressable>
             )}
           </View>
         </View>
-        <View className="flex-row justify-end">
-          {/* {new Date(`${errand.dateErrand}T${errand.timeErrand || "24:00"}`) <
-            new Date() && (
-            <Pressable>
-              <Ionicons
-                className="mt-1 ml-1"
-                name="calendar-outline"
-                size={20}
-                color="#dc2626"
-              />
-            </Pressable>
-          )} */}
-          {errand.marked && (
-            <Ionicons
-              className="mt-1 ml-1"
-              name="flag"
-              size={20}
-              color="#FFC402"
-            />
-          )}
-          {/* <Ionicons
-            className="ml-1"
-            name="information-circle-outline"
-            size={26}
-            color="#6E727A"
-          /> */}
-        </View>
       </Pressable>
+
+      <DateTimePickerModal
+        isVisible={isDateTimePickerVisible}
+        mode="date"
+        display="inline"
+        date={
+          watch("dateErrand") ? new Date(watch("dateErrand")) : new Date(today)
+        }
+        onConfirm={handleDateTimeConfirm}
+        onCancel={() => setIsDateTimePickerVisible(false)}
+        locale="es_ES"
+        accentColor={themes[theme].blueHeadText}
+        textColor={themes[theme].text}
+        confirmTextIOS="Confirmar"
+        cancelTextIOS="Cancelar"
+        minuteInterval={5}
+      />
     </Animated.View>
   );
 }

@@ -1,4 +1,4 @@
-import { View, Text, TextInput, Pressable, ScrollView } from "react-native";
+import { View, TextInput, Pressable, ScrollView } from "react-native";
 import { useEffect } from "react";
 import { useNavigation } from "expo-router";
 
@@ -27,7 +27,7 @@ function OwnTasks() {
   useEffect(() => {
     navigation.setOptions({
       title: "Mios",
-      headerBackTitle: "Listas",
+      headerBackTitle: "Atrás",
       headerTitleStyle: {
         color: themes[theme].text,
       },
@@ -47,6 +47,7 @@ function OwnTasks() {
         <Pressable>
           {/* List reminders */}
           {errands
+            .filter((errand) => !errand.deleted)
             .filter((errand) => !errand.completed)
             .filter(
               (errand) =>
@@ -76,28 +77,10 @@ function OwnTasks() {
                 placeholder="Añadir recordatorio"
                 placeholderTextColor={themes[theme].addNewTaskText}
               />
-              {/* <View className="justify-center">
-                  <Text className="text-sm text-[#6E727A]">Notas</Text>
-                </View> */}
             </View>
           </View>
         </Pressable>
       </ScrollView>
-      <View className="flex-row w-full ml-3 mt-4">
-        <Pressable className="flex-row gap-1">
-          <Ionicons
-            className="pb-2"
-            name="add-circle"
-            size={24}
-            color={themes[theme].blueHeadText}
-          />
-          <Text
-            className={`text-lg text-[${themes[theme].blueHeadText}] text font-bold`}
-          >
-            Nuevo recordatorio
-          </Text>
-        </Pressable>
-      </View>
     </View>
   );
 }

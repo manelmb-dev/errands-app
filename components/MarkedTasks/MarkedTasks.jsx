@@ -39,7 +39,7 @@ function MarkedTasks() {
   useEffect(() => {
     navigation.setOptions({
       title: "Destacados",
-      headerBackTitle: "Listas",
+      headerBackTitle: "Atrás",
       headerTitleStyle: {
         color: themes[theme].text,
       },
@@ -54,10 +54,9 @@ function MarkedTasks() {
   }, [navigation, theme]);
 
   const markedActiveErrands = errands
-    .filter(
-      (errand) => errand.ownerId === user.id || user.id === errand.assignedId
-    )
-    .filter((errand) => errand.marked && !errand.completed)
+    .filter((errand) => errand.marked)
+    .filter((errand) => !errand.completed)
+    .filter((errand) => !errand.deleted)
     .sort((a, b) => {
       const dateA = new Date(`${a.dateErrand}T${a.timeErrand || "20:00"}`);
       const dateB = new Date(`${b.dateErrand}T${b.timeErrand || "20:00"}`);
@@ -65,10 +64,9 @@ function MarkedTasks() {
     });
 
   const markedCompletedErrands = errands
-    .filter(
-      (errand) => errand.ownerId === user.id || user.id === errand.assignedId
-    )
-    .filter((errand) => errand.marked && errand.completed)
+    .filter((errand) => errand.marked)
+    .filter((errand) => !errand.deleted)
+    .filter((errand) => errand.completed)
     .sort((a, b) => {
       const dateA = new Date(`${a.dateErrand}T${a.timeErrand || "20:00"}`);
       const dateB = new Date(`${b.dateErrand}T${b.timeErrand || "20:00"}`);

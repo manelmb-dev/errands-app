@@ -1,7 +1,7 @@
 const users = [
   {
     id: "100002",
-    userName: "maria456",
+    username: "maria456",
     name: "María",
     surname: "Fernández Martínez",
     email: "maria.fernandez@example.com",
@@ -39,7 +39,7 @@ const users = [
   },
   {
     id: "100003",
-    userName: "juan789",
+    username: "juan789",
     name: "Juan",
     surname: "Pérez Sánchez",
     email: "juan.perez@example.com",
@@ -78,7 +78,7 @@ const users = [
   },
   {
     id: "100004",
-    userName: "ana321",
+    username: "ana321",
     name: "Ana",
     surname: "Ruiz Hernández",
     email: "ana.ruiz@example.com",
@@ -118,7 +118,7 @@ const users = [
   },
   {
     id: "100005",
-    userName: "lucia654",
+    username: "lucia654",
     name: "Lucía",
     surname: "Gómez Torres",
     email: "lucia.gomez@example.com",
@@ -159,7 +159,7 @@ const users = [
   },
   {
     id: "100006",
-    userName: "maxi456",
+    username: "maxi456",
     name: "Maxi",
     surname: "Tarin Rojo",
     email: "maxi.tarin@example.com",

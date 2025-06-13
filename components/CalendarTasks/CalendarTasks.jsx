@@ -5,7 +5,7 @@ import { View, Text, TouchableOpacity } from "react-native";
 import { useEffect, useRef, useState } from "react";
 import { useNavigation } from "expo-router";
 
-import { errandsAtom, listsAtom, themeAtom } from "../../constants/storeAtoms";
+import { errandsAtom, themeAtom } from "../../constants/storeAtoms";
 import { useAtom } from "jotai";
 
 import UndoCompleteErrandButton from "../../Utils/UndoCompleteErrandButton";
@@ -80,7 +80,7 @@ function CalendarTasks() {
   useEffect(() => {
     navigation.setOptions({
       title: "Agenda",
-      headerBackTitle: "Listas",
+      headerBackTitle: "Atrás",
       headerTitleStyle: {
         color: themes[theme].text,
       },
@@ -134,14 +134,16 @@ function CalendarTasks() {
     setIsDatePickerVisible(false);
   };
 
-  const markedDates = errands.reduce((acc, errand) => {
-    if (!errand.completed) {
-      if (!acc[errand.dateErrand]) {
-        acc[errand.dateErrand] = { dots: [{ color: "orange" }] };
+  const markedDates = errands
+    .filter((errand) => !errand.deleted)
+    .reduce((acc, errand) => {
+      if (!errand.completed) {
+        if (!acc[errand.dateErrand]) {
+          acc[errand.dateErrand] = { dots: [{ color: "orange" }] };
+        }
       }
-    }
-    return acc;
-  }, {});
+      return acc;
+    }, {});
 
   // Marcar el día seleccionado
   if (selectedDate) {
@@ -248,6 +250,7 @@ function CalendarTasks() {
         data={
           errands
             .filter((errand) => errand.dateErrand === selectedDate)
+            .filter((errand) => !errand.deleted)
             .filter((errand) => errand.completed === false)
             .sort((a, b) => {
               const dateA = new Date(

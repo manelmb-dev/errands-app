@@ -1,56 +1,47 @@
-export default function formatErrandDate(errand) {
+const formatErrandDate = (errand) => {
   const errandDate = new Date(
-    `${errand.dateErrand}T${errand.timeErrand || "24:00"}`,
+    `${errand.dateErrand}T${errand.timeErrand || "20:00"}`
   );
+
   const today = new Date();
-  const yesterday = new Date(today);
-  yesterday.setDate(today.getDate() - 1);
-  const tomorrow = new Date(today);
-  tomorrow.setDate(today.getDate() + 1);
-  const dayAfterTomorrow = new Date(today);
-  dayAfterTomorrow.setDate(today.getDate() + 2);
-  const twoDaysAgo = new Date(today);
-  twoDaysAgo.setDate(today.getDate() - 2);
+  const stripTime = (date) =>
+    new Date(date.getFullYear(), date.getMonth(), date.getDate());
 
-  // Compare the dates
-  if (
-    errandDate.toISOString().split("T")[0] === today.toISOString().split("T")[0]
-  ) {
+  const baseDate = stripTime(today);
+  const targetDate = stripTime(errandDate);
+
+  const diffDays = Math.floor((targetDate - baseDate) / (1000 * 60 * 60 * 24));
+
+  const dayNames = ["dom", "lun", "mar", "mié", "jue", "vie", "sáb"];
+  const monthNames = [
+    "ene",
+    "feb",
+    "mar",
+    "abr",
+    "may",
+    "jun",
+    "jul",
+    "ago",
+    "sep",
+    "oct",
+    "nov",
+    "dic",
+  ];
+  if (diffDays === 0)
     return errand.timeErrand ? `Hoy, ${errand.timeErrand}` : "Hoy";
-  }
-  if (
-    errandDate.toISOString().split("T")[0] ===
-    yesterday.toISOString().split("T")[0]
-  ) {
-    return "Ayer";
-  }
-  if (
-    errandDate.toISOString().split("T")[0] ===
-    twoDaysAgo.toISOString().split("T")[0]
-  ) {
-    return "Anteayer";
-  }
-  if (
-    errandDate.toISOString().split("T")[0] ===
-    tomorrow.toISOString().split("T")[0]
-  ) {
+  if (diffDays === -1) return "Ayer";
+  if (diffDays === -2) return "Anteayer";
+  if (diffDays === 1)
     return errand.timeErrand ? `Mañana, ${errand.timeErrand}` : "Mañana";
-  }
-  if (
-    errandDate.toISOString().split("T")[0] ===
-    dayAfterTomorrow.toISOString().split("T")[0]
-  ) {
-    return errand.timeErrand
-      ? `Pasado mañana, ${errand.timeErrand}`
-      : "Pasado mañana";
+  if (diffDays > 1 && diffDays < 7) {
+    const weekday = dayNames[errandDate.getDay()];
+    return errand.timeErrand ? `${weekday}, ${errand.timeErrand}` : weekday;
   }
 
-  // If none of the above, return the full date in DD/MM/YY format
-  const formattedDate = errandDate.toLocaleDateString("es-ES", {
-    day: "2-digit",
-    month: "2-digit",
-    year: "2-digit",
-  });
-
-  return formattedDate; // This will return in DD/MM/AA format
+  // Si está más allá de 6 días, mostrar fecha completa
+  const day = errandDate.getDate();
+  const month = monthNames[errandDate.getMonth()];
+  return `${day} ${month}`;
 }
+
+export default formatErrandDate;

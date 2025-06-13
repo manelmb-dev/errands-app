@@ -1,36 +1,21 @@
-import { router } from "expo-router";
 import { Pressable, View } from "react-native";
+import { router } from "expo-router";
 import Ionicons from "react-native-vector-icons/Ionicons";
 
-const RenderRightActionsErrand = ({ errand, setErrands, openSwipeableRef }) => {
-  const markErrandWithFlag = (errand) => {
-    const updatedErrand = {
-      ...errand,
-      marked: !errand.marked,
-    };
-
+const RenderRightActionsErrand = ({ errand, setErrands }) => {
+  const deleteErrand = () => {
     setErrands((prev) =>
-      prev.map((e) => (e.id === updatedErrand.id ? updatedErrand : e)),
+      prev.map((e) => (e.id === errand.id ? { ...e, deleted: true } : e))
     );
 
-    // FIRESTORE UPDATE pending
-    // await updateErrandInFirestore(updatedErrand);
+    // TODO: FIRESTORE UPDATEEE
+    // await updateErrandInFirestore({ ...errand, deleted: true });
   };
 
   return (
-    <View className="flex-row h-full mr-4">
+    <View className="flex-row h-full">
       <Pressable
-        className="w-16 my-1.5 rounded-xl bg-[#FFC402] justify-center items-center"
-        onPress={() => {
-          markErrandWithFlag(errand);
-          openSwipeableRef.current?.close();
-        }}
-      >
-        <Ionicons name="flag" size={24} color="white" />
-      </Pressable>
-
-      <Pressable
-        className="w-16 my-1.5 rounded-xl bg-blue-600 justify-center items-center"
+        className="w-16 bg-blue-600 justify-center items-center"
         onPress={() => {
           router.push({
             pathname: "Modals/editTaskModal",
@@ -42,14 +27,13 @@ const RenderRightActionsErrand = ({ errand, setErrands, openSwipeableRef }) => {
       </Pressable>
 
       <Pressable
-        className="w-16 my-1.5 rounded-xl bg-red-600 justify-center items-center"
-        onPress={() =>
-          setErrands((prev) => prev.filter((e) => e.id !== errand.id))
-        }
+        className="w-16 bg-red-600 justify-center items-center"
+        onPress={deleteErrand}
       >
         <Ionicons name="trash-outline" size={24} color="white" />
       </Pressable>
     </View>
   );
 };
+
 export default RenderRightActionsErrand;

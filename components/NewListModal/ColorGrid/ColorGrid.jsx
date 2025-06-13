@@ -25,8 +25,7 @@ const ColorGrid = ({ assignedColor, setAssignedColor }) => {
           }`}
         >
           <View
-            className={`rounded-xl w-14 h-14`}
-            style={{ backgroundColor: color }}
+            className={`rounded-xl w-14 h-14 ${theme === "light" ? `bg-${color}-300` : `bg-${color}-600`}`}
           />
         </TouchableOpacity>
       ))}

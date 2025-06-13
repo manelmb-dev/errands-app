@@ -1,8 +1,10 @@
 // Utils/SwipeableFullErrand.jsx
 import Swipeable from "react-native-gesture-handler/ReanimatedSwipeable";
+import React from "react";
+
 import RenderRightActionsErrand from "./RenderRightActionsErrand";
 import FullErrand from "./fullErrand";
-import React from "react";
+import FullErrand2 from "./fullErrand2";
 
 const SwipeableFullErrand = ({
   errand,
