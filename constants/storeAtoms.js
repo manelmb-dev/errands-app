@@ -241,4 +241,6 @@ export const userAssignedAtom = atom(userExample);
 export const listAssignedAtom = atom(false);
 export const contactsAtom = atom(userExample.contacts);
 export const themeAtom = atom("light");
+export const selectedThemeAtom = atom();
 export const languageAtom = atom("es");
+

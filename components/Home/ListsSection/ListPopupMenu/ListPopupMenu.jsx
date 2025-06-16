@@ -1,6 +1,7 @@
-import React from "react";
 import { Platform, Alert, TouchableOpacity } from "react-native";
 import ContextMenuView from "react-native-context-menu-view";
+import React from "react";
+import { router } from "expo-router";
 import {
   Menu,
   MenuTrigger,
@@ -15,35 +16,36 @@ import { useAtom } from "jotai";
 import { themeAtom } from "../../../../constants/storeAtoms";
 
 import { themes } from "../../../../constants/themes";
-import { router } from "expo-router";
 
 export default function ListPopupMenu() {
   const [theme] = useAtom(themeAtom);
-  const handleSelect = (key) => {
-    Alert.alert("Has pulsado", key);
-    // Aquí puedes usar navigation.navigate('Pantalla') si lo deseas
-  };
-
-  //   if (Platform.OS === "ios") {
-  //     return (
-  //       <ContextMenuView
-  //         style={{ padding: 4 }}
-  //         menuConfig={{
-  //           menuTitle: "Menú",
-  //           menuItems: [
-  //             { actionKey: "contactos", actionTitle: "Contactos" },
-  //             { actionKey: "configuracion", actionTitle: "Configuración" },
-  //             { actionKey: "perfil", actionTitle: "Perfil" },
-  //           ],
-  //         }}
-  //         onPressMenuItem={({ nativeEvent }) =>
-  //           handleSelect(nativeEvent.actionKey)
-  //         }
-  //       >
-  //         <Ionicons name="options" size={24} color={iconColor} />
-  //       </ContextMenuView>
-  //     );
+  // const handleSelect = (key) => {
+  //   if (key === "new") {
+  //     router.push("/Modals/newListModal");
+  //   } else if (key === "edit") {
+  //     Alert.alert("Editar listas");
   //   }
+  // };
+
+  // if (Platform.OS === "ios") {
+  //   return (
+  //     <ContextMenuView
+  //       style={{ padding: 4 }}
+  //       menuConfig={{
+  //         menuTitle: "Menú",
+  //         menuItems: [
+  //           { actionKey: "new", actionTitle: "Añadir lista" },
+  //           { actionKey: "edit", actionTitle: "Editar listas" },
+  //         ],
+  //       }}
+  //       onPressMenuItem={({ nativeEvent }) =>
+  //         handleSelect(nativeEvent.actionKey)
+  //       }
+  //     >
+  //       <Ionicons name="options" size={24} color={themes[theme].text} />
+  //     </ContextMenuView>
+  //   );
+  // }
 
   return (
     <Menu>
@@ -62,11 +64,13 @@ export default function ListPopupMenu() {
       <MenuOptions
         customStyles={{
           optionsContainer: {
+            marginLeft: 6,
+            marginTop: 26,
             backgroundColor: themes[theme].buttonMenuBackground,
             borderRadius: 10,
             elevation: 12, // shadow Android
             shadowColor: themes[theme].popupShadow, // shadow iOS
-            shadowOpacity: 0.4,
+            shadowOpacity: 0.5,
             shadowRadius: 30,
           },
         }}
@@ -75,13 +79,19 @@ export default function ListPopupMenu() {
           onSelect={() => router.push("/Modals/newListModal")}
           text="Añadir lista"
           customStyles={{
+            optionTouchable: {
+              activeOpacity: 70,
+              style: {
+                borderTopLeftRadius: 10,
+                borderTopRightRadius: 10,
+                overflow: "hidden",
+              },
+            },
             optionWrapper: {
               paddingVertical: 12,
               paddingHorizontal: 16,
               borderBottomColor: themes[theme].listsSeparator,
               borderBottomWidth: 1,
-              borderTopLeftRadius: 10,
-              borderTopRightRadius: 10,
             },
             optionText: {
               fontSize: 16,
@@ -90,15 +100,21 @@ export default function ListPopupMenu() {
           }}
         />
         <MenuOption
-          onSelect={() => handleSelect("Editar listas")}
+          onSelect={() => Alert.alert("Editar listas")}
           // FIX Thissssss
           text="Editar listas"
           customStyles={{
+            optionTouchable: {
+              activeOpacity: 70,
+              style: {
+                borderBottomLeftRadius: 10,
+                borderBottomRightRadius: 10,
+                overflow: "hidden",
+              },
+            },
             optionWrapper: {
               paddingVertical: 12,
               paddingHorizontal: 16,
-              borderBottomLeftRadius: 10,
-              borderBottomRightRadius: 10,
             },
             optionText: {
               fontSize: 16,

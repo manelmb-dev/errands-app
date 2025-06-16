@@ -8,6 +8,7 @@ import { useAtom } from "jotai";
 import Ionicons from "react-native-vector-icons/Ionicons";
 
 import { themes } from "../../constants/themes";
+import AppearencePopupMenu from "./AppearencePopupMenu/AppearencePopupMenu";
 
 const userSections = [
   { label: "Perfil", icon: "person-outline", size: 25, route: "/profile" },
@@ -189,43 +190,7 @@ function SettingsSection() {
         <View
           className={`bg-[${themes[theme].buttonMenuBackground}] rounded-xl border border-[${themes[theme].listsSeparator}] shadow-sm ${theme === "light" ? "shadow-gray-100" : "shadow-neutral-950"}`}
         >
-          {UISections.map((item, index) => (
-            <View
-              key={index}
-              className={`${index === 0 && "rounded-t-xl"} ${index === UISections.length - 1 && "rounded-b-xl"}`}
-              onPress={() => console.log(`Pressed ${item.label}`)}
-            >
-              <View
-                className={`flex-row items-center pl-5 gap-5 ${index === 0 && "rounded-t-xl"} ${index === UISections.length - 1 && "rounded-b-xl"}`}
-              >
-                <Ionicons
-                  name={item.icon}
-                  size={item.size}
-                  color={themes[theme].text}
-                />
-                <View
-                  className={`flex-1 flex-row items-center justify-between py-4 ${index !== UISections.length - 1 && `border-b  border-[${themes[theme].listsSeparator}]`}`}
-                >
-                  <Text className={`text-[${themes[theme].text}] text-lg `}>
-                    {item.label}
-                  </Text>
-                  <View className="flex-row items-center gap-2">
-                    <Text
-                      className={`text-lg text-[${themes[theme].taskSecondText}]`}
-                    >
-                      {item.option}
-                    </Text>
-                    <Ionicons
-                      className="mr-3"
-                      name="chevron-expand-outline"
-                      size={18}
-                      color={themes[theme].taskSecondText}
-                    />
-                  </View>
-                </View>
-              </View>
-            </View>
-          ))}
+          <AppearencePopupMenu />
         </View>
 
         {/* Help sections */}

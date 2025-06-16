@@ -1,4 +1,9 @@
-import { Keyboard, TouchableWithoutFeedback, View } from "react-native";
+import {
+  Keyboard,
+  TouchableWithoutFeedback,
+  useColorScheme,
+  View,
+} from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { MenuProvider } from "react-native-popup-menu";
@@ -11,9 +16,26 @@ import { themeAtom } from "../constants/storeAtoms";
 import { themes } from "../constants/themes";
 
 import "../App.css";
+import { useEffect } from "react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function Layout() {
-  const [theme] = useAtom(themeAtom);
+  const systemTheme = useColorScheme() ?? "light";
+  const [theme, setTheme] = useAtom(themeAtom);
+
+  useEffect(() => {
+    const loadThemePreference = async () => {
+      const saved = await AsyncStorage.getItem("themePreference");
+
+      if (saved === "auto") {
+        setTheme(systemTheme);
+      } else {
+        setTheme(saved || "light");
+      }
+    };
+
+    loadThemePreference();
+  }, [systemTheme, setTheme]);
 
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>

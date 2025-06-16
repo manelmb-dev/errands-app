@@ -28,22 +28,6 @@ export default function ListSection() {
           Mis listas
         </Text>
         <ListPopupMenu />
-        {/* <Pressable
-          className="flex-row justify-center items-center gap-1"
-          onPress={() => {
-            router.push("/Modals/newListModal");
-          }}
-        >
-          <Ionicons
-            className="pb-1"
-            name="add-sharp"
-            size={19}
-            color={themes[theme].text}
-          />
-          <Text className={`text-lg text-[${themes[theme].text}] mr-3 pb-1`}>
-            Añadir lista
-          </Text>
-        </Pressable> */}
       </View>
 
       {/* Lists section */}
