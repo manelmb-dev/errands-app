@@ -1,3 +1,5 @@
+import i18n from "./i18n";
+
 export default function formatErrandDate(dateErrand) {
   const today = new Date();
   const yesterday = new Date(today);
@@ -11,19 +13,19 @@ export default function formatErrandDate(dateErrand) {
 
   // Compare the dates
   if (dateErrand === today.toISOString().split("T")[0]) {
-    return "Hoy";
+    return i18n.t("today");
   }
   if (dateErrand === yesterday.toISOString().split("T")[0]) {
-    return "Ayer";
+    return i18n.t("yesterday");
   }
   if (dateErrand === twoDaysAgo.toISOString().split("T")[0]) {
-    return "Anteayer";
+    return i18n.t("twoDaysAgo");
   }
   if (dateErrand === tomorrow.toISOString().split("T")[0]) {
-    return "Mañana";
+    return i18n.t("tomorrow");
   }
   if (dateErrand === dayAfterTomorrow.toISOString().split("T")[0]) {
-    return "Pasado mañana";
+    return i18n.t("inTwoDays");
   }
 
   // If none of the above, return the full date in string format
@@ -39,7 +41,7 @@ export default function formatErrandDate(dateErrand) {
       month: "long",
       year: "numeric",
     };
-    return date.toLocaleDateString("es-ES", options);
+    return date.toLocaleDateString(i18n.locale, options);
   };
 
   return formattedDate(dateErrand); // This will return in DD/MM/AA format

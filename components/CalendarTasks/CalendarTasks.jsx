@@ -14,47 +14,56 @@ import { useErrandActions } from "../../hooks/useErrandActions";
 import { themes } from "../../constants/themes";
 
 import Ionicons from "react-native-vector-icons/Ionicons";
+import i18n from "../../constants/i18n";
 
 LocaleConfig.locales["es"] = {
   monthNames: [
-    "Enero",
-    "Febrero",
-    "Marzo",
-    "Abril",
-    "Mayo",
-    "Junio",
-    "Julio",
-    "Agosto",
-    "Septiembre",
-    "Octubre",
-    "Noviembre",
-    "Diciembre",
+    i18n.t("january"),
+    i18n.t("february"),
+    i18n.t("march"),
+    i18n.t("april"),
+    i18n.t("may"),
+    i18n.t("june"),
+    i18n.t("july"),
+    i18n.t("august"),
+    i18n.t("september"),
+    i18n.t("october"),
+    i18n.t("november"),
+    i18n.t("december"),
   ],
   monthNamesShort: [
-    "Ene.",
-    "Feb.",
-    "Mar.",
-    "Abr.",
-    "May.",
-    "Jun.",
-    "Jul.",
-    "Ago.",
-    "Sep.",
-    "Oct.",
-    "Nov.",
-    "Dic.",
+    i18n.t("januaryShort"),
+    i18n.t("februaryShort"),
+    i18n.t("marchShort"),
+    i18n.t("aprilShort"),
+    i18n.t("mayShort"),
+    i18n.t("juneShort"),
+    i18n.t("julyShort"),
+    i18n.t("augustShort"),
+    i18n.t("septemberShort"),
+    i18n.t("octoberShort"),
+    i18n.t("novemberShort"),
+    i18n.t("decemberShort"),
   ],
   dayNames: [
-    "Lunes",
-    "Martes",
-    "Miércoles",
-    "Jueves",
-    "Viernes",
-    "Sábado",
-    "Domingo",
+    i18n.t("monday"),
+    i18n.t("tuesday"),
+    i18n.t("wednesday"),
+    i18n.t("thursday"),
+    i18n.t("friday"),
+    i18n.t("saturday"),
+    i18n.t("sunday"),
   ],
-  dayNamesShort: ["Lun", "Mar", "Mié", "Jue", "Vie", "Sáb", "Dom"],
-  today: "Hoy",
+  dayNamesShort: [
+    i18n.t("mondayShort"),
+    i18n.t("tuesdayShort"),
+    i18n.t("wednesdayShort"),
+    i18n.t("thursdayShort"),
+    i18n.t("fridayShort"),
+    i18n.t("saturdayShort"),
+    i18n.t("sundayShort"),
+  ],
+  today: i18n.t("today"),
 };
 LocaleConfig.defaultLocale = "es";
 
@@ -79,8 +88,8 @@ function CalendarTasks() {
 
   useEffect(() => {
     navigation.setOptions({
-      title: "Agenda",
-      headerBackTitle: "Atrás",
+      title: i18n.t("agenda"),
+      headerBackTitle: i18n.t("back"),
       headerTitleStyle: {
         color: themes[theme].text,
       },
@@ -103,11 +112,11 @@ function CalendarTasks() {
         >
           <Text className={`text-2xl font-bold text-[${themes[theme].text}]`}>
             {new Date(props)
-              .toLocaleDateString("es-ES", {
+              .toLocaleDateString(i18n.locale, {
                 month: "long",
                 year: "numeric",
               })
-              .replace(" de", " ")}
+              .replace(i18n.locale.startsWith("ca") ? " del" : " de", " ")}
           </Text>
         </TouchableOpacity>
         <TouchableOpacity
@@ -120,7 +129,7 @@ function CalendarTasks() {
           <Text
             className={`text-2xl font-bold text-[${themes[theme].blueHeadText}]`}
           >
-            Hoy
+            {i18n.t("today")}
           </Text>
         </TouchableOpacity>
       </View>
@@ -145,7 +154,7 @@ function CalendarTasks() {
       return acc;
     }, {});
 
-  // Marcar el día seleccionado
+  // Mark the selected date
   if (selectedDate) {
     markedDates[selectedDate] = {
       ...markedDates[selectedDate],
@@ -194,8 +203,8 @@ function CalendarTasks() {
         markingType={"multi-dot"}
         scrollEnabled={true}
         staticHeader={true}
-        hideExtraDays={false} // Muestra días de otros meses
-        disableMonthChange={false} // Permite navegar entre meses
+        hideExtraDays={false} // Show other month days
+        disableMonthChange={false} // Allows to scroll to other months
         theme={{
           backgroundColor: themes[theme].background,
           calendarBackground: themes[theme].background,
@@ -227,7 +236,7 @@ function CalendarTasks() {
       <Text
         className={`mt-3 ml-5 text-lg text-[${themes[theme].text}] font-bold`}
       >
-        {new Date(selectedDate).toLocaleDateString("es-ES", {
+        {new Date(selectedDate).toLocaleDateString(i18n.locale, {
           day: "2-digit",
           month: "short",
           year: "numeric",
@@ -275,7 +284,7 @@ function CalendarTasks() {
         ListEmptyComponent={
           <View className="items-center mt-10">
             <Text className={`text-[${themes[theme].taskSecondText}] text-lg`}>
-              No hay recordatorios para este día
+              {i18n.t("noErrandsThisDay")}
             </Text>
           </View>
         }
@@ -297,7 +306,7 @@ function CalendarTasks() {
         date={new Date(selectedDate)}
         onConfirm={handleDateConfirm}
         onCancel={() => setIsDatePickerVisible(false)}
-        locale="es_ES"
+        locale={i18n.locale}
         accentColor={themes[theme].blueHeadText}
         textColor={themes[theme].text}
       />

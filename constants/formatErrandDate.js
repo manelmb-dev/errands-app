@@ -1,6 +1,8 @@
+import i18n from "./i18n";
+
 const formatErrandDate = (errand) => {
   const errandDate = new Date(
-    `${errand.dateErrand}T${errand.timeErrand || "20:00"}`
+    `${errand.dateErrand}T${errand.timeErrand || "20:00"}`,
   );
 
   const today = new Date();
@@ -12,27 +14,39 @@ const formatErrandDate = (errand) => {
 
   const diffDays = Math.floor((targetDate - baseDate) / (1000 * 60 * 60 * 24));
 
-  const dayNames = ["dom", "lun", "mar", "mié", "jue", "vie", "sáb"];
+  const dayNames = [
+    i18n.t("sundayShort"),
+    i18n.t("mondayShort"),
+    i18n.t("tuesdayShort"),
+    i18n.t("wednesdayShort"),
+    i18n.t("thursdayShort"),
+    i18n.t("fridayShort"),
+    i18n.t("saturdayShort"),
+  ];
   const monthNames = [
-    "ene",
-    "feb",
-    "mar",
-    "abr",
-    "may",
-    "jun",
-    "jul",
-    "ago",
-    "sep",
-    "oct",
-    "nov",
-    "dic",
+    i18n.t("januaryShort"),
+    i18n.t("februaryShort"),
+    i18n.t("marchShort"),
+    i18n.t("aprilShort"),
+    i18n.t("mayShort"),
+    i18n.t("juneShort"),
+    i18n.t("julyShort"),
+    i18n.t("augustShort"),
+    i18n.t("septemberShort"),
+    i18n.t("octoberShort"),
+    i18n.t("novemberShort"),
+    i18n.t("decemberShort"),
   ];
   if (diffDays === 0)
-    return errand.timeErrand ? `Hoy, ${errand.timeErrand}` : "Hoy";
-  if (diffDays === -1) return "Ayer";
-  if (diffDays === -2) return "Anteayer";
+    return errand.timeErrand
+      ? `${i18n.t("today")}, ${errand.timeErrand}`
+      : i18n.t("today");
+  if (diffDays === -1) return i18n.t("yesterday");
+  if (diffDays === -2) return i18n.t("twoDaysAgo");
   if (diffDays === 1)
-    return errand.timeErrand ? `Mañana, ${errand.timeErrand}` : "Mañana";
+    return errand.timeErrand
+      ? `${i18n.t("tomorrow")}, ${errand.timeErrand}`
+      : i18n.t("tomorrow");
   if (diffDays > 1 && diffDays < 7) {
     const weekday = dayNames[errandDate.getDay()];
     return errand.timeErrand ? `${weekday}, ${errand.timeErrand}` : weekday;
@@ -42,6 +56,6 @@ const formatErrandDate = (errand) => {
   const day = errandDate.getDate();
   const month = monthNames[errandDate.getMonth()];
   return `${day} ${month}`;
-}
+};
 
 export default formatErrandDate;

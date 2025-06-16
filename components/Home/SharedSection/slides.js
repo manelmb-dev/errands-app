@@ -1,4 +1,5 @@
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+import i18n from "../../../constants/i18n";
 
 const getCurrentWeekRange = () => {
   const now = new Date();
@@ -93,19 +94,19 @@ export const getSharedSlides = (errands, user) => {
 
   const sharedCards = [
     {
-      label: "Enviados",
+      label: i18n.t("outgoing"),
       value: outgoingErrands.length,
       route: "/sharedTasks",
       params: { type: "outgoing", status: "pending" },
     },
     {
-      label: "Recibidos",
+      label: i18n.t("incoming"),
       value: incomingErrands.length,
       route: "/sharedTasks",
       params: { type: "incoming", status: "pending" },
     },
     {
-      label: "Completados",
+      label: i18n.t("completed"),
       value: completedSharedErrands.length,
       route: "/sharedTasks",
       params: { type: "all", status: "completed" },
@@ -114,19 +115,19 @@ export const getSharedSlides = (errands, user) => {
 
   const incomingCards = [
     {
-      label: "Pendientes",
+      label: i18n.t("pending"),
       value: incomingPending.length,
       route: "/sharedTasks",
       params: { type: "incoming", status: "pending" },
     },
     {
-      label: "Con retraso",
+      label: i18n.t("overdue"),
       value: incomingOverdue.length,
       route: "/sharedTasks",
       params: { type: "incoming", status: "pending" },
     },
     {
-      label: "Completados",
+      label: i18n.t("completed"),
       value: incomingCompleted.length,
       route: "/sharedTasks",
       params: { type: "incoming", status: "completed" },
@@ -135,19 +136,19 @@ export const getSharedSlides = (errands, user) => {
 
   const outgoingCards = [
     {
-      label: "Pendientes",
+      label: i18n.t("pending"),
       value: outgoingPending.length,
       route: "/sharedTasks",
       params: { type: "outgoing", status: "pending" },
     },
     {
-      label: "Con retraso",
+      label: i18n.t("overdue"),
       value: outgoingOverdue.length,
       route: "/sharedTasks",
       params: { type: "outgoing", status: "pending" },
     },
     {
-      label: "Completados",
+      label: i18n.t("completed"),
       value: outgoingCompleted.length,
       route: "/sharedTasks",
       params: { type: "outgoing", status: "completed" },
@@ -156,20 +157,20 @@ export const getSharedSlides = (errands, user) => {
 
   const slides = [
     {
-      title: "Compartidos",
-      secondTitle: "Esta semana",
+      title: i18n.t("shared"),
+      secondTitle: i18n.t("thisWeek"),
       icon: { name: "account-group", lib: MaterialCommunityIcons, size: 29 },
       data: sharedCards,
     },
     {
-      title: "Recibidos",
-      secondTitle: "Esta semana",
+      title: i18n.t("incoming"),
+      secondTitle: i18n.t("thisWeek"),
       icon: { name: "tray-arrow-down", lib: MaterialCommunityIcons, size: 29 },
       data: incomingCards,
     },
     {
-      title: "Enviados",
-      secondTitle: "Esta semana",
+      title: i18n.t("outgoing"),
+      secondTitle: i18n.t("thisWeek"),
       icon: { name: "call-made", lib: MaterialCommunityIcons, size: 29 },
       data: outgoingCards,
     },

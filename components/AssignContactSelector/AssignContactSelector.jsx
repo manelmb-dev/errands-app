@@ -24,6 +24,7 @@ import {
 
 import { themes } from "../../constants/themes";
 import { SafeAreaView } from "react-native-safe-area-context";
+import i18n from "../../constants/i18n";
 
 const AssignContactSelector = () => {
   const navigation = useNavigation();
@@ -40,7 +41,7 @@ const AssignContactSelector = () => {
 
   useEffect(() => {
     navigation.setOptions({
-      title: "Asignar recordatorio",
+      title: i18n.t("assignErrand"),
       presentation: "modal",
       headerTitleStyle: {
         color: themes[theme].text,
@@ -50,7 +51,7 @@ const AssignContactSelector = () => {
       },
       headerShadowVisible: false,
       headerSearchBarOptions: {
-        placeholder: "Buscar",
+        placeholder: i18n.t("search"),
         onChangeText: (event) => {
           setContactSearchedInput(event.nativeEvent.text.replace(/\s+/g, ""));
         },
@@ -58,7 +59,7 @@ const AssignContactSelector = () => {
       headerLeft: () => (
         <Pressable onPress={() => navigation.goBack()}>
           <Text className={`text-2xl text-[${themes[theme].blueHeadText}]`}>
-            Cancelar
+            {i18n.t("cancel")}
           </Text>
         </Pressable>
       ),
@@ -99,14 +100,14 @@ const AssignContactSelector = () => {
         className={`py-5 text-lg font-bold text-center text-[${themes[theme].text}]  ${theme === "light" ? "bg-blue-300" : "bg-blue-700"}`}
       >
         {userAssigned.id === user.id
-          ? "Recordatorio para mi"
+          ? i18n.t("errandForMe")
           : userAssigned.name + " " + userAssigned.surname}
       </Text>
       {filteredContacts.length > 0 && (
         <Text
           className={`m-3 ml-5 text-lg text-[${themes[theme].text}] font-bold`}
         >
-          Selecciona un contacto
+          {i18n.t("selectContact")}
         </Text>
       )}
 
@@ -116,7 +117,7 @@ const AssignContactSelector = () => {
         ListEmptyComponent={
           <View className="pt-12 items-center">
             <Text className={`text-[${themes[theme].taskSecondText}] text-xl`}>
-              No existe ningún contacto con este nombre
+              {i18n.t("noContacts")}
             </Text>
           </View>
         }
@@ -148,7 +149,8 @@ const AssignContactSelector = () => {
               />
               <View className="flex-1 flex-row justify-between">
                 <Text className={`text-lg text-[${themes[theme].text}]`}>
-                  {item.name} {item.surname} {item.id === user.id && "(Tú)"}
+                  {item.name} {item.surname}{" "}
+                  {item.id === user.id && `(${i18n.t("me")})`}
                 </Text>
                 <View className="flex-row gap-4">
                   {userAssigned.id === item.id && (

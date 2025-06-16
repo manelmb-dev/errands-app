@@ -13,6 +13,7 @@ import { useAtom } from "jotai";
 import CompletedErrand from "../../Utils/CompletedErrand";
 import { themes } from "../../constants/themes";
 import RenderRightActionsCompletedErrand from "../../Utils/RenderRightActionsCompletedErrand";
+import i18n from "../../constants/i18n";
 
 function CompletedTasks() {
   const navigation = useNavigation();
@@ -20,7 +21,7 @@ function CompletedTasks() {
   const openSwipeableRef = useRef(null);
   const swipeableRefs = useRef({});
 
-  const [theme, setTheme] = useAtom(themeAtom);
+  const [theme] = useAtom(themeAtom);
   const [errands, setErrands] = useAtom(errandsAtom);
 
   const completedErrands = useMemo(
@@ -49,8 +50,8 @@ function CompletedTasks() {
 
   useEffect(() => {
     navigation.setOptions({
-      title: "Completados",
-      headerBackTitle: "Atrás",
+      title: i18n.t("completed"),
+      headerBackTitle: i18n.t("back"),
       headerTitleStyle: {
         color: themes[theme].text,
       },
@@ -76,11 +77,15 @@ function CompletedTasks() {
 
   const confirmDeleteAll = () => {
     Alert.alert(
-      `Eliminar ${totalErrandsCompleted} ${totalErrandsCompleted > 1 ? "recordatorios" : "recordatorio"}`,
+      `${i18n.t("delete")} ${totalErrandsCompleted} ${totalErrandsCompleted > 1 ? `${i18n.t("errands").toLowerCase()}` : `${i18n.t("errand").toLowerCase()}`}`,
       "",
       [
-        { text: "Eliminar", onPress: handleDeleteAll, style: "destructive" },
-        { text: "Cancelar" },
+        {
+          text: i18n.t("delete"),
+          onPress: handleDeleteAll,
+          style: "destructive",
+        },
+        { text: i18n.t("cancel") },
       ]
     );
   };
@@ -100,27 +105,27 @@ function CompletedTasks() {
 
   const confirmDeleteOverAMonth = () => {
     Alert.alert(
-      `Eliminar ${totalErrandsCompletedOverAMonth} ${totalErrandsCompletedOverAMonth > 1 ? "recordatorios" : "recordatorio"}`,
+      `${i18n.t("delete")} ${totalErrandsCompletedOverAMonth} ${totalErrandsCompletedOverAMonth > 1 ? `${i18n.t("errands").toLowerCase()}` : `${i18n.t("errand").toLowerCase()}`}`,
       "",
       [
         {
-          text: "Eliminar",
+          text: i18n.t("delete"),
           onPress: handleDeleteOverAMonth,
           style: "destructive",
         },
-        { text: "Cancelar" },
-      ]
+        { text: i18n.t("cancel") },
+      ],
     );
   };
 
   const deleteOptions = [
     {
-      label: "Eliminar todos",
+      label: i18n.t("deleteAll"),
       value: "all",
       delete: confirmDeleteAll,
     },
     {
-      label: "De hace más de un mes",
+      label: i18n.t("moreThanAMonthAgo"),
       value: "overAMonth",
       delete: confirmDeleteOverAMonth,
     },
@@ -142,7 +147,7 @@ function CompletedTasks() {
       <View className="w-full flex-row items-center justify-center gap-2">
         <Text
           className={`text-lg text-[${themes[theme].listTitle}]`}
-        >{`${totalErrandsCompleted} completados`}</Text>
+        >{`${totalErrandsCompleted} ${i18n.t("completed")}`}</Text>
         <Text
           className={`text-lg text-[${themes[theme].listTitle}] font-semibold`}
         >
@@ -156,15 +161,15 @@ function CompletedTasks() {
                 : `text-[${themes[theme].blueHeadText}] font-bold`
             }`}
           >
-            Eliminar
+            {i18n.t("delete")}
           </Text>
         </Pressable>
       </View>
       {totalErrandsCompleted === 0 && (
         <View className="mb-64 flex-1 flex-row items-center justify-center">
-          <Text
-            className={`text-xl text-[${themes[theme].text}]`}
-          >{`No hay recordatorios completados`}</Text>
+          <Text className={`text-xl text-[${themes[theme].text}]`}>
+            {i18n.t("thereAreNoCompletedErrands")}
+          </Text>
         </View>
       )}
       {totalErrandsCompleted > 0 && (
@@ -202,8 +207,11 @@ function CompletedTasks() {
 
       <ActionSheet
         ref={deleteSheetRef}
-        title={"Eliminar recordatorios completados"}
-        options={[...deleteOptions.map((option) => option.label), "Cancelar"]}
+        title={i18n.t("deleteCompletedErrands")}
+        options={[
+          ...deleteOptions.map((option) => option.label),
+          i18n.t("cancel"),
+        ]}
         cancelButtonIndex={deleteOptions.length}
         onPress={(index) => {
           if (index === deleteOptions.length) return;

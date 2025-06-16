@@ -19,6 +19,7 @@ import { themes } from "../constants/themes";
 import "../App.css";
 import { useEffect, useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import I18n from "../constants/i18n";
 
 export default function Layout() {
   const system = useColorScheme() ?? "light";
@@ -39,6 +40,8 @@ export default function Layout() {
       }
 
       setLanguage(savedLang || "es");
+      I18n.locale = savedLang || "es";
+
       setReady(true);
     };
     loadPreferences();

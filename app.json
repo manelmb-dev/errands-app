@@ -12,7 +12,10 @@
       "backgroundColor": "#ffffff"
     },
     "scheme": "errands",
-    "platforms": ["ios", "android"],
+    "platforms": [
+      "ios",
+      "android"
+    ],
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.mmbdev.errands",
@@ -33,7 +36,8 @@
       }
     },
     "plugins": [
-      "expo-router"
+      "expo-router",
+      "expo-localization"
     ]
   }
 }

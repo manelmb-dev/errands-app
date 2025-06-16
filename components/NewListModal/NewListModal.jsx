@@ -20,6 +20,7 @@ import Ionicons from "react-native-vector-icons/Ionicons";
 import { themes } from "../../constants/themes";
 import IconGrid from "./IconGrid/IconGrid";
 import ColorGrid from "./ColorGrid/ColorGrid";
+import i18n from "../../constants/i18n";
 
 const NewListModal = () => {
   const navigation = useNavigation();
@@ -58,7 +59,7 @@ const NewListModal = () => {
 
   useEffect(() => {
     navigation.setOptions({
-      title: "Nueva lista",
+      title: i18n.t("newList"),
       presentation: "modal",
       headerTitleStyle: {
         color: themes[theme].text,
@@ -70,7 +71,7 @@ const NewListModal = () => {
       headerLeft: () => (
         <Pressable onPress={handleCancelAlert}>
           <Text className={`text-2xl text-[${themes[theme].blueHeadText}]`}>
-            Cancelar
+            {i18n.t("cancel")}
           </Text>
         </Pressable>
       ),
@@ -79,7 +80,7 @@ const NewListModal = () => {
           <Text
             className={`text-2xl font-semibold ${watchedTitle.trim() ? `text-[${themes[theme].blueHeadText}]` : `text-[${themes[theme].taskSecondText}]`}`}
           >
-            Añadir
+            {i18n.t("add")}
           </Text>
         </Pressable>
       ),
@@ -102,16 +103,16 @@ const NewListModal = () => {
   // Function to handle cancel alert
   const handleCancelAlert = useCallback(() => {
     if (watch("title").length > 0) {
-      Alert.alert("Se descartará la nueva lista", "", [
+      Alert.alert(i18n.t("newListWillBeDiscarded"), "", [
         {
-          text: "Descartar",
+          text: i18n.t("discard"),
           onPress: () => {
             navigation.goBack();
           },
           style: "destructive",
         },
         {
-          text: "Cancelar",
+          text: i18n.t("cancel"),
         },
       ]);
     } else {
@@ -156,7 +157,7 @@ const NewListModal = () => {
               className={`p-4 pl-4 text-2xl border-b-hairline ${theme === "light" ? "border-gray-300" : "border-neutral-950"} align-top leading-tight text-[${themes[theme].text}]`}
               value={value}
               onChangeText={onChange}
-              placeholder="Título de la lista"
+              placeholder={i18n.t("listTitle")}
               placeholderTextColor={
                 theme === "dark" && themes[theme].taskSecondText
               }
@@ -179,7 +180,7 @@ const NewListModal = () => {
               />
               <View>
                 <Text className={`text-[${themes[theme].text}] text-base`}>
-                  Color
+                  {i18n.t("color")}
                 </Text>
               </View>
             </View>
@@ -221,7 +222,7 @@ const NewListModal = () => {
               />
               <View>
                 <Text className={`text-[${themes[theme].text}] text-base`}>
-                  Icono
+                  {i18n.t("icon")}
                 </Text>
               </View>
             </View>

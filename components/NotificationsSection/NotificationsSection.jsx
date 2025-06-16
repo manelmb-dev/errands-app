@@ -8,13 +8,12 @@ import { useAtom } from "jotai";
 import Ionicons from "react-native-vector-icons/Ionicons";
 
 import { themes } from "../../constants/themes";
+import i18n from "../../constants/i18n";
 
 function NotificationsSection() {
   const navigation = useNavigation();
 
   const [theme] = useAtom(themeAtom);
-
-  const [modalSettingsVisible, setModalSettingsVisible] = useState(false);
 
   useEffect(() => {
     navigation.setOptions({
@@ -29,7 +28,7 @@ function NotificationsSection() {
           <Text
             className={`text-3xl font-semibold text-[${themes[theme].text}]`}
           >
-            Notificaciones
+            {i18n.t("notifications")}
           </Text>
         </View>
       ),
@@ -38,7 +37,10 @@ function NotificationsSection() {
           name="options"
           color={themes[theme].blueHeadText}
           size={24}
-          onPress={() => setModalSettingsVisible(true)}
+          onPress={() =>
+            //FIXXX THIS;
+            console.log("modal")
+          }
         />
       ),
     });

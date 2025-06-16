@@ -14,6 +14,7 @@ import Ionicons from "react-native-vector-icons/Ionicons";
 import { themeAtom } from "../../../constants/storeAtoms";
 import { useAtom } from "jotai";
 import { themes } from "../../../constants/themes";
+import i18n from "../../../constants/i18n";
 
 export default function AppearencePopupMenu() {
   const systemTheme = useColorScheme() ?? "light";
@@ -47,18 +48,18 @@ export default function AppearencePopupMenu() {
   };
 
   const options = [
-    { label: "Claro", value: "light" },
-    { label: "Oscuro", value: "dark" },
-    { label: "Automático", value: "auto" },
+    { label: i18n.t("light"), value: "light" },
+    { label: i18n.t("dark"), value: "dark" },
+    { label: i18n.t("auto"), value: "auto" },
   ];
 
   // Label in trigger
   const labelShown =
     selectedType === "auto"
-      ? "Automático"
+      ? i18n.t("auto")
       : selectedType === "dark"
-        ? "Oscuro"
-        : "Claro";
+        ? i18n.t("dark")
+        : i18n.t("light");
 
   return (
     <Menu>
@@ -75,7 +76,7 @@ export default function AppearencePopupMenu() {
             className={`py-4 flex-1 flex-row justify-between border-b border-[${themes[theme].listsSeparator}]`}
           >
             <Text className={`text-[${themes[theme].text}] text-lg`}>
-              Aspecto
+              {i18n.t("appearance")}
             </Text>
             <View className="flex-row items-center gap-2 mr-4">
               <Text

@@ -15,19 +15,19 @@ import {
 
 import Ionicons from "react-native-vector-icons/Ionicons";
 
-import SettingsMainModal from "../Home/SettingsMainModal/SettingsMainModal";
 import UndoCompleteErrandButton from "../../Utils/UndoCompleteErrandButton";
 import SwipeableFullErrand from "../../Utils/SwipeableFullErrand";
 import { useErrandActions } from "../../hooks/useErrandActions";
 import CompletedErrand from "../../Utils/CompletedErrand";
 import { themes } from "../../constants/themes";
 import RenderRightActionsCompletedErrand from "../../Utils/RenderRightActionsCompletedErrand";
+import i18n from "../../constants/i18n";
 
 function FilterTasks() {
   const navigation = useNavigation();
 
   const [user] = useAtom(userAtom);
-  const [theme, setTheme] = useAtom(themeAtom);
+  const [theme] = useAtom(themeAtom);
   const [errands, setErrands] = useAtom(errandsAtom);
   const [lists] = useAtom(listsAtom);
 
@@ -60,7 +60,7 @@ function FilterTasks() {
       },
       headerShadowVisible: false,
       // headerSearchBarOptions: {
-      //   placeholder: "Buscar",
+      //   placeholder: {i18n.t("search")},
       //   obscureBackground: taskSearchInput.length > 0 ? false : true,
       //   onChangeText: (event) => {
       //     settaskSearchInput(event.nativeEvent.text);
@@ -70,10 +70,6 @@ function FilterTasks() {
       headerRight: () => null,
     });
   }, [navigation, theme, taskSearchInput]);
-
-  const toggleTheme = () => {
-    setTheme((prev) => (prev === "light" ? "dark" : "light"));
-  };
 
   {
     /* Filter errands*/
@@ -103,7 +99,7 @@ function FilterTasks() {
     if (sharedErrands.length > 0) {
       items.push({
         id: "sharedErrandsId",
-        title: "Compartidos",
+        title: i18n.t("shared"),
         icon: "people",
         color: "slate",
         errands: sharedErrands,
@@ -170,13 +166,6 @@ function FilterTasks() {
 
   return (
     <View className={`flex-1 flex-row bg-[${themes[theme].background}]`}>
-      {/* Modal */}
-      <SettingsMainModal
-        modalSettingsVisible={modalSettingsVisible}
-        setModalSettingsVisible={setModalSettingsVisible}
-        toggleTheme={toggleTheme}
-      />
-
       <View
         className="flex-1"
         onStartShouldSetResponder={() => {
@@ -277,7 +266,7 @@ function FilterTasks() {
             <Text
               className={`text-[${themes[theme].listTitle}] text-lg font-bold text-center mt-40`}
             >
-              No existen recordatorios con este título
+              {i18n.t("noSearchErrands")}
             </Text>
           }
         />

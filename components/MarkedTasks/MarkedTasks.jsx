@@ -1,7 +1,7 @@
 import Animated, { LinearTransition } from "react-native-reanimated";
 import { useEffect, useRef, useState } from "react";
 import { useNavigation } from "expo-router";
-import { View } from "react-native";
+import { Text, View } from "react-native";
 
 import Ionicons from "react-native-vector-icons/Ionicons";
 
@@ -17,6 +17,7 @@ import UndoCompleteErrandButton from "../../Utils/UndoCompleteErrandButton";
 import SwipeableFullErrand from "../../Utils/SwipeableFullErrand";
 import { useErrandActions } from "../../hooks/useErrandActions";
 import { themes } from "../../constants/themes";
+import i18n from "../../constants/i18n";
 
 function MarkedTasks() {
   const navigation = useNavigation();
@@ -26,7 +27,6 @@ function MarkedTasks() {
   const [user] = useAtom(userAtom);
   const [theme] = useAtom(themeAtom);
   const [errands, setErrands] = useAtom(errandsAtom);
-  const [lists, setLists] = useAtom(listsAtom);
 
   const [showCompleted, setShowCompleted] = useState(false);
   const [possibleUndoErrand, setPossibleUndoErrand] = useState(null);
@@ -38,8 +38,8 @@ function MarkedTasks() {
 
   useEffect(() => {
     navigation.setOptions({
-      title: "Destacados",
-      headerBackTitle: "Atrás",
+      title: i18n.t("marked"),
+      headerBackTitle: i18n.t("back"),
       headerTitleStyle: {
         color: themes[theme].text,
       },
@@ -120,6 +120,14 @@ function MarkedTasks() {
         //     </View>
         //   )
         // }
+
+        ListEmptyComponent={
+          <View className="flex-1 mt-16 items-center justify-center">
+            <Text className={`text-lg text-${themes[theme].text}`}>
+              {i18n.t("noMarkedErrands")}
+            </Text>
+          </View>
+        }
       />
 
       {possibleUndoErrand && (

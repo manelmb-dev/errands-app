@@ -12,6 +12,7 @@ import UndoCompleteErrandButton from "../../Utils/UndoCompleteErrandButton";
 import SwipeableFullErrand from "../../Utils/SwipeableFullErrand";
 import { useErrandActions } from "../../hooks/useErrandActions";
 import { themes } from "../../constants/themes";
+import i18n from "../../constants/i18n";
 
 function ListTasks() {
   const navigation = useNavigation();
@@ -35,7 +36,7 @@ function ListTasks() {
   useEffect(() => {
     navigation.setOptions({
       title: currentList.title,
-      headerBackTitle: "Atrás",
+      headerBackTitle: i18n.t("back"),
       headerTitleStyle: {
         color: themes[theme].text,
       },
@@ -95,7 +96,7 @@ function ListTasks() {
           <Text
             className={`text-[${themes[theme].listTitle}] text-lg font-bold text-center mt-20`}
           >
-            No existen recordatorios en esta lista
+            {i18n.t("noErrandsInThisList")}
           </Text>
         }
         // ListHeaderComponent={

@@ -16,6 +16,7 @@ import { useErrandActions } from "../../hooks/useErrandActions";
 import CompletedErrand from "../../Utils/CompletedErrand";
 import { themes } from "../../constants/themes";
 import RenderRightActionsCompletedErrand from "../../Utils/RenderRightActionsCompletedErrand";
+import i18n from "../../constants/i18n";
 
 function TodayTasks() {
   const navigation = useNavigation();
@@ -40,8 +41,8 @@ function TodayTasks() {
 
   useEffect(() => {
     navigation.setOptions({
-      title: "Hoy",
-      headerBackTitle: "Atrás",
+      title: i18n.t("today"),
+      headerBackTitle: i18n.t("back"),
       headerTitleStyle: {
         color: themes[theme].text,
       },
@@ -57,9 +58,9 @@ function TodayTasks() {
 
   const tabs = [
     {
-      label: "Pendientes",
+      label: i18n.t("pending"),
       value: "pending",
-      emptyListText: "Estás al día",
+      emptyListText: i18n.t("youAreUpToDate"),
       errandsList: errands
         .filter((errand) => !errand.completed)
         .filter((errand) => !errand.deleted)
@@ -70,9 +71,9 @@ function TodayTasks() {
         ),
     },
     {
-      label: "Completados",
+      label: i18n.t("completed"),
       value: "completed",
-      emptyListText: "No hay tareas completadas",
+      emptyListText: i18n.t("thereAreNoCompletedErrands"),
       errandsList: errands
         .filter((errand) => errand.completed)
         .filter((errand) => !errand.deleted)
@@ -104,7 +105,7 @@ function TodayTasks() {
     );
   }, [selectedTabObj, user.id]);
 
-  const todayDateFormatted = new Date().toLocaleDateString("es-ES", {
+  const todayDateFormatted = new Date().toLocaleDateString(i18n.locale, {
     weekday: "long",
     day: "numeric",
     month: "long",
@@ -211,7 +212,7 @@ function TodayTasks() {
                 <Text
                   className={`text-[${themes[theme].listTitle}] text-2xl font-bold`}
                 >
-                  Enviados
+                  {i18n.t("outgoing")}
                 </Text>
               </View>
               {errandsOutgoingFromMe.sort(sortByDate).map((errand) => {

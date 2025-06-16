@@ -14,6 +14,7 @@ import {
 } from "../../../constants/storeAtoms";
 
 import { themes } from "../../../constants/themes";
+import i18n from "../../../constants/i18n";
 
 function MainCardsSection() {
   const router = useRouter();
@@ -53,31 +54,31 @@ function MainCardsSection() {
 
   const cards = [
     {
-      label: "Todo",
+      label: i18n.t("allSingular"),
       icon: { name: "file-tray-full-outline", lib: Ionicons, size: 33 },
       count: errandsNotCompleted,
       route: "/allTasks",
     },
     {
-      label: "Hoy",
+      label: i18n.t("today"),
       icon: { name: "today-outline", lib: Ionicons, size: 32 },
       count: errandsToday,
       route: "/todayTasks",
     },
     {
-      label: "Marcados",
+      label: i18n.t("marked"),
       icon: { name: "flag-outline", lib: Ionicons, size: 30 },
       count: errandsMarked,
       route: "/markedTasks",
     },
     {
-      label: "Calendario",
+      label: i18n.t("calendar"),
       icon: { name: "calendar-outline", lib: Ionicons, size: 33 },
       count: null,
       route: "/calendarTasks",
     },
     // {
-    //   label: "Completados",
+    //   label: i18n.t("completed"),
     //   icon: { name: "check-circle-fill", lib: Octicons, size: 30 },
     //   count: null,
     //   route: "/completedTasks",

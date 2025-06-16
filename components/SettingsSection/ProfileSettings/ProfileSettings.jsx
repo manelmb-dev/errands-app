@@ -8,6 +8,7 @@ import { useAtom } from "jotai";
 import Ionicons from "react-native-vector-icons/Ionicons";
 
 import { themes } from "../../../constants/themes";
+import i18n from "../../../constants/i18n";
 
 function SettingsSection() {
   const navigation = useNavigation();
@@ -20,7 +21,7 @@ function SettingsSection() {
   useEffect(() => {
     navigation.setOptions({
       headerShown: true,
-      title: "Perfil",
+      title: i18n.t("profile"),
       headerStyle: {
         backgroundColor: themes[theme].background,
       },
@@ -108,7 +109,7 @@ function SettingsSection() {
           className="bg-blue-600 rounded-xl py-3"
         >
           <Text className="text-white text-center text-lg font-semibold">
-            Guardar cambios
+            {i18n.t("saveChanges")}
           </Text>
         </TouchableOpacity>
       </View>

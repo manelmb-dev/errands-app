@@ -1,6 +1,6 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import React, { useEffect, useState } from "react";
 import { View, TouchableOpacity, Text } from "react-native";
+import React, { useEffect, useState } from "react";
 import {
   Menu,
   MenuTrigger,
@@ -8,13 +8,15 @@ import {
   MenuOption,
 } from "react-native-popup-menu";
 
-import Feather from "react-native-vector-icons/Feather";
 import Ionicons from "react-native-vector-icons/Ionicons";
+import Feather from "react-native-vector-icons/Feather";
 
 import { languageAtom, themeAtom } from "../../../constants/storeAtoms";
 import { useAtom } from "jotai";
 
 import { themes } from "../../../constants/themes";
+import I18n from "../../../constants/i18n";
+import i18n from "../../../constants/i18n";
 
 export default function LanguagePopupMenu() {
   const [language, setLanguage] = useAtom(languageAtom);
@@ -28,6 +30,7 @@ export default function LanguagePopupMenu() {
         await AsyncStorage.getItem("languagePreference");
       setSelectedLanguage(storedLanguagePreference || "es");
       setLanguage(storedLanguagePreference || "es");
+      I18n.locale = storedLanguagePreference || "es";
     };
     loadLanguagePreference();
   }, [setLanguage]);
@@ -36,21 +39,23 @@ export default function LanguagePopupMenu() {
     await AsyncStorage.setItem("languagePreference", lang);
     setSelectedLanguage(lang);
     setLanguage(lang);
+
+    I18n.locale = lang;
   };
 
   const options = [
-    { label: "Español", value: "es" },
-    { label: "Inglés", value: "en" },
-    { label: "Catalán", value: "ca" },
+    { label: i18n.t("spanish"), value: "es" },
+    { label: i18n.t("english"), value: "en" },
+    { label: i18n.t("catalan"), value: "ca" },
   ];
 
   // Label in trigger
   const labelShown =
     selectedLanguage === "en"
-      ? "Inglés"
+      ? i18n.t("english")
       : selectedLanguage === "ca"
-        ? "Catalán"
-        : "Español";
+        ? i18n.t("catalan")
+        : i18n.t("spanish");
 
   return (
     <Menu>
@@ -65,7 +70,7 @@ export default function LanguagePopupMenu() {
           />
           <View className={`flex-1 flex-row justify-between py-4`}>
             <Text className={`text-[${themes[theme].text}] text-lg`}>
-              Idioma
+              {i18n.t("language")}
             </Text>
             <View className="flex-row items-center gap-2 mr-4">
               <Text

@@ -19,6 +19,7 @@ import {
 } from "../../constants/storeAtoms";
 
 import { themes } from "../../constants/themes";
+import i18n from "../../constants/i18n";
 
 const AssignContactSelector = () => {
   const navigation = useNavigation();
@@ -29,7 +30,7 @@ const AssignContactSelector = () => {
 
   useEffect(() => {
     navigation.setOptions({
-      title: "Lista",
+      title: i18n.t("list"),
       presentation: "modal",
       headerTitleStyle: {
         color: themes[theme].text,
@@ -41,7 +42,7 @@ const AssignContactSelector = () => {
       headerLeft: () => (
         <Pressable onPress={() => navigation.goBack()}>
           <Text className={`text-2xl text-[${themes[theme].blueHeadText}]`}>
-            Cancelar
+            {i18n.t("cancel")}
           </Text>
         </Pressable>
       ),
@@ -53,12 +54,12 @@ const AssignContactSelector = () => {
       <Text
         className={`py-5 text-lg font-bold text-center text-[${themes[theme].text}] ${theme === "light" ? "bg-blue-300" : "bg-blue-700"}`}
       >
-        {listAssigned ? `${listAssigned.title}` : "Compartidos"}
+        {listAssigned ? `${listAssigned.title}` : i18n.t("shared")}
       </Text>
       <Text
         className={`m-3 ml-5 text-lg text-[${themes[theme].text}] font-bold`}
       >
-        Selecciona una lista
+        {i18n.t("selectList")}
       </Text>
       <View>
         <FlatList
@@ -121,7 +122,7 @@ const AssignContactSelector = () => {
           />
           <View className="flex-1 flex-row justify-between">
             <Text className={`text-lg text-[${themes[theme].text}]`}>
-              Compartidos
+              {i18n.t("shared")}
             </Text>
             <View className="flex-row gap-4">
               {listAssigned.id === "" && (

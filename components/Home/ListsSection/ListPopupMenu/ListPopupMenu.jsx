@@ -16,6 +16,7 @@ import { useAtom } from "jotai";
 import { themeAtom } from "../../../../constants/storeAtoms";
 
 import { themes } from "../../../../constants/themes";
+import i18n from "../../../../constants/i18n";
 
 export default function ListPopupMenu() {
   const [theme] = useAtom(themeAtom);
@@ -77,7 +78,7 @@ export default function ListPopupMenu() {
       >
         <MenuOption
           onSelect={() => router.push("/Modals/newListModal")}
-          text="Añadir lista"
+          text={i18n.t("addList")}
           customStyles={{
             optionTouchable: {
               activeOpacity: 70,
@@ -100,9 +101,9 @@ export default function ListPopupMenu() {
           }}
         />
         <MenuOption
-          onSelect={() => Alert.alert("Editar listas")}
+          onSelect={() => Alert.alert(i18n.t("editLists"))}
           // FIX Thissssss
-          text="Editar listas"
+          text={i18n.t("editLists")}
           customStyles={{
             optionTouchable: {
               activeOpacity: 70,

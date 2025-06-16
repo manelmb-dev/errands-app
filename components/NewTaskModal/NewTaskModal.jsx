@@ -33,6 +33,7 @@ import {
   priorityOptions,
   repeatOptions,
 } from "../../constants/repeatPriorityOptions";
+import i18n from "../../constants/i18n";
 
 const NewTaskModal = () => {
   const navigation = useNavigation();
@@ -98,7 +99,7 @@ const NewTaskModal = () => {
 
   useEffect(() => {
     navigation.setOptions({
-      title: "Nuevo recordatorio",
+      title: i18n.t("newErrand"),
       presentation: "modal",
       headerTitleStyle: {
         color: themes[theme].text,
@@ -110,7 +111,7 @@ const NewTaskModal = () => {
       headerLeft: () => (
         <Pressable onPress={handleCancelAlert}>
           <Text className={`text-2xl text-[${themes[theme].blueHeadText}]`}>
-            Cancelar
+            {i18n.t("cancel")}
           </Text>
         </Pressable>
       ),
@@ -119,7 +120,7 @@ const NewTaskModal = () => {
           <Text
             className={`text-2xl font-semibold ${watchedTitle.trim() ? `text-[${themes[theme].blueHeadText}]` : `text-[${themes[theme].taskSecondText}]`}`}
           >
-            Añadir
+            {i18n.t("add")}
           </Text>
         </Pressable>
       ),
@@ -226,10 +227,10 @@ const NewTaskModal = () => {
   // Function to handle cancel alert
   const handleCancelAlert = useCallback(() => {
     if (watch("title").length > 0) {
-      Alert.alert("Se descartará el recordatorio", "", [
+      Alert.alert(i18n.t("errandWillBeDiscarded"), "", [
         { text: "Descartar", onPress: handleCancel, style: "destructive" },
         {
-          text: "Cancelar",
+          text: i18n.t("cancel"),
         },
       ]);
     } else {
@@ -265,7 +266,7 @@ const NewTaskModal = () => {
                   leading-tight text-[${themes[theme].text}]`}
               value={value}
               onChangeText={onChange}
-              placeholder="Título"
+              placeholder={i18n.t("title")}
               placeholderTextColor={
                 theme === "dark" && themes[theme].taskSecondText
               }
@@ -274,7 +275,7 @@ const NewTaskModal = () => {
         />
         <Controller
           control={control}
-          name="description"
+          name={i18n.t("description")}
           render={({ field: { onChange, value } }) => (
             <TextInput
               className={`p-4 pl-4 text-lg max-h-48 align-top leading-tight  text-[${themes[theme].text}]`}
@@ -314,7 +315,7 @@ const NewTaskModal = () => {
               className={`py-3 flex-1 flex-row justify-between gap-4 items-center border-b border-[${themes[theme].listsSeparator}]`}
             >
               <Text className={`text-[${themes[theme].text}] text-base`}>
-                Encargado
+                {i18n.t("inCharge")}
               </Text>
               <View
                 className={`mr-4 px-3 py-1 rounded-2xl gap-1 flex-row items-center ${theme === "light" ? "bg-blue-100" : "bg-blue-600"}`}
@@ -326,7 +327,7 @@ const NewTaskModal = () => {
                 />
                 <Text className={`text-lg text-[${themes[theme].text}]`}>
                   {userAssigned.name} {userAssigned.surname}{" "}
-                  {userAssigned.id === user.id && "(Tú)"}
+                  {userAssigned.id === user.id && `(${i18n.t("me")})`}
                 </Text>
               </View>
             </View>
@@ -352,7 +353,7 @@ const NewTaskModal = () => {
             />
             <View className="py-3 gap-4 flex-1 flex-row justify-between items-center">
               <Text className={`text-[${themes[theme].text}] text-base`}>
-                Lista
+                {i18n.t("list")}
               </Text>
               <View
                 className={`mr-4 px-3 py-1 gap-1 flex-row items-center ${listAssigned.id === "" || listAssigned === false ? `bg-[${themes[theme].buttonMenuBackground}]` : `${theme === "light" ? "bg-slate-300" : "bg-slate-600"}`} rounded-2xl`}
@@ -363,7 +364,7 @@ const NewTaskModal = () => {
                   color={themes["light"].text}
                 />
                 <Text className={`text-lg text-[${themes[theme].text}]`}>
-                  {listAssigned ? `${listAssigned.title}` : "Compartidos"}
+                  {listAssigned ? `${listAssigned.title}` : i18n.t("shared")}
                 </Text>
               </View>
             </View>
@@ -392,7 +393,7 @@ const NewTaskModal = () => {
             >
               <View>
                 <Text className={`text-[${themes[theme].text}] text-base`}>
-                  Fecha
+                  {i18n.t("date")}
                 </Text>
                 {watch("dateErrand") && (
                   <Text
@@ -431,7 +432,7 @@ const NewTaskModal = () => {
             >
               <View>
                 <Text className={`text-[${themes[theme].text}] text-base`}>
-                  Hora
+                  {i18n.t("time")}
                 </Text>
                 {watch("timeErrand") && (
                   <Text
@@ -468,7 +469,7 @@ const NewTaskModal = () => {
               >
                 <View>
                   <Text className={`text-[${themes[theme].text}] text-base`}>
-                    Aviso
+                    {i18n.t("notice")}
                   </Text>
                   {watch("dateNotice") && (
                     <Text
@@ -504,7 +505,7 @@ const NewTaskModal = () => {
               />
               <View className="py-4 gap-4 flex-1 flex-row justify-between items-center">
                 <Text className={`text-[${themes[theme].text}] text-base`}>
-                  Repetir
+                  {i18n.t("repeat")}
                 </Text>
               </View>
               <View
@@ -548,7 +549,7 @@ const NewTaskModal = () => {
               className={`py-3 flex-1 flex-row justify-between gap-4 items-center border-b border-[${themes[theme].listsSeparator}]`}
             >
               <Text className={`text-[${themes[theme].text}] text-base`}>
-                Marcador
+                {i18n.t("markedSingular")}
               </Text>
               <Switch
                 className="mr-4"
@@ -574,7 +575,7 @@ const NewTaskModal = () => {
             />
             <View className="py-4 gap-4 flex-1 flex-row justify-between items-center">
               <Text className={`text-[${themes[theme].text}] text-base`}>
-                Prioridad
+                {i18n.t("priority")}
               </Text>
             </View>
             <View
@@ -607,11 +608,11 @@ const NewTaskModal = () => {
         }
         onConfirm={handleDateConfirm}
         onCancel={() => setIsDatePickerVisible(false)}
-        locale="es_ES"
+        locale={i18n.locale}
         accentColor={themes[theme].blueHeadText}
         textColor={themes[theme].text}
-        confirmTextIOS="Confirmar"
-        cancelTextIOS="Cancelar"
+        confirmTextIOS={i18n.t("confirm")}
+        cancelTextIOS={i18n.t("cancel")}
       />
 
       <DateTimePickerModal
@@ -625,11 +626,11 @@ const NewTaskModal = () => {
         }
         onConfirm={handleHourConfirm}
         onCancel={() => setIsHourPickerVisible(false)}
-        locale="es_ES"
+        locale={i18n.locale}
         accentColor={themes[theme].blueHeadText}
         textColor={themes[theme].text}
-        confirmTextIOS="Confirmar"
-        cancelTextIOS="Cancelar"
+        confirmTextIOS={i18n.t("confirm")}
+        cancelTextIOS={i18n.t("cancel")}
         minuteInterval={5}
       />
 
@@ -645,18 +646,21 @@ const NewTaskModal = () => {
         }
         onConfirm={handleNoticeConfirm}
         onCancel={() => setIsNoticePickerVisible(false)}
-        locale="es_ES"
+        locale={i18n.locale}
         accentColor={themes[theme].blueHeadText}
         textColor={themes[theme].text}
-        confirmTextIOS="Confirmar"
-        cancelTextIOS="Cancelar"
+        confirmTextIOS={i18n.t("confirm")}
+        cancelTextIOS={i18n.t("cancel")}
         minuteInterval={5}
       />
 
       <ActionSheet
         ref={repeatSheetRef}
-        title={"Repetir"}
-        options={[...repeatOptions.map((option) => option.label), "Cancelar"]}
+        title={i18n.t("repeat")}
+        options={[
+          ...repeatOptions.map((option) => option.label),
+          i18n.t("cancel"),
+        ]}
         cancelButtonIndex={repeatOptions.length}
         onPress={(index) => {
           if (index === repeatOptions.length) return;
@@ -666,8 +670,11 @@ const NewTaskModal = () => {
 
       <ActionSheet
         ref={prioritySheetRef}
-        title={"Prioridad"}
-        options={[...priorityOptions.map((option) => option.label), "Cancelar"]}
+        title={i18n.t("priority")}
+        options={[
+          ...priorityOptions.map((option) => option.label),
+          i18n.t("cancel"),
+        ]}
         cancelButtonIndex={priorityOptions.length}
         onPress={(index) => {
           if (index === priorityOptions.length) return;

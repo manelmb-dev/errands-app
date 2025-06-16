@@ -15,17 +15,7 @@ import { useErrandActions } from "../../hooks/useErrandActions";
 import { themes } from "../../constants/themes";
 import CompletedErrand from "../../Utils/CompletedErrand";
 import RenderRightActionsCompletedErrand from "../../Utils/RenderRightActionsCompletedErrand";
-
-const tabOptions = [
-  { label: "Todos", value: "all" },
-  { label: "Enviados", value: "outgoing" },
-  { label: "Recibidos", value: "incoming" },
-];
-
-const subFilterOptions = [
-  { label: "Pendientes", value: "pending" },
-  { label: "Completados", value: "completed" },
-];
+import i18n from "../../constants/i18n";
 
 const SharedTasks = () => {
   const navigation = useNavigation();
@@ -53,11 +43,11 @@ const SharedTasks = () => {
   useEffect(() => {
     navigation.setOptions({
       headerShown: true,
-      title: "Compartidos",
+      title: i18n.t("shared"),
       headerTitleStyle: {
         color: themes[theme].text,
       },
-      headerBackTitle: "Atrás",
+      headerBackTitle: i18n.t("back"),
       headerStyle: {
         backgroundColor: themes[theme].background,
       },
@@ -70,18 +60,29 @@ const SharedTasks = () => {
     });
   }, [navigation, theme]);
 
+  const tabOptions = [
+    { label: i18n.t("all"), value: "all" },
+    { label: i18n.t("outgoing"), value: "outgoing" },
+    { label: i18n.t("incoming"), value: "incoming" },
+  ];
+
+  const subFilterOptions = [
+    { label: i18n.t("pending"), value: "pending" },
+    { label: i18n.t("completed"), value: "completed" },
+  ];
+
   const filteredErrands = useMemo(() => {
     let baseList = errands.filter(
-      (e) => !e.deleted && e.ownerId !== e.assignedId,
+      (e) => !e.deleted && e.ownerId !== e.assignedId
     );
 
     if (mainTab === "outgoing") {
       baseList = baseList.filter(
-        (e) => !e.deleted && e.ownerId === user.id && e.assignedId !== user.id,
+        (e) => !e.deleted && e.ownerId === user.id && e.assignedId !== user.id
       );
     } else if (mainTab === "incoming") {
       baseList = baseList.filter(
-        (e) => !e.deleted && e.ownerId !== user.id && e.assignedId === user.id,
+        (e) => !e.deleted && e.ownerId !== user.id && e.assignedId === user.id
       );
     }
 
@@ -107,13 +108,13 @@ const SharedTasks = () => {
     today.setHours(0, 0, 0, 0);
 
     const diasSemana = [
-      "domingo",
-      "lunes",
-      "martes",
-      "miércoles",
-      "jueves",
-      "viernes",
-      "sábado",
+      i18n.t("sunday"),
+      i18n.t("monday"),
+      i18n.t("tuesday"),
+      i18n.t("wednesday"),
+      i18n.t("thursday"),
+      i18n.t("friday"),
+      i18n.t("saturday"),
     ];
 
     filteredErrands.forEach((errand) => {
@@ -126,21 +127,21 @@ const SharedTasks = () => {
       let dateKey = "";
       if (subFilter === "pending") {
         if (diffDays <= 0) {
-          dateKey = "Hoy";
+          dateKey = i18n.t("today");
         } else if (diffDays === 1) {
-          dateKey = "Mañana";
+          dateKey = i18n.t("tomorrow");
         } else if (diffDays <= 6) {
           dateKey = diasSemana[errandDate.getDay()];
         } else {
           const diaNombre = diasSemana[errandDate.getDay()];
-          const fechaTexto = errandDate.toLocaleDateString("es-ES", {
+          const fechaTexto = errandDate.toLocaleDateString(i18n.locale, {
             day: "2-digit",
             month: "long",
           });
           dateKey = `${diaNombre}, ${fechaTexto}`;
         }
       } else {
-        dateKey = errandDate.toLocaleDateString("es-ES", {
+        dateKey = errandDate.toLocaleDateString(i18n.locale, {
           day: "2-digit",
           month: "short",
           year: "numeric",
@@ -237,6 +238,15 @@ const SharedTasks = () => {
                 />
               )
             )}
+          </View>
+        )}
+        ListEmptyComponent={() => (
+          <View className="flex-1 mt-16  items-center justify-center">
+            <Text
+              className={`text-lg font-semibold text-[${themes[theme].text}]`}
+            >
+              {i18n.t("noErrandsInThisSection")}
+            </Text>
           </View>
         )}
       />

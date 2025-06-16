@@ -16,6 +16,7 @@ import {
   priorityOptions,
   repeatOptions,
 } from "../../constants/repeatPriorityOptions";
+import i18n from "../../constants/i18n";
 
 const ViewIncomingTaskModal = () => {
   const navigation = useNavigation();
@@ -36,7 +37,7 @@ const ViewIncomingTaskModal = () => {
 
   useEffect(() => {
     navigation.setOptions({
-      title: "Detalles",
+      title: i18n.t("details"),
       presentation: "modal",
       headerTitleStyle: {
         color: themes[theme].text,
@@ -48,7 +49,7 @@ const ViewIncomingTaskModal = () => {
       headerLeft: () => (
         <Pressable onPress={() => navigation.goBack()}>
           <Text className={`text-2xl text-[${themes[theme].blueHeadText}]`}>
-            Cancelar
+            {i18n.t("cancel")}
           </Text>
         </Pressable>
       ),
@@ -60,7 +61,7 @@ const ViewIncomingTaskModal = () => {
           <Text
             className={`text-2xl font-bold ${watchedTitle.trim() ? `text-[${themes[theme].blueHeadText}]` : `text-[${themes[theme].taskSecondText}]`}`}
           >
-            Ok
+            {i18n.t("ok")}
           </Text>
         </Pressable>
       ),
@@ -216,7 +217,7 @@ const ViewIncomingTaskModal = () => {
             className={`py-3 pr-5 flex-1 flex-row justify-between gap-4 items-center border-b border-[${themes[theme].listsSeparator}]`}
           >
             <Text className={`text-[${themes[theme].text}] text-lg`}>
-              Fecha
+              {i18n.t("date")}
             </Text>
             {watch("dateErrand") ? (
               <Text className={`ml-auto text-[${themes[theme].text}] text-lg`}>
@@ -224,7 +225,7 @@ const ViewIncomingTaskModal = () => {
               </Text>
             ) : (
               <Text className={`ml-auto text-[${themes[theme].text}] text-lg`}>
-                Sin fecha
+                {i18n.t("noDate")}
               </Text>
             )}
           </View>
@@ -251,7 +252,7 @@ const ViewIncomingTaskModal = () => {
               </Text>
             ) : (
               <Text className={`ml-auto text-[${themes[theme].text}] text-lg`}>
-                Sin hora
+                {i18n.t("noTime")}
               </Text>
             )}
           </View>
@@ -273,7 +274,7 @@ const ViewIncomingTaskModal = () => {
               className={`py-3 pr-5 flex-1 flex-row justify-between gap-4 items-center ${watch("repeat") ? `border-b border-[${themes[theme].listsSeparator}]` : ""}`}
             >
               <Text className={`text-[${themes[theme].text}] text-lg`}>
-                Aviso
+                {i18n.t("notice")}
               </Text>
               {watch("dateNotice") && (
                 <Text className={`text-[${themes[theme].text}] text-lg`}>
@@ -297,7 +298,7 @@ const ViewIncomingTaskModal = () => {
               className={`py-3 pr-5 flex-1 flex-row justify-between gap-4 items-centerborder-b border-[${themes[theme].listsSeparator}]`}
             >
               <Text className={`text-[${themes[theme].text}] text-lg`}>
-                Repetir
+                {i18n.t("repeat")}
               </Text>
               <Text className={`text-lg text-[${themes[theme].text}]`}>
                 {
@@ -326,7 +327,7 @@ const ViewIncomingTaskModal = () => {
             className={`py-3 flex-1 flex-row justify-between gap-4 items-center border-b border-[${themes[theme].listsSeparator}]`}
           >
             <Text className={`text-[${themes[theme].text}] text-lg`}>
-              Marcador
+              {i18n.t("markedSingular")}
             </Text>
             <Switch className="mr-4" value={watch("marked")} disabled />
           </View>
@@ -343,7 +344,7 @@ const ViewIncomingTaskModal = () => {
           />
           <View className="py-4 gap-4 flex-1 flex-row justify-between items-center">
             <Text className={`text-[${themes[theme].text}] text-lg`}>
-              Prioridad
+              {i18n.t("priority")}
             </Text>
             <Text className={`mr-5 text-lg text-[${themes[theme].text}]`}>
               {

@@ -18,6 +18,7 @@ import UndoCompleteErrandButton from "../../Utils/UndoCompleteErrandButton";
 import SwipeableFullErrand from "../../Utils/SwipeableFullErrand";
 import { useErrandActions } from "../../hooks/useErrandActions";
 import { themes } from "../../constants/themes";
+import i18n from "../../constants/i18n";
 
 function AllTasks() {
   const navigation = useNavigation();
@@ -41,24 +42,24 @@ function AllTasks() {
   const tabs = useMemo(() => {
     return [
       // {
-      //   label: "Pendientes",
+      //   label: i18n.t("pending"),
       //   value: "pending",
       //   errandsList: errands.filter((errand) => !errand.deleted).filter((errand) => !errand.completed),
       // },
       // {
-      //   label: "Completados",
+      //   label: i18n.t("completed"),
       //   value: "completed",
       //   errandsList: errands.filter((errand) => !errand.deleted).filter((errand) => errand.completed),
       // },
       {
-        label: "Todos",
+        label: i18n.t("all"),
         value: "all",
         errandsList: errands
           .filter((errand) => !errand.deleted)
           .filter((errand) => !errand.completed),
       },
       {
-        label: "Míos",
+        label: i18n.t("mine"),
         value: "mine",
         errandsList: errands
           .filter((errand) => !errand.deleted)
@@ -70,7 +71,7 @@ function AllTasks() {
           ),
       },
       {
-        label: "Recibidos",
+        label: i18n.t("incoming"),
         value: "incoming",
         errandsList: errands
           .filter((errand) => !errand.deleted)
@@ -82,7 +83,7 @@ function AllTasks() {
           ),
       },
       {
-        label: "Enviados",
+        label: i18n.t("outgoing"),
         value: "outgoing",
         errandsList: errands
           .filter((errand) => !errand.deleted)
@@ -101,7 +102,7 @@ function AllTasks() {
   useEffect(() => {
     navigation.setOptions({
       title: tabs.find((tab) => tab.value === selectedTab).label,
-      headerBackTitle: "Atrás",
+      headerBackTitle: i18n.t("back"),
       headerTitleStyle: {
         color: themes[theme].text,
       },
@@ -235,6 +236,20 @@ function AllTasks() {
                   onCompleteWithUndo={onCompleteWithUndo}
                 />
               ))}
+          </View>
+        )}
+        ListEmptyComponent={() => (
+          <View className="flex-1 flex-col mt-14 mx-12 justify-center items-center gap-6">
+            <Text
+              className={`text-[${themes[theme].text}] text-xl font-semibold`}
+            >
+              {i18n.t("wellDone!")}
+            </Text>
+            <Text
+              className={`text-[${themes[theme].text}] text-lg text-center`}
+            >
+              {i18n.t("allYourTasksAreCompleted")}
+            </Text>
           </View>
         )}
       />

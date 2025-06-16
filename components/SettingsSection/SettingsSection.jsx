@@ -10,12 +10,23 @@ import Ionicons from "react-native-vector-icons/Ionicons";
 import { themes } from "../../constants/themes";
 import AppearencePopupMenu from "./AppearencePopupMenu/AppearencePopupMenu";
 import LanguagePopupMenu from "./LanguagePopupMenu/LanguagePopupMenu";
+import i18n from "../../constants/i18n";
 
 const userSections = [
-  { label: "Perfil", icon: "person-outline", size: 25, route: "/profile" },
-  { label: "Contactos", icon: "people-outline", size: 25, route: "/contacts" },
   {
-    label: "Notificaciones",
+    label: i18n.t("profile"),
+    icon: "person-outline",
+    size: 25,
+    route: "/profile",
+  },
+  {
+    label: i18n.t("contacts"),
+    icon: "people-outline",
+    size: 25,
+    route: "/contacts",
+  },
+  {
+    label: i18n.t("notifications"),
     icon: "notifications-outline",
     size: 25,
     route: "/notificationsSettings",
@@ -28,7 +39,7 @@ function SettingsSection() {
 
   const [user] = useAtom(userAtom);
   const [theme] = useAtom(themeAtom);
-  const [language, setLanguage] = useAtom(languageAtom);
+  const [language] = useAtom(languageAtom);
 
   const [modalSettingsVisible, setModalSettingsVisible] = useState(false);
 
@@ -45,7 +56,7 @@ function SettingsSection() {
           <Text
             className={`text-3xl font-semibold text-[${themes[theme].text}]`}
           >
-            Ajustes
+            {i18n.t("settings")}
           </Text>
         </View>
       ),
@@ -60,56 +71,39 @@ function SettingsSection() {
     });
   }, [navigation, theme]);
 
-  const UISections = [
-    {
-      label: "Idioma",
-      icon: "language-outline",
-      size: 25,
-      option: language,
-      route: "/appTheme",
-    },
-    {
-      label: "Aspecto",
-      icon: "contrast-outline",
-      size: 25,
-      option: theme,
-      route: "/appTheme",
-    },
-  ];
-
   const helpSections = [
     {
-      label: "Configuración",
+      label: i18n.t("config"),
       icon: "settings-outline",
       size: 25,
       route: "/appSettings",
     },
     {
-      label: "Cuenta",
+      label: i18n.t("account"),
       icon: "person-circle-outline",
       size: 25,
       route: "/accountSettings",
     },
     {
-      label: "Privacidad",
+      label: i18n.t("privacy"),
       icon: "shield-checkmark-outline",
       size: 25,
       route: "/privacySettings",
     },
     {
-      label: "Invitar amigos",
+      label: i18n.t("inviteFriends"),
       icon: "share-social-outline",
       size: 25,
       route: "/friendInvite",
     },
     {
-      label: "Ayuda",
+      label: i18n.t("help"),
       icon: "help-circle-outline",
       size: 25,
       route: "/profile",
     },
     {
-      label: "Sobre la app",
+      label: i18n.t("about"),
       icon: "information-circle-outline",
       size: 25,
       route: "/appInfo",

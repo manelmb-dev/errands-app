@@ -8,6 +8,7 @@ import { errandsAtom, themeAtom } from "../../constants/storeAtoms";
 import { useAtom } from "jotai";
 
 import { themes } from "../../constants/themes";
+import i18n from "../../constants/i18n";
 
 function DeletedTasks() {
   const navigation = useNavigation();
@@ -17,8 +18,8 @@ function DeletedTasks() {
 
   useEffect(() => {
     navigation.setOptions({
-      title: "Tareas eliminadas",
-      headerBackTitle: "Atrás",
+      title: i18n.t("deletedErrands"),
+      headerBackTitle: i18n.t("back"),
       headerTitleStyle: {
         color: themes[theme].text,
       },
@@ -34,7 +35,7 @@ function DeletedTasks() {
 
   return (
     <View className={`h-full bg-[${themes[theme].background}]`}>
-      <Text>Tareas eliminadas</Text>
+      <Text>{i18n.t("deletedErrands")}</Text>
     </View>
   );
 }

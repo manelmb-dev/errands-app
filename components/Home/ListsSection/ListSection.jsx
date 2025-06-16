@@ -13,6 +13,7 @@ import { useAtom } from "jotai";
 
 import { themes } from "../../../constants/themes";
 import ListPopupMenu from "./ListPopupMenu/ListPopupMenu";
+import i18n from "../../../constants/i18n";
 
 export default function ListSection() {
   const router = useRouter();
@@ -25,7 +26,7 @@ export default function ListSection() {
     <View>
       <View className="w-full flex-row justify-between mt-4 mb-1">
         <Text className={`text-xl font-bold ml-3 text-[${themes[theme].text}]`}>
-          Mis listas
+          {i18n.t("myLists")}
         </Text>
         <ListPopupMenu />
       </View>
@@ -113,7 +114,7 @@ export default function ListSection() {
                   className={`flex-1 py-4 flex-row items-center justify-between border-b  border-[${themes[theme].listsSeparator}]`}
                 >
                   <Text className={`text-lg text-[${themes[theme].listTitle}]`}>
-                    Compartidos
+                    {i18n.t("shared")}
                   </Text>
                   <Text
                     className={`mr-7 text-lg font-semibold text-[${themes[theme].listTitle}]`}
@@ -157,7 +158,7 @@ export default function ListSection() {
                   className={`flex-1 py-4 flex-row items-center justify-between`}
                 >
                   <Text className={`text-lg text-[${themes[theme].listTitle}]`}>
-                    Eliminados
+                    {i18n.t("deleted")}
                   </Text>
                   <Text
                     className={`mr-7 text-lg font-semibold text-[${themes[theme].listTitle}]`}
