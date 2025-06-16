@@ -21,7 +21,6 @@ const users = [
       "100012",
     ],
     settings: {
-      mode: "light",
       notifications: {
         email: true,
         sms: true,
@@ -60,7 +59,6 @@ const users = [
       "100013",
     ],
     settings: {
-      mode: "dark",
       notifications: {
         email: false,
         sms: true,
@@ -100,7 +98,6 @@ const users = [
       "100014",
     ],
     settings: {
-      mode: "light",
       notifications: {
         email: true,
         sms: false,
@@ -141,7 +138,6 @@ const users = [
       "100015",
     ],
     settings: {
-      mode: "dark",
       notifications: {
         email: false,
         sms: true,
@@ -178,7 +174,6 @@ const users = [
       "100012",
     ],
     settings: {
-      mode: "light",
       notifications: {
         email: true,
         sms: true,

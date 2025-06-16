@@ -1,4 +1,5 @@
 import {
+  ActivityIndicator,
   Keyboard,
   TouchableWithoutFeedback,
   useColorScheme,
@@ -12,30 +13,36 @@ import { Stack } from "expo-router";
 
 import { useAtom } from "jotai";
 
-import { themeAtom } from "../constants/storeAtoms";
+import { languageAtom, themeAtom } from "../constants/storeAtoms";
 import { themes } from "../constants/themes";
 
 import "../App.css";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function Layout() {
-  const systemTheme = useColorScheme() ?? "light";
+  const system = useColorScheme() ?? "light";
   const [theme, setTheme] = useAtom(themeAtom);
+  const [, setLanguage] = useAtom(languageAtom);
+
+  const [ready, setReady] = useState(false);
 
   useEffect(() => {
-    const loadThemePreference = async () => {
-      const saved = await AsyncStorage.getItem("themePreference");
+    const loadPreferences = async () => {
+      const savedTheme = await AsyncStorage.getItem("themePreference");
+      const savedLang = await AsyncStorage.getItem("languagePreference");
 
-      if (saved === "auto") {
-        setTheme(systemTheme);
+      if (savedTheme === "auto") {
+        setTheme(system);
       } else {
-        setTheme(saved || "light");
+        setTheme(savedTheme || "light");
       }
-    };
 
-    loadThemePreference();
-  }, [systemTheme, setTheme]);
+      setLanguage(savedLang || "es");
+      setReady(true);
+    };
+    loadPreferences();
+  }, [setLanguage, setTheme, system]);
 
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
@@ -44,7 +51,13 @@ export default function Layout() {
         <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
           <MenuProvider>
             <View className={`flex-1 bg-[${themes[theme].background}]`}>
-              <Stack />
+              {ready ? (
+                <Stack />
+              ) : (
+                <View className="flex-1 justify-center items-center">
+                  <ActivityIndicator size="large" color={themes[system].text} />
+                </View>
+              )}
             </View>
           </MenuProvider>
         </TouchableWithoutFeedback>

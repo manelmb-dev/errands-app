@@ -2,6 +2,7 @@ import { atom } from "jotai";
 
 import errandsData from "../errands";
 
+// User active lists
 let userLists = [
   {
     id: "900f87",
@@ -33,6 +34,7 @@ let userLists = [
   },
 ];
 
+// User active
 let userExample = {
   id: "100001",
   username: "manelmb9",
@@ -41,7 +43,6 @@ let userExample = {
   email: "manel.mb@example.com",
   phoneNumber: "+34-600-123-456",
   settings: {
-    mode: "dark",
     notifications: {
       email: true,
       sms: false,
@@ -62,8 +63,6 @@ let userExample = {
       phoneNumber: "+34678901234",
       email: "carlos.fernandez@email.com",
       favorite: true,
-      outgoingTasks: [],
-      incomingTasks: [],
       muted: false,
       blocked: false,
     },
@@ -73,8 +72,6 @@ let userExample = {
       surname: "Gómez",
       phoneNumber: "+34612345678",
       favorite: false,
-      outgoingTasks: [],
-      incomingTasks: [],
       muted: true,
       blocked: false,
     },
@@ -85,8 +82,6 @@ let userExample = {
       phoneNumber: "+34655544332",
       email: "alejandro.ruiz@email.com",
       favorite: true,
-      outgoingTasks: [],
-      incomingTasks: [],
       muted: false,
       blocked: false,
     },
@@ -96,8 +91,6 @@ let userExample = {
       surname: "Martínez",
       phoneNumber: "+34699988877",
       favorite: false,
-      outgoingTasks: [],
-      incomingTasks: [],
       muted: false,
       blocked: true,
     },
@@ -108,8 +101,6 @@ let userExample = {
       phoneNumber: "+34677766655",
       email: "javier.lopez@email.com",
       favorite: true,
-      outgoingTasks: [],
-      incomingTasks: [],
       muted: true,
       blocked: false,
     },
@@ -119,8 +110,6 @@ let userExample = {
       surname: "Hernández",
       phoneNumber: "+34623456789",
       favorite: false,
-      outgoingTasks: [],
-      incomingTasks: [],
       muted: false,
       blocked: false,
     },
@@ -131,8 +120,6 @@ let userExample = {
       phoneNumber: "+34687654321",
       email: "daniel.perez@email.com",
       favorite: true,
-      outgoingTasks: [],
-      incomingTasks: [],
       muted: false,
       blocked: false,
     },
@@ -142,8 +129,6 @@ let userExample = {
       surname: "Díaz",
       phoneNumber: "+34611223344",
       favorite: false,
-      outgoingTasks: [],
-      incomingTasks: [],
       muted: false,
       blocked: false,
     },
@@ -154,8 +139,6 @@ let userExample = {
       phoneNumber: "+34655667788",
       email: "pedro.torres@email.com",
       favorite: false,
-      outgoingTasks: [],
-      incomingTasks: [],
       muted: true,
       blocked: false,
     },
@@ -165,8 +148,6 @@ let userExample = {
       surname: "Romero",
       phoneNumber: "+34699887766",
       favorite: false,
-      outgoingTasks: [],
-      incomingTasks: [],
       muted: false,
       blocked: true,
     },
@@ -177,8 +158,6 @@ let userExample = {
       phoneNumber: "+34622334455",
       email: "hugo.sanchez@email.com",
       favorite: true,
-      outgoingTasks: [],
-      incomingTasks: [],
       muted: false,
       blocked: false,
     },
@@ -188,8 +167,6 @@ let userExample = {
       surname: "Vargas",
       phoneNumber: "+34633445566",
       favorite: false,
-      outgoingTasks: [],
-      incomingTasks: [],
       muted: false,
       blocked: false,
     },
@@ -200,8 +177,6 @@ let userExample = {
       phoneNumber: "+34644556677",
       email: "miguel.navarro@email.com",
       favorite: true,
-      outgoingTasks: [],
-      incomingTasks: [],
       muted: true,
       blocked: false,
     },
@@ -211,8 +186,6 @@ let userExample = {
       surname: "Ortega",
       phoneNumber: "+34655667799",
       favorite: false,
-      outgoingTasks: [],
-      incomingTasks: [],
       muted: false,
       blocked: false,
     },
@@ -223,8 +196,6 @@ let userExample = {
       phoneNumber: "+34666778899",
       email: "fernando.castro@email.com",
       favorite: true,
-      outgoingTasks: [],
-      incomingTasks: [],
       muted: false,
       blocked: false,
     },
@@ -241,6 +212,4 @@ export const userAssignedAtom = atom(userExample);
 export const listAssignedAtom = atom(false);
 export const contactsAtom = atom(userExample.contacts);
 export const themeAtom = atom("light");
-export const selectedThemeAtom = atom();
 export const languageAtom = atom("es");
-

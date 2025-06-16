@@ -1,6 +1,6 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import React, { useEffect, useState } from "react";
-import { View, TouchableOpacity, Text, useColorScheme } from "react-native";
+import { View, TouchableOpacity, Text } from "react-native";
 import {
   Menu,
   MenuTrigger,
@@ -11,54 +11,46 @@ import {
 import Feather from "react-native-vector-icons/Feather";
 import Ionicons from "react-native-vector-icons/Ionicons";
 
-import { themeAtom } from "../../../constants/storeAtoms";
+import { languageAtom, themeAtom } from "../../../constants/storeAtoms";
 import { useAtom } from "jotai";
+
 import { themes } from "../../../constants/themes";
 
-export default function AppearencePopupMenu() {
-  const systemTheme = useColorScheme() ?? "light";
-  const [theme, setTheme] = useAtom(themeAtom);
-  const [selectedType, setSelectedType] = useState("light");
+export default function LanguagePopupMenu() {
+  const [language, setLanguage] = useAtom(languageAtom);
+  const [theme] = useAtom(themeAtom);
+
+  const [selectedLanguage, setSelectedLanguage] = useState("es");
 
   useEffect(() => {
-    const loadThemePreference = async () => {
-      const storedThemePreference =
-        await AsyncStorage.getItem("themePreference");
-      setSelectedType(storedThemePreference || "light");
-
-      if (storedThemePreference === "auto") {
-        setTheme(systemTheme);
-      } else {
-        setTheme(storedThemePreference || "light");
-      }
+    const loadLanguagePreference = async () => {
+      const storedLanguagePreference =
+        await AsyncStorage.getItem("languagePreference");
+      setSelectedLanguage(storedLanguagePreference || "es");
+      setLanguage(storedLanguagePreference || "es");
     };
-    loadThemePreference();
-  }, [systemTheme, setTheme]);
+    loadLanguagePreference();
+  }, [setLanguage]);
 
-  const handleNewTheme = async (newType) => {
-    await AsyncStorage.setItem("themePreference", newType);
-    setSelectedType(newType);
-
-    if (newType === "auto") {
-      setTheme(systemTheme);
-    } else {
-      setTheme(newType);
-    }
+  const handleNewLanguage = async (lang) => {
+    await AsyncStorage.setItem("languagePreference", lang);
+    setSelectedLanguage(lang);
+    setLanguage(lang);
   };
 
   const options = [
-    { label: "Claro", value: "light" },
-    { label: "Oscuro", value: "dark" },
-    { label: "Automático", value: "auto" },
+    { label: "Español", value: "es" },
+    { label: "Inglés", value: "en" },
+    { label: "Catalán", value: "ca" },
   ];
 
   // Label in trigger
   const labelShown =
-    selectedType === "auto"
-      ? "Automático"
-      : selectedType === "dark"
-        ? "Oscuro"
-        : "Claro";
+    selectedLanguage === "en"
+      ? "Inglés"
+      : selectedLanguage === "ca"
+        ? "Catalán"
+        : "Español";
 
   return (
     <Menu>
@@ -67,15 +59,13 @@ export default function AppearencePopupMenu() {
       >
         <View className="flex-row items-center pl-5 gap-5 rounded-b-xl">
           <Ionicons
-            name="contrast-outline"
+            name="language-outline"
             size={25}
             color={themes[theme].text}
           />
-          <View
-            className={`py-4 flex-1 flex-row justify-between border-b border-[${themes[theme].listsSeparator}]`}
-          >
+          <View className={`flex-1 flex-row justify-between py-4`}>
             <Text className={`text-[${themes[theme].text}] text-lg`}>
-              Aspecto
+              Idioma
             </Text>
             <View className="flex-row items-center gap-2 mr-4">
               <Text
@@ -110,7 +100,7 @@ export default function AppearencePopupMenu() {
         {options.map(({ label, value }, index) => (
           <MenuOption
             key={index}
-            onSelect={() => handleNewTheme(value)}
+            onSelect={() => handleNewLanguage(value)}
             customStyles={{
               optionTouchable: {
                 activeOpacity: 70,
@@ -140,9 +130,11 @@ export default function AppearencePopupMenu() {
             }}
           >
             <View
-              className={`flex-row items-center ${selectedType !== value ? "pl-5" : ""}`}
+              className={`flex-row items-center ${
+                selectedLanguage !== value ? "pl-5" : ""
+              }`}
             >
-              {selectedType === value && (
+              {selectedLanguage === value && (
                 <Feather name="check" size={17} color={themes[theme].text} />
               )}
               <Text className={`ml-2 text-[${themes[theme].text}] text-lg`}>

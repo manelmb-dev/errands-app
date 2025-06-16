@@ -9,6 +9,7 @@ import Ionicons from "react-native-vector-icons/Ionicons";
 
 import { themes } from "../../constants/themes";
 import AppearencePopupMenu from "./AppearencePopupMenu/AppearencePopupMenu";
+import LanguagePopupMenu from "./LanguagePopupMenu/LanguagePopupMenu";
 
 const userSections = [
   { label: "Perfil", icon: "person-outline", size: 25, route: "/profile" },
@@ -191,6 +192,7 @@ function SettingsSection() {
           className={`bg-[${themes[theme].buttonMenuBackground}] rounded-xl border border-[${themes[theme].listsSeparator}] shadow-sm ${theme === "light" ? "shadow-gray-100" : "shadow-neutral-950"}`}
         >
           <AppearencePopupMenu />
+          <LanguagePopupMenu />
         </View>
 
         {/* Help sections */}
