@@ -604,6 +604,7 @@ const EditTaskModal = () => {
       <DateTimePickerModal
         isVisible={isDatePickerVisible}
         isDarkModeEnabled={theme === "dark"}
+        themeVariant={theme === "light" ? "light" : "dark"}
         mode="date"
         display="inline"
         date={
@@ -621,6 +622,7 @@ const EditTaskModal = () => {
       <DateTimePickerModal
         isVisible={isHourPickerVisible}
         isDarkModeEnabled={theme === "dark"}
+        themeVariant={theme === "light" ? "light" : "dark"}
         mode="time"
         date={
           watch("timeErrand")
@@ -640,6 +642,7 @@ const EditTaskModal = () => {
       <DateTimePickerModal
         isVisible={isNoticePickerVisible}
         isDarkModeEnabled={theme === "dark"}
+        themeVariant={theme === "light" ? "light" : "dark"}
         mode="datetime"
         display="inline"
         date={

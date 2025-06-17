@@ -271,6 +271,8 @@ function FullErrand({
 
       <DateTimePickerModal
         isVisible={isDateTimePickerVisible}
+        isDarkModeEnabled={theme === "dark"}
+        themeVariant={theme === "light" ? "light" : "dark"}
         mode="date"
         display="inline"
         date={
@@ -278,11 +280,11 @@ function FullErrand({
         }
         onConfirm={handleDateTimeConfirm}
         onCancel={() => setIsDateTimePickerVisible(false)}
-        locale="es_ES"
+        locale={i18n.locale}
         accentColor={themes[theme].blueHeadText}
         textColor={themes[theme].text}
-        confirmTextIOS="Confirmar"
-        cancelTextIOS="Cancelar"
+        confirmTextIOS={i18n.t("confirm")}
+        cancelTextIOS={i18n.t("cancel")}
         minuteInterval={5}
       />
     </Animated.View>

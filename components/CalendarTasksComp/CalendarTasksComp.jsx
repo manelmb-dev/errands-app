@@ -302,6 +302,7 @@ function CalendarTasksComp() {
       <DateTimePickerModal
         isVisible={isDatePickerVisible}
         isDarkModeEnabled={theme === "dark"}
+        themeVariant={theme === "light" ? "light" : "dark"}
         mode="date"
         date={new Date(selectedDate)}
         onConfirm={handleDateConfirm}
