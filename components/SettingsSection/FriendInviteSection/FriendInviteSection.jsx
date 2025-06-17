@@ -73,8 +73,17 @@ export default function FriendInviteSection() {
         onPress={handleInvite}
       >
         <Animated.View
-          className={`py-4 rounded-xl items-center shadow-lg shadow-[${themes[theme].blueHeadText}] bg-[${themes[theme].blueHeadText}]`}
-          style={animatedStyle}
+          className={`py-4 rounded-xl items-center bg-[${themes[theme].blueHeadText}]`}
+          style={[
+            {
+              shadowColor: themes[theme].blueHeadText,
+              shadowOffset: { width: 0, height: 4 },
+              shadowOpacity: 0.3,
+              shadowRadius: 8,
+              elevation: 5, // Android
+            },
+            animatedStyle,
+          ]}
         >
           <Text
             className={`text-lg font-semibold text-[${themes["dark"].text}]`}

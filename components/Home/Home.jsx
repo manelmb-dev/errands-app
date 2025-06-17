@@ -63,7 +63,7 @@ function Home() {
     >
       <View className="flex-1 px-4">
         <ScrollView showsVerticalScrollIndicator={false}>
-          <Pressable className="flex-row pb-3 flex-wrap justify-between">
+          <Pressable className="flex-row pb-5 flex-wrap justify-between">
             {/* Cards section */}
             <MainCardsSection />
 

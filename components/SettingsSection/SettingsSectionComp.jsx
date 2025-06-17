@@ -112,7 +112,7 @@ function SettingsSectionComp() {
 
   return (
     <ScrollView className={`w-full px-6 bg-[${themes[theme].background}]`}>
-      <View className="gap-6 pt-5 pb-3">
+      <View className="gap-6 pt-5 pb-5">
         {/* Profile section */}
         <View
           className={`bg-[${themes[theme].buttonMenuBackground}] rounded-xl border border-[${themes[theme].listsSeparator}] shadow-sm ${theme === "light" ? "shadow-gray-100" : "shadow-neutral-950"}`}
