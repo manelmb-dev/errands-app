@@ -76,37 +76,37 @@ function SettingsSection() {
       label: i18n.t("config"),
       icon: "settings-outline",
       size: 25,
-      route: "/appSettings",
+      route: "/configurationScreen",
     },
     {
       label: i18n.t("account"),
       icon: "person-circle-outline",
       size: 25,
-      route: "/accountSettings",
+      route: "/accountScreen",
     },
     {
       label: i18n.t("privacy"),
       icon: "shield-checkmark-outline",
       size: 25,
-      route: "/privacySettings",
+      route: "/privacyScreen",
     },
     {
       label: i18n.t("inviteFriends"),
       icon: "share-social-outline",
       size: 25,
-      route: "/friendInvite",
+      route: "/friendInviteScreen",
     },
     {
       label: i18n.t("help"),
       icon: "help-circle-outline",
       size: 25,
-      route: "/profile",
+      route: "/helpScreen",
     },
     {
       label: i18n.t("about"),
       icon: "information-circle-outline",
       size: 25,
-      route: "/appInfo",
+      route: "/aboutAppScreen",
     },
   ];
 
@@ -197,7 +197,7 @@ function SettingsSection() {
             <TouchableHighlight
               key={index}
               className={`${index === 0 && "rounded-t-xl"} ${index === helpSections.length - 1 && "rounded-b-xl"}`}
-              onPress={() => console.log(`Pressed ${item.label}`)}
+              onPress={() => router.push(item.route)}
               underlayColor={themes[theme].background}
             >
               <View

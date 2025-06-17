@@ -5,12 +5,13 @@ import { themeAtom } from "../constants/storeAtoms";
 import { useAtom } from "jotai";
 
 import { themes } from "../constants/themes";
+import i18n from "../constants/i18n";
 
 const UndoCompleteErrandButton = ({
   possibleUndoErrand,
   undoCompleteErrand,
   openSwipeableRef,
-  setPossibleUndoErrand
+  setPossibleUndoErrand,
 }) => {
   const [theme] = useAtom(themeAtom);
 
@@ -31,7 +32,7 @@ const UndoCompleteErrandButton = ({
       >
         <View className="flex-1">
           <Text className="text-gray-800 text-base font-semibold">
-            Tarea completada
+            {i18n.t("completedErrand")}
           </Text>
           <Text
             className={`text-[${themes[theme].blueHeadText}] text-lg font-medium truncate`}
@@ -43,7 +44,9 @@ const UndoCompleteErrandButton = ({
           onPress={undoCompleteErrand}
           className="px-6 py-4 bg-red-100 rounded-full active:opacity-80"
         >
-          <Text className="text-red-600 font-bold text-base">Deshacer</Text>
+          <Text className="text-red-600 font-bold text-base">
+            {i18n.t("undo")}
+          </Text>
         </Pressable>
       </Animated.View>
     </Pressable>

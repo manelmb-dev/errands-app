@@ -25,6 +25,7 @@ module.exports = {
     "bg-[#FDFDFD]",
     "bg-[#254C3B]",
     "bg-[#2F2B45]",
+    "bg-[#007AFF]",
     "bg-slate-300",
     "bg-zinc-300",
     "bg-stone-300",
@@ -78,6 +79,9 @@ module.exports = {
     // Border colors
     "border-[#e0e0e0]",
     "border-[#3A3A3A]",
+
+    // Shadow colors
+    "shadow-[#007AFF]",
   ],
   theme: {
     extend: {

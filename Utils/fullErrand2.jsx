@@ -15,16 +15,7 @@ import Ionicons from "react-native-vector-icons/Ionicons";
 import formatErrandDate from "../constants/formatErrandDate";
 import { themes } from "../constants/themes";
 import { router } from "expo-router";
-
-const repeatOptions = [
-  { label: "Nunca", value: "never" },
-  { label: "Todos los días", value: "daily" },
-  { label: "Entre semana", value: "weekDays" },
-  { label: "Los fines de semana", value: "weekendDays" },
-  { label: "Todas las semanas", value: "weekly" },
-  { label: "Todos los meses", value: "monthly" },
-  { label: "Todos los años", value: "yearly" },
-];
+import i18n from "../constants/i18n";
 
 function FullErrand({
   errand,
@@ -37,16 +28,26 @@ function FullErrand({
   const [contacts] = useAtom(contactsAtom);
   const [theme] = useAtom(themeAtom);
 
+  const repeatOptions = [
+    { label: i18n.t("never"), value: "never" },
+    { label: i18n.t("daily"), value: "daily" },
+    { label: i18n.t("weekDays"), value: "weekDays" },
+    { label: i18n.t("weekendDays"), value: "weekendDays" },
+    { label: i18n.t("weekly"), value: "weekly" },
+    { label: i18n.t("monthly"), value: "monthly" },
+    { label: i18n.t("yearly"), value: "yearly" },
+  ];
+
   const assignedContact = contacts.find(
-    (contact) => contact.id.toString() === errand.assignedId.toString(),
+    (contact) => contact.id.toString() === errand.assignedId.toString()
   );
 
   const creatorContact = contacts.find(
-    (contact) => contact.id.toString() === errand.ownerId.toString(),
+    (contact) => contact.id.toString() === errand.ownerId.toString()
   );
 
   const repeatOptionSelected = repeatOptions.find(
-    (option) => option.value === errand.repeat,
+    (option) => option.value === errand.repeat
   );
 
   const completeErrand = () => {
@@ -64,8 +65,8 @@ function FullErrand({
               completedDateErrand: formattedDate,
               completedTimeErrand: formattedTime,
             }
-          : e,
-      ),
+          : e
+      )
     );
 
     // Complete errand after timeout
@@ -164,7 +165,7 @@ function FullErrand({
                 <Text
                   className={`text-sm ${
                     new Date(
-                      `${errand.dateErrand}T${errand.timeErrand || "24:00"}`,
+                      `${errand.dateErrand}T${errand.timeErrand || "24:00"}`
                     ) < new Date()
                       ? "text-red-600"
                       : `text-[${themes[theme].taskSecondText}]`

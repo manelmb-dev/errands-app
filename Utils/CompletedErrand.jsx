@@ -15,22 +15,23 @@ import {
 import formatCompletedErrandDate from "../constants/formatCompletedErrandDate";
 import formatErrandDate from "../constants/formatCompletedErrandDate";
 import { themes } from "../constants/themes";
-
-const repeatOptions = [
-  { label: "Nunca", value: "never" },
-  { label: "Todos los días", value: "daily" },
-  { label: "Entre semana", value: "weekDays" },
-  { label: "Los fines de semana", value: "weekendDays" },
-  { label: "Todas las semanas", value: "weekly" },
-  { label: "Todos los meses", value: "monthly" },
-  { label: "Todos los años", value: "yearly" },
-];
+import i18n from "../constants/i18n";
 
 function CompletedErrand({ errand }) {
   const [user] = useAtom(userAtom);
   const [, setErrands] = useAtom(errandsAtom);
   const [contacts] = useAtom(contactsAtom);
   const [theme] = useAtom(themeAtom);
+
+  const repeatOptions = [
+    { label: i18n.t("never"), value: "never" },
+    { label: i18n.t("daily"), value: "daily" },
+    { label: i18n.t("weekDays"), value: "weekDays" },
+    { label: i18n.t("weekendDays"), value: "weekendDays" },
+    { label: i18n.t("weekly"), value: "weekly" },
+    { label: i18n.t("monthly"), value: "monthly" },
+    { label: i18n.t("yearly"), value: "yearly" },
+  ];
 
   const assignedContact = contacts.find(
     (contact) => contact.id.toString() === errand.assignedId.toString(),
