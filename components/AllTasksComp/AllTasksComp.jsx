@@ -31,7 +31,7 @@ function AllTasksComp() {
   const openSwipeableRef = useRef(null);
   const swipeableRefs = useRef({});
 
-  const [selectedTab, setSelectedTab] = useState("all");
+  // const [selectedTab, setSelectedTab] = useState("all");
   const [possibleUndoErrand, setPossibleUndoErrand] = useState(null);
 
   const { onCompleteWithUndo, undoCompleteErrand } = useErrandActions({
@@ -39,69 +39,70 @@ function AllTasksComp() {
     setPossibleUndoErrand,
   });
 
-  const tabs = useMemo(() => {
-    return [
-      // {
-      //   label: i18n.t("pending"),
-      //   value: "pending",
-      //   errandsList: errands.filter((errand) => !errand.deleted).filter((errand) => !errand.completed),
-      // },
-      // {
-      //   label: i18n.t("completed"),
-      //   value: "completed",
-      //   errandsList: errands.filter((errand) => !errand.deleted).filter((errand) => errand.completed),
-      // },
-      {
-        label: i18n.t("all"),
-        value: "all",
-        errandsList: errands
-          .filter((errand) => !errand.deleted)
-          .filter((errand) => !errand.completed),
-      },
-      {
-        label: i18n.t("mine"),
-        value: "mine",
-        errandsList: errands
-          .filter((errand) => !errand.deleted)
-          .filter(
-            (errand) =>
-              user.id === errand.ownerId &&
-              user.id === errand.assignedId &&
-              !errand.completed
-          ),
-      },
-      {
-        label: i18n.t("incoming"),
-        value: "incoming",
-        errandsList: errands
-          .filter((errand) => !errand.deleted)
-          .filter(
-            (errand) =>
-              user.id !== errand.ownerId &&
-              user.id === errand.assignedId &&
-              !errand.completed
-          ),
-      },
-      {
-        label: i18n.t("outgoing"),
-        value: "outgoing",
-        errandsList: errands
-          .filter((errand) => !errand.deleted)
-          .filter(
-            (errand) =>
-              user.id === errand.ownerId &&
-              user.id !== errand.assignedId &&
-              !errand.completed
-          ),
-      },
-    ];
-  }, [errands, user]);
+  // const tabs = useMemo(() => {
+  //   return [
+  //     // {
+  //     //   label: i18n.t("pending"),
+  //     //   value: "pending",
+  //     //   errandsList: errands.filter((errand) => !errand.deleted).filter((errand) => !errand.completed),
+  //     // },
+  //     // {
+  //     //   label: i18n.t("completed"),
+  //     //   value: "completed",
+  //     //   errandsList: errands.filter((errand) => !errand.deleted).filter((errand) => errand.completed),
+  //     // },
+  //     {
+  //       label: i18n.t("all"),
+  //       value: "all",
+  //       errandsList: errands
+  //         .filter((errand) => !errand.deleted)
+  //         .filter((errand) => !errand.completed),
+  //     },
+  //     {
+  //       label: i18n.t("mine"),
+  //       value: "mine",
+  //       errandsList: errands
+  //         .filter((errand) => !errand.deleted)
+  //         .filter(
+  //           (errand) =>
+  //             user.id === errand.ownerId &&
+  //             user.id === errand.assignedId &&
+  //             !errand.completed
+  //         ),
+  //     },
+  //     {
+  //       label: i18n.t("incoming"),
+  //       value: "incoming",
+  //       errandsList: errands
+  //         .filter((errand) => !errand.deleted)
+  //         .filter(
+  //           (errand) =>
+  //             user.id !== errand.ownerId &&
+  //             user.id === errand.assignedId &&
+  //             !errand.completed
+  //         ),
+  //     },
+  //     {
+  //       label: i18n.t("outgoing"),
+  //       value: "outgoing",
+  //       errandsList: errands
+  //         .filter((errand) => !errand.deleted)
+  //         .filter(
+  //           (errand) =>
+  //             user.id === errand.ownerId &&
+  //             user.id !== errand.assignedId &&
+  //             !errand.completed
+  //         ),
+  //     },
+  //   ];
+  // }, [errands, user]);
 
-  const selectedTabObj = tabs.find((tab) => tab.value === selectedTab);
+  // const selectedTabObj = tabs.find((tab) => tab.value === selectedTab);
 
   useEffect(() => {
     navigation.setOptions({
-      title: tabs.find((tab) => tab.value === selectedTab).label,
+      // title: tabs.find((tab) => tab.value === selectedTab).label,
+      title: i18n.t("all"),
       headerBackTitle: i18n.t("back"),
       headerTitleStyle: {
         color: themes[theme].text,
@@ -114,13 +115,16 @@ function AllTasksComp() {
         <Ionicons name="options" color={themes[theme].blueHeadText} size={24} />
       ),
     });
-  }, [navigation, theme, selectedTab, tabs]);
+  }, [navigation, theme]);
 
   const flatListData = useMemo(() => {
     const items = lists
       .map((list) => ({
         ...list,
-        errands: selectedTabObj.errandsList
+        // errands: selectedTabObj.errandsList
+        errands: errands
+          .filter((errand) => !errand.deleted)
+          .filter((errand) => !errand.completed)
           .filter((errand) => errand.listId === list.id)
           .sort((a, b) => {
             const dateA = new Date(
@@ -134,7 +138,9 @@ function AllTasksComp() {
       }))
       .filter((list) => list.errands.length > 0);
 
-    const sharedErrands = selectedTabObj.errandsList
+    // const sharedErrands = selectedTabObj.errandsList
+    const sharedErrands = errands
+      .filter((errand) => !errand.completed)
       .filter((errand) => !errand.deleted)
       .filter((e) => e.listId === "")
       .sort((a, b) => {
@@ -154,7 +160,7 @@ function AllTasksComp() {
     }
 
     return items;
-  }, [selectedTabObj, lists]);
+  }, [lists, errands]);
 
   return (
     <View
@@ -168,7 +174,7 @@ function AllTasksComp() {
         return false;
       }}
     >
-      <View className="mb-1.5 mt-1 flex-row justify-center gap-3">
+      {/* <View className="mb-1.5 mt-1 flex-row justify-center gap-3">
         {tabs.map((tab) => (
           <Pressable
             key={tab.value}
@@ -190,7 +196,7 @@ function AllTasksComp() {
             </Text>
           </Pressable>
         ))}
-      </View>
+      </View> */}
       <Animated.FlatList
         itemLayoutAnimation={LinearTransition}
         data={flatListData}
