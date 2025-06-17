@@ -1,6 +1,5 @@
-import CalendarTasks from "../components/CalendarTasks/CalendarTasks";
+import CalendarTasksComp from "../components/CalendarTasksComp/CalendarTasksComp";
 
-function calendarTasks() {
-  return <CalendarTasks />;
+export default function CalendarTasks() {
+  return <CalendarTasksComp />;
 }
-export default calendarTasks;

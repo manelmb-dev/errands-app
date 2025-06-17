@@ -1,6 +1,5 @@
-import TodayTasks from "../components/TodayTasks/TodayTasks";
+import TodayTasksComp from "../components/TodayTasksComp/TodayTasksComp";
 
-function todayTasks() {
-  return <TodayTasks />;
+export default function TodayTasks() {
+  return <TodayTasksComp />;
 }
-export default todayTasks;

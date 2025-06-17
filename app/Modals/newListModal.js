@@ -1,7 +1,5 @@
-import NewListModal from "../../components/NewListModal/NewListModal";
+import NewListModalComp from "../../components/NewListModalComp/NewListModalComp";
 
-function newListModal() {
-  return <NewListModal />;
+export default function NewListModal() {
+  return <NewListModalComp />;
 }
-
-export default newListModal;

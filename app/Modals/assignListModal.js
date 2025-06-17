@@ -1,7 +1,5 @@
 import AssignListSelector from "../../components/AssignListSelector/AssignListSelector";
 
-function assignedListModal() {
+export default function AssignedListModal() {
   return <AssignListSelector />;
 }
-
-export default assignedListModal;

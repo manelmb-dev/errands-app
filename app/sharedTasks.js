@@ -1,6 +1,5 @@
-import SharedTasks from "../components/SharedTasks/SharedTasks";
+import SharedTasksComp from "../components/SharedTasksComp/SharedTasksComp";
 
-function sharedTasks() {
-  return <SharedTasks />;
+export default function SharedTasks() {
+  return <SharedTasksComp />;
 }
-export default sharedTasks;

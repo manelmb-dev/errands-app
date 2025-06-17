@@ -1,6 +1,5 @@
-import MarkedTasks from "../components/MarkedTasks/MarkedTasks";
+import MarkedTasksComp from "../components/MarkedTasksComp/MarkedTasksComp";
 
-function markedTasks() {
-  return <MarkedTasks />;
+export default function MarkedTasks() {
+  return <MarkedTasksComp />;
 }
-export default markedTasks;

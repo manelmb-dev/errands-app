@@ -1,7 +1,5 @@
-import EditTaskModal from "../../components/EditTasksModal/EditTaskModal";
+import EditTaskModalComp from "../../components/EditTasksModalComp/EditTaskModalComp";
 
-function editTaskModal() {
-  return <EditTaskModal />;
+export default function EditTaskModal() {
+  return <EditTaskModalComp />;
 }
-
-export default editTaskModal;

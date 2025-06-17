@@ -1,6 +1,5 @@
-import AllTasks from "../components/AllTasks/AllTasks";
+import AllTasksComp from "../components/AllTasksComp/AllTasksComp";
 
-function allTasks() {
-  return <AllTasks />;
+export default function AllTasks() {
+  return <AllTasksComp />;
 }
-export default allTasks;

@@ -1,6 +1,5 @@
-import DeletedTasks from "../components/DeletedTasks/DeletedTasks";
+import DeletedTasksComp from "../components/DeletedTasksComp/DeletedTasksComp";
 
-function deletedTasks() {
-  return <DeletedTasks />;
+export default function DeletedTasks() {
+  return <DeletedTasksComp />;
 }
-export default deletedTasks;

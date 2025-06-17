@@ -1,6 +1,5 @@
-import FilterTasks from "../components/FilterTasks/FilterTasks";
+import FilterTasksComp from "../components/FilterTasksComp/FilterTasksComp";
 
-function filterTasks() {
-  return <FilterTasks />;
+export default function FilterTasks() {
+  return <FilterTasksComp />;
 }
-export default filterTasks;

@@ -1,7 +1,5 @@
-import NewTaskModal from "../../components/NewTaskModal/NewTaskModal";
+import NewTaskModalComp from "../../components/NewTaskModalComp/NewTaskModalComp";
 
-function newTaskModal() {
-  return <NewTaskModal />;
+export default function NewTaskModal() {
+  return <NewTaskModalComp />;
 }
-
-export default newTaskModal;

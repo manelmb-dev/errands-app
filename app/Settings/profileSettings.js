@@ -1,6 +1,5 @@
-import ProfileSettings from "../../components/SettingsSection/ProfileSettings/ProfileSettings";
+import ProfileSettingsComp from "../../components/SettingsSection/ProfileSettingsComp/ProfileSettings";
 
-function profileSettings() {
-  return <ProfileSettings />;
+export default function ProfileSettings() {
+  return <ProfileSettingsComp />;
 }
-export default profileSettings;

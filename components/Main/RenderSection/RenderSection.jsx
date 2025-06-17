@@ -1,6 +1,6 @@
 import NotificationsSection from "../../NotificationsSection/NotificationsSection";
-import SettingsSection from "../../SettingsSection/SettingsSection";
-import FilterTasks from "../../FilterTasks/FilterTasks";
+import SettingsSection from "../../SettingsSection/SettingsSectionComp";
+import FilterTasks from "../../FilterTasksComp/FilterTasksComp";
 import Home from "../../Home/Home";
 
 function RenderSection({ activeSection }) {

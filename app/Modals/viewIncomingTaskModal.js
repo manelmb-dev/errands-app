@@ -1,7 +1,5 @@
-import ViewIncomingTaskModal from "../../components/ViewIncomingTaskModal/ViewIncomingTaskModal";
+import ViewIncomingTaskModalComp from "../../components/ViewIncomingTaskModalComp/ViewIncomingTaskModalComp";
 
-function viewIncomingTaskModal() {
-  return <ViewIncomingTaskModal />;
+export default function ViewIncomingTaskModal() {
+  return <ViewIncomingTaskModalComp />;
 }
-
-export default viewIncomingTaskModal;

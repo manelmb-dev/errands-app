@@ -1,6 +1,5 @@
-import CompletedTasks from "../components/CompletedTasks/CompletedTasks";
+import CompletedTasksComp from "../components/CompletedTasksComp/CompletedTasksComp";
 
-function completedTasks() {
-  return <CompletedTasks />;
+export default function CompletedTasks() {
+  return <CompletedTasksComp />;
 }
-export default completedTasks;

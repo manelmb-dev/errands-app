@@ -1,7 +1,5 @@
 import AssignContactSelector from "../../components/AssignContactSelector/AssignContactSelector";
 
-function assignedContactModal() {
+export default function AssignedContactModal() {
   return <AssignContactSelector />;
 }
-
-export default assignedContactModal;

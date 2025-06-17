@@ -1,6 +1,5 @@
-import ListTasks from "../components/ListTasks/ListTasks";
+import ListTasksComp from "../components/ListTasksComp/ListTasksComp";
 
-function listTasks() {
-  return <ListTasks />;
+export default function ListTasks() {
+  return <ListTasksComp />;
 }
-export default listTasks;
