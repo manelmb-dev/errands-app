@@ -171,7 +171,7 @@
     "es": {
       "pending": "Pendientes",
       "completed": "Completados",
-      "all": "Todos",
+      "all": "Todas",
       "allSingular": "Todo",
       "mine": "Míos",
       "incoming": "Recibidas",
@@ -339,7 +339,7 @@
     "ca": {
       "pending": "Pendents",
       "completed": "Completats",
-      "all": "Tots",
+      "all": "Totes",
       "allSingular": "Tot",
       "mine": "Meus",
       "incoming": "Rebudes",

@@ -16,6 +16,7 @@ import { themes } from "../../constants/themes";
 import CompletedErrand from "../../Utils/CompletedErrand";
 import RenderRightActionsCompletedErrand from "../../Utils/RenderRightActionsCompletedErrand";
 import i18n from "../../constants/i18n";
+import FilterMainTabPopup from "./FilterMainTabPopup/FilterMainTabPopup";
 
 const SharedTasksComp = () => {
   const navigation = useNavigation();
@@ -158,27 +159,23 @@ const SharedTasksComp = () => {
   return (
     <View className={`h-full w-full bg-[${themes[theme].background}]`}>
       {/* Tabs */}
-      <View className="flex-row justify-center gap-2 px-2 py-2">
-        <View className="flex-1 flex-row rounded-full overflow-hidden">
-          {tabOptions.map((tab, index) => (
-            <Pressable
-              key={tab.value}
-              onPress={() => setMainTab(tab.value)}
-              className={`flex-1 items-center justify-center py-3 ${mainTab === tab.value ? `${theme === "light" ? "bg-gray-300" : "bg-gray-700"}` : `bg-[${themes[theme].buttonMenuBackground}]`} ${index === 0 ? "rounded-l-full" : ""} ${index === tabOptions.length - 1 ? "rounded-r-full" : ""}`}
-            >
-              <Text className={`text-[${themes[theme].text}] font-semibold`}>
-                {tab.label}
-              </Text>
-            </Pressable>
-          ))}
+      <View className="flex-row justify-center items-center gap-4 px-2 py-2">
+        <View className="flex-row items-center">
+          <FilterMainTabPopup mainTab={mainTab} setMainTab={setMainTab} />
         </View>
 
-        <View className="flex-1 flex-row rounded-full overflow-hidden">
+        <View className="flex-row items-center rounded-full overflow-hidden">
           {subFilterOptions.map((filter, index) => (
             <Pressable
               key={filter.value}
               onPress={() => setSubFilter(filter.value)}
-              className={`flex-1 items-center justify-center py-2 ${subFilter === filter.value ? `${theme === "light" ? "bg-gray-300" : "bg-gray-700"}` : `bg-[${themes[theme].buttonMenuBackground}]`} ${index === 0 ? "rounded-l-full" : ""} ${index === subFilterOptions.length - 1 ? "rounded-r-full" : ""}`}
+              className={`px-4 items-center justify-center py-3 ${
+                subFilter === filter.value
+                  ? `${theme === "light" ? "bg-gray-300" : "bg-gray-700"}`
+                  : `bg-[${themes[theme].buttonMenuBackground}]`
+              } ${index === 0 ? "rounded-l-full" : ""} ${
+                index === subFilterOptions.length - 1 ? "rounded-r-full" : ""
+              }`}
             >
               <Text className={`text-[${themes[theme].text}] font-medium`}>
                 {filter.label}
