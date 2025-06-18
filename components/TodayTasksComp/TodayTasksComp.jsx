@@ -17,6 +17,7 @@ import { useErrandActions } from "../../hooks/useErrandActions";
 import CompletedErrand from "../../Utils/CompletedErrand";
 import { themes } from "../../constants/themes";
 import i18n from "../../constants/i18n";
+import UndoDeleteErrandButton from "../../Utils/UndoDeleteErrandButton";
 
 function TodayTasks() {
   const navigation = useNavigation();
@@ -272,6 +273,14 @@ function TodayTasks() {
           undoCompleteErrand={undoCompleteErrand}
           openSwipeableRef={openSwipeableRef}
           setPossibleUndoCompleteErrand={setPossibleUndoCompleteErrand}
+        />
+      )}
+      {possibleUndoDeleteErrand && (
+        <UndoDeleteErrandButton
+          possibleUndoDeleteErrand={possibleUndoDeleteErrand}
+          undoDeleteErrand={undoDeleteErrand}
+          openSwipeableRef={openSwipeableRef}
+          setPossibleUndoDeleteErrand={setPossibleUndoDeleteErrand}
         />
       )}
     </View>
