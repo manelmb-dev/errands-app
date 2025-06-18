@@ -254,7 +254,7 @@ function TodayTasks() {
                   <SwipeableFullErrand
                     key={errand.id}
                     errand={errand}
-                    setErrandserrand={setErrands}
+                    setErrands={setErrands}
                     openSwipeableRef={openSwipeableRef}
                     swipeableRefs={swipeableRefs}
                     onCompleteWithUndo={onCompleteWithUndo}
