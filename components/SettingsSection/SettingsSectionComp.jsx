@@ -150,7 +150,7 @@ function SettingsSectionComp() {
             <TouchableHighlight
               key={index}
               className={`${index === 0 && "rounded-t-xl"} ${index === userSections.length - 1 && "rounded-b-xl"}`}
-              onPress={() => console.log(`Pressed ${item.label}`)}
+              onPress={() => router.push(item.route)}
               underlayColor={themes[theme].background}
             >
               <View

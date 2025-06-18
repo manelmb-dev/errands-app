@@ -16,7 +16,7 @@ import { themes } from "../../constants/themes";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import i18n from "../../constants/i18n";
 
-LocaleConfig.locales["es"] = {
+LocaleConfig.locales[i18n.locale] = {
   monthNames: [
     i18n.t("january"),
     i18n.t("february"),
@@ -46,26 +46,27 @@ LocaleConfig.locales["es"] = {
     i18n.t("decemberShort"),
   ],
   dayNames: [
+    i18n.t("sunday"),
     i18n.t("monday"),
     i18n.t("tuesday"),
     i18n.t("wednesday"),
     i18n.t("thursday"),
     i18n.t("friday"),
     i18n.t("saturday"),
-    i18n.t("sunday"),
   ],
   dayNamesShort: [
+    i18n.t("sundayShort"),
     i18n.t("mondayShort"),
     i18n.t("tuesdayShort"),
     i18n.t("wednesdayShort"),
     i18n.t("thursdayShort"),
     i18n.t("fridayShort"),
     i18n.t("saturdayShort"),
-    i18n.t("sundayShort"),
   ],
   today: i18n.t("today"),
 };
-LocaleConfig.defaultLocale = "es";
+
+LocaleConfig.defaultLocale = i18n.locale;
 
 function CalendarTasksComp() {
   const today = new Date().toISOString().split("T")[0];

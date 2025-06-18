@@ -1,5 +1,5 @@
 import { View, Text, TouchableHighlight } from "react-native";
-import { ScrollView } from "react-native-gesture-handler";
+import { Pressable, ScrollView } from "react-native-gesture-handler";
 import { useRouter } from "expo-router";
 import { useState } from "react";
 
@@ -50,26 +50,37 @@ export default function SharedSection() {
                 className="px-4"
                 style={{ width: containerWidth }}
               >
-                <View className={`flex-row rounded-t-3xl gap-3`}>
-                  <Icon
-                    className={`bg-[${themes[theme].iconColor}] p-2 rounded-xl`}
-                    name={slide.icon.name}
-                    size={slide.icon.size}
-                    color={`${theme === "light" ? `${themes["dark"].text}` : `${themes["light"].text}`}`}
-                  />
-                  <View>
-                    <Text
-                      className={`text-lg font-semibold text-[${themes[theme].text}]`}
-                    >
-                      {slide.title}
-                    </Text>
-                    <Text
-                      className={`text-sm font-medium text-[${themes[theme].taskSecondText}]`}
-                    >
-                      {slide.secondTitle}
-                    </Text>
+                <Pressable
+                  onPress={() =>
+                    router.push({
+                      pathname: slide.route,
+                      params: {
+                        tabParams: JSON.stringify(slide.params),
+                      },
+                    })
+                  }
+                >
+                  <View className={`flex-row rounded-t-3xl gap-3`}>
+                    <Icon
+                      className={`bg-[${themes[theme].iconColor}] p-2 rounded-xl`}
+                      name={slide.icon.name}
+                      size={slide.icon.size}
+                      color={`${theme === "light" ? `${themes["dark"].text}` : `${themes["light"].text}`}`}
+                    />
+                    <View>
+                      <Text
+                        className={`text-lg font-semibold text-[${themes[theme].text}]`}
+                      >
+                        {slide.title}
+                      </Text>
+                      <Text
+                        className={`text-sm font-medium text-[${themes[theme].taskSecondText}]`}
+                      >
+                        {slide.secondTitle}
+                      </Text>
+                    </View>
                   </View>
-                </View>
+                </Pressable>
 
                 {/* Social buttons */}
                 <View className="flex-row pt-4 gap-3">

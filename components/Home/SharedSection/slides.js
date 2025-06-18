@@ -161,18 +161,24 @@ export const getSharedSlides = (errands, user) => {
       secondTitle: i18n.t("thisWeek"),
       icon: { name: "account-group", lib: MaterialCommunityIcons, size: 29 },
       data: sharedCards,
+      route: "/sharedTasks",
+      params: { type: "all", status: "pending" },
     },
     {
       title: i18n.t("incoming"),
       secondTitle: i18n.t("thisWeek"),
       icon: { name: "tray-arrow-down", lib: MaterialCommunityIcons, size: 29 },
       data: incomingCards,
+      route: "/sharedTasks",
+      params: { type: "incoming", status: "pending" },
     },
     {
       title: i18n.t("outgoing"),
       secondTitle: i18n.t("thisWeek"),
       icon: { name: "call-made", lib: MaterialCommunityIcons, size: 29 },
       data: outgoingCards,
+      route: "/sharedTasks",
+      params: { type: "outgoing", status: "pending" },
     },
   ];
 
