@@ -176,7 +176,9 @@ const SharedTasksComp = () => {
           <FilterMainTabPopup mainTab={mainTab} setMainTab={setMainTab} />
         </View>
 
-        <View className="flex-row items-center rounded-full overflow-hidden">
+        <View
+          className={`flex-row items-center rounded-full shadow-sm ${theme === "light" ? "shadow-gray-200" : "shadow-neutral-950"}`}
+        >
           {subFilterOptions.map((filter, index) => (
             <Pressable
               key={filter.value}

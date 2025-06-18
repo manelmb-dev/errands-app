@@ -31,7 +31,7 @@ export default function FilterMainTabPopup({ mainTab, setMainTab }) {
         customStyles={{ TriggerTouchableComponent: TouchableOpacity }}
       >
         <View
-          className={`flex-row items-center justify-center px-4 py-3 rounded-full gap-2 ${theme === "light" ? "bg-gray-300" : "bg-gray-700"} min-w-[80px]`}
+          className={`flex-row items-center justify-center px-4 py-3 rounded-full gap-2 ${theme === "light" ? "bg-gray-300" : "bg-gray-700"} min-w-[80px] shadow-sm ${theme === "light" ? "shadow-gray-200" : "shadow-neutral-950"}`}
         >
           <Ionicons name="chevron-down" size={14} color={themes[theme].text} />
           <Text className={`text-[${themes[theme].text}] font-semibold`}>
