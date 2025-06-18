@@ -143,19 +143,13 @@ function TodayTasks() {
             onPress={() => {
               setSelectedTab(tab.value);
             }}
-            className={`px-4 py-2 rounded-full shadow ${
-              theme === "light" ? "shadow-gray-200" : "shadow-neutral-950"
-            } ${
+            className={`px-4 items-center justify-center py-3 rounded-full min-w-[90px] ${
               selectedTab === tab.value
-                ? "bg-blue-300"
+                ? `${theme === "light" ? "bg-gray-300" : "bg-gray-700"}`
                 : `bg-[${themes[theme].buttonMenuBackground}]`
-            }`}
+            } shadow-sm ${theme === "light" ? "shadow-gray-200" : "shadow-neutral-950"}`}
           >
-            <Text
-              className={`text-[${themes[theme].text}] text-lg font-semibold ${
-                selectedTab === tab.value ? "text-blue-900" : ""
-              }`}
-            >
+            <Text className={`text-[${themes[theme].text}] font-medium`}>
               {tab.label}
             </Text>
           </Pressable>
