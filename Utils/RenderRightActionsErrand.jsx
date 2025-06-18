@@ -1,12 +1,17 @@
 import { Pressable, View } from "react-native";
 import { router } from "expo-router";
+
 import Ionicons from "react-native-vector-icons/Ionicons";
 
-const RenderRightActionsErrand = ({ errand, setErrands }) => {
+const RenderRightActionsErrand = ({ errand, setErrands, onDeleteWithUndo }) => {
   const deleteErrand = () => {
+    // Delete errand locally
     setErrands((prev) =>
       prev.map((e) => (e.id === errand.id ? { ...e, deleted: true } : e))
     );
+
+    // Delete errand after timeout
+    onDeleteWithUndo(errand);
 
     // TODO: FIRESTORE UPDATEEE
     // await updateErrandInFirestore({ ...errand, deleted: true });

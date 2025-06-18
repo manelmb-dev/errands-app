@@ -13,6 +13,7 @@ import SwipeableFullErrand from "../../Utils/SwipeableFullErrand";
 import { useErrandActions } from "../../hooks/useErrandActions";
 import { themes } from "../../constants/themes";
 import i18n from "../../constants/i18n";
+import UndoDeleteErrandButton from "../../Utils/UndoDeleteErrandButton";
 
 function ListTasksComp() {
   const navigation = useNavigation();
@@ -26,11 +27,22 @@ function ListTasksComp() {
   const currentList = JSON.parse(list);
 
   const [showCompleted, setShowCompleted] = useState(false);
-  const [possibleUndoErrand, setPossibleUndoErrand] = useState(null);
+  const [possibleUndoCompleteErrand, setPossibleUndoCompleteErrand] =
+    useState(null);
+  const [possibleUndoDeleteErrand, setPossibleUndoDeleteErrand] =
+    useState(null);
 
-  const { onCompleteWithUndo, undoCompleteErrand } = useErrandActions({
+  const {
+    onCompleteWithUndo,
+    undoCompleteErrand,
+    onDeleteWithUndo,
+    undoDeleteErrand,
+  } = useErrandActions({
     setErrands,
-    setPossibleUndoErrand,
+    setPossibleUndoCompleteErrand,
+    setPossibleUndoDeleteErrand,
+    possibleUndoCompleteErrand,
+    possibleUndoDeleteErrand,
   });
 
   useEffect(() => {
@@ -89,6 +101,7 @@ function ListTasksComp() {
               openSwipeableRef={openSwipeableRef}
               swipeableRefs={swipeableRefs}
               onCompleteWithUndo={onCompleteWithUndo}
+              onDeleteWithUndo={onDeleteWithUndo}
             />
           );
         }}
@@ -135,12 +148,20 @@ function ListTasksComp() {
         //   )
         // }
       />
-      {possibleUndoErrand && (
+      {possibleUndoCompleteErrand && (
         <UndoCompleteErrandButton
-          possibleUndoErrand={possibleUndoErrand}
+          possibleUndoCompleteErrand={possibleUndoCompleteErrand}
           undoCompleteErrand={undoCompleteErrand}
           openSwipeableRef={openSwipeableRef}
-          setPossibleUndoErrand={setPossibleUndoErrand}
+          setPossibleUndoCompleteErrand={setPossibleUndoCompleteErrand}
+        />
+      )}
+      {possibleUndoDeleteErrand && (
+        <UndoDeleteErrandButton
+          possibleUndoDeleteErrand={possibleUndoDeleteErrand}
+          undoDeleteErrand={undoDeleteErrand}
+          openSwipeableRef={openSwipeableRef}
+          setPossibleUndoDeleteErrand={setPossibleUndoDeleteErrand}
         />
       )}
     </View>

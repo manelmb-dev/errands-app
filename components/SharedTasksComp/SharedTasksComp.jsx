@@ -17,6 +17,7 @@ import CompletedErrand from "../../Utils/CompletedErrand";
 import RenderRightActionsCompletedErrand from "../../Utils/RenderRightActionsCompletedErrand";
 import i18n from "../../constants/i18n";
 import FilterMainTabPopup from "./FilterMainTabPopup/FilterMainTabPopup";
+import UndoDeleteErrandButton from "../../Utils/UndoDeleteErrandButton";
 
 const SharedTasksComp = () => {
   const navigation = useNavigation();
@@ -32,13 +33,24 @@ const SharedTasksComp = () => {
   const swipeableRefs = useRef({});
 
   const [mainTab, setMainTab] = useState(tabParamsObj.type); // all | outgoing | incoming
-  const [subFilter, setSubFilter] = useState(tabParamsObj.status); // pending | overdue | completed
+  const [subFilter, setSubFilter] = useState(tabParamsObj.status); // pending | completed
 
-  const [possibleUndoErrand, setPossibleUndoErrand] = useState(null);
+  const [possibleUndoCompleteErrand, setPossibleUndoCompleteErrand] =
+    useState(null);
+  const [possibleUndoDeleteErrand, setPossibleUndoDeleteErrand] =
+    useState(null);
 
-  const { onCompleteWithUndo, undoCompleteErrand } = useErrandActions({
+  const {
+    onCompleteWithUndo,
+    undoCompleteErrand,
+    onDeleteWithUndo,
+    undoDeleteErrand,
+  } = useErrandActions({
     setErrands,
-    setPossibleUndoErrand,
+    setPossibleUndoCompleteErrand,
+    setPossibleUndoDeleteErrand,
+    possibleUndoCompleteErrand,
+    possibleUndoDeleteErrand,
   });
 
   useEffect(() => {
@@ -209,6 +221,7 @@ const SharedTasksComp = () => {
                     <RenderRightActionsCompletedErrand
                       errand={item}
                       setErrands={setErrands}
+                      onDeleteWithUndo={onDeleteWithUndo}
                     />
                   )}
                   onSwipeableWillOpen={() => {
@@ -232,6 +245,7 @@ const SharedTasksComp = () => {
                   openSwipeableRef={openSwipeableRef}
                   swipeableRefs={swipeableRefs}
                   onCompleteWithUndo={onCompleteWithUndo}
+                  onDeleteWithUndo={onDeleteWithUndo}
                 />
               )
             )}
@@ -248,12 +262,20 @@ const SharedTasksComp = () => {
         )}
       />
 
-      {possibleUndoErrand && (
+      {possibleUndoCompleteErrand && (
         <UndoCompleteErrandButton
-          possibleUndoErrand={possibleUndoErrand}
+          possibleUndoCompleteErrand={possibleUndoCompleteErrand}
           undoCompleteErrand={undoCompleteErrand}
           openSwipeableRef={openSwipeableRef}
-          setPossibleUndoErrand={setPossibleUndoErrand}
+          setPossibleUndoCompleteErrand={setPossibleUndoCompleteErrand}
+        />
+      )}
+      {possibleUndoDeleteErrand && (
+        <UndoDeleteErrandButton
+          possibleUndoDeleteErrand={possibleUndoDeleteErrand}
+          undoDeleteErrand={undoDeleteErrand}
+          openSwipeableRef={openSwipeableRef}
+          setPossibleUndoDeleteErrand={setPossibleUndoDeleteErrand}
         />
       )}
     </View>

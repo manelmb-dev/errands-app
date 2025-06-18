@@ -22,6 +22,7 @@ import CompletedErrand from "../../Utils/CompletedErrand";
 import { themes } from "../../constants/themes";
 import RenderRightActionsCompletedErrand from "../../Utils/RenderRightActionsCompletedErrand";
 import i18n from "../../constants/i18n";
+import UndoDeleteErrandButton from "../../Utils/UndoDeleteErrandButton";
 
 function FilterTasksComp() {
   const navigation = useNavigation();
@@ -34,11 +35,22 @@ function FilterTasksComp() {
   const openSwipeableRef = useRef(null);
   const swipeableRefs = useRef({});
 
-  const [possibleUndoErrand, setPossibleUndoErrand] = useState(null);
+  const [possibleUndoCompleteErrand, setPossibleUndoCompleteErrand] =
+    useState(null);
+  const [possibleUndoDeleteErrand, setPossibleUndoDeleteErrand] =
+    useState(null);
 
-  const { onCompleteWithUndo, undoCompleteErrand } = useErrandActions({
+  const {
+    onCompleteWithUndo,
+    undoCompleteErrand,
+    onDeleteWithUndo,
+    undoDeleteErrand,
+  } = useErrandActions({
     setErrands,
-    setPossibleUndoErrand,
+    setPossibleUndoCompleteErrand,
+    setPossibleUndoDeleteErrand,
+    possibleUndoCompleteErrand,
+    possibleUndoDeleteErrand,
   });
 
   const [uncompletedErrands, setUncompletedErrands] = useState(0);
@@ -220,6 +232,7 @@ function FilterTasksComp() {
                     openSwipeableRef={openSwipeableRef}
                     swipeableRefs={swipeableRefs}
                     onCompleteWithUndo={onCompleteWithUndo}
+                    onDeleteWithUndo={onDeleteWithUndo}
                   />
                 ))}
 
@@ -243,6 +256,7 @@ function FilterTasksComp() {
                       <RenderRightActionsCompletedErrand
                         errand={errand}
                         setErrands={setErrands}
+                        onDeleteWithUndo={onDeleteWithUndo}
                       />
                     )}
                     onSwipeableWillOpen={() => {
@@ -272,12 +286,20 @@ function FilterTasksComp() {
         />
       </View>
 
-      {possibleUndoErrand && (
+      {possibleUndoCompleteErrand && (
         <UndoCompleteErrandButton
-          possibleUndoErrand={possibleUndoErrand}
+          possibleUndoCompleteErrand={possibleUndoCompleteErrand}
           undoCompleteErrand={undoCompleteErrand}
           openSwipeableRef={openSwipeableRef}
-          setPossibleUndoErrand={setPossibleUndoErrand}
+          setPossibleUndoCompleteErrand={setPossibleUndoCompleteErrand}
+        />
+      )}
+      {possibleUndoDeleteErrand && (
+        <UndoDeleteErrandButton
+          possibleUndoDeleteErrand={possibleUndoDeleteErrand}
+          undoDeleteErrand={undoDeleteErrand}
+          openSwipeableRef={openSwipeableRef}
+          setPossibleUndoDeleteErrand={setPossibleUndoDeleteErrand}
         />
       )}
     </View>

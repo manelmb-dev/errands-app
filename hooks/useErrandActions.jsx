@@ -2,7 +2,13 @@
 
 import { useCallback, useRef } from "react";
 
-export function useErrandActions({ setErrands, setPossibleUndoErrand }) {
+export function useErrandActions({
+  setErrands,
+  possibleUndoCompleteErrand,
+  possibleUndoDeleteErrand,
+  setPossibleUndoCompleteErrand,
+  setPossibleUndoDeleteErrand,
+}) {
   const undoTimerRef = useRef(null);
   const previousUndoErrandRef = useRef(null);
 
@@ -10,26 +16,37 @@ export function useErrandActions({ setErrands, setPossibleUndoErrand }) {
     (completedErrand) => {
       if (undoTimerRef.current) {
         clearTimeout(undoTimerRef.current);
+        console.log(undoTimerRef)
         if (previousUndoErrandRef.current) {
-          // FIRESTORE UPDATE pending
-          // await updateErrandInFirestore(previousUndoErrandRef.current);
+          if (possibleUndoCompleteErrand) {
+            // Complete errand backend
+            // FIRESTORE UPDATE pending
+            // await updateCompleteErrandInFirestore(previousUndoErrandRef.current);
+          }
+          if (possibleUndoDeleteErrand) {
+            // Delete errand backend
+            // FIRESTORE UPDATE pending
+            // await updateDeleteErrandInFirestore(previousUndoErrandRef.current);
+          }
         }
       }
 
-      setPossibleUndoErrand(null);
+      setPossibleUndoCompleteErrand(null);
+      setPossibleUndoDeleteErrand(null);
       previousUndoErrandRef.current = completedErrand;
 
       setTimeout(() => {
-        setPossibleUndoErrand(completedErrand);
+        setPossibleUndoCompleteErrand(completedErrand);
 
         undoTimerRef.current = setTimeout(() => {
-          setPossibleUndoErrand(null);
+          setPossibleUndoCompleteErrand(null);
+          undoTimerRef.current = null;
           // FIRESTORE UPDATE pending
-          // await updateErrandInFirestore(completedErrand);
+          // await updateCompleteErrandInFirestore(completedErrand);
         }, 2000);
       }, 0);
     },
-    [setPossibleUndoErrand]
+    [setPossibleUndoCompleteErrand]
   );
 
   const undoCompleteErrand = useCallback(() => {
@@ -45,11 +62,66 @@ export function useErrandActions({ setErrands, setPossibleUndoErrand }) {
           : e
       )
     );
-    setPossibleUndoErrand(null);
-  }, [setErrands, setPossibleUndoErrand]);
+    setPossibleUndoCompleteErrand(null);
+  }, [setErrands, setPossibleUndoCompleteErrand]);
+
+  const onDeleteWithUndo = useCallback(
+    (deletedErrand) => {
+      if (undoTimerRef.current) {
+        clearTimeout(undoTimerRef.current);
+        if (previousUndoErrandRef.current) {
+          if (possibleUndoCompleteErrand) {
+            // Complete errand backend
+            // FIRESTORE UPDATE pending
+            // await updateCompleteErrandInFirestore(previousUndoErrandRef.current);
+          }
+          if (possibleUndoDeleteErrand) {
+            // Delete errand backend
+            // FIRESTORE UPDATE pending
+            // await updateDeleteErrandInFirestore(previousUndoErrandRef.current);
+          }
+          // FIRESTORE UPDATE pending
+          // check if the undo is a completed or deleted errand
+          // await updateErrandInFirestore(previousUndoErrandRef.current); if previous is completed then complete. if previous is deleted then delete
+        }
+      }
+
+      setPossibleUndoCompleteErrand(null);
+      setPossibleUndoDeleteErrand(null);
+      previousUndoErrandRef.current = deletedErrand;
+
+      setTimeout(() => {
+        setPossibleUndoDeleteErrand(deletedErrand);
+
+        undoTimerRef.current = setTimeout(() => {
+          setPossibleUndoDeleteErrand(null);
+          undoTimerRef.current = null;
+          // FIRESTORE UPDATE pending
+          // await updateErrandInFirestore(deletedErrand);
+        }, 2000);
+      }, 0);
+    },
+    [setPossibleUndoDeleteErrand]
+  );
+
+  const undoDeleteErrand = useCallback(() => {
+    setErrands((prev) =>
+      prev.map((e) =>
+        e.id === previousUndoErrandRef.current.id
+          ? {
+              ...e,
+              deleted: false,
+            }
+          : e
+      )
+    );
+    setPossibleUndoDeleteErrand(null);
+  }, [setErrands, setPossibleUndoDeleteErrand]);
 
   return {
     onCompleteWithUndo,
     undoCompleteErrand,
+    onDeleteWithUndo,
+    undoDeleteErrand,
   };
 }

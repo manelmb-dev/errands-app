@@ -1,10 +1,22 @@
 import { Pressable, View } from "react-native";
 import Ionicons from "react-native-vector-icons/Ionicons";
 
-const RenderRightActionsCompletedErrand = ({ errand, setErrands }) => {
+const RenderRightActionsCompletedErrand = ({
+  errand,
+  setErrands,
+  onDeleteWithUndo,
+}) => {
   const deleteErrand = () => {
-    setErrands((prev) => prev.filter((e) => e.id !== errand.id));
-    // TODO: FIRESTORE UPDATEEEEE
+    // Delete errand locally
+    setErrands((prev) =>
+      prev.map((e) => (e.id === errand.id ? { ...e, deleted: true } : e))
+    );
+
+    // Delete errand after timeout
+    onDeleteWithUndo(errand);
+
+    // TODO: FIRESTORE UPDATEEE
+    // await updateErrandInFirestore({ ...errand, deleted: true });
   };
 
   return (

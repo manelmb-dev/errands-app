@@ -1,7 +1,7 @@
 import Swipeable from "react-native-gesture-handler/ReanimatedSwipeable";
 import Animated, { LinearTransition } from "react-native-reanimated";
 import { View, Text, Pressable, Alert } from "react-native";
-import { useEffect, useMemo, useRef } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import ActionSheet from "react-native-actionsheet";
 import { useNavigation } from "expo-router";
 
@@ -10,10 +10,12 @@ import Ionicons from "react-native-vector-icons/Ionicons";
 import { errandsAtom, themeAtom } from "../../constants/storeAtoms";
 import { useAtom } from "jotai";
 
+import RenderRightActionsCompletedErrand from "../../Utils/RenderRightActionsCompletedErrand";
 import CompletedErrand from "../../Utils/CompletedErrand";
 import { themes } from "../../constants/themes";
-import RenderRightActionsCompletedErrand from "../../Utils/RenderRightActionsCompletedErrand";
 import i18n from "../../constants/i18n";
+import { useErrandActions } from "../../hooks/useErrandActions";
+import UndoDeleteErrandButton from "../../Utils/UndoDeleteErrandButton";
 
 function CompletedTasksComp() {
   const navigation = useNavigation();
@@ -23,6 +25,15 @@ function CompletedTasksComp() {
 
   const [theme] = useAtom(themeAtom);
   const [errands, setErrands] = useAtom(errandsAtom);
+
+  const [possibleUndoDeleteErrand, setPossibleUndoDeleteErrand] =
+    useState(null);
+
+  const { onDeleteWithUndo, undoDeleteErrand } = useErrandActions({
+    setErrands,
+    setPossibleUndoDeleteErrand,
+    possibleUndoDeleteErrand,
+  });
 
   const completedErrands = useMemo(
     () =>
@@ -114,7 +125,7 @@ function CompletedTasksComp() {
           style: "destructive",
         },
         { text: i18n.t("cancel") },
-      ],
+      ]
     );
   };
 
@@ -186,6 +197,7 @@ function CompletedTasksComp() {
                   <RenderRightActionsCompletedErrand
                     errand={item}
                     setErrands={setErrands}
+                    onDeleteWithUndo={onDeleteWithUndo}
                   />
                 )}
                 onSwipeableWillOpen={() => {
@@ -202,6 +214,15 @@ function CompletedTasksComp() {
               </Swipeable>
             );
           }}
+        />
+      )}
+
+      {possibleUndoDeleteErrand && (
+        <UndoDeleteErrandButton
+          possibleUndoDeleteErrand={possibleUndoDeleteErrand}
+          undoDeleteErrand={undoDeleteErrand}
+          openSwipeableRef={openSwipeableRef}
+          setPossibleUndoDeleteErrand={setPossibleUndoDeleteErrand}
         />
       )}
 

@@ -10,12 +10,12 @@ import Ionicons from "react-native-vector-icons/Ionicons";
 import { errandsAtom, themeAtom, userAtom } from "../../constants/storeAtoms";
 import { useAtom } from "jotai";
 
+import RenderRightActionsCompletedErrand from "../../Utils/RenderRightActionsCompletedErrand";
 import UndoCompleteErrandButton from "../../Utils/UndoCompleteErrandButton";
 import SwipeableFullErrand from "../../Utils/SwipeableFullErrand";
 import { useErrandActions } from "../../hooks/useErrandActions";
 import CompletedErrand from "../../Utils/CompletedErrand";
 import { themes } from "../../constants/themes";
-import RenderRightActionsCompletedErrand from "../../Utils/RenderRightActionsCompletedErrand";
 import i18n from "../../constants/i18n";
 
 function TodayTasks() {
@@ -28,11 +28,23 @@ function TodayTasks() {
   const [errands, setErrands] = useAtom(errandsAtom);
 
   const [selectedTab, setSelectedTab] = useState("pending");
-  const [possibleUndoErrand, setPossibleUndoErrand] = useState(null);
 
-  const { onCompleteWithUndo, undoCompleteErrand } = useErrandActions({
+  const [possibleUndoCompleteErrand, setPossibleUndoCompleteErrand] =
+    useState(null);
+  const [possibleUndoDeleteErrand, setPossibleUndoDeleteErrand] =
+    useState(null);
+
+  const {
+    onCompleteWithUndo,
+    undoCompleteErrand,
+    onDeleteWithUndo,
+    undoDeleteErrand,
+  } = useErrandActions({
     setErrands,
-    setPossibleUndoErrand,
+    setPossibleUndoCompleteErrand,
+    setPossibleUndoDeleteErrand,
+    possibleUndoCompleteErrand,
+    possibleUndoDeleteErrand,
   });
 
   const sortByDate = (a, b) =>
@@ -180,6 +192,7 @@ function TodayTasks() {
                 <RenderRightActionsCompletedErrand
                   errand={item}
                   setErrands={setErrands}
+                  onDeleteWithUndo={onDeleteWithUndo}
                 />
               )}
               onSwipeableWillOpen={() => {
@@ -201,6 +214,7 @@ function TodayTasks() {
               openSwipeableRef={openSwipeableRef}
               swipeableRefs={swipeableRefs}
               onCompleteWithUndo={onCompleteWithUndo}
+              onDeleteWithUndo={onDeleteWithUndo}
             />
           )
         }
@@ -224,6 +238,7 @@ function TodayTasks() {
                       <RenderRightActionsCompletedErrand
                         errand={errand}
                         setErrands={setErrands}
+                        onDeleteWithUndo={onDeleteWithUndo}
                       />
                     )}
                     onSwipeableWillOpen={() => {
@@ -248,6 +263,7 @@ function TodayTasks() {
                     openSwipeableRef={openSwipeableRef}
                     swipeableRefs={swipeableRefs}
                     onCompleteWithUndo={onCompleteWithUndo}
+                    onDeleteWithUndo={onDeleteWithUndo}
                   />
                 );
               })}
@@ -256,12 +272,12 @@ function TodayTasks() {
         }
       />
 
-      {possibleUndoErrand && (
+      {possibleUndoCompleteErrand && (
         <UndoCompleteErrandButton
-          possibleUndoErrand={possibleUndoErrand}
+          possibleUndoCompleteErrand={possibleUndoCompleteErrand}
           undoCompleteErrand={undoCompleteErrand}
           openSwipeableRef={openSwipeableRef}
-          setPossibleUndoErrand={setPossibleUndoErrand}
+          setPossibleUndoCompleteErrand={setPossibleUndoCompleteErrand}
         />
       )}
     </View>

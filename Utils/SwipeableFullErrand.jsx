@@ -12,6 +12,7 @@ const SwipeableFullErrand = ({
   openSwipeableRef,
   swipeableRefs,
   onCompleteWithUndo,
+  onDeleteWithUndo,
 }) => {
   return (
     <Swipeable
@@ -21,6 +22,7 @@ const SwipeableFullErrand = ({
           errand={errand}
           setErrands={setErrands}
           openSwipeableRef={openSwipeableRef}
+          onDeleteWithUndo={onDeleteWithUndo}
         />
       )}
       onSwipeableWillOpen={() => {

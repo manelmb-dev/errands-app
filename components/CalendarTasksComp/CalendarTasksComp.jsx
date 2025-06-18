@@ -15,6 +15,7 @@ import { themes } from "../../constants/themes";
 
 import Ionicons from "react-native-vector-icons/Ionicons";
 import i18n from "../../constants/i18n";
+import UndoDeleteErrandButton from "../../Utils/UndoDeleteErrandButton";
 
 LocaleConfig.locales[i18n.locale] = {
   monthNames: [
@@ -80,11 +81,23 @@ function CalendarTasksComp() {
   const [selectedDate, setSelectedDate] = useState(today);
   const [currentMonth, setCurrentMonth] = useState(new Date());
   const [isDatePickerVisible, setIsDatePickerVisible] = useState(false);
-  const [possibleUndoErrand, setPossibleUndoErrand] = useState(null);
 
-  const { onCompleteWithUndo, undoCompleteErrand } = useErrandActions({
+  const [possibleUndoCompleteErrand, setPossibleUndoCompleteErrand] =
+    useState(null);
+  const [possibleUndoDeleteErrand, setPossibleUndoDeleteErrand] =
+    useState(null);
+
+  const {
+    onCompleteWithUndo,
+    undoCompleteErrand,
+    onDeleteWithUndo,
+    undoDeleteErrand,
+  } = useErrandActions({
     setErrands,
-    setPossibleUndoErrand,
+    setPossibleUndoCompleteErrand,
+    setPossibleUndoDeleteErrand,
+    possibleUndoCompleteErrand,
+    possibleUndoDeleteErrand,
   });
 
   useEffect(() => {
@@ -280,6 +293,7 @@ function CalendarTasksComp() {
             openSwipeableRef={openSwipeableRef}
             swipeableRefs={swipeableRefs}
             onCompleteWithUndo={onCompleteWithUndo}
+            onDeleteWithUndo={onDeleteWithUndo}
           />
         )}
         ListEmptyComponent={
@@ -291,12 +305,20 @@ function CalendarTasksComp() {
         }
       />
 
-      {possibleUndoErrand && (
+      {possibleUndoCompleteErrand && (
         <UndoCompleteErrandButton
-          possibleUndoErrand={possibleUndoErrand}
+          possibleUndoCompleteErrand={possibleUndoCompleteErrand}
           undoCompleteErrand={undoCompleteErrand}
           openSwipeableRef={openSwipeableRef}
-          setPossibleUndoErrand={setPossibleUndoErrand}
+          setPossibleUndoCompleteErrand={setPossibleUndoCompleteErrand}
+        />
+      )}
+      {possibleUndoDeleteErrand && (
+        <UndoDeleteErrandButton
+          possibleUndoDeleteErrand={possibleUndoDeleteErrand}
+          undoDeleteErrand={undoDeleteErrand}
+          openSwipeableRef={openSwipeableRef}
+          setPossibleUndoDeleteErrand={setPossibleUndoDeleteErrand}
         />
       )}
 

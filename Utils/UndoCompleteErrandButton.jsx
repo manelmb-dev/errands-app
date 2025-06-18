@@ -8,17 +8,17 @@ import { themes } from "../constants/themes";
 import i18n from "../constants/i18n";
 
 const UndoCompleteErrandButton = ({
-  possibleUndoErrand,
+  possibleUndoCompleteErrand,
   undoCompleteErrand,
   openSwipeableRef,
-  setPossibleUndoErrand,
+  setPossibleUndoCompleteErrand,
 }) => {
   const [theme] = useAtom(themeAtom);
 
   return (
     <Pressable
       onPress={() => {
-        setPossibleUndoErrand(null);
+        setPossibleUndoCompleteErrand(null);
         if (openSwipeableRef.current) {
           openSwipeableRef.current.close();
           openSwipeableRef.current = null;
@@ -37,7 +37,7 @@ const UndoCompleteErrandButton = ({
           <Text
             className={`text-[${themes[theme].blueHeadText}] text-lg font-medium truncate`}
           >
-            {possibleUndoErrand.title}
+            {possibleUndoCompleteErrand.title}
           </Text>
         </View>
         <Pressable
