@@ -8,6 +8,7 @@ import {
   errandsAtom,
   listsAtom,
   themeAtom,
+  userAtom,
 } from "../../../constants/storeAtoms";
 import { useAtom } from "jotai";
 
@@ -19,6 +20,7 @@ export default function ListSection() {
   const router = useRouter();
 
   const [theme] = useAtom(themeAtom);
+  const [user] = useAtom(userAtom);
   const [errands] = useAtom(errandsAtom);
   const [lists] = useAtom(listsAtom);
 
@@ -163,7 +165,11 @@ export default function ListSection() {
                   <Text
                     className={`mr-7 text-lg font-semibold text-[${themes[theme].listTitle}]`}
                   >
-                    {errands.filter((errand) => errand.deleted === true).length}
+                    {
+                      errands
+                        .filter((errand) => errand.deleted === true)
+                        .filter((errand) => errand.ownerId === user.id).length
+                    }
                   </Text>
                 </View>
               </View>

@@ -14,6 +14,7 @@ import {
   errandsAtom,
   languageAtom,
   themeAtom,
+  userAtom,
 } from "../../../constants/storeAtoms";
 import { useAtom } from "jotai";
 
@@ -22,14 +23,19 @@ import i18n from "../../../constants/i18n";
 
 export default function PopupDeletedTasksScreen() {
   const [theme] = useAtom(themeAtom);
+  const [user] = useAtom(userAtom);
   const [language] = useAtom(languageAtom);
   const [errands, setErrands] = useAtom(errandsAtom);
 
-  const totalErrandsDeleted = errands.filter((errand) => errand.deleted).length;
+  const totalErrandsDeleted = errands
+    .filter((errand) => errand.deleted)
+    .filter((e) => e.ownerId === user.id).length;
 
   const deleteAllDeletedErrands = () => {
     //delete deleted errands locally
-    setErrands((prev) => prev.filter((e) => !e.deleted));
+    setErrands((prev) =>
+      prev.filter((e) => !e.deleted).filter((e) => e.ownerId === user.id)
+    );
 
     // TODO: FIRESTORE UPDATEEE
     // await delete elements from firestore

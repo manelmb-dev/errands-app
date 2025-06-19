@@ -41,6 +41,7 @@ function DeletedTasksComp() {
 
   const flatListData = errands
     .filter((errand) => errand.deleted)
+    .filter((errand) => errand.ownerId === user.id)
     .sort((a, b) => new Date(a.dateDeleted) - new Date(b.dateDeleted));
 
   useEffect(() => {
