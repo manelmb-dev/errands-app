@@ -124,14 +124,14 @@ const SwipeableFullErrand = ({
             <Octicons
               className="p-3 self-center"
               name={"check-circle-fill"}
-              size={22}
+              size={20}
               color={"#6E727A"}
             />
           ) : (
             <Octicons
               className="p-3 self-center"
               name={"circle"}
-              size={22}
+              size={20}
               color={"#6E727A"}
             />
           )}

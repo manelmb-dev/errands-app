@@ -66,6 +66,7 @@
         "noErrandsThisDay": "There are no errands for this day",
         "delete": "Delete",
         "deleteAll": "Delete all",
+        "deleteAllSingular": "Delete all",
         "moreThanAMonthAgo": "More than a month ago",
         "thereAreNoCompletedErrands": "There are no completed errands",
         "deleteCompletedErrands": "Delete completed errands",
@@ -158,7 +159,8 @@
         "noDeletedErrands": "There are no deleted errands",
         "recoverAlertText": "This errand is deleted. To edit it, you need to recover it first.",
         "recover": "Recover",
-        "recoverDeletedErrand": "Recover deleted errand?"
+        "recoverDeletedErrand": "Recover deleted errand?",
+        "actionCannotBeUndone": "This action cannot be undone."
 
 
           
@@ -240,6 +242,7 @@
       "noErrandsThisDay": "No hay tareas para este día",
       "delete": "Eliminar",
       "deleteAll": "Eliminar todos",
+      "deleteAllSingular": "Eliminar todo",
       "moreThanAMonthAgo": "De hace más de un mes",
       "thereAreNoCompletedErrands": "No hay tareas completadas",
       "deleteCompletedErrands": "Eliminar tareas completadas",
@@ -332,7 +335,8 @@
       "noDeletedErrands": "No hay tareas eliminadas",
       "recoverAlertText": "Esta tarea está eliminada. Para editarla, primero debes recuperarla.",
       "recover": "Recuperar",
-      "recoverDeletedErrand": "¿Recuperar tarea eliminada?"
+      "recoverDeletedErrand": "¿Recuperar tarea eliminada?",
+      "actionCannotBeUndone": "Esta acción no se podrá deshacer."
 
       
       
@@ -413,6 +417,7 @@
       "noErrandsThisDay": "No hi ha tasques per aquest dia",
       "delete": "Eliminar",
       "deleteAll": "Eliminar tots",
+      "deleteAllSingular": "Eliminar tot",
       "moreThanAMonthAgo": "De fa més de un mes",
       "thereAreNoCompletedErrands": "No hi ha tasques completades",
       "deleteCompletedErrands": "Eliminar tasques completades",
@@ -505,7 +510,8 @@
       "noDeletedErrands": "No hi ha tasques eliminades",
       "recoverAlertText": "Aquesta tasca està eliminada. Per editar-la, primer l’has de recuperar.",
       "recover": "Recuperar",
-      "recoverDeletedErrand": "Recuperar tasca eliminada?"
+      "recoverDeletedErrand": "Recuperar tasca eliminada?",
+      "actionCannotBeUndone": "Aquesta acció no es podrà desfer."
 
 
 

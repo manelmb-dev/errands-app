@@ -5,12 +5,13 @@ import { useNavigation } from "expo-router";
 
 import Ionicons from "react-native-vector-icons/Ionicons";
 
-import { errandsAtom, themeAtom } from "../../constants/storeAtoms";
+import { errandsAtom, themeAtom, userAtom } from "../../constants/storeAtoms";
 import { useAtom } from "jotai";
 
 import { themes } from "../../constants/themes";
 import i18n from "../../constants/i18n";
 import SwipeableDeletedErrand from "./SwipeableDeletedErrand/SwipeableDeletedErrand";
+import PopupDeletedTasksScreen from "./PopupDeletedTasksScreen/PopupDeletedTasksScreen";
 
 function DeletedTasksComp() {
   const navigation = useNavigation();
@@ -18,6 +19,7 @@ function DeletedTasksComp() {
   const swipeableRefs = useRef({});
 
   const [theme] = useAtom(themeAtom);
+  const [user] = useAtom(userAtom);
   const [errands, setErrands] = useAtom(errandsAtom);
 
   const [showEmpty, setShowEmpty] = useState(false);
@@ -33,9 +35,7 @@ function DeletedTasksComp() {
         backgroundColor: themes[theme].background,
       },
       headerShadowVisible: false,
-      headerRight: () => (
-        <Ionicons name="options" color={themes[theme].blueHeadText} size={24} />
-      ),
+      headerRight: () => <PopupDeletedTasksScreen />,
     });
   }, [navigation, theme]);
 
