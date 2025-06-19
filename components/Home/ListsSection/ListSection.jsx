@@ -24,6 +24,10 @@ export default function ListSection() {
   const [errands] = useAtom(errandsAtom);
   const [lists] = useAtom(listsAtom);
 
+  const totalErrandsDeleted = errands
+    .filter((errand) => errand.deleted)
+    .filter((e) => e.ownerId === user.id).length;
+
   return (
     <View>
       <View className="w-full flex-row justify-between mt-4 mb-1">
@@ -91,6 +95,7 @@ export default function ListSection() {
         {/* Shared Errands */}
         <View>
           <TouchableHighlight
+            className={`${totalErrandsDeleted === 0 && "rounded-b-3xl pb-1"}`}
             underlayColor={themes[theme].background}
             onPress={() => {
               router.push({
@@ -104,7 +109,9 @@ export default function ListSection() {
               });
             }}
           >
-            <View className={`w-full flex-row justify-between items-center`}>
+            <View
+              className={`w-full flex-row justify-between items-center ${totalErrandsDeleted === 0 && "rounded-b-3xl"}`}
+            >
               <View className={`flex-row items-center ml-5 gap-5`}>
                 <MaterialCommunityIcons
                   className={`p-2 rounded-xl ${theme === "light" ? `bg-slate-300` : `bg-slate-600`}`}
@@ -113,7 +120,7 @@ export default function ListSection() {
                   color={`${themes[theme].text}`}
                 />
                 <View
-                  className={`flex-1 py-4 flex-row items-center justify-between border-b  border-[${themes[theme].listsSeparator}]`}
+                  className={`flex-1 py-4 flex-row items-center justify-between ${totalErrandsDeleted !== 0 && `border-b  border-[${themes[theme].listsSeparator}]`}`}
                 >
                   <Text className={`text-lg text-[${themes[theme].listTitle}]`}>
                     {i18n.t("shared")}
@@ -138,44 +145,50 @@ export default function ListSection() {
         </View>
 
         {/* Errands deleted */}
-        <View className="rounded-b-3xl">
-          <TouchableHighlight
-            className={`rounded-b-3xl pb-1`}
-            underlayColor={themes[theme].background}
-            onPress={() => {
-              router.push("/deletedTasks");
-            }}
-          >
-            <View
-              className={`w-full flex-row justify-between items-center rounded-b-3xl`}
+        {totalErrandsDeleted > 0 && (
+          <View className="rounded-b-3xl">
+            <TouchableHighlight
+              className={`rounded-b-3xl pb-1`}
+              underlayColor={themes[theme].background}
+              onPress={() => {
+                router.push("/deletedTasks");
+              }}
             >
-              <View className={`flex-row items-center ml-5 gap-5 rounded-b-xl`}>
-                <Ionicons
-                  className={`p-2 rounded-xl ${theme === "light" ? `bg-red-300` : `bg-red-600`}`}
-                  name="trash"
-                  size={23}
-                  color={`${themes[theme].text}`}
-                />
+              <View
+                className={`w-full flex-row justify-between items-center rounded-b-3xl`}
+              >
                 <View
-                  className={`flex-1 py-4 flex-row items-center justify-between`}
+                  className={`flex-row items-center ml-5 gap-5 rounded-b-xl`}
                 >
-                  <Text className={`text-lg text-[${themes[theme].listTitle}]`}>
-                    {i18n.t("deleted")}
-                  </Text>
-                  <Text
-                    className={`mr-7 text-lg font-semibold text-[${themes[theme].listTitle}]`}
+                  <Ionicons
+                    className={`p-2 rounded-xl ${theme === "light" ? `bg-red-300` : `bg-red-600`}`}
+                    name="trash"
+                    size={23}
+                    color={`${themes[theme].text}`}
+                  />
+                  <View
+                    className={`flex-1 py-4 flex-row items-center justify-between`}
                   >
-                    {
-                      errands
-                        .filter((errand) => errand.deleted === true)
-                        .filter((errand) => errand.ownerId === user.id).length
-                    }
-                  </Text>
+                    <Text
+                      className={`text-lg text-[${themes[theme].listTitle}]`}
+                    >
+                      {i18n.t("deleted")}
+                    </Text>
+                    <Text
+                      className={`mr-7 text-lg font-semibold text-[${themes[theme].listTitle}]`}
+                    >
+                      {
+                        errands
+                          .filter((errand) => errand.deleted === true)
+                          .filter((errand) => errand.ownerId === user.id).length
+                      }
+                    </Text>
+                  </View>
                 </View>
               </View>
-            </View>
-          </TouchableHighlight>
-        </View>
+            </TouchableHighlight>
+          </View>
+        )}
       </View>
     </View>
   );
