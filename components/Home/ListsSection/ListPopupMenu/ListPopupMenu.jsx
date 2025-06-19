@@ -69,10 +69,11 @@ export default function ListPopupMenu() {
             marginTop: 26,
             backgroundColor: themes[theme].buttonMenuBackground,
             borderRadius: 10,
-            elevation: 12, // shadow Android
-            shadowColor: themes[theme].popupShadow, // shadow iOS
-            shadowOpacity: 0.5,
-            shadowRadius: 30,
+            elevation: 12,
+            shadowColor: "#000",
+            shadowOpacity: 0.6,
+            shadowOffset: { width: 0, height: 5 },
+            shadowRadius: 40,
           },
         }}
       >

@@ -96,9 +96,10 @@ export default function LanguagePopupMenu() {
             backgroundColor: themes[theme].buttonMenuBackground,
             borderRadius: 10,
             elevation: 12,
-            shadowColor: themes[theme].popupShadow,
-            shadowOpacity: 0.5,
-            shadowRadius: 30,
+            shadowColor: "#000",
+            shadowOpacity: 0.4,
+            shadowOffset: { width: 0, height: 5 },
+            shadowRadius: 40,
           },
         }}
       >

@@ -57,11 +57,11 @@ export default function MainPopupPage() {
           optionsContainer: {
             backgroundColor: themes[theme].buttonMenuBackground,
             borderRadius: 10,
-            elevation: 6, // shadow Android
-            shadowColor: "#000", // shadow iOS
-            shadowOpacity: 0.3,
-            shadowOffset: { width: 0, height: 2 },
-            shadowRadius: 6,
+            elevation: 12,
+            shadowColor: "#000",
+            shadowOpacity: 0.6,
+            shadowOffset: { width: 0, height: 5 },
+            shadowRadius: 40,
           },
           optionWrapper: {
             paddingVertical: 12,

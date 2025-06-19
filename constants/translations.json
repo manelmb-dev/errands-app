@@ -331,7 +331,7 @@
       "shareInvitation": "Compartir invitación",
       "inviteAppMessage": "¡Únete a la app de recados! Descárgala aquí: https://errands-app.com",
       "inviteDescription": "Invita a tus amigos y familiares a unirse a errands-app para así coordinar tareas juntos de forma organizada y sin complicaciones. Comparte la aplicación y mejora la forma en que planificáis vuestros días.",
-      "deletedErrandsCompText": "Podrás acceder a tus tareas borradas durante 30 días. Después de ese plazo, se eliminarán definitivamente.",
+      "deletedErrandsCompText": "Podrás acceder a tus tareas eliminadas durante 30 días. Después de ese plazo, se eliminarán definitivamente.",
       "noDeletedErrands": "No hay tareas eliminadas",
       "recoverAlertText": "Esta tarea está eliminada. Para editarla, primero debes recuperarla.",
       "recover": "Recuperar",

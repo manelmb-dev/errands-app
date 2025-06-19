@@ -77,11 +77,11 @@ export default function PopupDeletedTasksScreen() {
           optionsContainer: {
             backgroundColor: themes[theme].buttonMenuBackground,
             borderRadius: 10,
-            elevation: 6,
+            elevation: 12,
             shadowColor: "#000",
-            shadowOpacity: 0.3,
+            shadowOpacity: 0.6,
             shadowOffset: { width: 0, height: 5 },
-            shadowRadius: 6,
+            shadowRadius: 40,
           },
           optionWrapper: {
             paddingVertical: 12,
