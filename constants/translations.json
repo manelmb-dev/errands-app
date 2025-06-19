@@ -153,7 +153,12 @@
         "aboutAppFullText": "This app has been designed so you never forget any important errands and can organize them quickly and easily.\n\nKey features:\n\n- Create errands for yourself or assign errands to your contacts.\n- Organize errands in custom lists and use colors and icons to identify them easily.\n- Receive notifications so you don’t forget important tasks.\n- Mark errands as completed or starred to prioritize them.\n- Sync your data securely in the cloud.\n- Invite your friends and coordinate tasks as a team.\n\nOur mission is to help you save time and stay organized every day.\n\nVersion: 1.0.0\n\nThank you for trusting us and being part of our community.\n\nIf you have suggestions or need help, contact us at: errands.support@gmail.com",
         "shareInvitation": "Share invitation",
         "inviteAppMessage": "Join the errands app! Download it here: https://errands-app.com",
-        "inviteDescription": "Invite your friends and family to join errands-app to coordinate errands together in an organized and hassle-free way. Share the app and make planning your days easier and more efficient."
+        "inviteDescription": "Invite your friends and family to join errands-app to coordinate errands together in an organized and hassle-free way. Share the app and make planning your days easier and more efficient.",
+        "deletedErrandsCompText": "You’ll have access to your deleted errands for 30 days. Once that time passes, they’ll be permanently deleted.",
+        "noDeletedErrands": "There are no deleted errands",
+        "recoverAlertText": "This errand is deleted. To edit it, you need to recover it first.",
+        "recover": "Recover",
+        "recoverDeletedErrand": "Recover deleted errand?"
 
 
           
@@ -322,7 +327,12 @@
       "aboutAppFullText": "Esta aplicación ha sido diseñada para que nunca olvides ningún recado importante y puedas organizarlos de forma rápida y sencilla.\n\nCaracterísticas principales:\n\n- Crea recados para ti o asigna recados a tus contactos.\n- Organiza recados en listas personalizadas y usa colores e iconos para identificarlas fácilmente.\n- Recibe notificaciones para no olvidar tareas importantes.\n- Marca los recados como completados o destacados para priorizarlos.\n- Sincroniza tus datos de forma segura en la nube.\n- Invita a tus amigos y coordina tareas en equipo.\n\nNuestra misión es ayudarte a ahorrar tiempo y mantenerte organizado en tu día a día.\n\nVersión: 1.0.0\n\nGracias por confiar en nosotros y ser parte de nuestra comunidad.\n\nSi tienes sugerencias o necesitas ayuda, contáctanos en: errands.support@gmail.com",
       "shareInvitation": "Compartir invitación",
       "inviteAppMessage": "¡Únete a la app de recados! Descárgala aquí: https://errands-app.com",
-      "inviteDescription": "Invita a tus amigos y familiares a unirse a errands-app para así coordinar tareas juntos de forma organizada y sin complicaciones. Comparte la aplicación y mejora la forma en que planificáis vuestros días."
+      "inviteDescription": "Invita a tus amigos y familiares a unirse a errands-app para así coordinar tareas juntos de forma organizada y sin complicaciones. Comparte la aplicación y mejora la forma en que planificáis vuestros días.",
+      "deletedErrandsCompText": "Podrás acceder a tus tareas borradas durante 30 días. Después de ese plazo, se eliminarán definitivamente.",
+      "noDeletedErrands": "No hay tareas eliminadas",
+      "recoverAlertText": "Esta tarea está eliminada. Para editarla, primero debes recuperarla.",
+      "recover": "Recuperar",
+      "recoverDeletedErrand": "¿Recuperar tarea eliminada?"
 
       
       
@@ -490,7 +500,12 @@
       "aboutAppFullText": "Aquesta aplicació ha estat dissenyada perquè no oblidis cap encàrrec important i puguis organitzar-los de forma ràpida i senzilla.\n\nCaracterístiques principals:\n\n- Crea encàrrecs per a tu o assigna'ls als teus contactes.\n- Organitza encàrrecs en llistes personalitzades i utilitza colors i icones per identificar-les fàcilment.\n- Rep notificacions per no oblidar tasques importants.\n- Marca els encàrrecs com a completats o destacats per prioritzar-los.\n- Sincronitza les teves dades de forma segura al núvol.\n- Convida els teus amics i coordina tasques en equip.\n\nLa nostra missió és ajudar-te a estalviar temps i mantenir-te organitzat en el teu dia a dia.\n\nVersió: 1.0.0\n\nGràcies per confiar en nosaltres i formar part de la nostra comunitat.\n\nSi tens suggeriments o necessites ajuda, contacta'ns a: errands.support@gmail.com",
       "shareInvitation": "Comparteix invitació",
       "inviteAppMessage": "Uneix-te a l'app d'encàrrecs! Descarrega-la aquí: https://errands-app.com",
-      "inviteDescription": "Convida els teus amics i familiars a unir-se a errands-app per coordinar tasques junts de manera organitzada i sense complicacions. Comparteix l'aplicació i millora la forma com planifiqueu els vostres dies."
+      "inviteDescription": "Convida els teus amics i familiars a unir-se a errands-app per coordinar tasques junts de manera organitzada i sense complicacions. Comparteix l'aplicació i millora la forma com planifiqueu els vostres dies.",
+      "deletedErrandsCompText": "Podràs accedir a les teves tasques eliminades durant 30 dies. Un cop passat aquest termini, s’esborraran definitivament.",
+      "noDeletedErrands": "No hi ha tasques eliminades",
+      "recoverAlertText": "Aquesta tasca està eliminada. Per editar-la, primer l’has de recuperar.",
+      "recover": "Recuperar",
+      "recoverDeletedErrand": "Recuperar tasca eliminada?"
 
 
 

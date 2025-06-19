@@ -1,6 +1,7 @@
-import { View, Text, TextInput, Pressable, ScrollView } from "react-native";
+import Animated, { LinearTransition } from "react-native-reanimated";
+import { useEffect, useRef, useState } from "react";
+import { View, Text } from "react-native";
 import { useNavigation } from "expo-router";
-import { useEffect, useState } from "react";
 
 import Ionicons from "react-native-vector-icons/Ionicons";
 
@@ -9,12 +10,17 @@ import { useAtom } from "jotai";
 
 import { themes } from "../../constants/themes";
 import i18n from "../../constants/i18n";
+import SwipeableDeletedErrand from "./SwipeableDeletedErrand/SwipeableDeletedErrand";
 
 function DeletedTasksComp() {
   const navigation = useNavigation();
+  const openSwipeableRef = useRef(null);
+  const swipeableRefs = useRef({});
 
   const [theme] = useAtom(themeAtom);
   const [errands, setErrands] = useAtom(errandsAtom);
+
+  const [showEmpty, setShowEmpty] = useState(false);
 
   useEffect(() => {
     navigation.setOptions({
@@ -33,9 +39,48 @@ function DeletedTasksComp() {
     });
   }, [navigation, theme]);
 
+  const flatListData = errands
+    .filter((errand) => errand.deleted)
+    .sort((a, b) => new Date(a.dateDeleted) - new Date(b.dateDeleted));
+
+  useEffect(() => {
+    if (flatListData.length === 0) {
+      // Espera la duración del FadeOut (~300ms suele ir bien)
+      const timer = setTimeout(() => setShowEmpty(true), 300);
+      return () => clearTimeout(timer);
+    } else {
+      // Si vuelve a haber tareas, oculta el empty inmediatamente
+      setShowEmpty(false);
+    }
+  }, [flatListData.length]);
+
   return (
-    <View className={`h-full bg-[${themes[theme].background}]`}>
-      <Text>{i18n.t("deletedErrands")}</Text>
+    <View className={`flex-1 bg-[${themes[theme].background}]`}>
+      <Text className={`m-4 text-lg text-[${themes[theme].taskSecondText}]`}>
+        {i18n.t("deletedErrandsCompText")}
+      </Text>
+      <Animated.FlatList
+        itemLayoutAnimation={LinearTransition}
+        data={flatListData}
+        keyExtractor={(item) => item.id}
+        ListEmptyComponent={() =>
+          showEmpty && (
+            <Text
+              className={`my-8 text-xl text-center text-[${themes[theme].text}]`}
+            >
+              {i18n.t("noDeletedErrands")}
+            </Text>
+          )
+        }
+        renderItem={({ item }) => (
+          <SwipeableDeletedErrand
+            errand={item}
+            setErrands={setErrands}
+            openSwipeableRef={openSwipeableRef}
+            swipeableRefs={swipeableRefs}
+          />
+        )}
+      />
     </View>
   );
 }
