@@ -1,7 +1,6 @@
-import { Platform, Alert, TouchableOpacity } from "react-native";
-import ContextMenuView from "react-native-context-menu-view";
-import React from "react";
+import { TouchableOpacity } from "react-native";
 import { router } from "expo-router";
+import React from "react";
 import {
   Menu,
   MenuTrigger,
@@ -10,7 +9,6 @@ import {
 } from "react-native-popup-menu";
 
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
-import Ionicons from "react-native-vector-icons/Ionicons";
 
 import { useAtom } from "jotai";
 import { themeAtom } from "../../../../constants/storeAtoms";
@@ -20,33 +18,6 @@ import i18n from "../../../../constants/i18n";
 
 export default function ListPopupMenu() {
   const [theme] = useAtom(themeAtom);
-  // const handleSelect = (key) => {
-  //   if (key === "new") {
-  //     router.push("/Modals/newListModal");
-  //   } else if (key === "edit") {
-  //     Alert.alert("Editar listas");
-  //   }
-  // };
-
-  // if (Platform.OS === "ios") {
-  //   return (
-  //     <ContextMenuView
-  //       style={{ padding: 4 }}
-  //       menuConfig={{
-  //         menuTitle: "Menú",
-  //         menuItems: [
-  //           { actionKey: "new", actionTitle: "Añadir lista" },
-  //           { actionKey: "edit", actionTitle: "Editar listas" },
-  //         ],
-  //       }}
-  //       onPressMenuItem={({ nativeEvent }) =>
-  //         handleSelect(nativeEvent.actionKey)
-  //       }
-  //     >
-  //       <Ionicons name="options" size={24} color={themes[theme].text} />
-  //     </ContextMenuView>
-  //   );
-  // }
 
   return (
     <Menu>
@@ -102,8 +73,7 @@ export default function ListPopupMenu() {
           }}
         />
         <MenuOption
-          onSelect={() => Alert.alert(i18n.t("editLists"))}
-          // FIX Thissssss
+          onSelect={() => router.push("/viewAllLists")}
           text={i18n.t("editLists")}
           customStyles={{
             optionTouchable: {

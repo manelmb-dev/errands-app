@@ -160,7 +160,11 @@
         "recoverAlertText": "This errand is deleted. To edit it, you need to recover it first.",
         "recover": "Recover",
         "recoverDeletedErrand": "Recover deleted errand?",
-        "actionCannotBeUndone": "This action cannot be undone."
+        "actionCannotBeUndone": "This action cannot be undone.",
+        "deleteList": "Delete list?",
+        "thisListContains": "This list contains",
+        "deleteListTextAlert": "Deleting it will also delete all associated tasks. Are you sure you want to continue?",
+        "areYouSureDeleteList": "Are you sure you want to delete this list?"
 
 
           
@@ -336,7 +340,11 @@
       "recoverAlertText": "Esta tarea está eliminada. Para editarla, primero debes recuperarla.",
       "recover": "Recuperar",
       "recoverDeletedErrand": "¿Recuperar tarea eliminada?",
-      "actionCannotBeUndone": "Esta acción no se podrá deshacer."
+      "actionCannotBeUndone": "Esta acción no se podrá deshacer.",
+      "deleteList": "¿Eliminar lista?",
+      "thisListContains": "Esta lista contiene",
+      "deleteListTextAlert": "Al eliminarla, se eliminarán también todas las tareas asociadas. ¿Estás seguro de que deseas continuar?",
+      "areYouSureDeleteList": "¿Estás seguro de que deseas eliminar esta lista?"
 
       
       
@@ -506,12 +514,16 @@
       "shareInvitation": "Comparteix invitació",
       "inviteAppMessage": "Uneix-te a l'app d'encàrrecs! Descarrega-la aquí: https://errands-app.com",
       "inviteDescription": "Convida els teus amics i familiars a unir-se a errands-app per coordinar tasques junts de manera organitzada i sense complicacions. Comparteix l'aplicació i millora la forma com planifiqueu els vostres dies.",
-      "deletedErrandsCompText": "Podràs accedir a les teves tasques eliminades durant 30 dies. Un cop passat aquest termini, s’esborraran definitivament.",
+      "deletedErrandsCompText": "Podràs accedir a les teves tasques eliminades durant 30 dies. Un cop passat aquest termini, s’eliminaran definitivament.",
       "noDeletedErrands": "No hi ha tasques eliminades",
       "recoverAlertText": "Aquesta tasca està eliminada. Per editar-la, primer l’has de recuperar.",
       "recover": "Recuperar",
       "recoverDeletedErrand": "Recuperar tasca eliminada?",
-      "actionCannotBeUndone": "Aquesta acció no es podrà desfer."
+      "actionCannotBeUndone": "Aquesta acció no es podrà desfer.",
+      "deleteList": "Eliminar llista?",
+      "thisListContains": "Aquesta llista conté",
+      "deleteListTextAlert": "En eliminar-la, s’esliminaran també totes les tasques associades. Estàs segur que vols continuar?",
+      "areYouSureDeleteList": "Estàs segur que vols eliminar aquesta llista?"
 
 
 
