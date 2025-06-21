@@ -1,9 +1,12 @@
 import { ScrollView, TouchableOpacity } from "react-native";
-import Ionicons from "react-native-vector-icons/Ionicons";
+
 import { useAtom } from "jotai";
-import { themeAtom } from "../../../constants/storeAtoms";
-import { themes } from "../../../constants/themes";
-import { icons } from "../../../constants/iconsColorsLists";
+import { themeAtom } from "../../constants/storeAtoms";
+
+import Ionicons from "react-native-vector-icons/Ionicons";
+
+import { icons } from "../../constants/iconsColorsLists";
+import { themes } from "../../constants/themes";
 
 const IconGrid = ({ assignedIcon, setAssignedIcon, assignedColor }) => {
   const [theme] = useAtom(themeAtom);

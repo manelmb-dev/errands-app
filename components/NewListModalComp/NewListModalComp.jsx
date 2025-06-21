@@ -10,16 +10,16 @@ import {
 } from "react-native";
 import { useForm, Controller } from "react-hook-form";
 
-import { useAtom } from "jotai";
 import { listsAtom, themeAtom, userAtom } from "../../constants/storeAtoms";
+import { useAtom } from "jotai";
 
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import FontAwesome6 from "react-native-vector-icons/FontAwesome6";
 import Ionicons from "react-native-vector-icons/Ionicons";
 
+import ColorGrid from "../../Utils/Icons&ColorsLists/ColorGrid";
+import IconGrid from "../../Utils/Icons&ColorsLists/IconGrid";
 import { themes } from "../../constants/themes";
-import ColorGrid from "./ColorGrid/ColorGrid";
-import IconGrid from "./IconGrid/IconGrid";
 import i18n from "../../constants/i18n";
 
 const NewListModal = () => {
