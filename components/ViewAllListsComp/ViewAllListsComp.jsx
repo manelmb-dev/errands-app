@@ -81,7 +81,7 @@ const ViewAllLists = () => {
   return (
     <View className={`w-full bg-[${themes[theme].background}] `}>
       {lists.map((list, index) => (
-        <View key={list.id} className={`${index === 0 && "rounded-t-3xl"}`}>
+        <View key={list.id}>
           <TouchableHighlight
             underlayColor={themes[theme].background}
             onPress={() => {
