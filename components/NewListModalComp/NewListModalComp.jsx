@@ -120,11 +120,13 @@ const NewListModal = () => {
     }
   }, [navigation, watch]);
 
-  // Function to handle add new errand
+  //FIRESTONE FIXXX ALL THE COMPONENT
+
+  // Function to handle add new list
   const handleAdd = handleSubmit((data) => {
     console.log(data); // Set to FIRESTORE
 
-    // Add errand to DB
+    // Add list to DB
     const newListWithId = setListToFS(data);
     setLists((prevLists) => [...prevLists, newListWithId]);
     // Reset form values

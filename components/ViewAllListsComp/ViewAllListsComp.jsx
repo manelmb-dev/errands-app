@@ -108,7 +108,14 @@ const ViewAllLists = () => {
                     {list.title}
                   </Text>
                   <View className="mx-4 flex-row gap-4">
-                    <Pressable>
+                    <Pressable
+                      onPress={() =>
+                        router.push({
+                          pathname: "/Modals/editListModal",
+                          params: { list: JSON.stringify(list) },
+                        })
+                      }
+                    >
                       <Feather
                         className={`p-2 rounded-xl ${theme === "light" ? `bg-blue-300` : `bg-blue-600`}`}
                         name="edit"
