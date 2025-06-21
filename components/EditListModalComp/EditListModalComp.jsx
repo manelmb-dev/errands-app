@@ -31,17 +31,17 @@ const EditListModalComp = () => {
   const { list } = useLocalSearchParams();
   const currentList = useMemo(() => JSON.parse(list), [list]);
 
+  const initialValuesRef = useRef(currentList);
+
   const [assignedColor, setAssignedColor] = useState(currentList.color);
   const [assignedIcon, setAssignedIcon] = useState(currentList.icon);
 
   const [showPalleteColor, setShowPalleteColor] = useState(false);
   const [showIconGrid, setShowIconGrid] = useState(false);
 
-  const { control, handleSubmit, watch, setValue, getValues } = useForm({
+  const { control, handleSubmit, watch, setValue } = useForm({
     defaultValues: { ...currentList },
   });
-
-  const initialValuesRef = useRef(getValues());
 
   const watchedTitle = watch("title");
 

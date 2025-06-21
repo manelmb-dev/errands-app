@@ -48,7 +48,9 @@ const EditTaskModal = () => {
   const { errand } = useLocalSearchParams();
   const currentErrand = useMemo(() => JSON.parse(errand), [errand]);
 
-  const { control, handleSubmit, watch, setValue, getValues } = useForm({
+  const initialValuesRef = useRef(currentErrand);
+
+  const { control, handleSubmit, watch, setValue } = useForm({
     defaultValues: { ...currentErrand },
   });
 
@@ -73,8 +75,6 @@ const EditTaskModal = () => {
     watch("dateNotice")
   );
   const [isNoticePickerVisible, setIsNoticePickerVisible] = useState(false);
-
-  const initialValuesRef = useRef(getValues());
 
   const watchedTitle = watch("title");
 
