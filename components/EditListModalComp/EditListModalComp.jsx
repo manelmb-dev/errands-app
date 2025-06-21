@@ -24,6 +24,7 @@ import { themes } from "../../constants/themes";
 import i18n from "../../constants/i18n";
 const EditListModalComp = () => {
   const navigation = useNavigation();
+  const shouldPreventClose = useRef(true);
 
   const [theme] = useAtom(themeAtom);
   const [, setLists] = useAtom(listsAtom);
@@ -57,14 +58,19 @@ const EditListModalComp = () => {
       },
       headerShadowVisible: false,
       headerLeft: () => (
-        <Pressable onPress={handleCancelAlert}>
+        <Pressable
+          onPress={() => {
+            shouldPreventClose.current = false;
+            handleCancelAlert(() => navigation.goBack());
+          }}
+        >
           <Text className={`text-2xl text-[${themes[theme].blueHeadText}]`}>
             {i18n.t("cancel")}
           </Text>
         </Pressable>
       ),
       headerRight: () => (
-        <Pressable onPress={handleOk} disabled={!watchedTitle.trim()}>
+        <Pressable onPress={handleSave} disabled={!watchedTitle.trim()}>
           <Text
             className={`text-2xl font-semibold ${watchedTitle.trim() ? `text-[${themes[theme].blueHeadText}]` : `text-[${themes[theme].taskSecondText}]`}`}
           >
@@ -73,7 +79,7 @@ const EditListModalComp = () => {
         </Pressable>
       ),
     });
-  }, [navigation, theme, handleOk, watchedTitle, handleCancelAlert]);
+  }, [navigation, theme, handleSave, watchedTitle, handleCancelAlert]);
 
   useEffect(() => {
     setValue("icon", assignedIcon);
@@ -83,48 +89,52 @@ const EditListModalComp = () => {
   // Function to handle dismiss modal
   useEffect(() => {
     const dismissModal = navigation.addListener("beforeRemove", (e) => {
-      // Codigo
+      if (!shouldPreventClose.current) return;
+
+      e.preventDefault();
+      handleCancelAlert(() => {
+        shouldPreventClose.current = false;
+        navigation.goBack();
+      });
     });
     return dismissModal;
-  }, [navigation]);
+  }, [navigation, handleCancelAlert]);
 
   // Function to handle cancel alert
-  const handleCancelAlert = useCallback(() => {
-    const formValues = watch();
+  const handleCancelAlert = useCallback(
+    (onDiscard) => {
+      const formValues = watch();
+      const hasChanges = !deepEqual(initialValuesRef.current, formValues);
 
-    const hasChanges = !deepEqual(initialValuesRef.current, formValues);
-
-    if (hasChanges) {
-      Alert.alert(i18n.t("changesInListWillBeDiscarded"), "", [
-        {
-          text: i18n.t("discard"),
-          onPress: () => {
-            navigation.goBack();
+      if (hasChanges) {
+        Alert.alert(i18n.t("changesInListWillBeDiscarded"), "", [
+          {
+            text: i18n.t("discard"),
+            onPress: onDiscard,
+            style: "destructive",
           },
-          style: "destructive",
-        },
-        {
-          text: i18n.t("cancel"),
-        },
-      ]);
-    } else {
-      navigation.goBack();
-    }
-  }, [navigation, watch]);
+          { text: i18n.t("cancel") },
+        ]);
+      } else {
+        onDiscard();
+      }
+    },
+    [watch]
+  );
 
   // Function to handle changes in list
-  const handleOk = handleSubmit(async (data) => {
-    const updatedList = { ...data, id: currentList.id };
+  const onSubmit = useCallback(
+    (data) => {
+      const updatedList = { ...data, id: currentList.id };
+      setLists((prevLists) =>
+        prevLists.map((l) => (l.id === updatedList.id ? updatedList : l))
+      );
+      navigation.goBack();
+    },
+    [currentList.id, setLists, navigation]
+  );
 
-    setLists((prevLists) =>
-      prevLists.map((l) => (l.id === updatedList.id ? updatedList : l))
-    );
-
-    // Modify list to DB FIRESTOREEE FIXXX THIS
-    // await updateListInFirestore(updatedList);
-
-    navigation.goBack();
-  });
+  const handleSave = handleSubmit(onSubmit);
 
   return (
     <View
@@ -153,9 +163,7 @@ const EditListModalComp = () => {
               value={value}
               onChangeText={onChange}
               placeholder={i18n.t("listTitle")}
-              placeholderTextColor={
-                theme === "dark" && themes[theme].taskSecondText
-              }
+              placeholderTextColor={themes[theme].taskSecondText}
             />
           )}
         />
