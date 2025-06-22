@@ -4,7 +4,6 @@ import { useNavigation, useRouter } from "expo-router";
 import { errandsAtom, listsAtom, themeAtom } from "../../constants/storeAtoms";
 import { useAtom } from "jotai";
 
-import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import Feather from "react-native-vector-icons/Feather";
 
@@ -68,6 +67,7 @@ const ViewAllLists = () => {
     navigation.setOptions({
       headerShown: true,
       title: i18n.t("editLists"),
+      headerBackTitle: i18n.t("back"),
       headerStyle: {
         backgroundColor: themes[theme].background,
       },
@@ -79,19 +79,19 @@ const ViewAllLists = () => {
   }, [navigation, theme]);
 
   return (
-    <View className={`w-full bg-[${themes[theme].background}] `}>
+    <View className={`w-full h-full bg-[${themes[theme].background}]`}>
       {lists.map((list, index) => (
         <View key={list.id}>
           <TouchableHighlight
             underlayColor={themes[theme].background}
-            onPress={() => {
-              router.push({
-                pathname: "/listTasks",
-                params: {
-                  list: JSON.stringify(list),
-                },
-              });
-            }}
+            // onPress={() => {
+            //   router.push({
+            //     pathname: "/listTasks",
+            //     params: {
+            //       list: JSON.stringify(list),
+            //     },
+            //   });
+            // }}
           >
             <View className={`w-full flex-row justify-between items-center`}>
               <View className={`flex-row items-center ml-5 gap-5`}>
@@ -138,6 +138,50 @@ const ViewAllLists = () => {
           </TouchableHighlight>
         </View>
       ))}
+      <View>
+        <TouchableHighlight
+          underlayColor={themes[theme].background}
+          onPress={() => router.push("/Modals/newListModal")}
+        >
+          <View className={`w-full flex-row justify-between items-center`}>
+            <View className={`flex-row items-center ml-5 gap-5`}>
+              <Ionicons
+                className={`p-2 rounded-xl bg-[${themes[theme].buttonMenuBackground}] border border-dashed border-[${themes[theme].text}]`}
+                name="add"
+                size={23}
+                color={`${themes[theme].text}`}
+              />
+              <View
+                className={`flex-1 py-8 flex-row items-center justify-between border-b  border-[${themes[theme].listsSeparator}]`}
+              >
+                <Text className={`text-lg text-[${themes[theme].listTitle}]`}>
+                  {i18n.t("addNewList")}
+                </Text>
+                {/* <View className="mx-4 flex-row gap-4">
+                  <Pressable
+                    onPress={() => router.push("")}
+                  >
+                    <Feather
+                      className={`p-2 rounded-xl ${theme === "light" ? `bg-blue-300` : `bg-blue-600`}`}
+                      name="edit"
+                      size={23}
+                      color={`${themes[theme].text}`}
+                    />
+                  </Pressable>
+                  <Pressable onPress={() => confirmDeleteList(list.id)}>
+                    <Ionicons
+                      className={`p-2 rounded-xl ${theme === "light" ? `bg-red-300` : `bg-red-600`}`}
+                      name="trash"
+                      size={23}
+                      color={`${themes[theme].text}`}
+                    />
+                  </Pressable>
+                </View> */}
+              </View>
+            </View>
+          </View>
+        </TouchableHighlight>
+      </View>
     </View>
   );
 };

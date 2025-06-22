@@ -30,7 +30,7 @@ const NewListModal = () => {
   const [theme] = useAtom(themeAtom);
   const [, setLists] = useAtom(listsAtom);
 
-  const [assignedColor, setAssignedColor] = useState("red");
+  const [assignedColor, setAssignedColor] = useState("slate");
   const [assignedIcon, setAssignedIcon] = useState("list");
 
   const [showPalleteColor, setShowPalleteColor] = useState(false);

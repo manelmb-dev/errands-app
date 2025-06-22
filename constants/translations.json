@@ -166,7 +166,8 @@
         "deleteListTextAlert": "Deleting it will also delete all associated tasks. Are you sure you want to continue?",
         "areYouSureDeleteList": "Are you sure you want to delete this list?",
         "editList": "Edit list",
-        "changesInListWillBeDiscarded": "Changes in the list will be discarded"
+        "changesInListWillBeDiscarded": "Changes in the list will be discarded",
+        "addNewList": "Add new list"
 
 
           
@@ -348,7 +349,8 @@
       "deleteListTextAlert": "Al eliminarla, se eliminarán también todas las tareas asociadas. ¿Estás seguro de que deseas continuar?",
       "areYouSureDeleteList": "¿Estás seguro de que deseas eliminar esta lista?",
       "editList": "Editar lista",
-      "changesInListWillBeDiscarded": "Los cambios en la lista serán descartados"
+      "changesInListWillBeDiscarded": "Los cambios en la lista serán descartados",
+      "addNewList": "Crear nueva lista"
 
       
       
@@ -529,7 +531,8 @@
       "deleteListTextAlert": "En eliminar-la, s’esliminaran també totes les tasques associades. Estàs segur que vols continuar?",
       "areYouSureDeleteList": "Estàs segur que vols eliminar aquesta llista?",
       "editList": "Editar llista",
-      "changesInListWillBeDiscarded": "Els canvis en la llista seran descartats"
+      "changesInListWillBeDiscarded": "Els canvis en la llista seran descartats",
+      "addNewList": "Afegir nova llista"
 
 
 
