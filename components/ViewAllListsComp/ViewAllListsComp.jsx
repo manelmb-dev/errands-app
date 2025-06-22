@@ -1,5 +1,6 @@
 import { View, Text, TouchableHighlight, Pressable, Alert } from "react-native";
 import { useNavigation, useRouter } from "expo-router";
+import DraggableFlatList from "react-native-draggable-flatlist";
 
 import { errandsAtom, listsAtom, themeAtom } from "../../constants/storeAtoms";
 import { useAtom } from "jotai";
@@ -11,7 +12,7 @@ import { themes } from "../../constants/themes";
 import { useEffect } from "react";
 import i18n from "../../constants/i18n";
 
-const ViewAllLists = () => {
+const ViewAllListsComp = () => {
   const router = useRouter();
   const navigation = useNavigation();
 
@@ -78,43 +79,110 @@ const ViewAllLists = () => {
     });
   }, [navigation, theme]);
 
+  const handleDragEnd = (data) => {
+    setLists(data);
+
+    // FIRESTONE UPDATEEE FIXX THIS
+    // update lists on the server
+  };
+
+  const renderItem = ({ item, drag, isActive }) => (
+    <Pressable
+      onLongPress={drag}
+      disabled={isActive}
+      className={`flex-row justify-between items-center px-5 py-5 border-b border-[${themes[theme].listsSeparator}]`}
+      style={{
+        backgroundColor: isActive
+          ? themes[theme].buttonMenuBackground
+          : themes[theme].background,
+        borderColor: themes[theme].listsSeparator,
+        transform: [{ scale: isActive ? 1.03 : 1 }],
+        elevation: isActive ? 8 : 0,
+        shadowColor: isActive ? "#000" : "transparent",
+        shadowOpacity: isActive ? 0.15 : 0,
+        shadowRadius: isActive ? 10 : 0,
+        shadowOffset: { width: 0, height: 4 },
+      }}
+    >
+      <View className="flex-row items-center gap-4">
+        <Ionicons
+          className={`p-2 rounded-xl ${theme === "light" ? `bg-${item.color}-300` : `bg-${item.color}-600`}`}
+          name={item.icon}
+          size={23}
+          color={themes[theme].text}
+        />
+        <Text className={`text-lg text-[${themes[theme].listTitle}]`}>
+          {item.title}
+        </Text>
+      </View>
+      <View className="flex-row gap-4">
+        <Pressable
+          onPress={() =>
+            router.push({
+              pathname: "/Modals/editListModal",
+              params: { list: JSON.stringify(item) },
+            })
+          }
+        >
+          <Feather
+            className={`p-2 rounded-xl ${theme === "light" ? `bg-blue-300` : `bg-blue-600`}`}
+            name="edit"
+            size={23}
+            color={themes[theme].text}
+          />
+        </Pressable>
+        <Pressable onPress={() => confirmDeleteList(item.id)}>
+          <Ionicons
+            className={`p-2 rounded-xl ${theme === "light" ? `bg-red-300` : `bg-red-600`}`}
+            name="trash"
+            size={23}
+            color={themes[theme].text}
+          />
+        </Pressable>
+      </View>
+    </Pressable>
+  );
+
   return (
-    <View className={`w-full h-full bg-[${themes[theme].background}]`}>
-      {lists.map((list, index) => (
-        <View key={list.id}>
+    <View className={`flex-1 bg-[${themes[theme].background}]`}>
+      <DraggableFlatList
+        animationConfig={{
+          scale: {
+            damping: 40,
+            stiffness: 400,
+          },
+        }}
+        data={lists}
+        onDragEnd={({ data }) => handleDragEnd(data)}
+        keyExtractor={(item) => item.id}
+        renderItem={renderItem}
+        contentContainerStyle={{
+          height: "100%",
+        }}
+        ListFooterComponent={() => (
           <TouchableHighlight
-            underlayColor={themes[theme].background}
-            // onPress={() => {
-            //   router.push({
-            //     pathname: "/listTasks",
-            //     params: {
-            //       list: JSON.stringify(list),
-            //     },
-            //   });
-            // }}
+            underlayColor={themes[theme].buttonMenuBackground}
+            onPress={() => router.push("/Modals/newListModal")}
           >
-            <View className={`w-full flex-row justify-between items-center`}>
-              <View className={`flex-row items-center ml-5 gap-5`}>
+            <View
+              className={`w-full flex-row justify-between items-center border-b border-[${themes[theme].listsSeparator}]`}
+            >
+              <View className={`flex-row items-center pl-5 gap-5`}>
                 <Ionicons
-                  className={`p-2 rounded-xl ${theme === "light" ? `bg-${list.color}-300` : `bg-${list.color}-600`}`}
-                  name={list.icon}
+                  className={`p-2 rounded-xl bg-[${themes[theme].buttonMenuBackground}] border border-dashed border-[${themes[theme].text}]`}
+                  name="add"
                   size={23}
                   color={`${themes[theme].text}`}
                 />
                 <View
-                  className={`flex-1 py-6 flex-row items-center justify-between ${index !== lists.length && `border-b  border-[${themes[theme].listsSeparator}]`}`}
+                  className={`flex-1 py-8 flex-row items-center justify-between`}
                 >
                   <Text className={`text-lg text-[${themes[theme].listTitle}]`}>
-                    {list.title}
+                    {i18n.t("addNewList")}
                   </Text>
-                  <View className="mx-4 flex-row gap-4">
+                  {/* <View className="mx-4 flex-row gap-4">
                     <Pressable
-                      onPress={() =>
-                        router.push({
-                          pathname: "/Modals/editListModal",
-                          params: { list: JSON.stringify(list) },
-                        })
-                      }
+                      onPress={() => router.push("")}
                     >
                       <Feather
                         className={`p-2 rounded-xl ${theme === "light" ? `bg-blue-300` : `bg-blue-600`}`}
@@ -131,58 +199,14 @@ const ViewAllLists = () => {
                         color={`${themes[theme].text}`}
                       />
                     </Pressable>
-                  </View>
+                  </View> */}
                 </View>
               </View>
             </View>
           </TouchableHighlight>
-        </View>
-      ))}
-      <View>
-        <TouchableHighlight
-          underlayColor={themes[theme].background}
-          onPress={() => router.push("/Modals/newListModal")}
-        >
-          <View className={`w-full flex-row justify-between items-center`}>
-            <View className={`flex-row items-center ml-5 gap-5`}>
-              <Ionicons
-                className={`p-2 rounded-xl bg-[${themes[theme].buttonMenuBackground}] border border-dashed border-[${themes[theme].text}]`}
-                name="add"
-                size={23}
-                color={`${themes[theme].text}`}
-              />
-              <View
-                className={`flex-1 py-8 flex-row items-center justify-between border-b  border-[${themes[theme].listsSeparator}]`}
-              >
-                <Text className={`text-lg text-[${themes[theme].listTitle}]`}>
-                  {i18n.t("addNewList")}
-                </Text>
-                {/* <View className="mx-4 flex-row gap-4">
-                  <Pressable
-                    onPress={() => router.push("")}
-                  >
-                    <Feather
-                      className={`p-2 rounded-xl ${theme === "light" ? `bg-blue-300` : `bg-blue-600`}`}
-                      name="edit"
-                      size={23}
-                      color={`${themes[theme].text}`}
-                    />
-                  </Pressable>
-                  <Pressable onPress={() => confirmDeleteList(list.id)}>
-                    <Ionicons
-                      className={`p-2 rounded-xl ${theme === "light" ? `bg-red-300` : `bg-red-600`}`}
-                      name="trash"
-                      size={23}
-                      color={`${themes[theme].text}`}
-                    />
-                  </Pressable>
-                </View> */}
-              </View>
-            </View>
-          </View>
-        </TouchableHighlight>
-      </View>
+        )}
+      />
     </View>
   );
 };
-export default ViewAllLists;
+export default ViewAllListsComp;
