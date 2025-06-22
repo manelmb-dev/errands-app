@@ -15,11 +15,11 @@ function BottomToolbar({ activeSection, setActiveSection }) {
 
   return (
     <View
-      className={`w-full flex-row px-2 justify-around items-center pb-6 border-t border-[${themes[theme].listsSeparator}] bg-[${themes[theme].background}]`}
+      className={`w-full flex-row px-2 pb-7 pt-1.5 justify-around items-center border-t border-[${themes[theme].listsSeparator}] bg-[${themes[theme].background}]`}
     >
       <Pressable
         onPress={() => setActiveSection("home")}
-        className="flex-1 items-center pt-2 pb-4"
+        className="flex-1 items-center p-2 px-4"
       >
         <Ionicons
           name={activeSection === "home" ? "home" : "home-outline"}
@@ -30,7 +30,7 @@ function BottomToolbar({ activeSection, setActiveSection }) {
 
       <Pressable
         onPress={() => setActiveSection("search")}
-        className="flex-1 items-center  pt-2 pb-4"
+        className="flex-1 items-center  p-2 px-4"
       >
         <Ionicons
           name={activeSection === "search" ? "search" : "search-outline"}
@@ -40,8 +40,19 @@ function BottomToolbar({ activeSection, setActiveSection }) {
       </Pressable>
 
       <Pressable
+        onPress={() => router.push("/Modals/newTaskModal")}
+        className={`items-center p-2 px-4 bg-[${themes[theme].buttonMenuBackground}] rounded-2xl`}
+      >
+        <Ionicons
+          name={activeSection === "newTask" ? "add" : "add-outline"}
+          size={31}
+          color={themes[theme].text}
+        />
+      </Pressable>
+
+      <Pressable
         onPress={() => setActiveSection("notifications")}
-        className="flex-1 items-center pt-2 pb-4"
+        className="flex-1 items-center p-2 px-4"
       >
         <Ionicons
           name={
@@ -55,21 +66,8 @@ function BottomToolbar({ activeSection, setActiveSection }) {
       </Pressable>
 
       <Pressable
-        onPress={() => router.push("/Modals/newTaskModal")}
-        className="flex-1 items-center pt-2 pb-4"
-      >
-        <Ionicons
-          name={
-            activeSection === "newTask" ? "add-circle" : "add-circle-outline"
-          }
-          size={31}
-          color={themes[theme].text}
-        />
-      </Pressable>
-
-      <Pressable
         onPress={() => setActiveSection("settings")}
-        className="flex-1 items-center pt-2 pb-4"
+        className="flex-1 items-center p-2 px-4"
       >
         <Ionicons
           name={activeSection === "settings" ? "settings" : "settings-outline"}
