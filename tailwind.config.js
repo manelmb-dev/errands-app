@@ -79,6 +79,8 @@ module.exports = {
     // Border colors
     "border-[#e0e0e0]",
     "border-[#3A3A3A]",
+    "border-[#1E1E1E]",
+    "border-[#FDFDFD]",
 
     // Shadow colors
     "shadow-[#007AFF]",

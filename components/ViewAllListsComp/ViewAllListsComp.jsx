@@ -68,6 +68,9 @@ const ViewAllListsComp = () => {
     navigation.setOptions({
       headerShown: true,
       title: i18n.t("editLists"),
+      headerTitleStyle: {
+        color: themes[theme].text,
+      },
       headerBackTitle: i18n.t("back"),
       headerStyle: {
         backgroundColor: themes[theme].background,
@@ -180,26 +183,6 @@ const ViewAllListsComp = () => {
                   <Text className={`text-lg text-[${themes[theme].listTitle}]`}>
                     {i18n.t("addNewList")}
                   </Text>
-                  {/* <View className="mx-4 flex-row gap-4">
-                    <Pressable
-                      onPress={() => router.push("")}
-                    >
-                      <Feather
-                        className={`p-2 rounded-xl ${theme === "light" ? `bg-blue-300` : `bg-blue-600`}`}
-                        name="edit"
-                        size={23}
-                        color={`${themes[theme].text}`}
-                      />
-                    </Pressable>
-                    <Pressable onPress={() => confirmDeleteList(list.id)}>
-                      <Ionicons
-                        className={`p-2 rounded-xl ${theme === "light" ? `bg-red-300` : `bg-red-600`}`}
-                        name="trash"
-                        size={23}
-                        color={`${themes[theme].text}`}
-                      />
-                    </Pressable>
-                  </View> */}
                 </View>
               </View>
             </View>
