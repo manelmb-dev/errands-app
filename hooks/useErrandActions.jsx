@@ -16,7 +16,6 @@ export function useErrandActions({
     (completedErrand) => {
       if (undoTimerRef.current) {
         clearTimeout(undoTimerRef.current);
-        console.log(undoTimerRef)
         if (previousUndoErrandRef.current) {
           if (possibleUndoCompleteErrand) {
             // Complete errand backend
@@ -46,7 +45,14 @@ export function useErrandActions({
         }, 2000);
       }, 0);
     },
-    [setPossibleUndoCompleteErrand]
+    [
+      setPossibleUndoCompleteErrand,
+      setPossibleUndoDeleteErrand,
+      possibleUndoCompleteErrand,
+      possibleUndoDeleteErrand,
+      previousUndoErrandRef,
+      undoTimerRef,
+    ]
   );
 
   const undoCompleteErrand = useCallback(() => {
@@ -63,7 +69,7 @@ export function useErrandActions({
       )
     );
     setPossibleUndoCompleteErrand(null);
-  }, [setErrands, setPossibleUndoCompleteErrand]);
+  }, [setErrands, setPossibleUndoCompleteErrand, previousUndoErrandRef]);
 
   const onDeleteWithUndo = useCallback(
     (deletedErrand) => {
@@ -101,7 +107,14 @@ export function useErrandActions({
         }, 2000);
       }, 0);
     },
-    [setPossibleUndoDeleteErrand]
+    [
+      setPossibleUndoDeleteErrand,
+      setPossibleUndoCompleteErrand,
+      previousUndoErrandRef,
+      undoTimerRef,
+      possibleUndoCompleteErrand,
+      possibleUndoDeleteErrand,
+    ]
   );
 
   const undoDeleteErrand = useCallback(() => {
