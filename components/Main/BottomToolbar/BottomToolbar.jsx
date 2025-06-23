@@ -1,4 +1,4 @@
-import { View, Pressable } from "react-native";
+import { View, Pressable, TouchableHighlight } from "react-native";
 import { useRouter } from "expo-router";
 
 import Ionicons from "react-native-vector-icons/Ionicons";
@@ -39,16 +39,17 @@ function BottomToolbar({ activeSection, setActiveSection }) {
         />
       </Pressable>
 
-      <Pressable
+      <TouchableHighlight
         onPress={() => router.push("/Modals/newTaskModal")}
         className={`items-center p-2 px-4 bg-[${themes[theme].buttonMenuBackground}] rounded-2xl`}
+        underlayColor={themes[theme].listsSeparator}
       >
         <Ionicons
           name={activeSection === "newTask" ? "add" : "add-outline"}
           size={31}
           color={themes[theme].text}
         />
-      </Pressable>
+      </TouchableHighlight>
 
       <Pressable
         onPress={() => setActiveSection("notifications")}
