@@ -1,20 +1,39 @@
 import { Pressable, View } from "react-native";
 import { router } from "expo-router";
 
+import { userAtom } from "../constants/storeAtoms";
+import { useAtom } from "jotai";
+
 import Ionicons from "react-native-vector-icons/Ionicons";
 
 const RenderRightActionsErrand = ({ errand, setErrands, onDeleteWithUndo }) => {
-  const deleteErrand = () => {
-    // Delete errand locally
-    setErrands((prev) =>
-      prev.map((e) => (e.id === errand.id ? { ...e, deleted: true } : e))
-    );
+  const [user] = useAtom(userAtom);
 
-    // Delete errand after timeout
-    onDeleteWithUndo(errand);
+  const deleteErrand = async () => {
+    if (user.id === errand.ownerId) {
+      // Delete errand locally
+      setErrands((prev) =>
+        prev.map((e) => (e.id === errand.id ? { ...e, deleted: true } : e))
+      );
 
-    // TODO: FIRESTORE UPDATEEE
-    // await updateErrandInFirestore({ ...errand, deleted: true });
+      // Delete errand after timeout
+      onDeleteWithUndo(errand);
+
+      // TODO: FIRESTORE UPDATEEE
+      // await updateErrandInFirestore({ ...errand, deleted: true });
+    } else if (user.id !== errand.ownerId) {
+      // Change assignedId to ownerId locally
+      setErrands((prev) =>
+        prev.map((e) =>
+          e.id === errand.id ? { ...e, assignedId: errand.ownerId } : e
+        )
+      );
+      // Send notification push to ownerId
+      // await sendNotificationToOwner(errand.ownerId, ...);
+
+      // TODO: FIRESTORE UPDATEEE
+      // await updateErrandInFirestore({ ...errand, assignedId: errand.ownerId });
+    }
   };
 
   return (
@@ -23,7 +42,7 @@ const RenderRightActionsErrand = ({ errand, setErrands, onDeleteWithUndo }) => {
         className="w-16 bg-blue-600 justify-center items-center"
         onPress={() => {
           router.push({
-            pathname: "Modals/editTaskModal",
+            pathname: "/Modals/editTaskModal",
             params: { errand: JSON.stringify(errand) },
           });
         }}
