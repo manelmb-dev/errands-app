@@ -21,7 +21,6 @@ const SwipeableFullErrand = ({
         <RenderRightActionsErrand
           errand={errand}
           setErrands={setErrands}
-          openSwipeableRef={openSwipeableRef}
           onDeleteWithUndo={onDeleteWithUndo}
         />
       )}
