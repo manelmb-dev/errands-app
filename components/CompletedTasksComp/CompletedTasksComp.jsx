@@ -200,7 +200,7 @@ function CompletedTasksComp() {
                     onDeleteWithUndo={onDeleteWithUndo}
                   />
                 )}
-                onSwipeableWillOpen={() => {
+                onSwipeableOpenStartDrag={() => {
                   if (
                     openSwipeableRef.current &&
                     openSwipeableRef.current !== swipeableRefs.current[item.id]

@@ -92,7 +92,7 @@ const SwipeableFullErrand = ({
       renderRightActions={() => (
         <DeletedErrandRenderRightActions errand={errand} />
       )}
-      onSwipeableWillOpen={() => {
+      onSwipeableOpenStartDrag={() => {
         if (
           openSwipeableRef.current &&
           openSwipeableRef.current !== swipeableRefs.current[errand.id]

@@ -25,8 +25,13 @@ const SwipeableContact = ({ contact, openSwipeableRef, swipeableRefs }) => {
   return (
     <Swipeable
       ref={(ref) => (swipeableRefs.current[contact.id] = ref)}
-      renderRightActions={() => <RenderRightActionsContact contact={contact} />}
-      onSwipeableWillOpen={() => {
+      renderRightActions={() => (
+        <RenderRightActionsContact
+          contact={contact}
+          openSwipeableRef={openSwipeableRef}
+        />
+      )}
+      onSwipeableOpenStartDrag={() => {
         if (
           openSwipeableRef.current &&
           openSwipeableRef.current !== swipeableRefs.current[contact.id]

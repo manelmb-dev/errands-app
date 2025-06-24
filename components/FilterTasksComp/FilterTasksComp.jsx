@@ -259,7 +259,7 @@ function FilterTasksComp() {
                         onDeleteWithUndo={onDeleteWithUndo}
                       />
                     )}
-                    onSwipeableWillOpen={() => {
+                    onSwipeableOpenStartDrag={() => {
                       if (
                         openSwipeableRef.current &&
                         openSwipeableRef.current !==

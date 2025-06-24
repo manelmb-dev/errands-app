@@ -24,7 +24,7 @@ const SwipeableFullErrand = ({
           onDeleteWithUndo={onDeleteWithUndo}
         />
       )}
-      onSwipeableWillOpen={() => {
+      onSwipeableOpenStartDrag={() => {
         if (
           openSwipeableRef.current &&
           openSwipeableRef.current !== swipeableRefs.current[errand.id]

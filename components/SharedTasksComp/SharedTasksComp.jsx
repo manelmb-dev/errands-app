@@ -226,7 +226,7 @@ const SharedTasksComp = () => {
                       onDeleteWithUndo={onDeleteWithUndo}
                     />
                   )}
-                  onSwipeableWillOpen={() => {
+                  onSwipeableOpenStartDrag={() => {
                     if (
                       openSwipeableRef.current &&
                       openSwipeableRef.current !==
