@@ -46,6 +46,14 @@ const SwipeableContact = ({ contact, openSwipeableRef, swipeableRefs }) => {
           theme === "light" ? "border-gray-300" : "border-gray-700"
         }`}
         onPress={() => {
+          if (
+            openSwipeableRef.current &&
+            openSwipeableRef.current !== swipeableRefs.current[contact.id]
+          ) {
+            openSwipeableRef.current.close();
+            openSwipeableRef.current = null;
+            return;
+          }
           router.push({
             pathname: `/Modals/contact-detail}`,
             params: contact,
