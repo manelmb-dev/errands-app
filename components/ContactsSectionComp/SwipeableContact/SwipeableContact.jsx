@@ -55,8 +55,8 @@ const SwipeableContact = ({ contact, openSwipeableRef, swipeableRefs }) => {
             return;
           }
           router.push({
-            pathname: `/Modals/contact-detail}`,
-            params: contact,
+            pathname: `/Modals/contactDetailModal`,
+            params: { contact: JSON.stringify(contact) },
           });
         }}
       >
@@ -65,7 +65,7 @@ const SwipeableContact = ({ contact, openSwipeableRef, swipeableRefs }) => {
             className="text-base font-semibold"
             style={{ color: themes[theme].text }}
           >
-            {contact.name} {contact.surnames}
+            {contact.name} {contact.surname}
           </Text>
           {contact.alias ? (
             <Text className="text-xs" style={{ color: themes[theme].gray }}>

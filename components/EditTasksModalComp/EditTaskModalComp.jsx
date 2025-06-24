@@ -39,9 +39,10 @@ import i18n from "../../constants/i18n";
 
 const EditTaskModal = () => {
   const navigation = useNavigation();
-  const repeatSheetRef = useRef();
-  const prioritySheetRef = useRef();
   const router = useRouter();
+
+  const prioritySheetRef = useRef();
+  const repeatSheetRef = useRef();
 
   const today = new Date().toISOString().split("T")[0];
 
