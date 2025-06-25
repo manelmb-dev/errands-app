@@ -126,10 +126,11 @@ const AssignContactSelector = () => {
             className={`h-16 border-b border-[${themes[theme].listsSeparator}]`}
             underlayColor={themes[theme].background}
             onPress={() => {
-              setUserAssigned(item);
-              if (item.id === user.id) {
+              if (item.id === user.id && userAssigned.id !== user.id) {
+                setUserAssigned(item);
                 setListAssigned(lists[0]);
               } else if (item.id !== user.id) {
+                setUserAssigned(item);
                 setListAssigned("");
               }
               navigation.goBack();

@@ -167,7 +167,10 @@
         "areYouSureDeleteList": "Are you sure you want to delete this list?",
         "editList": "Edit list",
         "changesInListWillBeDiscarded": "Changes in the list will be discarded",
-        "addNewList": "Add new list"
+        "addNewList": "Add new list",
+        "sendErrand": "Send errand",
+        "block": "Block",
+        "unblock": "Unblock"
 
 
           
@@ -350,7 +353,10 @@
       "areYouSureDeleteList": "¿Estás seguro de que deseas eliminar esta lista?",
       "editList": "Editar lista",
       "changesInListWillBeDiscarded": "Los cambios en la lista serán descartados",
-      "addNewList": "Crear nueva lista"
+      "addNewList": "Crear nueva lista",
+      "sendErrand": "Enviar tarea",
+      "block": "Bloquear",
+      "unblock": "Desbloquear"
 
       
       
@@ -532,7 +538,10 @@
       "areYouSureDeleteList": "Estàs segur que vols eliminar aquesta llista?",
       "editList": "Editar llista",
       "changesInListWillBeDiscarded": "Els canvis en la llista seran descartats",
-      "addNewList": "Afegir nova llista"
+      "addNewList": "Afegir nova llista",
+      "sendErrand": "Enviar tasca",
+      "block": "Bloquejar",
+      "unblock": "Desbloquejar"
 
 
 

@@ -1,5 +1,5 @@
-import { useCallback, useEffect, useState, useRef } from "react";
-import { useNavigation, useRouter } from "expo-router";
+import { useCallback, useEffect, useState, useRef, useMemo } from "react";
+import { useLocalSearchParams, useNavigation, useRouter } from "expo-router";
 import {
   View,
   Text,
@@ -9,7 +9,7 @@ import {
   TouchableHighlight,
   Alert,
 } from "react-native";
-import { useForm, Controller } from "react-hook-form";
+import { useForm, Controller, set } from "react-hook-form";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import ActionSheet from "react-native-actionsheet";
 
@@ -41,15 +41,18 @@ const NewTaskModal = () => {
   const prioritySheetRef = useRef();
   const router = useRouter();
 
-  const today = new Date().toISOString().split("T")[0];
+  // const { contact } = useLocalSearchParams();
+  // const currentContact = useMemo(() => JSON.parse(contact), [contact]);
 
   const [user] = useAtom(userAtom);
-  const [userAssigned, setUserAssigned] = useAtom(userAssignedAtom);
-  const [listAssigned, setListAssigned] = useAtom(listAssignedAtom);
-
   const [theme] = useAtom(themeAtom);
   const [, setErrands] = useAtom(errandsAtom);
   const [lists] = useAtom(listsAtom);
+
+  const today = new Date().toISOString().split("T")[0];
+
+  const [userAssigned, setUserAssigned] = useAtom(userAssignedAtom);
+  const [listAssigned, setListAssigned] = useAtom(listAssignedAtom);
 
   const [dateSwitchEnabled, SetDateSwitchEnabled] = useState(false);
   const [hourSwitchEnabled, SetHourSwitchEnabled] = useState(false);
@@ -96,6 +99,13 @@ const NewTaskModal = () => {
   useEffect(() => {
     setListAssigned(lists[0]);
   }, [lists, setListAssigned]);
+
+  // useEffect(() => {
+  //   if (currentContact) {
+  //     setUserAssigned(currentContact);
+  //     setListAssigned("");
+  //   }
+  // }, [currentContact, setUserAssigned, setListAssigned, setValue]);
 
   useEffect(() => {
     navigation.setOptions({
@@ -251,6 +261,8 @@ const NewTaskModal = () => {
     navigation.goBack();
   });
 
+
+
   return (
     <View className={`p-6 gap-4 bg-[${themes[theme].background}] h-full`}>
       <View
@@ -275,7 +287,7 @@ const NewTaskModal = () => {
         />
         <Controller
           control={control}
-          name={i18n.t("description")}
+          name="description"
           render={({ field: { onChange, value } }) => (
             <TextInput
               className={`p-4 pl-4 text-lg max-h-48 align-top leading-tight  text-[${themes[theme].text}]`}
