@@ -170,7 +170,9 @@
         "addNewList": "Add new list",
         "sendErrand": "Send errand",
         "block": "Block",
-        "unblock": "Unblock"
+        "unblock": "Unblock",
+        "favorite": "Favorite",
+        "unfavorite": "Unfavorite"
 
 
           
@@ -356,7 +358,9 @@
       "addNewList": "Crear nueva lista",
       "sendErrand": "Enviar tarea",
       "block": "Bloquear",
-      "unblock": "Desbloquear"
+      "unblock": "Desbloquear",
+      "favorite": "Favorito",
+      "unfavorite": "Quitar favorito"
 
       
       
@@ -541,7 +545,9 @@
       "addNewList": "Afegir nova llista",
       "sendErrand": "Enviar tasca",
       "block": "Bloquejar",
-      "unblock": "Desbloquejar"
+      "unblock": "Desbloquejar",
+      "favorite": "Favorit",
+      "unfavorite": "Treure favorit"
 
 
 

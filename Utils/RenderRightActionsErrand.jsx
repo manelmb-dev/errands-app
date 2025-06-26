@@ -39,7 +39,7 @@ const RenderRightActionsErrand = ({ errand, setErrands, onDeleteWithUndo }) => {
   return (
     <View className="flex-row h-full">
       <TouchableOpacity
-        className="w-16 bg-blue-600 justify-center items-center"
+        className="w-20 bg-blue-600 justify-center items-center"
         activeOpacity={0.6}
         onPress={() => {
           router.push({
@@ -52,11 +52,11 @@ const RenderRightActionsErrand = ({ errand, setErrands, onDeleteWithUndo }) => {
       </TouchableOpacity>
 
       <TouchableOpacity
-        className="w-16 bg-red-600 justify-center items-center"
+        className="w-20 bg-red-600 justify-center items-center"
         activeOpacity={0.6}
         onPress={deleteErrand}
       >
-        <Ionicons name="trash-outline" size={24} color="white" />
+        <Ionicons name="trash-outline" size={23} color="white" />
       </TouchableOpacity>
     </View>
   );

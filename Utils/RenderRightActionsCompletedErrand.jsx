@@ -24,7 +24,7 @@ const RenderRightActionsCompletedErrand = ({
     <View className="flex-row h-full mr-4">
       <TouchableOpacity
         onPress={deleteErrand}
-        className="w-16 my-1.5 rounded-xl bg-red-600 justify-center items-center"
+        className="w-20 my-1.5 rounded-xl bg-red-600 justify-center items-center"
         activeOpacity={0.6}
       >
         <Ionicons name="trash-outline" size={24} color="white" />

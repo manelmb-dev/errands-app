@@ -9,7 +9,7 @@ import {
 import { useNavigation } from "expo-router";
 
 import FontAwesome6 from "react-native-vector-icons/FontAwesome6";
-import AntDesign from "react-native-vector-icons/AntDesign";
+import Octicons from "react-native-vector-icons/Octicons";
 import Ionicons from "react-native-vector-icons/Ionicons";
 
 import { useAtom } from "jotai";
@@ -162,7 +162,7 @@ const AssignContactSelector = () => {
                     />
                   )}
                   {item.favorite === true && (
-                    <AntDesign name="star" size={22} color="orange" />
+                    <Octicons name="star" size={22} color="FFD700" />
                   )}
                 </View>
               </View>

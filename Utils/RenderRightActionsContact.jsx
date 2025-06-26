@@ -6,6 +6,7 @@ import { useAtom } from "jotai";
 
 import MaterialDesignIcons from "@react-native-vector-icons/material-design-icons";
 import Ionicons from "react-native-vector-icons/Ionicons";
+import Octicons from "react-native-vector-icons/Octicons";
 
 const RenderRightActionsContact = ({ contact, openSwipeableRef }) => {
   const router = useRouter();
@@ -29,14 +30,14 @@ const RenderRightActionsContact = ({ contact, openSwipeableRef }) => {
   return (
     <View className="flex-row h-full">
       <TouchableOpacity
-        className="w-16 bg-yellow-300 justify-center items-center"
+        className="w-20 bg-yellow-300 justify-center items-center"
         activeOpacity={0.6}
         onPress={toggleFavorite}
       >
-        <Ionicons name="star-outline" size={24} color="white" />
+        <Octicons name="star" size={26} color="white" />
       </TouchableOpacity>
       <TouchableOpacity
-        className="w-16 bg-blue-600 justify-center items-center"
+        className="w-20 bg-blue-600 justify-center items-center"
         activeOpacity={0.6}
         onPress={() => {
           router.push({
@@ -55,7 +56,7 @@ const RenderRightActionsContact = ({ contact, openSwipeableRef }) => {
           size={24}
           color="white"
         /> */}
-        <Ionicons name="send" size={24} color="white" />
+        <Ionicons name="send" size={22} color="white" />
       </TouchableOpacity>
     </View>
   );

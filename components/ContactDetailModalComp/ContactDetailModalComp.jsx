@@ -5,9 +5,13 @@ import React, { useEffect, useMemo, useState } from "react";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import Feather from "react-native-vector-icons/Feather";
+import Octicons from "react-native-vector-icons/Octicons";
 
-
-import { themeAtom, errandsAtom } from "../../constants/storeAtoms";
+import {
+  themeAtom,
+  errandsAtom,
+  contactsAtom,
+} from "../../constants/storeAtoms";
 import { useAtom } from "jotai";
 
 import { themes } from "../../constants/themes";
@@ -19,6 +23,7 @@ const ContactDetailModalComp = () => {
 
   const [theme] = useAtom(themeAtom);
   const [errands] = useAtom(errandsAtom);
+  const [, setContacts] = useAtom(contactsAtom);
 
   const { contact } = useLocalSearchParams();
   const currentContact = useMemo(() => JSON.parse(contact), [contact]);
@@ -29,14 +34,34 @@ const ContactDetailModalComp = () => {
   const [filter, setFilter] = useState("pending"); // pending | completed
 
   const toggleBlockContact = () => {
-    // update contact locally
-    setContactDetails((prev) => ({
-      ...prev,
-      blocked: !prev.blocked,
-    }))
+    const updatedContact = {
+      ...contactDetails,
+      blocked: !contactDetails.blocked,
+    };
+
+    setContactDetails(updatedContact);
+
+    setContacts((prev) =>
+      prev.map((c) => (c.id === updatedContact.id ? updatedContact : c))
+    );
 
     // TODO: FIRESTORE UPDATEEE FIX THISSS
-  }
+  };
+
+  const toggleFavoriteContact = () => {
+    const updatedContact = {
+      ...contactDetails,
+      favorite: !contactDetails.favorite,
+    };
+
+    setContactDetails(updatedContact);
+
+    setContacts((prev) =>
+      prev.map((c) => (c.id === updatedContact.id ? updatedContact : c))
+    );
+
+    // TODO: FIRESTORE UPDATEEE FIX THISSS
+  };
 
   useEffect(() => {
     navigation.setOptions({
@@ -77,22 +102,27 @@ const ContactDetailModalComp = () => {
       style={{ backgroundColor: themes[theme].background }}
     >
       {/* Contact details */}
-      <View className="flex-row mb-6 gap-6">
+
+      {/* Image contact or icon */}
+      <View className="flex items-center">
         {contactDetails.photoURL ? (
           <Image
-            source={{ uri: contact.photoURL }}
             className="w-20 h-20 rounded-full"
+            source={{ uri: contact.photoURL }}
           />
         ) : (
           <Ionicons
             name="person-circle-outline"
-            size={110}
+            size={80}
             color={themes[theme].iconColor}
           />
         )}
+      </View>
+      <View className="flex-row mb-6 gap-4 items-center">
+        {/* Send errand to contact */}
         <TouchableOpacity
-          className={`mt-3 p-3 flex-1 rounded-2xl items-center justify-around bg-[${themes[theme].buttonMenuBackground}]`}
-          activeOpacity={0.7}
+          className={`mt-3 py-3 px-1 flex-1 rounded-2xl items-center justify-around gap-1.5 border border-gray-300 bg-[${themes[theme].buttonMenuBackground}]`}
+          activeOpacity={0.8}
           onPress={() => {
             router.push({
               pathname: "/Modals/newTaskModal",
@@ -100,31 +130,65 @@ const ContactDetailModalComp = () => {
             });
           }}
         >
-          <Ionicons name="send" size={35} color={themes[theme].text} />
-          <Text className={`font-semibold text-[${themes[theme].text}]`}>
+          <Ionicons name="send" size={25} color={themes[theme].text} />
+          <Text
+            className={`text-base text-center text-[${themes[theme].text}]`}
+          >
             {i18n.t("sendErrand")}
           </Text>
         </TouchableOpacity>
 
+        {/* Toggle favorite contact */}
+        {contactDetails.favorite ? (
+          <TouchableOpacity
+            className={`mt-3 py-3 px-1 flex-1 rounded-2xl items-center justify-around gap-1.5 border border-yellow-500 bg-yellow-200`}
+            activeOpacity={0.8}
+            onPress={toggleFavoriteContact}
+          >
+            <Octicons name="star" size={25} color={themes[theme].text} />
+            <Text
+              className={`text-base text-center text-[${themes[theme].text}]`}
+            >
+              {i18n.t("unfavorite")}
+            </Text>
+          </TouchableOpacity>
+        ) : (
+          <TouchableOpacity
+            className={`mt-3 py-3 px-1 flex-1 rounded-2xl items-center justify-around gap-1.5 border border-yellow-500 bg-yellow-50`}
+            activeOpacity={0.8}
+            onPress={toggleFavoriteContact}
+          >
+            <Octicons name="star-fill" size={25} color={themes[theme].text} />
+            <Text
+              className={`text-base text-center text-[${themes[theme].text}]`}
+            >
+              {i18n.t("favorite")}
+            </Text>
+          </TouchableOpacity>
+        )}
+
+        {/* Toggle block contact */}
         {contactDetails.blocked ? (
           <TouchableOpacity
-            className={`mt-3 p-3 flex-1 rounded-2xl items-center justify-around gap-1 border border-red-500 bg-red-200`}
+            className={`mt-3 py-3 px-1 flex-1 rounded-2xl items-center justify-around gap-1.5 border border-red-500 bg-red-200`}
             activeOpacity={0.8}
             onPress={toggleBlockContact}
           >
-            <Feather name="user-check" size={40} color="#dc2626" />
-            <Text className={`text-red-600 font-semibold`}>
+            <Feather name="user-check" size={28} color="#dc2626" />
+            <Text
+              className={`text-base text-red-600 font-semibold text-center`}
+            >
               {i18n.t("unblock")}
             </Text>
           </TouchableOpacity>
         ) : (
           <TouchableOpacity
-            className={`mt-3 p-3 flex-1 rounded-2xl items-center justify-around gap-1 border border-red-500 bg-red-200`}
+            className={`mt-3 py-3 px-1 flex-1 rounded-2xl items-center justify-around gap-1.5 border border-red-500 bg-red-50`}
             activeOpacity={0.8}
             onPress={toggleBlockContact}
           >
-            <Feather name="user-x" size={40} color="#dc2626" />
-            <Text className="text-red-600 font-semibold">
+            <Feather name="user-x" size={28} color="#dc2626" />
+            <Text className="text-base text-red-600 font-semibold text-center">
               {i18n.t("block")}
             </Text>
           </TouchableOpacity>
