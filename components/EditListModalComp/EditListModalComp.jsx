@@ -87,18 +87,18 @@ const EditListModalComp = () => {
   }, [assignedColor, assignedIcon, setValue]);
 
   // Function to handle dismiss modal
-  useEffect(() => {
-    const dismissModal = navigation.addListener("beforeRemove", (e) => {
-      if (!shouldPreventClose.current) return;
+  // useEffect(() => {
+  //   const dismissModal = navigation.addListener("beforeRemove", (e) => {
+  //     if (!shouldPreventClose.current) return;
 
-      e.preventDefault();
-      handleCancelAlert(() => {
-        shouldPreventClose.current = false;
-        navigation.goBack();
-      });
-    });
-    return dismissModal;
-  }, [navigation, handleCancelAlert]);
+  //     e.preventDefault();
+  //     handleCancelAlert(() => {
+  //       shouldPreventClose.current = false;
+  //       navigation.goBack();
+  //     });
+  //   });
+  //   return dismissModal;
+  // }, [navigation, handleCancelAlert]);
 
   // Function to handle cancel alert
   const handleCancelAlert = useCallback(

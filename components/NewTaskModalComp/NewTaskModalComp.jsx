@@ -9,7 +9,7 @@ import {
   TouchableHighlight,
   Alert,
 } from "react-native";
-import { useForm, Controller, set } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import ActionSheet from "react-native-actionsheet";
 
