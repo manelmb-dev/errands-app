@@ -13,8 +13,8 @@ import {
 } from "../constants/storeAtoms";
 import { useAtom } from "jotai";
 
-import SimpleLineIcons from "react-native-vector-icons/SimpleLineIcons";
 import Ionicons from "react-native-vector-icons/Ionicons";
+import Octicons from "react-native-vector-icons/Octicons";
 
 import formatErrandDate from "../constants/formatErrandDate";
 import { themes } from "../constants/themes";
@@ -144,11 +144,11 @@ function FullErrand({
         }}
       >
         {/* Check icon */}
-        <SimpleLineIcons
+        <Octicons
           onPress={completeErrand}
           className="p-3 self-center"
-          name={"check"}
-          size={22}
+          name={"circle"}
+          size={20}
           color={"#6E727A"}
         />
 

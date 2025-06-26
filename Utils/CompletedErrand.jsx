@@ -68,10 +68,10 @@ function CompletedErrand({ errand }) {
         className={`flex-row bg-[${themes[theme].background}] rounded-xl mx-4 my-1.5 pr-2 pt-3 pb-2  border border-[${themes[theme].listsSeparator}] shadow-sm ${theme === "light" ? "shadow-gray-100" : "shadow-neutral-950"}`}
       >
         <Octicons
-          className="px-3"
           onPress={uncompleteErrand}
+          className="px-3"
           name="check-circle-fill"
-          size={21}
+          size={20}
           color="green"
         />
         <View className="flex-1">
