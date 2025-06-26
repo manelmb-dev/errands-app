@@ -1,4 +1,4 @@
-import { Pressable, View } from "react-native";
+import { Pressable, Touchable, TouchableOpacity, View } from "react-native";
 import { useRouter } from "expo-router";
 
 import { contactsAtom } from "../constants/storeAtoms";
@@ -28,14 +28,16 @@ const RenderRightActionsContact = ({ contact, openSwipeableRef }) => {
 
   return (
     <View className="flex-row h-full">
-      <Pressable
+      <TouchableOpacity
         className="w-16 bg-yellow-300 justify-center items-center"
+        activeOpacity={0.6}
         onPress={toggleFavorite}
       >
         <Ionicons name="star-outline" size={24} color="white" />
-      </Pressable>
-      <Pressable
+      </TouchableOpacity>
+      <TouchableOpacity
         className="w-16 bg-blue-600 justify-center items-center"
+        activeOpacity={0.6}
         onPress={() => {
           router.push({
             pathname: "/Modals/newTaskModal",
@@ -54,7 +56,7 @@ const RenderRightActionsContact = ({ contact, openSwipeableRef }) => {
           color="white"
         /> */}
         <Ionicons name="send" size={24} color="white" />
-      </Pressable>
+      </TouchableOpacity>
     </View>
   );
 };

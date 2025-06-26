@@ -1,4 +1,4 @@
-import { Pressable, View } from "react-native";
+import { Pressable, TouchableOpacity, View } from "react-native";
 import { router } from "expo-router";
 
 import { userAtom } from "../constants/storeAtoms";
@@ -38,8 +38,9 @@ const RenderRightActionsErrand = ({ errand, setErrands, onDeleteWithUndo }) => {
 
   return (
     <View className="flex-row h-full">
-      <Pressable
+      <TouchableOpacity
         className="w-16 bg-blue-600 justify-center items-center"
+        activeOpacity={0.6}
         onPress={() => {
           router.push({
             pathname: "/Modals/editTaskModal",
@@ -48,14 +49,15 @@ const RenderRightActionsErrand = ({ errand, setErrands, onDeleteWithUndo }) => {
         }}
       >
         <Ionicons name="list-circle" size={24} color="white" />
-      </Pressable>
+      </TouchableOpacity>
 
-      <Pressable
+      <TouchableOpacity
         className="w-16 bg-red-600 justify-center items-center"
+        activeOpacity={0.6}
         onPress={deleteErrand}
       >
         <Ionicons name="trash-outline" size={24} color="white" />
-      </Pressable>
+      </TouchableOpacity>
     </View>
   );
 };

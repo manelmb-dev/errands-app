@@ -1,4 +1,4 @@
-import { Pressable, View } from "react-native";
+import { Pressable, TouchableOpacity, View } from "react-native";
 
 import Ionicons from "react-native-vector-icons/Ionicons";
 
@@ -22,12 +22,13 @@ const RenderRightActionsCompletedErrand = ({
 
   return (
     <View className="flex-row h-full mr-4">
-      <Pressable
+      <TouchableOpacity
         onPress={deleteErrand}
-        className="w-16 my-1.5 rounded-xl bg-red-600 justify-center items-center active:opacity-80"
+        className="w-16 my-1.5 rounded-xl bg-red-600 justify-center items-center"
+        activeOpacity={0.6}
       >
         <Ionicons name="trash-outline" size={24} color="white" />
-      </Pressable>
+      </TouchableOpacity>
     </View>
   );
 };
