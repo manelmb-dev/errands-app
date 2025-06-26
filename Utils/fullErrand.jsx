@@ -1,6 +1,6 @@
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import Animated, { FadeOut } from "react-native-reanimated";
-import { Pressable, Text, View } from "react-native";
+import { Pressable, Text, TouchableOpacity, View } from "react-native";
 import { useForm } from "react-hook-form";
 import { router } from "expo-router";
 import { useState } from "react";
@@ -213,7 +213,8 @@ function FullErrand({
               <Ionicons name="repeat" size={17} color="#6E727A" />
             )}
             {errand.dateErrand ? (
-              <Pressable
+              <TouchableOpacity
+                activeOpacity={0.6}
                 className={`py-1 px-0.5 rounded-lg items-center justify-center min-w-[88px] ${
                   new Date(
                     `${errand.dateErrand}T${errand.timeErrand || "24:00"}`
@@ -243,10 +244,11 @@ function FullErrand({
                 >
                   {formatErrandDate(errand)}
                 </Text>
-              </Pressable>
+              </TouchableOpacity>
             ) : (
-              <Pressable
-                className={`py-2 px-2 rounded-full items-center justify-center border border-dashed ${theme === "light" ? "border-gray-400" : "border-neutral-700"}`}
+              <TouchableOpacity
+                activeOpacity={0.6}
+                className={`py-1 px-1 rounded-full items-center justify-center border border-dashed ${theme === "light" ? "border-gray-400" : "border-neutral-700"}`}
                 onPress={() => {
                   if (errand.ownerId === user.id) {
                     setIsDateTimePickerVisible(true);
@@ -259,11 +261,12 @@ function FullErrand({
                 }}
               >
                 <Ionicons
+                  className="p-0.5 self-center"
                   name="calendar-outline"
-                  size={17}
+                  size={19}
                   color={`${themes[theme].taskSecondText}`}
                 />
-              </Pressable>
+              </TouchableOpacity>
             )}
           </View>
         </View>

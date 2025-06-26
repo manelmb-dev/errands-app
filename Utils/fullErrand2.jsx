@@ -99,9 +99,9 @@ function FullErrand({
       >
         <Octicons
           onPress={completeErrand}
-          className="px-3"
+          className="p-3 self-center"
           name={"circle"}
-          size={21}
+          size={20}
           color={"#6E727A"}
         />
         <View className="flex-1">
