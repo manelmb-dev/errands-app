@@ -172,7 +172,13 @@
         "block": "Block",
         "unblock": "Unblock",
         "favorite": "Favorite",
-        "unfavorite": "Unfavorite"
+        "unfavorite": "Unfavorite",
+        "mute": "Mute",
+        "muteAll": "Mute all",
+        "muteMessages": "Mute messages",
+        "muteNewErrands": "Mute new errands",
+        "muteReminders": "Mute reminders",
+        "muteChangesInErrands": "Mute errand changes"
 
 
           
@@ -360,7 +366,13 @@
       "block": "Bloquear",
       "unblock": "Desbloquear",
       "favorite": "Favorito",
-      "unfavorite": "Quitar favorito"
+      "unfavorite": "Quitar favorito",
+      "mute": "Silenciar",
+      "muteAll": "Silenciar todo",
+      "muteMessages": "Silenciar mensajes",
+      "muteNewErrands": "Silenciar nuevas tareas",
+      "muteReminders": "Silenciar recordatorios",
+      "muteChangesInErrands": "Silenciar cambios en tareas"
 
       
       
@@ -547,7 +559,13 @@
       "block": "Bloquejar",
       "unblock": "Desbloquejar",
       "favorite": "Favorit",
-      "unfavorite": "Treure favorit"
+      "unfavorite": "Treure favorit",
+      "mute": "Silenciar",
+      "muteAll": "Silenciar tot",
+      "muteMessages": "Silenciar missatges",
+      "muteNewErrands": "Silenciar noves tasques",
+      "muteReminders": "Silenciar recordatoris",
+      "muteChangesInErrands": "Silenciar canvis en tasques"
 
 
 

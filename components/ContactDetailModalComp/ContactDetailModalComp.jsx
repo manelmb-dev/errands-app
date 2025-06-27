@@ -14,6 +14,7 @@ import {
 } from "../../constants/storeAtoms";
 import { useAtom } from "jotai";
 
+import MuteOptionsPopup from "./MuteOptionsPopup/MuteOptionsPopup";
 import { themes } from "../../constants/themes";
 import i18n from "../../constants/i18n";
 
@@ -104,7 +105,7 @@ const ContactDetailModalComp = () => {
       {/* Contact details */}
 
       {/* Image contact or icon */}
-      <View className="flex items-center">
+      <View className="mb-3 flex items-center">
         {contactDetails.photoURL ? (
           <Image
             className="w-20 h-20 rounded-full"
@@ -118,11 +119,11 @@ const ContactDetailModalComp = () => {
           />
         )}
       </View>
-      <View className="flex-row mb-6 gap-4 items-center">
+      <View className="flex-row mb-6 gap-2 items-stretch">
         {/* Send errand to contact */}
         <TouchableOpacity
-          className={`mt-3 py-3 px-1 flex-1 rounded-2xl items-center justify-around gap-1.5 border border-gray-300 bg-[${themes[theme].buttonMenuBackground}]`}
-          activeOpacity={0.8}
+          className={`flex-1 h-24 rounded-2xl items-center justify-evenly border border-gray-300 bg-[${themes[theme].buttonMenuBackground}]`}
+          activeOpacity={0.6}
           onPress={() => {
             router.push({
               pathname: "/Modals/newTaskModal",
@@ -132,67 +133,55 @@ const ContactDetailModalComp = () => {
         >
           <Ionicons name="send" size={25} color={themes[theme].text} />
           <Text
-            className={`text-base text-center text-[${themes[theme].text}]`}
+            style={{ color: themes[theme].text }}
+            className="text-base text-center"
           >
             {i18n.t("sendErrand")}
           </Text>
         </TouchableOpacity>
 
         {/* Toggle favorite contact */}
-        {contactDetails.favorite ? (
-          <TouchableOpacity
-            className={`mt-3 py-3 px-1 flex-1 rounded-2xl items-center justify-around gap-1.5 border border-yellow-500 bg-yellow-200`}
-            activeOpacity={0.8}
-            onPress={toggleFavoriteContact}
+        <TouchableOpacity
+          className={`flex-1 h-24 rounded-2xl items-center justify-evenly border border-yellow-500 ${contactDetails.favorite ? `${theme === "light" ? "bg-yellow-200" : "bg-yellow-700"}` : `bg-[${themes[theme].buttonMenuBackground}]`}`}
+          activeOpacity={0.7}
+          onPress={toggleFavoriteContact}
+        >
+          <Octicons
+            name={contactDetails.favorite ? "star-fill" : "star"}
+            size={25}
+            color={themes[theme].text}
+          />
+          <Text
+            className={`text-base text-center text-[${themes[theme].text}]`}
           >
-            <Octicons name="star" size={25} color={themes[theme].text} />
-            <Text
-              className={`text-base text-center text-[${themes[theme].text}]`}
-            >
-              {i18n.t("unfavorite")}
-            </Text>
-          </TouchableOpacity>
-        ) : (
-          <TouchableOpacity
-            className={`mt-3 py-3 px-1 flex-1 rounded-2xl items-center justify-around gap-1.5 border border-yellow-500 bg-yellow-50`}
-            activeOpacity={0.8}
-            onPress={toggleFavoriteContact}
-          >
-            <Octicons name="star-fill" size={25} color={themes[theme].text} />
-            <Text
-              className={`text-base text-center text-[${themes[theme].text}]`}
-            >
-              {i18n.t("favorite")}
-            </Text>
-          </TouchableOpacity>
-        )}
+            {contactDetails.favorite
+              ? i18n.t("unfavorite")
+              : i18n.t("favorite")}
+          </Text>
+        </TouchableOpacity>
+
+        {/* Mute Popup contact */}
+        <View className="flex-1">
+          <MuteOptionsPopup contactDetails={contactDetails} />
+        </View>
 
         {/* Toggle block contact */}
-        {contactDetails.blocked ? (
-          <TouchableOpacity
-            className={`mt-3 py-3 px-1 flex-1 rounded-2xl items-center justify-around gap-1.5 border border-red-500 bg-red-200`}
-            activeOpacity={0.8}
-            onPress={toggleBlockContact}
+        <TouchableOpacity
+          className={`flex-1 h-24 rounded-2xl items-center justify-evenly border border-red-500 ${contactDetails.blocked ? `${theme === "light" ? "bg-red-200" : "bg-red-700"}` : `bg-[${themes[theme].buttonMenuBackground}]`}`}
+          activeOpacity={0.7}
+          onPress={toggleBlockContact}
+        >
+          <Feather
+            name={contactDetails.blocked ? "user-check" : "user-x"}
+            size={28}
+            color={themes[theme].text}
+          />
+          <Text
+            className={`text-base text-center text-[${themes[theme].text}]`}
           >
-            <Feather name="user-check" size={28} color="#dc2626" />
-            <Text
-              className={`text-base text-red-600 font-semibold text-center`}
-            >
-              {i18n.t("unblock")}
-            </Text>
-          </TouchableOpacity>
-        ) : (
-          <TouchableOpacity
-            className={`mt-3 py-3 px-1 flex-1 rounded-2xl items-center justify-around gap-1.5 border border-red-500 bg-red-50`}
-            activeOpacity={0.8}
-            onPress={toggleBlockContact}
-          >
-            <Feather name="user-x" size={28} color="#dc2626" />
-            <Text className="text-base text-red-600 font-semibold text-center">
-              {i18n.t("block")}
-            </Text>
-          </TouchableOpacity>
-        )}
+            {contactDetails.blocked ? i18n.t("unblock") : i18n.t("block")}
+          </Text>
+        </TouchableOpacity>
       </View>
 
       {/* Tabs */}
