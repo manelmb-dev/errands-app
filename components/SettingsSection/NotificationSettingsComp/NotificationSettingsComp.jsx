@@ -5,6 +5,9 @@ import React, { useEffect, useState } from "react";
 import { themeAtom, userAtom } from "../../../constants/storeAtoms";
 import { useAtom } from "jotai";
 
+import Ionicons from "react-native-vector-icons/Ionicons";
+import MaterialIcons from "react-native-vector-icons/MaterialIcons";
+
 import { themes } from "../../../constants/themes";
 import i18n from "../../../constants/i18n";
 
@@ -40,10 +43,26 @@ const NotificationSettingsComp = () => {
 
   // Opciones individuales de notificación
   const notificationOptions = [
-    { key: "newMessages", label: i18n.t("newMessages") },
-    { key: "newErrands", label: i18n.t("newErrands") },
-    { key: "reminders", label: i18n.t("reminders") },
-    { key: "changesInErrands", label: i18n.t("changesInErrands") },
+    {
+      key: "newMessages",
+      label: i18n.t("newMessages"),
+      icon: "chatbubble-outline",
+    },
+    {
+      key: "newErrands",
+      label: i18n.t("newErrands"),
+      icon: "document-text-outline",
+    },
+    {
+      key: "reminders",
+      label: i18n.t("reminders"),
+      icon: "notifications-outline",
+    },
+    {
+      key: "changesInErrands",
+      label: i18n.t("changesInErrands"),
+      icon: "create-outline",
+    },
   ];
 
   const handleNotificationsEnabledToggle = () => {
@@ -117,7 +136,14 @@ const NotificationSettingsComp = () => {
       <View
         className={`mb-4 p-3 flex-row justify-between items-center bg-[${themes[theme].buttonMenuBackground}] rounded-xl border border-[${themes[theme].listsSeparator}] shadow-sm ${theme === "light" ? "shadow-gray-100" : "shadow-neutral-950"}`}
       >
-        <Text className="text-base">{i18n.t("enableNotifications")}</Text>
+        <View className="flex-row items-center gap-3">
+          <Ionicons
+            name="notifications-outline"
+            size={23}
+            color={themes[theme].text}
+          />
+          <Text className="text-lg">{i18n.t("enableNotifications")}</Text>
+        </View>
         <Switch
           value={notificationSettings.notificationsEnabled}
           onValueChange={handleNotificationsEnabledToggle}
@@ -137,7 +163,14 @@ const NotificationSettingsComp = () => {
                 `border-b border-[${themes[theme].listsSeparator}]`
               }`}
             >
-              <Text className="text-base">{option.label}</Text>
+              <View className="flex-row items-center gap-3">
+                <Ionicons
+                  name={option.icon}
+                  size={23}
+                  color={themes[theme].text}
+                />
+                <Text className="text-base">{option.label}</Text>
+              </View>
               <Switch
                 value={notificationSettings[option.key]}
                 onValueChange={() => toggleIndividual(option.key)}
