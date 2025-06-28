@@ -2,7 +2,7 @@ import { useNavigation, useRouter } from "expo-router";
 import { View, Text, ScrollView, TouchableHighlight } from "react-native";
 import { useEffect, useState } from "react";
 
-import { languageAtom, themeAtom, userAtom } from "../../constants/storeAtoms";
+import { themeAtom, userAtom } from "../../constants/storeAtoms";
 import { useAtom } from "jotai";
 
 import Ionicons from "react-native-vector-icons/Ionicons";
@@ -18,7 +18,6 @@ function SettingsSectionComp() {
 
   const [user] = useAtom(userAtom);
   const [theme] = useAtom(themeAtom);
-  const [language] = useAtom(languageAtom);
 
   const [modalSettingsVisible, setModalSettingsVisible] = useState(false);
 

@@ -82,7 +82,7 @@ export default function MainPopupPage({ contactDetails }) {
       <MenuOptions
         customStyles={{
           optionsContainer: {
-            marginTop: 200,
+            marginTop: 195,
             marginLeft: 92,
             backgroundColor: themes[theme].buttonMenuBackground,
             borderRadius: 10,

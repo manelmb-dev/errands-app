@@ -44,9 +44,11 @@ let userExample = {
   phoneNumber: "+34-600-123-456",
   settings: {
     notifications: {
-      email: true,
-      sms: false,
-      push: true,
+      notificationsEnabled: true,
+      newMessages: true,
+      newErrands: true,
+      reminders: true,
+      changesInErrands: true,
     },
     language: "es",
     privacy: {

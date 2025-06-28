@@ -178,7 +178,12 @@
         "muteMessages": "Mute messages",
         "muteNewErrands": "Mute new errands",
         "muteReminders": "Mute reminders",
-        "muteChangesInErrands": "Mute errand changes"
+        "muteChangesInErrands": "Mute errand changes",
+        "enableNotifications": "Enable notifications",
+        "newMessages": "New messages",
+        "newErrands": "New errands",
+        "reminders": "Reminders",
+        "changesInErrands": "Changes in errands"
 
 
           
@@ -372,7 +377,12 @@
       "muteMessages": "Silenciar mensajes",
       "muteNewErrands": "Silenciar nuevas tareas",
       "muteReminders": "Silenciar recordatorios",
-      "muteChangesInErrands": "Silenciar cambios en tareas"
+      "muteChangesInErrands": "Silenciar cambios en tareas",
+      "enableNotifications": "Habilitar notificaciones",
+      "newMessages": "Nuevos mensajes",
+      "newErrands": "Nuevas tareas",
+      "reminders": "Recordatorios",
+      "changesInErrands": "Cambios en tareas"
 
       
       
@@ -565,7 +575,12 @@
       "muteMessages": "Silenciar missatges",
       "muteNewErrands": "Silenciar noves tasques",
       "muteReminders": "Silenciar recordatoris",
-      "muteChangesInErrands": "Silenciar canvis en tasques"
+      "muteChangesInErrands": "Silenciar canvis en tasques",
+      "enableNotifications": "Habilitar notificacions",
+      "newMessages": "Nous missatges",
+      "newErrands": "Noves tasques",
+      "reminders": "Recordatoris",
+      "changesInErrands": "Canvis en tasques"
 
 
 
