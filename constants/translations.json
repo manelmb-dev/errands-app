@@ -182,8 +182,9 @@
         "enableNotifications": "Enable notifications",
         "newMessages": "New messages",
         "newErrands": "New errands",
-        "reminders": "Reminders",
-        "changesInErrands": "Changes in errands"
+        "incomingReminders": "Incoming reminders",
+        "changesInErrands": "Changes in errands",
+        "ownTasks": "Own tasks"
 
 
           
@@ -381,8 +382,9 @@
       "enableNotifications": "Habilitar notificaciones",
       "newMessages": "Nuevos mensajes",
       "newErrands": "Nuevas tareas",
-      "reminders": "Recordatorios",
-      "changesInErrands": "Cambios en tareas"
+      "incomingReminders": "Recordatorios recibidos",
+      "changesInErrands": "Cambios en tareas",
+      "ownTasks": "Tareas propias"
 
       
       
@@ -579,8 +581,9 @@
       "enableNotifications": "Habilitar notificacions",
       "newMessages": "Nous missatges",
       "newErrands": "Noves tasques",
-      "reminders": "Recordatoris",
-      "changesInErrands": "Canvis en tasques"
+      "incomingReminders": "Recordatoris rebuts",
+      "changesInErrands": "Canvis en tasques",
+      "ownTasks": "Tascas propies"
 
 
 

@@ -6,7 +6,6 @@ import { themeAtom, userAtom } from "../../../constants/storeAtoms";
 import { useAtom } from "jotai";
 
 import Ionicons from "react-native-vector-icons/Ionicons";
-import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 
 import { themes } from "../../../constants/themes";
 import i18n from "../../../constants/i18n";
@@ -19,9 +18,10 @@ const NotificationSettingsComp = () => {
 
   const [notificationSettings, setNotificationSettings] = useState({
     notificationsEnabled: user.settings.notifications.notificationsEnabled,
+    ownTasks: user.settings.notifications.ownTasks,
     newMessages: user.settings.notifications.newMessages,
     newErrands: user.settings.notifications.newErrands,
-    reminders: user.settings.notifications.reminders,
+    incomingReminders: user.settings.notifications.incomingReminders,
     changesInErrands: user.settings.notifications.changesInErrands,
   });
 
@@ -44,18 +44,23 @@ const NotificationSettingsComp = () => {
   // Opciones individuales de notificación
   const notificationOptions = [
     {
+      key: "ownTasks",
+      label: i18n.t("ownTasks"),
+      icon: "document-text-outline",
+    },
+    {
       key: "newMessages",
       label: i18n.t("newMessages"),
-      icon: "chatbubble-outline",
+      icon: "chatbox-outline",
     },
     {
       key: "newErrands",
       label: i18n.t("newErrands"),
-      icon: "document-text-outline",
+      icon: "send-outline",
     },
     {
-      key: "reminders",
-      label: i18n.t("reminders"),
+      key: "incomingReminders",
+      label: i18n.t("incomingReminders"),
       icon: "notifications-outline",
     },
     {
@@ -74,18 +79,20 @@ const NotificationSettingsComp = () => {
       // Set all to true if notifications are enabled
       newSettings = {
         notificationsEnabled: true,
+        ownTasks: true,
         newMessages: true,
         newErrands: true,
-        reminders: true,
+        incomingReminders: true,
         changesInErrands: true,
       };
     } else {
       // If notifications are disabled, set all to false
       newSettings = {
         notificationsEnabled: false,
+        ownTasks: false,
         newMessages: false,
         newErrands: false,
-        reminders: false,
+        incomingReminders: false,
         changesInErrands: false,
       };
     }
@@ -103,9 +110,10 @@ const NotificationSettingsComp = () => {
 
     // Check if all are off
     const allOff =
+      !newSettings.ownTasks &&
       !newSettings.newMessages &&
       !newSettings.newErrands &&
-      !newSettings.reminders &&
+      !newSettings.incomingReminders &&
       !newSettings.changesInErrands;
 
     if (allOff) {
@@ -128,7 +136,9 @@ const NotificationSettingsComp = () => {
         notifications: newNotificationSettings,
       },
     }));
+
     // Add Firestore update here if needed
+    // FIRESTONEEE UPDATEEE FIXXX THISSS
   };
 
   return (
@@ -168,6 +178,7 @@ const NotificationSettingsComp = () => {
                   name={option.icon}
                   size={23}
                   color={themes[theme].text}
+                  className={`${option.icon === "send-outline" && "transform rotate-180"}`}
                 />
                 <Text className="text-base">{option.label}</Text>
               </View>

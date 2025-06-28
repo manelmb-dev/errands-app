@@ -45,9 +45,10 @@ let userExample = {
   settings: {
     notifications: {
       notificationsEnabled: true,
+      ownTasks: true,
       newMessages: true,
       newErrands: true,
-      reminders: true,
+      incomingReminders: true,
       changesInErrands: true,
     },
     language: "es",
