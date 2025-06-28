@@ -47,26 +47,31 @@ const NotificationSettingsComp = () => {
       key: "ownTasks",
       label: i18n.t("ownTasks"),
       icon: "document-text-outline",
+      size: 23,
     },
     {
       key: "newMessages",
       label: i18n.t("newMessages"),
       icon: "chatbox-outline",
+      size: 23,
     },
     {
       key: "newErrands",
       label: i18n.t("newErrands"),
       icon: "send-outline",
+      size: 22,
     },
     {
       key: "incomingReminders",
       label: i18n.t("incomingReminders"),
       icon: "notifications-outline",
+      size: 23,
     },
     {
       key: "changesInErrands",
       label: i18n.t("changesInErrands"),
       icon: "create-outline",
+      size: 23,
     },
   ];
 
@@ -142,7 +147,7 @@ const NotificationSettingsComp = () => {
   };
 
   return (
-    <View className="p-4">
+    <View className={`p-4 h-full bg-[${themes[theme].background}]`}>
       <View
         className={`mb-4 p-3 flex-row justify-between items-center bg-[${themes[theme].buttonMenuBackground}] rounded-xl border border-[${themes[theme].listsSeparator}] shadow-sm ${theme === "light" ? "shadow-gray-100" : "shadow-neutral-950"}`}
       >
@@ -152,7 +157,9 @@ const NotificationSettingsComp = () => {
             size={23}
             color={themes[theme].text}
           />
-          <Text className="text-lg">{i18n.t("enableNotifications")}</Text>
+          <Text className={`text-lg text-[${themes[theme].text}]`}>
+            {i18n.t("enableNotifications")}
+          </Text>
         </View>
         <Switch
           value={notificationSettings.notificationsEnabled}
@@ -168,7 +175,7 @@ const NotificationSettingsComp = () => {
           {notificationOptions.map((option, index) => (
             <View
               key={option.key}
-              className={`p-2.5 flex-row justify-between items-center ${
+              className={`p-3 flex-row justify-between items-center ${
                 index !== notificationOptions.length - 1 &&
                 `border-b border-[${themes[theme].listsSeparator}]`
               }`}
@@ -176,11 +183,13 @@ const NotificationSettingsComp = () => {
               <View className="flex-row items-center gap-3">
                 <Ionicons
                   name={option.icon}
-                  size={23}
+                  size={option.size || 23}
                   color={themes[theme].text}
                   className={`${option.icon === "send-outline" && "transform rotate-180"}`}
                 />
-                <Text className="text-base">{option.label}</Text>
+                <Text className={`text-lg text-[${themes[theme].text}]`}>
+                  {option.label}
+                </Text>
               </View>
               <Switch
                 value={notificationSettings[option.key]}
