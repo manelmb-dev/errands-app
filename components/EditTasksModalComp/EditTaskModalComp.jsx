@@ -566,7 +566,7 @@ const EditTaskModal = () => {
 
         {/* Priority */}
         <TouchableHighlight
-          className={"rounded-b-xl"}
+          className={"rounded-b-xl py-0.5"}
           underlayColor={themes[theme].background}
           onPress={showPriorityActionSheet}
         >
