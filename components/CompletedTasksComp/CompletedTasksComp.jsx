@@ -1,8 +1,8 @@
 import Swipeable from "react-native-gesture-handler/ReanimatedSwipeable";
 import Animated, { LinearTransition } from "react-native-reanimated";
+import { useActionSheet } from "@expo/react-native-action-sheet";
 import { View, Text, Pressable, Alert } from "react-native";
 import { useEffect, useMemo, useRef, useState } from "react";
-import ActionSheet from "react-native-actionsheet";
 import { useNavigation } from "expo-router";
 
 import Ionicons from "react-native-vector-icons/Ionicons";
@@ -18,8 +18,8 @@ import { useErrandActions } from "../../hooks/useErrandActions";
 import UndoDeleteErrandButton from "../../Utils/UndoDeleteErrandButton";
 
 function CompletedTasksComp() {
+  const { showActionSheetWithOptions } = useActionSheet();
   const navigation = useNavigation();
-  const deleteSheetRef = useRef();
   const openSwipeableRef = useRef(null);
   const swipeableRefs = useRef({});
 
@@ -75,11 +75,6 @@ function CompletedTasksComp() {
       ),
     });
   }, [navigation, theme]);
-
-  const showDeleteActionSheet = () => {
-    if (totalErrandsCompleted === 0) return;
-    deleteSheetRef.current.show();
-  };
 
   const handleDeleteAll = () => {
     // FIRESTONEEE UPDATE
@@ -141,6 +136,27 @@ function CompletedTasksComp() {
       delete: confirmDeleteOverAMonth,
     },
   ];
+
+  const showDeleteActionSheet = () => {
+    if (totalErrandsCompleted === 0) return;
+
+    const options = [...deleteOptions.map((o) => o.label), i18n.t("cancel")];
+    const cancelButtonIndex = options.length - 1;
+
+    showActionSheetWithOptions(
+      {
+        options,
+        cancelButtonIndex,
+        title: i18n.t("deleteCompletedErrands"),
+        destructiveButtonIndex: 0, // Opcional
+        userInterfaceStyle: theme, // dark | light
+      },
+      (selectedIndex) => {
+        if (selectedIndex === cancelButtonIndex) return;
+        deleteOptions[selectedIndex].delete();
+      }
+    );
+  };
 
   return (
     <View
@@ -225,20 +241,6 @@ function CompletedTasksComp() {
           setPossibleUndoDeleteErrand={setPossibleUndoDeleteErrand}
         />
       )}
-
-      <ActionSheet
-        ref={deleteSheetRef}
-        title={i18n.t("deleteCompletedErrands")}
-        options={[
-          ...deleteOptions.map((option) => option.label),
-          i18n.t("cancel"),
-        ]}
-        cancelButtonIndex={deleteOptions.length}
-        onPress={(index) => {
-          if (index === deleteOptions.length) return;
-          deleteOptions[index].delete();
-        }}
-      />
     </View>
   );
 }

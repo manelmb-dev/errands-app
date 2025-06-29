@@ -6,6 +6,7 @@ import {
   View,
 } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
+import { ActionSheetProvider } from "@expo/react-native-action-sheet";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { MenuProvider } from "react-native-popup-menu";
 import { StatusBar } from "expo-status-bar";
@@ -53,15 +54,20 @@ export default function Layout() {
         <StatusBar style={theme === "dark" ? "light" : "dark"} />
         <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
           <MenuProvider>
-            <View className={`flex-1 bg-[${themes[theme].background}]`}>
-              {ready ? (
-                <Stack />
-              ) : (
-                <View className="flex-1 justify-center items-center">
-                  <ActivityIndicator size="large" color={themes[system].text} />
-                </View>
-              )}
-            </View>
+            <ActionSheetProvider>
+              <View className={`flex-1 bg-[${themes[theme].background}]`}>
+                {ready ? (
+                  <Stack />
+                ) : (
+                  <View className="flex-1 justify-center items-center">
+                    <ActivityIndicator
+                      size="large"
+                      color={themes[system].text}
+                    />
+                  </View>
+                )}
+              </View>
+            </ActionSheetProvider>
           </MenuProvider>
         </TouchableWithoutFeedback>
       </SafeAreaProvider>

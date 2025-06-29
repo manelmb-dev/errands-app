@@ -1,5 +1,6 @@
-import { useCallback, useEffect, useState, useRef, useMemo } from "react";
 import { useLocalSearchParams, useNavigation, useRouter } from "expo-router";
+import { useCallback, useEffect, useState, useRef, useMemo } from "react";
+import { useActionSheet } from "@expo/react-native-action-sheet";
 import {
   View,
   Text,
@@ -11,7 +12,6 @@ import {
 } from "react-native";
 import { useForm, Controller } from "react-hook-form";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
-import ActionSheet from "react-native-actionsheet";
 import deepEqual from "fast-deep-equal";
 
 import { useAtom } from "jotai";
@@ -38,11 +38,9 @@ import {
 import i18n from "../../constants/i18n";
 
 const EditTaskModal = () => {
+  const { showActionSheetWithOptions } = useActionSheet();
   const navigation = useNavigation();
   const router = useRouter();
-
-  const prioritySheetRef = useRef();
-  const repeatSheetRef = useRef();
 
   const today = new Date().toISOString().split("T")[0];
 
@@ -195,14 +193,6 @@ const EditTaskModal = () => {
     setIsNoticePickerVisible(false);
   };
 
-  const showRepeatActionSheet = () => {
-    repeatSheetRef.current?.show();
-  };
-
-  const showPriorityActionSheet = () => {
-    prioritySheetRef.current.show();
-  };
-
   // Function to handle header cancel button
   const handleCancel = useCallback(() => {
     setUserAssigned(user);
@@ -254,6 +244,42 @@ const EditTaskModal = () => {
     setListAssigned(false);
     navigation.goBack();
   });
+
+  const showRepeatActionSheet = () => {
+    const options = [...repeatOptions.map((o) => o.label), i18n.t("cancel")];
+    const cancelButtonIndex = options.length - 1;
+
+    showActionSheetWithOptions(
+      {
+        title: i18n.t("repeat"),
+        options,
+        cancelButtonIndex,
+      },
+      (selectedIndex) => {
+        if (selectedIndex !== cancelButtonIndex) {
+          setValue("repeat", repeatOptions[selectedIndex].value);
+        }
+      }
+    );
+  };
+
+  const showPriorityActionSheet = () => {
+    const options = [...priorityOptions.map((o) => o.label), i18n.t("cancel")];
+    const cancelButtonIndex = options.length - 1;
+
+    showActionSheetWithOptions(
+      {
+        title: i18n.t("priority"),
+        options,
+        cancelButtonIndex,
+      },
+      (selectedIndex) => {
+        if (selectedIndex !== cancelButtonIndex) {
+          setValue("priority", priorityOptions[selectedIndex].value);
+        }
+      }
+    );
+  };
 
   return (
     <View className={`p-6 gap-4 bg-[${themes[theme].background}] h-full`}>
@@ -659,34 +685,6 @@ const EditTaskModal = () => {
         confirmTextIOS={i18n.t("confirm")}
         cancelTextIOS={i18n.t("cancel")}
         minuteInterval={5}
-      />
-
-      <ActionSheet
-        ref={repeatSheetRef}
-        title={i18n.t("repeat")}
-        options={[
-          ...repeatOptions.map((option) => option.label),
-          i18n.t("cancel"),
-        ]}
-        cancelButtonIndex={repeatOptions.length}
-        onPress={(index) => {
-          if (index === repeatOptions.length) return;
-          setValue("repeat", repeatOptions[index].value);
-        }}
-      />
-
-      <ActionSheet
-        ref={prioritySheetRef}
-        title={i18n.t("priority")}
-        options={[
-          ...priorityOptions.map((option) => option.label),
-          i18n.t("cancel"),
-        ]}
-        cancelButtonIndex={priorityOptions.length}
-        onPress={(index) => {
-          if (index === priorityOptions.length) return;
-          setValue("priority", priorityOptions[index].value);
-        }}
       />
     </View>
   );
