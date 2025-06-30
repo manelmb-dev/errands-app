@@ -184,7 +184,9 @@
         "newErrands": "New errands",
         "incomingReminders": "Incoming reminders",
         "changesInErrands": "Changes in errands",
-        "ownTasks": "Own tasks"
+        "ownTasks": "Own tasks",
+        "invalidAction": "Invalid action",
+        "sharedListSelectedAlertText": "Shared lists cannot be assigned to errands. Shared list will be selected if you assign the errand to a contact."
 
 
           
@@ -384,7 +386,9 @@
       "newErrands": "Nuevas tareas",
       "incomingReminders": "Recordatorios recibidos",
       "changesInErrands": "Cambios en tareas",
-      "ownTasks": "Tareas propias"
+      "ownTasks": "Tareas propias",
+      "invalidAction": "Acción inválida",
+      "sharedListSelectedAlertText": "Las listas compartidas no se pueden asignar a tareas. Se seleccionará la lista compartida si asignas la tarea a un contacto."
 
       
       
@@ -583,7 +587,9 @@
       "newErrands": "Noves tasques",
       "incomingReminders": "Recordatoris rebuts",
       "changesInErrands": "Canvis en tasques",
-      "ownTasks": "Tascas propies"
+      "ownTasks": "Tascas propies",
+      "invalidAction": "Acció invàlida",
+      "sharedListSelectedAlertText": "Les llistes compartides no es poden assignar a tasques. Es seleccionarà la llista compartida si assignes la tasca a un contacte."
 
 
 

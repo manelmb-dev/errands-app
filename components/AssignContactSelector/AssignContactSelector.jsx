@@ -11,6 +11,7 @@ import { useNavigation } from "expo-router";
 import FontAwesome6 from "react-native-vector-icons/FontAwesome6";
 import Octicons from "react-native-vector-icons/Octicons";
 import Ionicons from "react-native-vector-icons/Ionicons";
+import Feather from "react-native-vector-icons/Feather";
 
 import { useAtom } from "jotai";
 import {
@@ -131,7 +132,7 @@ const AssignContactSelector = () => {
                 setListAssigned(lists[0]);
               } else if (item.id !== user.id) {
                 setUserAssigned(item);
-                setListAssigned("");
+                setListAssigned({ id: "", title: i18n.t("shared") });
               }
               navigation.goBack();
             }}
@@ -162,7 +163,10 @@ const AssignContactSelector = () => {
                     />
                   )}
                   {item.favorite === true && (
-                    <Octicons name="star" size={22} color="FFD700" />
+                    <Octicons name="star-fill" size={25} color="#FFD700" />
+                  )}
+                  {item.id === user.id && (
+                    <Feather name="user" size={25} color={themes[theme].text} />
                   )}
                 </View>
               </View>

@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import {
+  Alert,
   FlatList,
   Pressable,
   Text,
@@ -16,6 +17,8 @@ import {
   listAssignedAtom,
   listsAtom,
   themeAtom,
+  userAssignedAtom,
+  userAtom,
 } from "../../constants/storeAtoms";
 
 import { themes } from "../../constants/themes";
@@ -24,7 +27,9 @@ import i18n from "../../constants/i18n";
 const AssignContactSelector = () => {
   const navigation = useNavigation();
 
+  const [user] = useAtom(userAtom);
   const [lists] = useAtom(listsAtom);
+  const [, setUserAssigned] = useAtom(userAssignedAtom);
   const [listAssigned, setListAssigned] = useAtom(listAssignedAtom);
   const [theme] = useAtom(themeAtom);
 
@@ -67,10 +72,12 @@ const AssignContactSelector = () => {
           keyExtractor={(item) => item.id}
           renderItem={({ item }) => (
             <TouchableOpacity
-              className={`h-16 border-b border-[${themes[theme].listsSeparator}]`}
+              activeOpacity={0.7}
               underlayColor={themes[theme].background}
+              className={`h-16 border-b border-[${themes[theme].listsSeparator}]`}
               onPress={() => {
                 setListAssigned(item);
+                setUserAssigned(user);
                 navigation.goBack();
               }}
             >
@@ -105,7 +112,10 @@ const AssignContactSelector = () => {
             </TouchableOpacity>
           )}
         />
-        <View
+        {/* Shared list option */}
+        <TouchableOpacity
+          activeOpacity={0.7}
+          underlayColor={themes[theme].background}
           className={`h-16 px-7 flex-row gap-5 items-center ${
             listAssigned?.id === ""
               ? theme === "light"
@@ -113,6 +123,15 @@ const AssignContactSelector = () => {
                 : "bg-gray-800"
               : ""
           }`}
+          onPress={() => {
+            Alert.alert(
+              i18n.t("invalidAction"),
+              `${i18n.t("sharedListSelectedAlertText")}`,
+              [
+                { text: i18n.t("ok") }, // Dismiss the alert,
+              ]
+            );
+          }}
         >
           <Ionicons
             className={`bg-slate-300 p-2 rounded-xl`}
@@ -134,7 +153,7 @@ const AssignContactSelector = () => {
               )}
             </View>
           </View>
-        </View>
+        </TouchableOpacity>
       </View>
     </View>
   );

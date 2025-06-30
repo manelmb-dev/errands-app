@@ -102,7 +102,7 @@ const NewTaskModal = () => {
   // useEffect(() => {
   //   if (currentContact) {
   //     setUserAssigned(currentContact);
-  //     setListAssigned("");
+  //     setListAssigned({id: "", title: i18n.t("shared")});
   //   }
   // }, [currentContact, setUserAssigned, setListAssigned, setValue]);
 
@@ -389,13 +389,16 @@ const NewTaskModal = () => {
                 {i18n.t("list")}
               </Text>
               <View
-                className={`mr-4 px-3 py-1 gap-1 flex-row items-center ${listAssigned.id === "" || listAssigned === false ? `bg-[${themes[theme].buttonMenuBackground}]` : `${theme === "light" ? "bg-slate-300" : "bg-slate-600"}`} rounded-2xl`}
+                className={`mr-4 px-3 py-1 gap-1 flex-row items-center ${theme === "light" ? "bg-slate-300" : "bg-slate-600"} rounded-2xl`}
               >
-                <FontAwesome6
-                  name="arrows-up-down"
-                  size={12}
-                  color={themes["light"].text}
-                />
+                {listAssigned.id !== "" && (
+                  <FontAwesome6
+                    name="arrows-up-down"
+                    size={12}
+                    color={themes["light"].text}
+                  />
+                )}
+
                 <Text className={`text-lg text-[${themes[theme].text}]`}>
                   {listAssigned ? `${listAssigned.title}` : i18n.t("shared")}
                 </Text>
