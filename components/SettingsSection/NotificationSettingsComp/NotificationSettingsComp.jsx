@@ -126,12 +126,15 @@ const NotificationSettingsComp = () => {
         ...newSettings,
         notificationsEnabled: false,
       };
-      setNotificationSettings(finalSettings);
-      updateUserSettings(finalSettings);
+      setTimeout(() => {
+        setNotificationSettings(finalSettings);
+        updateUserSettings(finalSettings);
+      }, 10);
     } else {
       updateUserSettings(newSettings);
     }
   };
+  console.log(notificationSettings);
 
   const updateUserSettings = (newNotificationSettings) => {
     setUser((prevUser) => ({
@@ -174,7 +177,7 @@ const NotificationSettingsComp = () => {
         >
           {notificationOptions.map((option, index) => (
             <View
-              key={option.key}
+              key={option.key + notificationSettings[option.key]}
               className={`p-3 flex-row justify-between items-center ${
                 index !== notificationOptions.length - 1 &&
                 `border-b border-[${themes[theme].listsSeparator}]`

@@ -19,7 +19,7 @@ import I18n from "../../../constants/i18n";
 import i18n from "../../../constants/i18n";
 
 export default function LanguagePopupMenu() {
-  const [language, setLanguage] = useAtom(languageAtom);
+  const [, setLanguage] = useAtom(languageAtom);
   const [theme] = useAtom(themeAtom);
 
   const [selectedLanguage, setSelectedLanguage] = useState("es");
