@@ -32,7 +32,7 @@ const UndoDeleteErrandButton = ({
       <Animated.View
         entering={FadeInDown}
         exiting={FadeOutDown}
-        className={`flex-row items-center justify-between gap-4 px-4 py-4 mx-3 absolute bottom-10 rounded-2xl bg-white shadow shadow-[${themes[theme].popupShadow}] border border-[${themes[theme].listsSeparator}]`}
+        className={`flex-row items-center justify-between gap-4 px-4 py-4 mx-3 absolute bottom-10 rounded-2xl bg-white shadow shadow-[${themes[theme].popupShadow}] border border-[${themes[theme].borderColor}]`}
       >
         <Ionicons
           className="p-1.5 bg-red-400 rounded-full"

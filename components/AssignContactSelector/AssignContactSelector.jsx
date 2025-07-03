@@ -124,7 +124,7 @@ const AssignContactSelector = () => {
         }
         renderItem={({ item }) => (
           <TouchableOpacity
-            className={`h-16 border-b border-[${themes[theme].listsSeparator}]`}
+            className={`h-16 border-b border-[${themes[theme].borderColor}]`}
             underlayColor={themes[theme].background}
             onPress={() => {
               if (item.id === user.id && userAssigned.id !== user.id) {

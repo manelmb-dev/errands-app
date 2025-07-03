@@ -75,7 +75,7 @@ const ViewIncomingTaskModal = () => {
   return (
     <View className={`p-6 gap-4 bg-[${themes[theme].background}] h-full`}>
       <View
-        className={`bg-[${themes[theme].buttonMenuBackground}] rounded-xl border border-[${themes[theme].listsSeparator}] shadow-sm ${theme === "light" ? "shadow-gray-100" : "shadow-neutral-950"}`}
+        className={`bg-[${themes[theme].buttonMenuBackground}] rounded-xl border border-[${themes[theme].borderColor}] shadow-sm ${theme === "light" ? "shadow-gray-100" : "shadow-neutral-950"}`}
       >
         <Controller
           control={control}
@@ -86,7 +86,7 @@ const ViewIncomingTaskModal = () => {
               className={`p-4 pl-4 text-lg ${
                 errand.description
                   ? `border-b 
-                  border-[${themes[theme].listsSeparator}]`
+                  border-[${themes[theme].borderColor}]`
                   : ``
               }   align-top
                   leading-tight text-[${themes[theme].text}]`}
@@ -112,7 +112,7 @@ const ViewIncomingTaskModal = () => {
       </View>
 
       <View
-        className={`flex-row justify-between bg-[${themes[theme].buttonMenuBackground}] rounded-xl border border-[${themes[theme].listsSeparator}] shadow-sm ${theme === "light" ? "shadow-gray-100" : "shadow-neutral-950"}`}
+        className={`flex-row justify-between bg-[${themes[theme].buttonMenuBackground}] rounded-xl border border-[${themes[theme].borderColor}] shadow-sm ${theme === "light" ? "shadow-gray-100" : "shadow-neutral-950"}`}
       >
         <View className="flex-row items-center">
           <View className="mx-4 p-1.5 bg-neutral-600 rounded-lg">
@@ -153,7 +153,7 @@ const ViewIncomingTaskModal = () => {
       </View>
 
       {/* <View
-        className={`bg-[${themes[theme].buttonMenuBackground}] rounded-xl border border-[${themes[theme].listsSeparator}] shadow-sm ${theme === "light" ? "shadow-gray-100" : "shadow-neutral-950"}`}
+        className={`bg-[${themes[theme].buttonMenuBackground}] rounded-xl border border-[${themes[theme].borderColor}] shadow-sm ${theme === "light" ? "shadow-gray-100" : "shadow-neutral-950"}`}
       >
         <View className={`rounded-t-xl`}>
           <View className={`flex-row items-center rounded-t-xl`}>
@@ -164,7 +164,7 @@ const ViewIncomingTaskModal = () => {
               color={themes["light"].background}
             />
             <View
-              className={`py-3 flex-1 gap-4 flex-row justify-between items-center border-b border-[${themes[theme].listsSeparator}]`}
+              className={`py-3 flex-1 gap-4 flex-row justify-between items-center border-b border-[${themes[theme].borderColor}]`}
             >
               <Text className={`text-[${themes[theme].text}] text-lg`}>
                 Encargado
@@ -203,7 +203,7 @@ const ViewIncomingTaskModal = () => {
       </View> */}
 
       <View
-        className={`bg-[${themes[theme].buttonMenuBackground}] rounded-xl border border-[${themes[theme].listsSeparator}] shadow-sm ${theme === "light" ? "shadow-gray-100" : "shadow-neutral-950"}`}
+        className={`bg-[${themes[theme].buttonMenuBackground}] rounded-xl border border-[${themes[theme].borderColor}] shadow-sm ${theme === "light" ? "shadow-gray-100" : "shadow-neutral-950"}`}
       >
         {/* Date */}
         <View className={`flex-row items-center rounded-t-xl`}>
@@ -214,7 +214,7 @@ const ViewIncomingTaskModal = () => {
             color={themes["light"].background}
           />
           <View
-            className={`py-3 pr-5 flex-1 flex-row justify-between gap-4 items-center border-b border-[${themes[theme].listsSeparator}]`}
+            className={`py-3 pr-5 flex-1 flex-row justify-between gap-4 items-center border-b border-[${themes[theme].borderColor}]`}
           >
             <Text className={`text-[${themes[theme].text}] text-lg`}>
               {i18n.t("date")}
@@ -243,7 +243,7 @@ const ViewIncomingTaskModal = () => {
           />
 
           <View
-            className={`py-3 pr-5 flex-1 flex-row justify-between gap-4 items-center ${watch("dateNotice") || watch("repeat") ? `border-b border-[${themes[theme].listsSeparator}]` : ""}`}
+            className={`py-3 pr-5 flex-1 flex-row justify-between gap-4 items-center ${watch("dateNotice") || watch("repeat") ? `border-b border-[${themes[theme].borderColor}]` : ""}`}
           >
             <Text className={`text-[${themes[theme].text}] text-lg`}>Hora</Text>
             {watch("timeErrand") ? (
@@ -271,7 +271,7 @@ const ViewIncomingTaskModal = () => {
             />
 
             <View
-              className={`py-3 pr-5 flex-1 flex-row justify-between gap-4 items-center ${watch("repeat") ? `border-b border-[${themes[theme].listsSeparator}]` : ""}`}
+              className={`py-3 pr-5 flex-1 flex-row justify-between gap-4 items-center ${watch("repeat") ? `border-b border-[${themes[theme].borderColor}]` : ""}`}
             >
               <Text className={`text-[${themes[theme].text}] text-lg`}>
                 {i18n.t("notice")}
@@ -295,7 +295,7 @@ const ViewIncomingTaskModal = () => {
               color={themes["light"].background}
             />
             <View
-              className={`py-3 pr-5 flex-1 flex-row justify-between gap-4 items-centerborder-b border-[${themes[theme].listsSeparator}]`}
+              className={`py-3 pr-5 flex-1 flex-row justify-between gap-4 items-centerborder-b border-[${themes[theme].borderColor}]`}
             >
               <Text className={`text-[${themes[theme].text}] text-lg`}>
                 {i18n.t("repeat")}
@@ -313,7 +313,7 @@ const ViewIncomingTaskModal = () => {
       </View>
 
       <View
-        className={`bg-[${themes[theme].buttonMenuBackground}] rounded-xl border border-[${themes[theme].listsSeparator}] shadow-sm ${theme === "light" ? "shadow-gray-100" : "shadow-neutral-950"}`}
+        className={`bg-[${themes[theme].buttonMenuBackground}] rounded-xl border border-[${themes[theme].borderColor}] shadow-sm ${theme === "light" ? "shadow-gray-100" : "shadow-neutral-950"}`}
       >
         {/* Marked */}
         <View className={`flex-row items-center rounded-t-xl`}>
@@ -324,7 +324,7 @@ const ViewIncomingTaskModal = () => {
             color={themes["light"].background}
           />
           <View
-            className={`py-3 flex-1 flex-row justify-between gap-4 items-center border-b border-[${themes[theme].listsSeparator}]`}
+            className={`py-3 flex-1 flex-row justify-between gap-4 items-center border-b border-[${themes[theme].borderColor}]`}
           >
             <Text className={`text-[${themes[theme].text}] text-lg`}>
               {i18n.t("markedSingular")}

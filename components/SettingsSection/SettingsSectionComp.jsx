@@ -116,7 +116,7 @@ function SettingsSectionComp() {
       <View className="gap-6 pt-5 pb-5">
         {/* Profile section */}
         <View
-          className={`bg-[${themes[theme].buttonMenuBackground}] rounded-xl border border-[${themes[theme].listsSeparator}] shadow-sm ${theme === "light" ? "shadow-gray-100" : "shadow-neutral-950"}`}
+          className={`bg-[${themes[theme].buttonMenuBackground}] rounded-xl border border-[${themes[theme].borderColor}] shadow-sm ${theme === "light" ? "shadow-gray-100" : "shadow-neutral-950"}`}
         >
           <TouchableHighlight
             className="rounded-xl"
@@ -145,7 +145,7 @@ function SettingsSectionComp() {
 
         {/* User sections */}
         <View
-          className={`bg-[${themes[theme].buttonMenuBackground}] rounded-xl border border-[${themes[theme].listsSeparator}] shadow-sm ${theme === "light" ? "shadow-gray-100" : "shadow-neutral-950"}`}
+          className={`bg-[${themes[theme].buttonMenuBackground}] rounded-xl border border-[${themes[theme].borderColor}] shadow-sm ${theme === "light" ? "shadow-gray-100" : "shadow-neutral-950"}`}
         >
           {userSections.map((item, index) => (
             <TouchableHighlight
@@ -163,7 +163,7 @@ function SettingsSectionComp() {
                   color={themes[theme].text}
                 />
                 <View
-                  className={`flex-1 flex-row justify-between py-4 ${index !== userSections.length - 1 && `border-b  border-[${themes[theme].listsSeparator}]`}`}
+                  className={`flex-1 flex-row justify-between py-4 ${index !== userSections.length - 1 && `border-b  border-[${themes[theme].borderColor}]`}`}
                 >
                   <Text className={`text-[${themes[theme].text}] text-lg `}>
                     {item.label}
@@ -184,7 +184,7 @@ function SettingsSectionComp() {
 
         {/* UI sections */}
         <View
-          className={`bg-[${themes[theme].buttonMenuBackground}] rounded-xl border border-[${themes[theme].listsSeparator}] shadow-sm ${theme === "light" ? "shadow-gray-100" : "shadow-neutral-950"}`}
+          className={`bg-[${themes[theme].buttonMenuBackground}] rounded-xl border border-[${themes[theme].borderColor}] shadow-sm ${theme === "light" ? "shadow-gray-100" : "shadow-neutral-950"}`}
         >
           <AppearencePopupMenu />
           <LanguagePopupMenu />
@@ -192,7 +192,7 @@ function SettingsSectionComp() {
 
         {/* Help sections */}
         <View
-          className={`bg-[${themes[theme].buttonMenuBackground}] rounded-xl border border-[${themes[theme].listsSeparator}] shadow-sm ${theme === "light" ? "shadow-gray-100" : "shadow-neutral-950"}`}
+          className={`bg-[${themes[theme].buttonMenuBackground}] rounded-xl border border-[${themes[theme].borderColor}] shadow-sm ${theme === "light" ? "shadow-gray-100" : "shadow-neutral-950"}`}
         >
           {helpSections.map((item, index) => (
             <TouchableHighlight
@@ -210,7 +210,7 @@ function SettingsSectionComp() {
                   color={themes[theme].text}
                 />
                 <View
-                  className={`flex-1 py-4 ${index !== helpSections.length - 1 && `border-b border-[${themes[theme].listsSeparator}]`}`}
+                  className={`flex-1 py-4 ${index !== helpSections.length - 1 && `border-b border-[${themes[theme].borderColor}]`}`}
                 >
                   <Text className={`text-[${themes[theme].text}] text-lg `}>
                     {item.label}

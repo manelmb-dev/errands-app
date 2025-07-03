@@ -27,7 +27,7 @@ export default function SharedSection() {
 
   return (
     <View
-      className={`w-full mt-3 pt-5 bg-[${themes[theme].buttonMenuBackground}] rounded-t-3xl rounded-b-3xl border border-[${themes[theme].listsSeparator}] shadow-sm ${theme === "light" ? "shadow-gray-100" : "shadow-neutral-950"}`}
+      className={`w-full mt-3 pt-5 bg-[${themes[theme].buttonMenuBackground}] rounded-t-3xl rounded-b-3xl border border-[${themes[theme].borderColor}] shadow-sm ${theme === "light" ? "shadow-gray-100" : "shadow-neutral-950"}`}
     >
       <View onLayout={(e) => setContainerWidth(e.nativeEvent.layout.width)}>
         <ScrollView

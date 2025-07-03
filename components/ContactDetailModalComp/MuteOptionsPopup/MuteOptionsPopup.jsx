@@ -107,7 +107,7 @@ export default function MainPopupPage({ contactDetails }) {
         ].map(({ key, label }, index, array) => (
           <MenuOption key={key} onSelect={() => {}}>
             <View
-              className={`p-3 flex-row justify-between items-center ${index < array.length - 1 && `border-b-hairline border-[${themes[theme].listsSeparator}]`}`}
+              className={`p-3 flex-row justify-between items-center ${index < array.length - 1 && `border-b-hairline border-[${themes[theme].borderColor}]`}`}
             >
               <Text style={{ color: themes[theme].text }}>{label}</Text>
               <Switch

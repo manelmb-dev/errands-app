@@ -15,7 +15,7 @@ function BottomToolbar({ activeSection, setActiveSection }) {
 
   return (
     <View
-      className={`w-full flex-row px-2 pb-7 pt-1.5 justify-around items-center border-t border-[${themes[theme].listsSeparator}] bg-[${themes[theme].background}]`}
+      className={`w-full flex-row px-2 pb-7 pt-1.5 justify-around items-center border-t border-[${themes[theme].borderColor}] bg-[${themes[theme].background}]`}
     >
       <Pressable
         onPress={() => setActiveSection("home")}
@@ -42,7 +42,7 @@ function BottomToolbar({ activeSection, setActiveSection }) {
       <TouchableHighlight
         onPress={() => router.push("/Modals/newTaskModal")}
         className={`items-center p-2 px-4 bg-[${themes[theme].buttonMenuBackground}] rounded-2xl`}
-        underlayColor={themes[theme].listsSeparator}
+        underlayColor={themes[theme].borderColor}
       >
         <Ionicons
           name={activeSection === "newTask" ? "add" : "add-outline"}

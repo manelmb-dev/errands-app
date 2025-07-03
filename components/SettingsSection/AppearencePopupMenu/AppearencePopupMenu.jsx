@@ -73,7 +73,7 @@ export default function AppearencePopupMenu() {
             color={themes[theme].text}
           />
           <View
-            className={`py-4 flex-1 flex-row justify-between border-b border-[${themes[theme].listsSeparator}]`}
+            className={`py-4 flex-1 flex-row justify-between border-b border-[${themes[theme].borderColor}]`}
           >
             <Text className={`text-[${themes[theme].text}] text-lg`}>
               {i18n.t("appearance")}
@@ -133,7 +133,7 @@ export default function AppearencePopupMenu() {
                 paddingHorizontal: 13,
                 borderBottomColor:
                   index !== options.length - 1
-                    ? themes[theme].listsSeparator
+                    ? themes[theme].borderColor
                     : "transparent",
                 borderBottomWidth: 1,
                 flexDirection: "row",

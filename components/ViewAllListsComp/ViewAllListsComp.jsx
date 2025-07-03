@@ -93,12 +93,12 @@ const ViewAllListsComp = () => {
     <Pressable
       onLongPress={drag}
       disabled={isActive}
-      className={`flex-row justify-between items-center px-5 py-5 border-b border-[${themes[theme].listsSeparator}]`}
+      className={`flex-row justify-between items-center px-5 py-5 border-b border-[${themes[theme].borderColor}]`}
       style={{
         backgroundColor: isActive
           ? themes[theme].buttonMenuBackground
           : themes[theme].background,
-        borderColor: themes[theme].listsSeparator,
+        borderColor: themes[theme].borderColor,
         transform: [{ scale: isActive ? 1.03 : 1 }],
         elevation: isActive ? 8 : 0,
         shadowColor: isActive ? "#000" : "transparent",
@@ -168,7 +168,7 @@ const ViewAllListsComp = () => {
             onPress={() => router.push("/Modals/newListModal")}
           >
             <View
-              className={`w-full flex-row justify-between items-center border-b border-[${themes[theme].listsSeparator}]`}
+              className={`w-full flex-row justify-between items-center border-b border-[${themes[theme].borderColor}]`}
             >
               <View className={`flex-row items-center pl-5 gap-5`}>
                 <Ionicons

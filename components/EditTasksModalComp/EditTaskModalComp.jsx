@@ -284,7 +284,7 @@ const EditTaskModal = () => {
   return (
     <View className={`p-6 gap-4 bg-[${themes[theme].background}] h-full`}>
       <View
-        className={`bg-[${themes[theme].buttonMenuBackground}] rounded-xl border border-[${themes[theme].listsSeparator}] shadow-sm ${theme === "light" ? "shadow-gray-100" : "shadow-neutral-950"}`}
+        className={`bg-[${themes[theme].buttonMenuBackground}] rounded-xl border border-[${themes[theme].borderColor}] shadow-sm ${theme === "light" ? "shadow-gray-100" : "shadow-neutral-950"}`}
       >
         <Controller
           control={control}
@@ -292,7 +292,7 @@ const EditTaskModal = () => {
           render={({ field: { onChange, value } }) => (
             <TextInput
               className={`p-4 pl-4 text-lg border-b 
-                  border-[${themes[theme].listsSeparator}] align-top
+                  border-[${themes[theme].borderColor}] align-top
                   leading-tight text-[${themes[theme].text}]`}
               value={value}
               onChangeText={onChange}
@@ -322,7 +322,7 @@ const EditTaskModal = () => {
       </View>
 
       <View
-        className={`bg-[${themes[theme].buttonMenuBackground}] rounded-xl border border-[${themes[theme].listsSeparator}] shadow-sm ${theme === "light" ? "shadow-gray-100" : "shadow-neutral-950"}`}
+        className={`bg-[${themes[theme].buttonMenuBackground}] rounded-xl border border-[${themes[theme].borderColor}] shadow-sm ${theme === "light" ? "shadow-gray-100" : "shadow-neutral-950"}`}
       >
         {/* Assign errand */}
         <TouchableHighlight
@@ -342,7 +342,7 @@ const EditTaskModal = () => {
               color={themes["light"].background}
             />
             <View
-              className={`py-3 flex-1 gap-4 flex-row justify-between items-center border-b border-[${themes[theme].listsSeparator}]`}
+              className={`py-3 flex-1 gap-4 flex-row justify-between items-center border-b border-[${themes[theme].borderColor}]`}
             >
               <Text className={`text-[${themes[theme].text}] text-base`}>
                 {i18n.t("inCharge")}
@@ -403,7 +403,7 @@ const EditTaskModal = () => {
       </View>
 
       <View
-        className={`bg-[${themes[theme].buttonMenuBackground}] rounded-xl border border-[${themes[theme].listsSeparator}] shadow-sm ${theme === "light" ? "shadow-gray-100" : "shadow-neutral-950"}`}
+        className={`bg-[${themes[theme].buttonMenuBackground}] rounded-xl border border-[${themes[theme].borderColor}] shadow-sm ${theme === "light" ? "shadow-gray-100" : "shadow-neutral-950"}`}
       >
         {/* Date */}
         <TouchableHighlight
@@ -419,7 +419,7 @@ const EditTaskModal = () => {
               color={themes["light"].background}
             />
             <View
-              className={`py-2 flex-1 flex-row justify-between gap-4 items-center border-b border-[${themes[theme].listsSeparator}]`}
+              className={`py-2 flex-1 flex-row justify-between gap-4 items-center border-b border-[${themes[theme].borderColor}]`}
             >
               <View>
                 <Text className={`text-[${themes[theme].text}] text-base`}>
@@ -458,7 +458,7 @@ const EditTaskModal = () => {
               color={themes["light"].background}
             />
             <View
-              className={`py-2 flex-1 flex-row justify-between gap-4 items-center ${watch("dateErrand") && `border-b border-[${themes[theme].listsSeparator}]`}`}
+              className={`py-2 flex-1 flex-row justify-between gap-4 items-center ${watch("dateErrand") && `border-b border-[${themes[theme].borderColor}]`}`}
             >
               <View>
                 <Text className={`text-[${themes[theme].text}] text-base`}>
@@ -495,7 +495,7 @@ const EditTaskModal = () => {
                 color={themes["light"].background}
               />
               <View
-                className={`py-2 flex-1 flex-row justify-between gap-4 items-center ${watch("dateErrand") && `border-b border-[${themes[theme].listsSeparator}]`}`}
+                className={`py-2 flex-1 flex-row justify-between gap-4 items-center ${watch("dateErrand") && `border-b border-[${themes[theme].borderColor}]`}`}
               >
                 <View>
                   <Text className={`text-[${themes[theme].text}] text-base`}>
@@ -560,7 +560,7 @@ const EditTaskModal = () => {
       </View>
 
       <View
-        className={`bg-[${themes[theme].buttonMenuBackground}] rounded-xl border border-[${themes[theme].listsSeparator}] shadow-sm ${theme === "light" ? "shadow-gray-100" : "shadow-neutral-950"}`}
+        className={`bg-[${themes[theme].buttonMenuBackground}] rounded-xl border border-[${themes[theme].borderColor}] shadow-sm ${theme === "light" ? "shadow-gray-100" : "shadow-neutral-950"}`}
       >
         {/* Marked */}
         <TouchableHighlight
@@ -576,7 +576,7 @@ const EditTaskModal = () => {
               color={themes["light"].background}
             />
             <View
-              className={`py-3 flex-1 flex-row justify-between gap-4 items-center border-b border-[${themes[theme].listsSeparator}]`}
+              className={`py-3 flex-1 flex-row justify-between gap-4 items-center border-b border-[${themes[theme].borderColor}]`}
             >
               <Text className={`text-[${themes[theme].text}] text-base`}>
                 {i18n.t("markedSingular")}

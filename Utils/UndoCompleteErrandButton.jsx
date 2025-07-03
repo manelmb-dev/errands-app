@@ -30,7 +30,7 @@ const UndoCompleteErrandButton = ({
       <Animated.View
         entering={FadeInDown}
         exiting={FadeOutDown}
-        className={`flex-row items-center justify-between gap-4 px-4 py-4 mx-3 absolute bottom-10 rounded-2xl bg-white shadow shadow-[${themes[theme].popupShadow}] border border-[${themes[theme].listsSeparator}]`}
+        className={`flex-row items-center justify-between gap-4 px-4 py-4 mx-3 absolute bottom-10 rounded-2xl bg-white shadow shadow-[${themes[theme].popupShadow}] border border-[${themes[theme].borderColor}]`}
       >
         <Octicons name="check-circle-fill" size={27} color="green" />
         <View className="flex-1">

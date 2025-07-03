@@ -81,7 +81,7 @@ function FullErrand({
   return (
     <Animated.View exiting={FadeOut}>
       <Pressable
-        className={`flex-row bg-[${themes[theme].buttonMenuBackground}] rounded-xl mx-4 my-1.5 pr-2 pt-3 pb-2  border border-[${themes[theme].listsSeparator}] shadow-sm ${theme === "light" ? "shadow-gray-100" : "shadow-neutral-950"}`}
+        className={`flex-row bg-[${themes[theme].buttonMenuBackground}] rounded-xl mx-4 my-1.5 pr-2 pt-3 pb-2  border border-[${themes[theme].borderColor}] shadow-sm ${theme === "light" ? "shadow-gray-100" : "shadow-neutral-950"}`}
         onPress={() => {
           if (
             openSwipeableRef.current &&

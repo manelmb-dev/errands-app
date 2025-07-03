@@ -74,7 +74,7 @@ const AssignContactSelector = () => {
             <TouchableOpacity
               activeOpacity={0.7}
               underlayColor={themes[theme].background}
-              className={`h-16 border-b border-[${themes[theme].listsSeparator}]`}
+              className={`h-16 border-b border-[${themes[theme].borderColor}]`}
               onPress={() => {
                 setListAssigned(item);
                 setUserAssigned(user);

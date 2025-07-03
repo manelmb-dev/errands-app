@@ -39,7 +39,7 @@ export default function ListSection() {
 
       {/* Lists section */}
       <View
-        className={`w-full bg-[${themes[theme].buttonMenuBackground}] border border-[${themes[theme].listsSeparator}] rounded-t-3xl rounded-b-3xl shadow-sm ${theme === "light" ? "shadow-gray-100" : "shadow-neutral-950"}`}
+        className={`w-full bg-[${themes[theme].buttonMenuBackground}] border border-[${themes[theme].borderColor}] rounded-t-3xl rounded-b-3xl shadow-sm ${theme === "light" ? "shadow-gray-100" : "shadow-neutral-950"}`}
       >
         {lists.map((list, index) => (
           <View key={list.id} className={`${index === 0 && "rounded-t-3xl"}`}>
@@ -68,7 +68,7 @@ export default function ListSection() {
                     color={`${themes[theme].text}`}
                   />
                   <View
-                    className={`flex-1 py-4 flex-row items-center justify-between border-b  border-[${themes[theme].listsSeparator}]`}
+                    className={`flex-1 py-4 flex-row items-center justify-between border-b  border-[${themes[theme].borderColor}]`}
                   >
                     <Text
                       className={`text-lg text-[${themes[theme].listTitle}]`}
@@ -120,7 +120,7 @@ export default function ListSection() {
                   color={`${themes[theme].text}`}
                 />
                 <View
-                  className={`flex-1 py-4 flex-row items-center justify-between ${totalErrandsDeleted !== 0 && `border-b  border-[${themes[theme].listsSeparator}]`}`}
+                  className={`flex-1 py-4 flex-row items-center justify-between ${totalErrandsDeleted !== 0 && `border-b  border-[${themes[theme].borderColor}]`}`}
                 >
                   <Text className={`text-lg text-[${themes[theme].listTitle}]`}>
                     {i18n.t("shared")}

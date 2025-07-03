@@ -100,7 +100,7 @@ module.exports = {
           outgoingTaskToBg: "#D3F3E0",
           taskIncomingFromBg: "#F0EEFD",
           listTitle: "#161618",
-          listsSeparator: "#e0e0e0",
+          borderColor: "#e0e0e0",
           popupShadow: "#000000",
         },
         dark: {
@@ -115,7 +115,7 @@ module.exports = {
           outgoingTaskToBg: "#254C3B",
           taskIncomingFromBg: "#2F2B45",
           listTitle: "#FDFDFD",
-          listsSeparator: "#3A3A3A",
+          borderColor: "#3A3A3A",
           popupShadow: "#4A4A4A",
         },
       },

@@ -63,7 +63,7 @@ export default function ListPopupMenu() {
             optionWrapper: {
               paddingVertical: 12,
               paddingHorizontal: 16,
-              borderBottomColor: themes[theme].listsSeparator,
+              borderBottomColor: themes[theme].borderColor,
               borderBottomWidth: 1,
             },
             optionText: {

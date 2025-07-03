@@ -127,7 +127,7 @@ export default function LanguagePopupMenu() {
                 paddingHorizontal: 13,
                 borderBottomColor:
                   index !== options.length - 1
-                    ? themes[theme].listsSeparator
+                    ? themes[theme].borderColor
                     : "transparent",
                 borderBottomWidth: 1,
                 flexDirection: "row",

@@ -78,7 +78,7 @@ export default function FilterMainTabPopup({ mainTab, setMainTab }) {
                 paddingHorizontal: 13,
                 borderBottomColor:
                   index !== tabOptions.length - 1
-                    ? themes[theme].listsSeparator
+                    ? themes[theme].borderColor
                     : "transparent",
                 borderBottomWidth: 1,
                 flexDirection: "row",
