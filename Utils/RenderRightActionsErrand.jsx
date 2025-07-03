@@ -47,10 +47,17 @@ const RenderRightActionsErrand = ({
         className="w-20 bg-blue-600 justify-center items-center"
         activeOpacity={0.6}
         onPress={() => {
-          router.push({
-            pathname: "/Modals/editTaskModal",
-            params: { errand: JSON.stringify(errand) },
-          });
+          if (errand.ownerId === user.id) {
+            router.push({
+              pathname: "Modals/editTaskModal",
+              params: { errand: JSON.stringify(errand) },
+            });
+          } else {
+            router.push({
+              pathname: "Modals/viewIncomingTaskModal",
+              params: { errand: JSON.stringify(errand) },
+            });
+          }
           openSwipeableRef.current?.close();
         }}
       >
