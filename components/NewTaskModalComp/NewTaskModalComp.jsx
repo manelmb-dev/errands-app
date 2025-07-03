@@ -232,7 +232,11 @@ const NewTaskModal = () => {
   const handleCancelAlert = useCallback(() => {
     if (watch("title").length > 0) {
       Alert.alert(i18n.t("errandWillBeDiscarded"), "", [
-        { text: "Descartar", onPress: handleCancel, style: "destructive" },
+        {
+          text: i18n.t("discard"),
+          onPress: handleCancel,
+          style: "destructive",
+        },
         {
           text: i18n.t("cancel"),
         },
