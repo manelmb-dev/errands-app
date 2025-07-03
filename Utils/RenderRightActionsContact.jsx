@@ -44,7 +44,6 @@ const RenderRightActionsContact = ({ contact, openSwipeableRef }) => {
             pathname: "/Modals/newTaskModal",
             params: { contact: JSON.stringify(contact) },
           });
-
           openSwipeableRef.current?.close();
         }}
       >

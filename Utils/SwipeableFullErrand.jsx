@@ -22,6 +22,7 @@ const SwipeableFullErrand = ({
           errand={errand}
           setErrands={setErrands}
           onDeleteWithUndo={onDeleteWithUndo}
+          openSwipeableRef={openSwipeableRef}
         />
       )}
       onSwipeableOpenStartDrag={() => {

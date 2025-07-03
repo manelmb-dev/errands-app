@@ -6,7 +6,12 @@ import { useAtom } from "jotai";
 
 import Ionicons from "react-native-vector-icons/Ionicons";
 
-const RenderRightActionsErrand = ({ errand, setErrands, onDeleteWithUndo }) => {
+const RenderRightActionsErrand = ({
+  errand,
+  setErrands,
+  onDeleteWithUndo,
+  openSwipeableRef,
+}) => {
   const [user] = useAtom(userAtom);
 
   const deleteErrand = async () => {
@@ -46,6 +51,7 @@ const RenderRightActionsErrand = ({ errand, setErrands, onDeleteWithUndo }) => {
             pathname: "/Modals/editTaskModal",
             params: { errand: JSON.stringify(errand) },
           });
+          openSwipeableRef.current?.close();
         }}
       >
         <Ionicons name="list-circle" size={24} color="white" />
