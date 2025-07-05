@@ -9,7 +9,6 @@ import MainCardsSection from "./MainCardsSection/MainCardsSection";
 import SharedSection from "./SharedSection/SharedSection";
 import ListSection from "./ListsSection/ListSection";
 import { themes } from "../../constants/themes";
-import MainPopupPage from "./MainPopupPage/MainPopupPage";
 import i18n from "../../constants/i18n";
 
 function Home() {
@@ -53,7 +52,7 @@ function Home() {
           </Text>
         </View>
       ),
-      headerRight: () => <MainPopupPage />,
+      headerRight: () => null,
     });
   }, [navigation, theme, user.name, todayFormatted]);
 
