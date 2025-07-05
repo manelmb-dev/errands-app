@@ -2,7 +2,12 @@ import { View, Text, TouchableHighlight, Pressable, Alert } from "react-native";
 import { useNavigation, useRouter } from "expo-router";
 import DraggableFlatList from "react-native-draggable-flatlist";
 
-import { errandsAtom, listsAtom, themeAtom } from "../../constants/storeAtoms";
+import {
+  errandsAtom,
+  listsAtom,
+  themeAtom,
+  userAtom,
+} from "../../constants/storeAtoms";
 import { useAtom } from "jotai";
 
 import Ionicons from "react-native-vector-icons/Ionicons";
@@ -16,6 +21,7 @@ const ViewAllListsComp = () => {
   const router = useRouter();
   const navigation = useNavigation();
 
+  const [user] = useAtom(userAtom);
   const [theme] = useAtom(themeAtom);
   const [errands, setErrands] = useAtom(errandsAtom);
   const [lists, setLists] = useAtom(listsAtom);
@@ -89,6 +95,15 @@ const ViewAllListsComp = () => {
     // update lists on the server
   };
 
+  const ownNotSahredLists = lists
+    .filter((list) => list.ownerId === user.id)
+    .filter((list) => list.usersShared.length === 1)
+    .filter((list) => list.usersShared[0] === user.id);
+
+  const sharedLists = lists
+    .filter((list) => list.usersShared.length > 1)
+    .filter((list) => list.usersShared.includes(user.id));
+
   const renderItem = ({ item, drag, isActive }) => (
     <Pressable
       onLongPress={drag}
@@ -148,6 +163,14 @@ const ViewAllListsComp = () => {
 
   return (
     <View className={`flex-1 bg-[${themes[theme].background}]`}>
+      {/* Own not shared lists section */}
+      <View
+        className={`px-5 py-4 border-b border-[${themes[theme].borderColor}]`}
+      >
+        <Text className={`text-lg font-bold text-[${themes[theme].text}]`}>
+          {i18n.t("myLists")}
+        </Text>
+      </View>
       <DraggableFlatList
         animationConfig={{
           scale: {
@@ -155,7 +178,54 @@ const ViewAllListsComp = () => {
             stiffness: 400,
           },
         }}
-        data={lists}
+        data={ownNotSahredLists}
+        onDragEnd={({ data }) => handleDragEnd(data)}
+        keyExtractor={(item) => item.id}
+        renderItem={renderItem}
+        ListFooterComponent={() => (
+          <TouchableHighlight
+            underlayColor={themes[theme].buttonMenuBackground}
+            onPress={() => router.push("/Modals/newListModal")}
+          >
+            <View
+              className={`w-full flex-row justify-between items-center border-b border-[${themes[theme].borderColor}]`}
+            >
+              <View className={`flex-row items-center pl-5 gap-5`}>
+                <Ionicons
+                  className={`p-2 rounded-xl bg-[${themes[theme].buttonMenuBackground}] border border-dashed border-[${themes[theme].text}]`}
+                  name="add"
+                  size={22}
+                  color={`${themes[theme].text}`}
+                />
+                <View
+                  className={`flex-1 py-7 flex-row items-center justify-between`}
+                >
+                  <Text className={`text-lg text-[${themes[theme].listTitle}]`}>
+                    {i18n.t("addNewList")}
+                  </Text>
+                </View>
+              </View>
+            </View>
+          </TouchableHighlight>
+        )}
+      />
+
+      {/* Shared lists section */}
+      <View
+        className={`px-5 py-4 border-b border-[${themes[theme].borderColor}]`}
+      >
+        <Text className={`text-lg font-bold text-[${themes[theme].text}]`}>
+          {i18n.t("sharedLists")}
+        </Text>
+      </View>
+      <DraggableFlatList
+        animationConfig={{
+          scale: {
+            damping: 40,
+            stiffness: 400,
+          },
+        }}
+        data={sharedLists}
         onDragEnd={({ data }) => handleDragEnd(data)}
         keyExtractor={(item) => item.id}
         renderItem={renderItem}
@@ -174,11 +244,11 @@ const ViewAllListsComp = () => {
                 <Ionicons
                   className={`p-2 rounded-xl bg-[${themes[theme].buttonMenuBackground}] border border-dashed border-[${themes[theme].text}]`}
                   name="add"
-                  size={23}
+                  size={22}
                   color={`${themes[theme].text}`}
                 />
                 <View
-                  className={`flex-1 py-8 flex-row items-center justify-between`}
+                  className={`flex-1 py-7 flex-row items-center justify-between`}
                 >
                   <Text className={`text-lg text-[${themes[theme].listTitle}]`}>
                     {i18n.t("addNewList")}

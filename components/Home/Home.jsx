@@ -10,6 +10,7 @@ import SharedSection from "./SharedSection/SharedSection";
 import ListSection from "./ListsSection/ListSection";
 import { themes } from "../../constants/themes";
 import i18n from "../../constants/i18n";
+import SharedListSection from "./SharedListsSection/SharedListsSection";
 
 function Home() {
   const navigation = useNavigation();
@@ -66,11 +67,14 @@ function Home() {
             {/* Cards section */}
             <MainCardsSection />
 
-            {/* <Shared section */}
+            {/* Shared section */}
             <SharedSection />
 
             {/* Lists section */}
             <ListSection />
+
+            {/* Shared Lists section */}
+            <SharedListSection />
           </Pressable>
         </ScrollView>
       </View>

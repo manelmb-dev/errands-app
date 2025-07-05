@@ -3,13 +3,14 @@ import { atom } from "jotai";
 import errandsData from "../errands";
 
 // User active lists
-let userLists = [
+let lists = [
   {
     id: "900f87",
     ownerId: "100001",
     title: "Personal",
     icon: "person",
     color: "blue",
+    usersShared: ["100001"],
   },
   {
     id: "12439l",
@@ -17,6 +18,7 @@ let userLists = [
     title: "Supermercado",
     icon: "restaurant",
     color: "yellow",
+    usersShared: ["100001", "100002"],
   },
   {
     id: "9dsmnb",
@@ -24,6 +26,7 @@ let userLists = [
     title: "Trabajo",
     icon: "business",
     color: "orange",
+    usersShared: ["100001"],
   },
   {
     id: "9dwe32",
@@ -31,6 +34,24 @@ let userLists = [
     title: "Universidad",
     icon: "book",
     color: "green",
+    usersShared: ["100001"],
+  },
+  {
+    id: "po2531",
+    ownerId: "100001",
+    title: "Comprar casa",
+    icon: "home",
+    color: "lime",
+    usersShared: ["100001", "100002", "100003", "100004"],
+  },
+
+  {
+    id: "vi83724",
+    ownerId: "100002",
+    title: "Viaje Japón",
+    icon: "airplane",
+    color: "blue",
+    usersShared: ["100001", "100002", "100003"],
   },
 ];
 
@@ -299,7 +320,8 @@ let userExample = {
 
 export const userAtom = atom(userExample);
 export const errandsAtom = atom(errandsData);
-export const listsAtom = atom(userLists);
+export const listsAtom = atom(lists);
+export const usersSharedWithAtom = atom([]);
 export const currentErrandAtom = atom(null);
 export const userAssignedAtom = atom(userExample);
 export const listAssignedAtom = atom(false);

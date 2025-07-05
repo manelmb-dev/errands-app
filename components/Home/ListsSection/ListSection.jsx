@@ -28,6 +28,11 @@ export default function ListSection() {
     .filter((errand) => errand.deleted)
     .filter((e) => e.ownerId === user.id).length;
 
+  const ownNotSahredLists = lists
+    .filter((list) => list.ownerId === user.id)
+    .filter((list) => list.usersShared.length === 1)
+    .filter((list) => list.usersShared[0] === user.id);
+
   return (
     <View>
       <View className="w-full flex-row justify-between mt-4 mb-1">
@@ -41,7 +46,7 @@ export default function ListSection() {
       <View
         className={`w-full bg-[${themes[theme].buttonMenuBackground}] border border-[${themes[theme].borderColor}] rounded-t-3xl rounded-b-3xl shadow-sm ${theme === "light" ? "shadow-gray-100" : "shadow-neutral-950"}`}
       >
-        {lists.map((list, index) => (
+        {ownNotSahredLists.map((list, index) => (
           <View key={list.id} className={`${index === 0 && "rounded-t-3xl"}`}>
             <TouchableHighlight
               className={`${index === 0 && "rounded-t-3xl pt-1"}`}

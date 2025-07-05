@@ -12,7 +12,7 @@ const ColorGrid = ({ assignedColor, setAssignedColor }) => {
 
   return (
     <View
-      className={`flex-row flex-wrap items-center justify-center my-1 px-2`}
+      className={`flex-row flex-wrap items-center justify-center my-2 px-2`}
     >
       {colors.map((color) => (
         <TouchableOpacity

@@ -32,11 +32,7 @@ const IconGrid = ({ assignedIcon, setAssignedIcon, assignedColor }) => {
               : "border-2 border-transparent"
           }`}
         >
-          <Ionicons
-            name={icon}
-            size={35}
-            color={assignedIcon === icon ? assignedColor : themes[theme].text}
-          />
+          <Ionicons name={icon} size={35} color={themes[theme].text} />
         </TouchableOpacity>
       ))}
     </ScrollView>
