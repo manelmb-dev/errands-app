@@ -9,6 +9,8 @@ import {
   Switch,
   TouchableHighlight,
   Alert,
+  Keyboard,
+  TouchableWithoutFeedback,
 } from "react-native";
 import { useForm, Controller } from "react-hook-form";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
@@ -282,216 +284,188 @@ const EditTaskModal = () => {
   };
 
   return (
-    <View className={`p-6 gap-4 bg-[${themes[theme].background}] h-full`}>
-      <View
-        className={`bg-[${themes[theme].buttonMenuBackground}] rounded-xl border border-[${themes[theme].borderColor}] shadow-sm ${theme === "light" ? "shadow-gray-100" : "shadow-neutral-950"}`}
-      >
-        <Controller
-          control={control}
-          name="title"
-          render={({ field: { onChange, value } }) => (
-            <TextInput
-              className={`p-4 pl-4 text-lg border-b 
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+      <View className={`p-6 gap-4 bg-[${themes[theme].background}] h-full`}>
+        <View
+          className={`bg-[${themes[theme].buttonMenuBackground}] rounded-xl border border-[${themes[theme].borderColor}] shadow-sm ${theme === "light" ? "shadow-gray-100" : "shadow-neutral-950"}`}
+        >
+          <Controller
+            control={control}
+            name="title"
+            render={({ field: { onChange, value } }) => (
+              <TextInput
+                className={`p-4 pl-4 text-lg border-b 
                   border-[${themes[theme].borderColor}] align-top
                   leading-tight text-[${themes[theme].text}]`}
-              value={value}
-              onChangeText={onChange}
-              placeholder={i18n.t("title")}
-              placeholderTextColor={
-                theme === "dark" && themes[theme].taskSecondText
-              }
-            />
-          )}
-        />
-        <Controller
-          control={control}
-          name="description"
-          render={({ field: { onChange, value } }) => (
-            <TextInput
-              className={`p-4 pl-4 text-lg max-h-48 align-top leading-tight  text-[${themes[theme].text}]`}
-              value={value}
-              onChangeText={onChange}
-              placeholder={i18n.t("description")}
-              placeholderTextColor={
-                theme === "dark" && themes[theme].taskSecondText
-              }
-              multiline={true}
-            />
-          )}
-        />
-      </View>
-
-      <View
-        className={`bg-[${themes[theme].buttonMenuBackground}] rounded-xl border border-[${themes[theme].borderColor}] shadow-sm ${theme === "light" ? "shadow-gray-100" : "shadow-neutral-950"}`}
-      >
-        {/* Assign errand */}
-        <TouchableHighlight
-          className={`rounded-t-xl`}
-          underlayColor={themes[theme].background}
-          onPress={() =>
-            router.push({
-              pathname: "/Modals/assignContactModal",
-            })
-          }
-        >
-          <View className={`flex-row items-center rounded-t-xl`}>
-            <Ionicons
-              className="mx-4 p-1 bg-blue-500 rounded-lg"
-              name="person"
-              size={22}
-              color={themes["light"].background}
-            />
-            <View
-              className={`py-3 flex-1 gap-4 flex-row justify-between items-center border-b border-[${themes[theme].borderColor}]`}
-            >
-              <Text className={`text-[${themes[theme].text}] text-base`}>
-                {i18n.t("inCharge")}
-              </Text>
-              <View
-                className={`mr-4 px-3 py-1 rounded-2xl gap-1 flex-row items-center ${theme === "light" ? "bg-blue-100" : "bg-blue-600"}`}
-              >
-                <FontAwesome6
-                  name="arrows-up-down"
-                  size={12}
-                  color={themes["light"].text}
-                />
-                <Text className={`text-lg text-[${themes[theme].text}]`}>
-                  {userAssigned.name} {userAssigned.surname}{" "}
-                  {userAssigned.id === user.id && `(${i18n.t("me")})`}
-                </Text>
-              </View>
-            </View>
-          </View>
-        </TouchableHighlight>
-
-        {/* List errand */}
-        <TouchableHighlight
-          className={`rounded-b-xl`}
-          underlayColor={themes[theme].background}
-          onPress={() =>
-            router.push({
-              pathname: "/Modals/assignListModal",
-            })
-          }
-        >
-          <View className={`flex-row items-center rounded-b-xl`}>
-            <Ionicons
-              className="mx-4 p-1 bg-slate-500 rounded-lg "
-              name="list"
-              size={22}
-              color={themes["light"].background}
-            />
-            <View className="py-3 gap-4 flex-1 flex-row justify-between items-center">
-              <Text className={`text-[${themes[theme].text}] text-base`}>
-                {i18n.t("list")}
-              </Text>
-              <View
-                className={`mr-4 px-3 py-1 gap-1 flex-row items-center ${listAssigned.id === "" || listAssigned === false ? `bg-[${themes[theme].buttonMenuBackground}]` : `${theme === "light" ? "bg-slate-300" : "bg-slate-600"}`} rounded-2xl`}
-              >
-                <FontAwesome6
-                  name="arrows-up-down"
-                  size={12}
-                  color={themes["light"].text}
-                />
-                <Text className={`text-lg text-[${themes[theme].text}]`}>
-                  {listAssigned ? `${listAssigned.title}` : i18n.t("shared")}
-                </Text>
-              </View>
-            </View>
-          </View>
-        </TouchableHighlight>
-      </View>
-
-      <View
-        className={`bg-[${themes[theme].buttonMenuBackground}] rounded-xl border border-[${themes[theme].borderColor}] shadow-sm ${theme === "light" ? "shadow-gray-100" : "shadow-neutral-950"}`}
-      >
-        {/* Date */}
-        <TouchableHighlight
-          className={`rounded-t-xl`}
-          underlayColor={themes[theme].background}
-          onPress={() => setIsDatePickerVisible(true)}
-        >
-          <View className={`flex-row items-center rounded-t-xl`}>
-            <Ionicons
-              className="mx-4 p-1 bg-red-500 rounded-lg "
-              name="calendar-outline"
-              size={22}
-              color={themes["light"].background}
-            />
-            <View
-              className={`py-2 flex-1 flex-row justify-between gap-4 items-center border-b border-[${themes[theme].borderColor}]`}
-            >
-              <View>
-                <Text className={`text-[${themes[theme].text}] text-base`}>
-                  {i18n.t("date")}
-                </Text>
-                {watch("dateErrand") && (
-                  <Text
-                    className={`text-[${themes[theme].blueHeadText}] text-base`}
-                  >
-                    {formatDay(watch("dateErrand"))}
-                  </Text>
-                )}
-              </View>
-              <Switch
-                className="mr-4"
-                value={watch("dateErrand") ? true : false}
-                onValueChange={toggleDateSwitch}
+                value={value}
+                onChangeText={onChange}
+                placeholder={i18n.t("title")}
+                placeholderTextColor={
+                  theme === "dark" && themes[theme].taskSecondText
+                }
               />
-            </View>
-          </View>
-        </TouchableHighlight>
-
-        {/* Time */}
-        <TouchableHighlight
-          className={`${!watch("dateErrand") && "rounded-b-xl"}`}
-          underlayColor={themes[theme].background}
-          onPress={() => setIsHourPickerVisible(true)}
-        >
-          <View
-            className={`flex-row items-center ${!watch("dateErrand") && "rounded-b-xl"}`}
-          >
-            <Ionicons
-              className="mx-4 p-1 bg-yellow-500 rounded-lg"
-              name="time-outline"
-              size={23}
-              color={themes["light"].background}
-            />
-            <View
-              className={`py-2 flex-1 flex-row justify-between gap-4 items-center ${watch("dateErrand") && `border-b border-[${themes[theme].borderColor}]`}`}
-            >
-              <View>
-                <Text className={`text-[${themes[theme].text}] text-base`}>
-                  {i18n.t("time")}
-                </Text>
-                {watch("timeErrand") && (
-                  <Text
-                    className={`text-[${themes[theme].blueHeadText}] text-lg`}
-                  >
-                    {watch("timeErrand")}
-                  </Text>
-                )}
-              </View>
-              <Switch
-                className="mr-4"
-                value={watch("timeErrand") ? true : false}
-                onValueChange={toggleHourSwitch}
+            )}
+          />
+          <Controller
+            control={control}
+            name="description"
+            render={({ field: { onChange, value } }) => (
+              <TextInput
+                className={`p-4 pl-4 text-lg max-h-48 align-top leading-tight  text-[${themes[theme].text}]`}
+                value={value}
+                onChangeText={onChange}
+                placeholder={i18n.t("description")}
+                placeholderTextColor={
+                  theme === "dark" && themes[theme].taskSecondText
+                }
+                multiline={true}
               />
-            </View>
-          </View>
-        </TouchableHighlight>
+            )}
+          />
+        </View>
 
-        {/* Notice */}
-        {watch("dateErrand") && (
+        <View
+          className={`bg-[${themes[theme].buttonMenuBackground}] rounded-xl border border-[${themes[theme].borderColor}] shadow-sm ${theme === "light" ? "shadow-gray-100" : "shadow-neutral-950"}`}
+        >
+          {/* Assign errand */}
           <TouchableHighlight
+            className={`rounded-t-xl`}
             underlayColor={themes[theme].background}
-            onPress={() => setIsNoticePickerVisible(true)}
+            onPress={() => {
+              Keyboard.dismiss();
+              router.push({
+                pathname: "/Modals/assignContactModal",
+              });
+            }}
           >
-            <View className={`flex-row items-center`}>
-              <FontAwesome6
-                className="mx-4 p-1 px-1.5 bg-emerald-500 rounded-lg "
-                name="bell"
+            <View className={`flex-row items-center rounded-t-xl`}>
+              <Ionicons
+                className="mx-4 p-1 bg-blue-500 rounded-lg"
+                name="person"
                 size={22}
+                color={themes["light"].background}
+              />
+              <View
+                className={`py-3 flex-1 gap-4 flex-row justify-between items-center border-b border-[${themes[theme].borderColor}]`}
+              >
+                <Text className={`text-[${themes[theme].text}] text-base`}>
+                  {i18n.t("inCharge")}
+                </Text>
+                <View
+                  className={`mr-4 px-3 py-1 rounded-2xl gap-1 flex-row items-center ${theme === "light" ? "bg-blue-100" : "bg-blue-600"}`}
+                >
+                  <FontAwesome6
+                    name="arrows-up-down"
+                    size={12}
+                    color={themes["light"].text}
+                  />
+                  <Text className={`text-lg text-[${themes[theme].text}]`}>
+                    {userAssigned.name} {userAssigned.surname}{" "}
+                    {userAssigned.id === user.id && `(${i18n.t("me")})`}
+                  </Text>
+                </View>
+              </View>
+            </View>
+          </TouchableHighlight>
+
+          {/* List errand */}
+          <TouchableHighlight
+            className={`rounded-b-xl`}
+            underlayColor={themes[theme].background}
+            onPress={() => {
+              Keyboard.dismiss();
+              router.push({
+                pathname: "/Modals/assignListModal",
+              });
+            }}
+          >
+            <View className={`flex-row items-center rounded-b-xl`}>
+              <Ionicons
+                className="mx-4 p-1 bg-slate-500 rounded-lg "
+                name="list"
+                size={22}
+                color={themes["light"].background}
+              />
+              <View className="py-3 gap-4 flex-1 flex-row justify-between items-center">
+                <Text className={`text-[${themes[theme].text}] text-base`}>
+                  {i18n.t("list")}
+                </Text>
+                <View
+                  className={`mr-4 px-3 py-1 gap-1 flex-row items-center ${listAssigned.id === "" || listAssigned === false ? `bg-[${themes[theme].buttonMenuBackground}]` : `${theme === "light" ? "bg-slate-300" : "bg-slate-600"}`} rounded-2xl`}
+                >
+                  <FontAwesome6
+                    name="arrows-up-down"
+                    size={12}
+                    color={themes["light"].text}
+                  />
+                  <Text className={`text-lg text-[${themes[theme].text}]`}>
+                    {listAssigned ? `${listAssigned.title}` : i18n.t("shared")}
+                  </Text>
+                </View>
+              </View>
+            </View>
+          </TouchableHighlight>
+        </View>
+
+        <View
+          className={`bg-[${themes[theme].buttonMenuBackground}] rounded-xl border border-[${themes[theme].borderColor}] shadow-sm ${theme === "light" ? "shadow-gray-100" : "shadow-neutral-950"}`}
+        >
+          {/* Date */}
+          <TouchableHighlight
+            className={`rounded-t-xl`}
+            underlayColor={themes[theme].background}
+            onPress={() => {
+              Keyboard.dismiss();
+              setIsDatePickerVisible(true);
+            }}
+          >
+            <View className={`flex-row items-center rounded-t-xl`}>
+              <Ionicons
+                className="mx-4 p-1 bg-red-500 rounded-lg "
+                name="calendar-outline"
+                size={22}
+                color={themes["light"].background}
+              />
+              <View
+                className={`py-2 flex-1 flex-row justify-between gap-4 items-center border-b border-[${themes[theme].borderColor}]`}
+              >
+                <View>
+                  <Text className={`text-[${themes[theme].text}] text-base`}>
+                    {i18n.t("date")}
+                  </Text>
+                  {watch("dateErrand") && (
+                    <Text
+                      className={`text-[${themes[theme].blueHeadText}] text-base`}
+                    >
+                      {formatDay(watch("dateErrand"))}
+                    </Text>
+                  )}
+                </View>
+                <Switch
+                  className="mr-4"
+                  value={watch("dateErrand") ? true : false}
+                  onValueChange={toggleDateSwitch}
+                />
+              </View>
+            </View>
+          </TouchableHighlight>
+
+          {/* Time */}
+          <TouchableHighlight
+            className={`${!watch("dateErrand") && "rounded-b-xl"}`}
+            underlayColor={themes[theme].background}
+            onPress={() => {
+              Keyboard.dismiss();
+              setIsHourPickerVisible(true);
+            }}
+          >
+            <View
+              className={`flex-row items-center ${!watch("dateErrand") && "rounded-b-xl"}`}
+            >
+              <Ionicons
+                className="mx-4 p-1 bg-yellow-500 rounded-lg"
+                name="time-outline"
+                size={23}
                 color={themes["light"].background}
               />
               <View
@@ -499,194 +473,240 @@ const EditTaskModal = () => {
               >
                 <View>
                   <Text className={`text-[${themes[theme].text}] text-base`}>
-                    {i18n.t("notice")}
+                    {i18n.t("time")}
                   </Text>
-                  {watch("dateNotice") && (
+                  {watch("timeErrand") && (
                     <Text
-                      className={`text-[${themes[theme].blueHeadText}] text-base`}
+                      className={`text-[${themes[theme].blueHeadText}] text-lg`}
                     >
-                      {formatDay(watch("dateNotice"))}, {watch("timeNotice")}
+                      {watch("timeErrand")}
                     </Text>
                   )}
                 </View>
                 <Switch
                   className="mr-4"
-                  value={watch("dateNotice") ? true : false}
-                  onValueChange={toggleNoticeSwitch}
+                  value={watch("timeErrand") ? true : false}
+                  onValueChange={toggleHourSwitch}
                 />
               </View>
             </View>
           </TouchableHighlight>
-        )}
 
-        {/* Repeat */}
-        {watch("dateErrand") && (
+          {/* Notice */}
+          {watch("dateErrand") && (
+            <TouchableHighlight
+              underlayColor={themes[theme].background}
+              onPress={() => {
+                Keyboard.dismiss();
+                setIsNoticePickerVisible(true);
+              }}
+            >
+              <View className={`flex-row items-center`}>
+                <FontAwesome6
+                  className="mx-4 p-1 px-1.5 bg-emerald-500 rounded-lg "
+                  name="bell"
+                  size={22}
+                  color={themes["light"].background}
+                />
+                <View
+                  className={`py-2 flex-1 flex-row justify-between gap-4 items-center ${watch("dateErrand") && `border-b border-[${themes[theme].borderColor}]`}`}
+                >
+                  <View>
+                    <Text className={`text-[${themes[theme].text}] text-base`}>
+                      {i18n.t("notice")}
+                    </Text>
+                    {watch("dateNotice") && (
+                      <Text
+                        className={`text-[${themes[theme].blueHeadText}] text-base`}
+                      >
+                        {formatDay(watch("dateNotice"))}, {watch("timeNotice")}
+                      </Text>
+                    )}
+                  </View>
+                  <Switch
+                    className="mr-4"
+                    value={watch("dateNotice") ? true : false}
+                    onValueChange={toggleNoticeSwitch}
+                  />
+                </View>
+              </View>
+            </TouchableHighlight>
+          )}
+
+          {/* Repeat */}
+          {watch("dateErrand") && (
+            <TouchableHighlight
+              className={"rounded-b-xl"}
+              underlayColor={themes[theme].background}
+              onPress={showRepeatActionSheet}
+            >
+              <View className={`flex-row items-center rounded-b-xl`}>
+                <Ionicons
+                  className="mx-4 p-1 bg-violet-500 rounded-lg "
+                  name="repeat"
+                  size={23}
+                  color={themes["light"].background}
+                />
+                <View className="py-4 gap-4 flex-1 flex-row justify-between items-center">
+                  <Text className={`text-[${themes[theme].text}] text-base`}>
+                    {i18n.t("repeat")}
+                  </Text>
+                </View>
+                <View
+                  className={`mr-4 px-3 py-1 gap-1 flex-row items-center ${watch("repeat") === "never" ? `bg-[${themes[theme].buttonMenuBackground}]` : `${theme === "light" ? "bg-violet-300" : "bg-violet-500"}`} rounded-2xl`}
+                >
+                  <FontAwesome6
+                    name="arrows-up-down"
+                    size={14}
+                    color={themes["light"].text}
+                  />
+                  <Text className={`text-lg text-[${themes[theme].text}]`}>
+                    {
+                      repeatOptions.find(
+                        (option) => option.value === watch("repeat")
+                      )?.label
+                    }
+                  </Text>
+                </View>
+              </View>
+            </TouchableHighlight>
+          )}
+        </View>
+
+        <View
+          className={`bg-[${themes[theme].buttonMenuBackground}] rounded-xl border border-[${themes[theme].borderColor}] shadow-sm ${theme === "light" ? "shadow-gray-100" : "shadow-neutral-950"}`}
+        >
+          {/* Marked */}
           <TouchableHighlight
-            className={"rounded-b-xl"}
+            className={`rounded-t-xl`}
             underlayColor={themes[theme].background}
-            onPress={showRepeatActionSheet}
+            onPress={() => {
+              Keyboard.dismiss();
+              setValue("marked", !watch("marked"));
+            }}
+          >
+            <View className={`flex-row items-center rounded-t-xl`}>
+              <Ionicons
+                className="mx-4 p-1 bg-orange-500 rounded-lg "
+                name="flag-sharp"
+                size={22}
+                color={themes["light"].background}
+              />
+              <View
+                className={`py-3 flex-1 flex-row justify-between gap-4 items-center border-b border-[${themes[theme].borderColor}]`}
+              >
+                <Text className={`text-[${themes[theme].text}] text-base`}>
+                  {i18n.t("markedSingular")}
+                </Text>
+                <Switch
+                  className="mr-4"
+                  value={watch("marked")}
+                  onChange={() => setValue("marked", !watch("marked"))}
+                />
+              </View>
+            </View>
+          </TouchableHighlight>
+
+          {/* Priority */}
+          <TouchableHighlight
+            className={"rounded-b-xl py-0.5"}
+            underlayColor={themes[theme].background}
+            onPress={showPriorityActionSheet}
           >
             <View className={`flex-row items-center rounded-b-xl`}>
-              <Ionicons
-                className="mx-4 p-1 bg-violet-500 rounded-lg "
-                name="repeat"
-                size={23}
+              <MaterialIcons
+                className="mx-4 p-1 bg-rose-500 rounded-lg "
+                name="priority-high"
+                size={22}
                 color={themes["light"].background}
               />
               <View className="py-4 gap-4 flex-1 flex-row justify-between items-center">
                 <Text className={`text-[${themes[theme].text}] text-base`}>
-                  {i18n.t("repeat")}
+                  {i18n.t("priority")}
                 </Text>
               </View>
               <View
-                className={`mr-4 px-3 py-1 gap-1 flex-row items-center ${watch("repeat") === "never" ? `bg-[${themes[theme].buttonMenuBackground}]` : `${theme === "light" ? "bg-violet-300" : "bg-violet-500"}`} rounded-2xl`}
+                className={`mr-4 px-3 py-1 gap-1 flex-row items-center ${watch("priority") === "none" ? `bg-[${themes[theme].buttonMenuBackground}]` : `${theme === "light" ? "bg-rose-300" : "bg-rose-500"}`} rounded-2xl`}
               >
                 <FontAwesome6
                   name="arrows-up-down"
-                  size={14}
+                  size={12}
                   color={themes["light"].text}
                 />
                 <Text className={`text-lg text-[${themes[theme].text}]`}>
                   {
-                    repeatOptions.find(
-                      (option) => option.value === watch("repeat")
+                    priorityOptions.find(
+                      (option) => option.value === watch("priority")
                     )?.label
                   }
                 </Text>
               </View>
             </View>
           </TouchableHighlight>
-        )}
+        </View>
+
+        <DateTimePickerModal
+          isVisible={isDatePickerVisible}
+          isDarkModeEnabled={theme === "dark"}
+          themeVariant={theme === "light" ? "light" : "dark"}
+          mode="date"
+          display="inline"
+          date={
+            watch("dateErrand")
+              ? new Date(watch("dateErrand"))
+              : new Date(today)
+          }
+          onConfirm={handleDateConfirm}
+          onCancel={() => setIsDatePickerVisible(false)}
+          locale={i18n.locale}
+          accentColor={themes[theme].blueHeadText}
+          textColor={themes[theme].text}
+          confirmTextIOS={i18n.t("confirm")}
+          cancelTextIOS={i18n.t("cancel")}
+        />
+
+        <DateTimePickerModal
+          isVisible={isHourPickerVisible}
+          isDarkModeEnabled={theme === "dark"}
+          themeVariant={theme === "light" ? "light" : "dark"}
+          mode="time"
+          date={
+            watch("timeErrand")
+              ? new Date(`2000-01-01T${watch("timeErrand")}`)
+              : new Date()
+          }
+          onConfirm={handleHourConfirm}
+          onCancel={() => setIsHourPickerVisible(false)}
+          locale={i18n.locale}
+          accentColor={themes[theme].blueHeadText}
+          textColor={themes[theme].text}
+          confirmTextIOS={i18n.t("confirm")}
+          cancelTextIOS={i18n.t("cancel")}
+          minuteInterval={5}
+        />
+
+        <DateTimePickerModal
+          isVisible={isNoticePickerVisible}
+          isDarkModeEnabled={theme === "dark"}
+          themeVariant={theme === "light" ? "light" : "dark"}
+          mode="datetime"
+          display="inline"
+          date={
+            watch("timeErrand")
+              ? new Date(`${watch("dateErrand")}T${watch("timeErrand")}`)
+              : new Date(`${watch("dateErrand")}T08:00`)
+          }
+          onConfirm={handleNoticeConfirm}
+          onCancel={() => setIsNoticePickerVisible(false)}
+          locale={i18n.locale}
+          accentColor={themes[theme].blueHeadText}
+          textColor={themes[theme].text}
+          confirmTextIOS={i18n.t("confirm")}
+          cancelTextIOS={i18n.t("cancel")}
+          minuteInterval={5}
+        />
       </View>
-
-      <View
-        className={`bg-[${themes[theme].buttonMenuBackground}] rounded-xl border border-[${themes[theme].borderColor}] shadow-sm ${theme === "light" ? "shadow-gray-100" : "shadow-neutral-950"}`}
-      >
-        {/* Marked */}
-        <TouchableHighlight
-          className={`rounded-t-xl`}
-          underlayColor={themes[theme].background}
-          onPress={() => setValue("marked", !watch("marked"))}
-        >
-          <View className={`flex-row items-center rounded-t-xl`}>
-            <Ionicons
-              className="mx-4 p-1 bg-orange-500 rounded-lg "
-              name="flag-sharp"
-              size={22}
-              color={themes["light"].background}
-            />
-            <View
-              className={`py-3 flex-1 flex-row justify-between gap-4 items-center border-b border-[${themes[theme].borderColor}]`}
-            >
-              <Text className={`text-[${themes[theme].text}] text-base`}>
-                {i18n.t("markedSingular")}
-              </Text>
-              <Switch
-                className="mr-4"
-                value={watch("marked")}
-                onChange={() => setValue("marked", !watch("marked"))}
-              />
-            </View>
-          </View>
-        </TouchableHighlight>
-
-        {/* Priority */}
-        <TouchableHighlight
-          className={"rounded-b-xl py-0.5"}
-          underlayColor={themes[theme].background}
-          onPress={showPriorityActionSheet}
-        >
-          <View className={`flex-row items-center rounded-b-xl`}>
-            <MaterialIcons
-              className="mx-4 p-1 bg-rose-500 rounded-lg "
-              name="priority-high"
-              size={22}
-              color={themes["light"].background}
-            />
-            <View className="py-4 gap-4 flex-1 flex-row justify-between items-center">
-              <Text className={`text-[${themes[theme].text}] text-base`}>
-                {i18n.t("priority")}
-              </Text>
-            </View>
-            <View
-              className={`mr-4 px-3 py-1 gap-1 flex-row items-center ${watch("priority") === "none" ? `bg-[${themes[theme].buttonMenuBackground}]` : `${theme === "light" ? "bg-rose-300" : "bg-rose-500"}`} rounded-2xl`}
-            >
-              <FontAwesome6
-                name="arrows-up-down"
-                size={12}
-                color={themes["light"].text}
-              />
-              <Text className={`text-lg text-[${themes[theme].text}]`}>
-                {
-                  priorityOptions.find(
-                    (option) => option.value === watch("priority")
-                  )?.label
-                }
-              </Text>
-            </View>
-          </View>
-        </TouchableHighlight>
-      </View>
-
-      <DateTimePickerModal
-        isVisible={isDatePickerVisible}
-        isDarkModeEnabled={theme === "dark"}
-        themeVariant={theme === "light" ? "light" : "dark"}
-        mode="date"
-        display="inline"
-        date={
-          watch("dateErrand") ? new Date(watch("dateErrand")) : new Date(today)
-        }
-        onConfirm={handleDateConfirm}
-        onCancel={() => setIsDatePickerVisible(false)}
-        locale={i18n.locale}
-        accentColor={themes[theme].blueHeadText}
-        textColor={themes[theme].text}
-        confirmTextIOS={i18n.t("confirm")}
-        cancelTextIOS={i18n.t("cancel")}
-      />
-
-      <DateTimePickerModal
-        isVisible={isHourPickerVisible}
-        isDarkModeEnabled={theme === "dark"}
-        themeVariant={theme === "light" ? "light" : "dark"}
-        mode="time"
-        date={
-          watch("timeErrand")
-            ? new Date(`2000-01-01T${watch("timeErrand")}`)
-            : new Date()
-        }
-        onConfirm={handleHourConfirm}
-        onCancel={() => setIsHourPickerVisible(false)}
-        locale={i18n.locale}
-        accentColor={themes[theme].blueHeadText}
-        textColor={themes[theme].text}
-        confirmTextIOS={i18n.t("confirm")}
-        cancelTextIOS={i18n.t("cancel")}
-        minuteInterval={5}
-      />
-
-      <DateTimePickerModal
-        isVisible={isNoticePickerVisible}
-        isDarkModeEnabled={theme === "dark"}
-        themeVariant={theme === "light" ? "light" : "dark"}
-        mode="datetime"
-        display="inline"
-        date={
-          watch("timeErrand")
-            ? new Date(`${watch("dateErrand")}T${watch("timeErrand")}`)
-            : new Date(`${watch("dateErrand")}T08:00`)
-        }
-        onConfirm={handleNoticeConfirm}
-        onCancel={() => setIsNoticePickerVisible(false)}
-        locale={i18n.locale}
-        accentColor={themes[theme].blueHeadText}
-        textColor={themes[theme].text}
-        confirmTextIOS={i18n.t("confirm")}
-        cancelTextIOS={i18n.t("cancel")}
-        minuteInterval={5}
-      />
-    </View>
+    </TouchableWithoutFeedback>
   );
 };
 export default EditTaskModal;

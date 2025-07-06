@@ -9,6 +9,8 @@ import {
   Alert,
   TextInput,
   TouchableHighlight,
+  Keyboard,
+  TouchableWithoutFeedback,
 } from "react-native";
 
 import {
@@ -156,188 +158,194 @@ const EditListModalComp = () => {
   });
 
   return (
-    <View
-      className={`flex-1 p-6 bg-[${themes[theme].background}] items-center`}
-    >
-      {/* Icon and color preview */}
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <View
-        className={`p-4 justify-center items-center ${theme === "light" ? `bg-${assignedColor}-300` : `bg-${assignedColor}-600`} mb-4 rounded-2xl shadow ${theme === "light" ? "shadow-gray-200" : "shadow-neutral-950"}`}
+        className={`flex-1 p-6 bg-[${themes[theme].background}] items-center`}
       >
-        <Ionicons
-          name={assignedIcon}
-          size={58}
-          color={`${themes[theme].text}`}
-        />
-      </View>
-      <View
-        className={`w-full ${showIconGrid && "flex-1"} bg-[${themes[theme].buttonMenuBackground}] mb-4 rounded-xl border border-[${themes[theme].borderColor}] shadow-sm ${theme === "light" ? "shadow-gray-100" : "shadow-neutral-950"}`}
-      >
-        <Controller
-          control={control}
-          name="title"
-          render={({ field: { onChange, value } }) => (
-            <TextInput
-              autoFocus
-              className={`p-4 pl-4 text-2xl border-b border-[${themes[theme].borderColor}] align-top leading-tight text-[${themes[theme].text}]`}
-              value={value}
-              onChangeText={onChange}
-              placeholder={i18n.t("listTitle")}
-              placeholderTextColor={themes[theme].taskSecondText}
+        {/* Icon and color preview */}
+        <View
+          className={`p-4 justify-center items-center ${theme === "light" ? `bg-${assignedColor}-300` : `bg-${assignedColor}-600`} mb-4 rounded-2xl shadow ${theme === "light" ? "shadow-gray-200" : "shadow-neutral-950"}`}
+        >
+          <Ionicons
+            name={assignedIcon}
+            size={58}
+            color={`${themes[theme].text}`}
+          />
+        </View>
+        <View
+          className={`w-full ${showIconGrid && "flex-1"} bg-[${themes[theme].buttonMenuBackground}] mb-4 rounded-xl border border-[${themes[theme].borderColor}] shadow-sm ${theme === "light" ? "shadow-gray-100" : "shadow-neutral-950"}`}
+        >
+          <Controller
+            control={control}
+            name="title"
+            render={({ field: { onChange, value } }) => (
+              <TextInput
+                className={`p-4 pl-4 text-2xl border-b border-[${themes[theme].borderColor}] align-top leading-tight text-[${themes[theme].text}]`}
+                value={value}
+                onChangeText={onChange}
+                placeholder={i18n.t("listTitle")}
+                placeholderTextColor={themes[theme].taskSecondText}
+              />
+            )}
+          />
+
+          {/* Users shared with */}
+          <TouchableHighlight
+            onPress={() => {
+              Keyboard.dismiss();
+              setShowUsersSharedWith((prev) => !prev);
+              setShowIconGrid(false);
+              setShowPalleteColor(false);
+            }}
+          >
+            <View
+              className={`flex-row items-center bg-[${themes[theme].buttonMenuBackground}]`}
+            >
+              <MaterialCommunityIcons
+                className="mx-4 p-1.5 bg-slate-400 rounded-lg"
+                name="account-group"
+                size={24}
+                color={themes["light"].background}
+              />
+              <View
+                className={`py-4 flex-row flex-1 gap-4 items-center justify-between border-b border-[${themes[theme].borderColor}]`}
+              >
+                <Text className={`text-[${themes[theme].text}] text-base`}>
+                  {usersSharedWith.length > 0
+                    ? `${i18n.t("sharedWith")}`
+                    : `${i18n.t("sharedSingular")}`}
+                </Text>
+                <View className="mr-4 flex-row gap-3 items-center">
+                  <Text
+                    className={`text-base text-[${themes[theme].listTitle}]`}
+                  >
+                    {usersSharedWith.length > 0
+                      ? `${usersSharedWith.length}`
+                      : `${i18n.t("no")}`}
+                  </Text>
+                  <Ionicons
+                    name={
+                      showUsersSharedWith
+                        ? "chevron-down-outline"
+                        : "chevron-forward-outline"
+                    }
+                    size={23}
+                    color={themes["light"].taskSecondText}
+                  />
+                </View>
+              </View>
+            </View>
+          </TouchableHighlight>
+
+          {/* Users shown */}
+          {showUsersSharedWith && <UsersOfList listOwner={listOwner} />}
+
+          {/* Color */}
+          <TouchableHighlight
+            onPress={() => {
+              Keyboard.dismiss();
+              setShowPalleteColor((prev) => !prev);
+              setShowUsersSharedWith(false);
+              setShowIconGrid(false);
+            }}
+          >
+            <View
+              className={`flex-row items-center bg-[${themes[theme].buttonMenuBackground}]`}
+            >
+              <MaterialIcons
+                className="mx-4 p-1.5 bg-slate-400 rounded-lg"
+                name="color-lens"
+                size={24}
+                color={themes["light"].background}
+              />
+              <View
+                className={`py-3 flex-row flex-1 gap-4 items-center justify-between border-b border-[${themes[theme].borderColor}]`}
+              >
+                <Text className={`text-[${themes[theme].text}] text-base`}>
+                  {i18n.t("color")}
+                </Text>
+                <View className="mr-4 flex-row gap-3 items-center">
+                  <View
+                    className={`flex-row items-center py-4 px-8 rounded-2xl ${theme === "light" ? `bg-${assignedColor}-300` : `bg-${assignedColor}-600`}`}
+                  />
+                  <Ionicons
+                    name={
+                      showPalleteColor
+                        ? "chevron-down-outline"
+                        : "chevron-forward-outline"
+                    }
+                    size={23}
+                    color={themes["light"].taskSecondText}
+                  />
+                </View>
+              </View>
+            </View>
+          </TouchableHighlight>
+
+          {/* Color palette */}
+          {showPalleteColor && (
+            <ColorGrid
+              assignedColor={assignedColor}
+              setAssignedColor={setAssignedColor}
             />
           )}
-        />
 
-        {/* Users shared with */}
-        <TouchableHighlight
-          onPress={() => {
-            setShowUsersSharedWith((prev) => !prev);
-            setShowIconGrid(false);
-            setShowPalleteColor(false);
-          }}
-        >
-          <View
-            className={`flex-row items-center bg-[${themes[theme].buttonMenuBackground}]`}
+          {/* Icon */}
+          <TouchableHighlight
+            className={`${showIconGrid ? "" : "rounded-b-xl"}`}
+            onPress={() => {
+              Keyboard.dismiss();
+              setShowIconGrid((prev) => !prev);
+              setShowUsersSharedWith(false);
+              setShowPalleteColor(false);
+            }}
           >
-            <MaterialCommunityIcons
-              className="mx-4 p-1.5 bg-slate-400 rounded-lg"
-              name="account-group"
-              size={24}
-              color={themes["light"].background}
-            />
             <View
-              className={`py-4 flex-row flex-1 gap-4 items-center justify-between border-b border-[${themes[theme].borderColor}]`}
+              className={`flex-row items-center bg-[${themes[theme].buttonMenuBackground}] ${showIconGrid ? "" : "rounded-b-xl"}`}
             >
-              <Text className={`text-[${themes[theme].text}] text-base`}>
-                {usersSharedWith.length > 0
-                  ? `${i18n.t("sharedWith")}`
-                  : `${i18n.t("sharedSingular")}`}
-              </Text>
-              <View className="mr-4 flex-row gap-3 items-center">
-                <Text className={`text-base text-[${themes[theme].listTitle}]`}>
-                  {usersSharedWith.length > 0
-                    ? `${usersSharedWith.length}`
-                    : `${i18n.t("no")}`}
+              <Ionicons
+                className="mx-4 p-1.5 bg-slate-400 rounded-lg"
+                name="apps-outline"
+                size={24}
+                color={themes["light"].background}
+              />
+              <View
+                className={`py-3 flex-row flex-1 gap-4 items-center justify-between`}
+              >
+                <Text className={`text-[${themes[theme].text}] text-base`}>
+                  {i18n.t("icon")}
                 </Text>
-                <Ionicons
-                  name={
-                    showUsersSharedWith
-                      ? "chevron-down-outline"
-                      : "chevron-forward-outline"
-                  }
-                  size={23}
-                  color={themes["light"].taskSecondText}
-                />
+                <View className="flex-row gap-3 items-center mr-4">
+                  <Ionicons
+                    name={assignedIcon}
+                    size={28}
+                    color={`${themes[theme].text}`}
+                  />
+                  <Ionicons
+                    name={
+                      showIconGrid
+                        ? "chevron-down-outline"
+                        : "chevron-forward-outline"
+                    }
+                    size={23}
+                    color={themes["light"].taskSecondText}
+                  />
+                </View>
               </View>
             </View>
-          </View>
-        </TouchableHighlight>
+          </TouchableHighlight>
 
-        {/* Users shown */}
-        {showUsersSharedWith && <UsersOfList listOwner={listOwner} />}
-
-        {/* Color */}
-        <TouchableHighlight
-          onPress={() => {
-            setShowPalleteColor((prev) => !prev);
-            setShowUsersSharedWith(false);
-            setShowIconGrid(false);
-          }}
-        >
-          <View
-            className={`flex-row items-center bg-[${themes[theme].buttonMenuBackground}]`}
-          >
-            <MaterialIcons
-              className="mx-4 p-1.5 bg-slate-400 rounded-lg"
-              name="color-lens"
-              size={24}
-              color={themes["light"].background}
+          {/* Icon Grid */}
+          {showIconGrid && (
+            <IconGrid
+              assignedColor={assignedColor}
+              assignedIcon={assignedIcon}
+              setAssignedIcon={setAssignedIcon}
             />
-            <View
-              className={`py-3 flex-row flex-1 gap-4 items-center justify-between border-b border-[${themes[theme].borderColor}]`}
-            >
-              <Text className={`text-[${themes[theme].text}] text-base`}>
-                {i18n.t("color")}
-              </Text>
-              <View className="mr-4 flex-row gap-3 items-center">
-                <View
-                  className={`flex-row items-center py-4 px-8 rounded-2xl ${theme === "light" ? `bg-${assignedColor}-300` : `bg-${assignedColor}-600`}`}
-                />
-                <Ionicons
-                  name={
-                    showPalleteColor
-                      ? "chevron-down-outline"
-                      : "chevron-forward-outline"
-                  }
-                  size={23}
-                  color={themes["light"].taskSecondText}
-                />
-              </View>
-            </View>
-          </View>
-        </TouchableHighlight>
-
-        {/* Color palette */}
-        {showPalleteColor && (
-          <ColorGrid
-            assignedColor={assignedColor}
-            setAssignedColor={setAssignedColor}
-          />
-        )}
-
-        {/* Icon */}
-        <TouchableHighlight
-          className={`${showIconGrid ? "" : "rounded-b-xl"}`}
-          onPress={() => {
-            setShowIconGrid((prev) => !prev);
-            setShowUsersSharedWith(false);
-            setShowPalleteColor(false);
-          }}
-        >
-          <View
-            className={`flex-row items-center bg-[${themes[theme].buttonMenuBackground}] ${showIconGrid ? "" : "rounded-b-xl"}`}
-          >
-            <Ionicons
-              className="mx-4 p-1.5 bg-slate-400 rounded-lg"
-              name="apps-outline"
-              size={24}
-              color={themes["light"].background}
-            />
-            <View
-              className={`py-3 flex-row flex-1 gap-4 items-center justify-between`}
-            >
-              <Text className={`text-[${themes[theme].text}] text-base`}>
-                {i18n.t("icon")}
-              </Text>
-              <View className="flex-row gap-3 items-center mr-4">
-                <Ionicons
-                  name={assignedIcon}
-                  size={28}
-                  color={`${themes[theme].text}`}
-                />
-                <Ionicons
-                  name={
-                    showIconGrid
-                      ? "chevron-down-outline"
-                      : "chevron-forward-outline"
-                  }
-                  size={23}
-                  color={themes["light"].taskSecondText}
-                />
-              </View>
-            </View>
-          </View>
-        </TouchableHighlight>
-
-        {/* Icon Grid */}
-        {showIconGrid && (
-          <IconGrid
-            assignedColor={assignedColor}
-            assignedIcon={assignedIcon}
-            setAssignedIcon={setAssignedIcon}
-          />
-        )}
+          )}
+        </View>
       </View>
-    </View>
+    </TouchableWithoutFeedback>
   );
 };
 export default EditListModalComp;
