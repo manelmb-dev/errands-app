@@ -69,7 +69,9 @@ const ViewIncomingTaskModal = () => {
 
   return (
     <View className={`p-6 bg-[${themes[theme].background}] h-full`}>
-      <View className="pb-10 flex-row justify-between items-center">
+      <View
+        className={`mb-6 pb-3 flex-row justify-between items-center border-b-[1.5px] border-[${themes[theme].borderColor}]`}
+      >
         <Text className={`text-4xl font-semibold text-[${themes[theme].text}]`}>
           {currentErrand.title}
         </Text>
