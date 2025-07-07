@@ -151,26 +151,27 @@ const ViewIncomingTaskModal = () => {
 
         <View className="flex-col gap-3">
           {/* Notice */}
-          {currentErrand.dateNotice && (
-            <View className="flex-row items-center gap-3">
-              <Ionicons
-                className={`p-1 rounded-lg border border-[${themes[theme].taskSecondText}]`}
-                name="notifications-outline"
-                size={20}
-                color={themes[theme].taskSecondText}
-              />
+          {currentErrand.dateNotice &&
+            currentErrand.dateNotice < new Date() && (
               <View className="flex-row items-center gap-3">
-                <Text className={`text-lg text-[${themes[theme].text}]`}>
-                  {formatDayShort(currentErrand.dateNotice)}
-                </Text>
-                {currentErrand.timeNotice && (
+                <Ionicons
+                  className={`p-1 rounded-lg border border-[${themes[theme].taskSecondText}]`}
+                  name="notifications-outline"
+                  size={20}
+                  color={themes[theme].taskSecondText}
+                />
+                <View className="flex-row items-center gap-3">
                   <Text className={`text-lg text-[${themes[theme].text}]`}>
-                    {currentErrand.timeNotice}
+                    {formatDayShort(currentErrand.dateNotice)}
                   </Text>
-                )}
+                  {currentErrand.timeNotice && (
+                    <Text className={`text-lg text-[${themes[theme].text}]`}>
+                      {currentErrand.timeNotice}
+                    </Text>
+                  )}
+                </View>
               </View>
-            </View>
-          )}
+            )}
 
           {/* Repeat */}
           {currentErrand.repeat && (
