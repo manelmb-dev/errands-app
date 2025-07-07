@@ -54,7 +54,7 @@ export default function SharedListSection() {
               className={`${index === 0 && "rounded-t-3xl"} ${index === sharedLists.length - 1 && "rounded-b-3xl"}`}
             >
               <TouchableHighlight
-                className={`${index === 0 && "rounded-t-3xl pt-1"} ${index === sharedLists.length - 1 && "rounded-b-3xl"}`}
+                className={`${index === 0 && "rounded-t-3xl pt-1"} ${index === sharedLists.length - 1 && "rounded-b-3xl pb-1"}`}
                 underlayColor={themes[theme].background}
                 onPress={() => {
                   router.push({
