@@ -11,12 +11,13 @@ import Ionicons from "react-native-vector-icons/Ionicons";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 
 import { themes } from "../../constants/themes";
-import formatDay from "../../constants/formatDay";
+import formatDayShort from "../../constants/formatDayShort";
 import {
   priorityOptions,
   repeatOptions,
 } from "../../constants/repeatPriorityOptions";
 import i18n from "../../constants/i18n";
+import formatDay from "../../constants/formatDay";
 
 const ViewIncomingTaskModal = () => {
   const navigation = useNavigation();
@@ -46,13 +47,7 @@ const ViewIncomingTaskModal = () => {
         backgroundColor: themes[theme].background,
       },
       headerShadowVisible: false,
-      headerLeft: () => (
-        <Pressable onPress={() => navigation.goBack()}>
-          <Text className={`text-2xl text-[${themes[theme].blueHeadText}]`}>
-            {i18n.t("cancel")}
-          </Text>
-        </Pressable>
-      ),
+      headerLeft: () => null,
       headerRight: () => (
         <Pressable
           onPress={() => navigation.goBack()}
@@ -73,287 +68,122 @@ const ViewIncomingTaskModal = () => {
   );
 
   return (
-    <View className={`p-6 gap-4 bg-[${themes[theme].background}] h-full`}>
-      <View
-        className={`bg-[${themes[theme].buttonMenuBackground}] rounded-xl border border-[${themes[theme].borderColor}] shadow-sm ${theme === "light" ? "shadow-gray-100" : "shadow-neutral-950"}`}
-      >
-        <Controller
-          control={control}
-          name="title"
-          render={({ field: { value } }) => (
-            <TextInput
-              editable={false}
-              className={`p-4 pl-4 text-lg ${
-                errand.description
-                  ? `border-b 
-                  border-[${themes[theme].borderColor}]`
-                  : ``
-              }   align-top
-                  leading-tight text-[${themes[theme].text}]`}
-              value={value}
-            />
-          )}
-        />
-        {/* Description */}
-        {errand.description && (
-          <Controller
-            control={control}
-            name="description"
-            render={({ field: { value } }) => (
-              <TextInput
-                editable={false}
-                className={`p-4 pl-4 text-lg max-h-48 align-top leading-tight  text-[${themes[theme].text}]`}
-                value={value}
-                multiline={true}
-              />
-            )}
+    <View className={`p-6 bg-[${themes[theme].background}] h-full`}>
+      <View className="pb-10 flex-row justify-between items-center">
+        <Text className={`text-4xl font-semibold text-[${themes[theme].text}]`}>
+          {currentErrand.title}
+        </Text>
+        {currentErrand.marked && (
+          <Ionicons
+            className="mx-4 p-1.5 bg-orange-500 rounded-lg "
+            name="flag-sharp"
+            size={18}
+            color={themes["light"].background}
           />
         )}
       </View>
 
-      <View
-        className={`flex-row justify-between bg-[${themes[theme].buttonMenuBackground}] rounded-xl border border-[${themes[theme].borderColor}] shadow-sm ${theme === "light" ? "shadow-gray-100" : "shadow-neutral-950"}`}
-      >
-        <View className="flex-row items-center">
-          <View className="mx-4 p-1.5 bg-neutral-600 rounded-lg">
+      <View>
+        {/* Owner & Date */}
+        <View className="pb-10 flex-row items-center justify-between">
+          <View className=" flex-row items-center gap-2">
+            {/* If there is no picture, show the default icon */}
             <Ionicons
-              name="send"
-              size={18}
-              color={themes["light"].background}
-              style={{ transform: [{ rotateY: "180deg" }] }}
+              name="person-circle-outline"
+              size={42}
+              color={themes["light"].taskSecondText}
             />
-          </View>
-          <Pressable
-            className="py-3 pr-6"
-            onPress={() => {
-              console.log("Open contact info");
-              // Fix this (open contact info)
-            }}
-          >
-            <Text
-              className={`text-lg font-semibold text-[${themes[theme].text}]`}
-            >
-              {ownerCurrentErrand.name + " " + ownerCurrentErrand.surname}
-            </Text>
-          </Pressable>
-        </View>
-        <Pressable
-          className="px-4 py-3"
-          onPress={() => {
-            console.log("Info");
-            // Fix this (modal to show info that user can only see this task but not edit it)
-          }}
-        >
-          <Ionicons
-            name="help-circle-outline"
-            size={27}
-            color={themes[theme].text}
-          />
-        </Pressable>
-      </View>
-
-      {/* <View
-        className={`bg-[${themes[theme].buttonMenuBackground}] rounded-xl border border-[${themes[theme].borderColor}] shadow-sm ${theme === "light" ? "shadow-gray-100" : "shadow-neutral-950"}`}
-      >
-        <View className={`rounded-t-xl`}>
-          <View className={`flex-row items-center rounded-t-xl`}>
-            <Ionicons
-              className="mx-4 p-1 bg-blue-500 rounded-lg"
-              name="person"
-              size={22}
-              color={themes["light"].background}
-            />
-            <View
-              className={`py-3 flex-1 gap-4 flex-row justify-between items-center border-b border-[${themes[theme].borderColor}]`}
-            >
-              <Text className={`text-[${themes[theme].text}] text-lg`}>
-                Encargado
-              </Text>
-              <View
-                className={`mr-4 px-3 py-1 rounded-2xl gap-1 flex-row items-center ${theme === "light" ? "bg-blue-100" : "bg-blue-600"}`}
-              >
-                <Text className={`text-lg text-[${themes[theme].text}]`}>
-                  {`${user.name} ${user.surname} (Tú)`}
-                </Text>
-              </View>
-            </View>
-          </View>
-        </View>
-
-        <View className={`flex-row items-center rounded-b-xl`}>
-          <Ionicons
-            className="mx-4 p-1 bg-slate-500 rounded-lg "
-            name="list"
-            size={22}
-            color={themes["light"].background}
-          />
-          <View className="py-3 gap-4 flex-1 flex-row justify-between items-center">
-            <Text className={`text-[${themes[theme].text}] text-lg`}>
-              Lista
-            </Text>
-            <View
-              className={`mr-4 px-3 py-1 gap-1 flex-row items-center ${listAssigned.id === "" || listAssigned === false ? `bg-[${themes[theme].buttonMenuBackground}]` : `${theme === "light" ? "bg-slate-300" : "bg-slate-600"}`} rounded-2xl`}
-            >
+            <View className="flex-col">
               <Text className={`text-lg text-[${themes[theme].text}]`}>
-                Compartidos
+                {i18n.t("sentBy")}
+              </Text>
+              <Text
+                className={`text-lg font-semibold text-[${themes[theme].text}]`}
+              >
+                {ownerCurrentErrand.name} {ownerCurrentErrand.surname}
               </Text>
             </View>
           </View>
-        </View>
-      </View> */}
-
-      <View
-        className={`bg-[${themes[theme].buttonMenuBackground}] rounded-xl border border-[${themes[theme].borderColor}] shadow-sm ${theme === "light" ? "shadow-gray-100" : "shadow-neutral-950"}`}
-      >
-        {/* Date */}
-        <View className={`flex-row items-center rounded-t-xl`}>
-          <Ionicons
-            className="mx-4 p-1 bg-red-500 rounded-lg "
-            name="calendar-outline"
-            size={22}
-            color={themes["light"].background}
-          />
-          <View
-            className={`py-3 pr-5 flex-1 flex-row justify-between gap-4 items-center border-b border-[${themes[theme].borderColor}]`}
-          >
-            <Text className={`text-[${themes[theme].text}] text-lg`}>
-              {i18n.t("date")}
-            </Text>
-            {watch("dateErrand") ? (
-              <Text className={`ml-auto text-[${themes[theme].text}] text-lg`}>
-                {formatDay(watch("dateErrand"))}
-              </Text>
-            ) : (
-              <Text className={`ml-auto text-[${themes[theme].text}] text-lg`}>
-                {i18n.t("noDate")}
-              </Text>
-            )}
-          </View>
-        </View>
-
-        {/* Time */}
-        <View
-          className={`flex-row items-center ${watch("dateNotice") || watch("repeat") ? "" : "rounded-b-xl"}`}
-        >
-          <Ionicons
-            className="mx-4 p-1 bg-yellow-500 rounded-lg"
-            name="time-outline"
-            size={23}
-            color={themes["light"].background}
-          />
-
-          <View
-            className={`py-3 pr-5 flex-1 flex-row justify-between gap-4 items-center ${watch("dateNotice") || watch("repeat") ? `border-b border-[${themes[theme].borderColor}]` : ""}`}
-          >
-            <Text className={`text-[${themes[theme].text}] text-lg`}>Hora</Text>
-            {watch("timeErrand") ? (
-              <Text className={`ml-auto text-[${themes[theme].text}] text-lg`}>
-                {watch("timeErrand")}
-              </Text>
-            ) : (
-              <Text className={`ml-auto text-[${themes[theme].text}] text-lg`}>
-                {i18n.t("noTime")}
-              </Text>
-            )}
-          </View>
-        </View>
-
-        {/* Notice */}
-        {watch("dateNotice") && (
-          <View
-            className={`flex-row items-center ${watch("repeat") || watch("repeat") ? "" : "rounded-b-xl"}`}
-          >
-            <FontAwesome6
-              className="mx-4 p-1 px-1.5 bg-emerald-500 rounded-lg "
-              name="bell"
-              size={22}
-              color={themes["light"].background}
+          <View className="pr-3 h-full flex-row justify-end items-center gap-3">
+            <Ionicons
+              className={`p-2 rounded-full border border-[${themes[theme].taskSecondText}]`}
+              name="calendar-outline"
+              size={18}
+              color={themes["light"].taskSecondText}
             />
-
-            <View
-              className={`py-3 pr-5 flex-1 flex-row justify-between gap-4 items-center ${watch("repeat") ? `border-b border-[${themes[theme].borderColor}]` : ""}`}
-            >
-              <Text className={`text-[${themes[theme].text}] text-lg`}>
-                {i18n.t("notice")}
+            <View className="flex-col items-start mr-3">
+              <Text
+                className={`text-lg ${
+                  new Date(
+                    `${currentErrand.dateErrand}T${currentErrand.timeErrand || "24:00"}`
+                  ) < new Date()
+                    ? `${theme === "light" ? "text-red-500" : "text-red-700 "}`
+                    : `text-[${themes[theme].text}]`
+                }`}
+              >
+                {formatDayShort(currentErrand.dateErrand)}
               </Text>
-              {watch("dateNotice") && (
-                <Text className={`text-[${themes[theme].text}] text-lg`}>
-                  {formatDay(watch("dateNotice"))}, {watch("timeNotice")}
+              {currentErrand.timeErrand && (
+                <Text
+                  className={`text-lg ${
+                    new Date(
+                      `${currentErrand.dateErrand}T${currentErrand.timeErrand || "24:00"}`
+                    ) < new Date()
+                      ? `${theme === "light" ? "text-red-500" : "text-red-700 "}`
+                      : `text-[${themes[theme].text}]`
+                  }`}
+                >
+                  {currentErrand.timeErrand}
                 </Text>
               )}
             </View>
           </View>
-        )}
-
-        {/* Repeat */}
-        {watch("repeat") && (
-          <View className={`flex-row items-center rounded-b-xl`}>
-            <Ionicons
-              className="mx-4 p-1 bg-violet-500 rounded-lg "
-              name="repeat"
-              size={23}
-              color={themes["light"].background}
-            />
-            <View
-              className={`py-3 pr-5 flex-1 flex-row justify-between gap-4 items-centerborder-b border-[${themes[theme].borderColor}]`}
-            >
-              <Text className={`text-[${themes[theme].text}] text-lg`}>
-                {i18n.t("repeat")}
-              </Text>
-              <Text className={`text-lg text-[${themes[theme].text}]`}>
-                {
-                  repeatOptions.find(
-                    (option) => option.value === watch("repeat")
-                  )?.label
-                }
-              </Text>
-            </View>
-          </View>
-        )}
-      </View>
-
-      <View
-        className={`bg-[${themes[theme].buttonMenuBackground}] rounded-xl border border-[${themes[theme].borderColor}] shadow-sm ${theme === "light" ? "shadow-gray-100" : "shadow-neutral-950"}`}
-      >
-        {/* Marked */}
-        <View className={`flex-row items-center rounded-t-xl`}>
-          <Ionicons
-            className="mx-4 p-1 bg-orange-500 rounded-lg "
-            name="flag-sharp"
-            size={22}
-            color={themes["light"].background}
-          />
-          <View
-            className={`py-3 flex-1 flex-row justify-between gap-4 items-center border-b border-[${themes[theme].borderColor}]`}
-          >
-            <Text className={`text-[${themes[theme].text}] text-lg`}>
-              {i18n.t("markedSingular")}
-            </Text>
-            <Switch className="mr-4" value={watch("marked")} disabled />
-          </View>
         </View>
 
-        {/* Priority */}
+        {/* Description */}
+        {currentErrand.description && (
+          <Text className={`pb-10 text-xl text-[${themes[theme].text}]`}>
+            {currentErrand.description}
+          </Text>
+        )}
 
-        <View className={`flex-row items-center rounded-b-xl`}>
-          <MaterialIcons
-            className="mx-4 p-1 bg-rose-500 rounded-lg "
-            name="priority-high"
-            size={22}
-            color={themes["light"].background}
-          />
-          <View className="py-4 gap-4 flex-1 flex-row justify-between items-center">
-            <Text className={`text-[${themes[theme].text}] text-lg`}>
-              {i18n.t("priority")}
-            </Text>
-            <Text className={`mr-5 text-lg text-[${themes[theme].text}]`}>
-              {
-                priorityOptions.find(
-                  (option) => option.value === watch("priority")
-                )?.label
-              }
-            </Text>
-          </View>
+        <View className="flex-col gap-3">
+          {/* Notice */}
+          {currentErrand.dateNotice && (
+            <View className="flex-row items-center gap-3">
+              <Ionicons
+                className={`p-1 rounded-lg border border-[${themes[theme].taskSecondText}]`}
+                name="notifications-outline"
+                size={20}
+                color={themes[theme].taskSecondText}
+              />
+              <View className="flex-row items-center gap-3">
+                <Text className={`text-lg text-[${themes[theme].text}]`}>
+                  {formatDayShort(currentErrand.dateNotice)}
+                </Text>
+                {currentErrand.timeNotice && (
+                  <Text className={`text-lg text-[${themes[theme].text}]`}>
+                    {currentErrand.timeNotice}
+                  </Text>
+                )}
+              </View>
+            </View>
+          )}
+
+          {/* Repeat */}
+          {currentErrand.repeat && (
+            <View className="flex-row items-center gap-3">
+              <Ionicons
+                className={`p-1 rounded-lg border border-[${themes[theme].taskSecondText}]`}
+                name="repeat"
+                size={20}
+                color={themes[theme].taskSecondText}
+              />
+              <Text className={`text-lg text-[${themes[theme].text}]`}>
+                {currentErrand.repeat}
+              </Text>
+            </View>
+          )}
         </View>
       </View>
     </View>

@@ -1,6 +1,6 @@
 import i18n from "./i18n";
 
-export default function formatDay(dateErrand) {
+export default function formatDayShort(dateErrand) {
   const today = new Date();
   const yesterday = new Date(today);
   yesterday.setDate(today.getDate() - 1);
@@ -29,7 +29,7 @@ export default function formatDay(dateErrand) {
   }
 
   // If none of the above, return the full date in string format
-  const formatDay = (dateString) => {
+  const formatDayShort = (dateString) => {
     if (!dateString) return "";
 
     const [year, month, day] = dateString.split("-");
@@ -38,11 +38,10 @@ export default function formatDay(dateErrand) {
     const options = {
       weekday: "short",
       day: "numeric",
-      month: "long",
-      year: "numeric",
+      month: "short",
     };
     return date.toLocaleDateString(i18n.locale, options);
   };
 
-  return formatDay(dateErrand); // This will return in DD/MM/AA format
+  return formatDayShort(dateErrand); // This will return in DD/MM/AA format
 }
