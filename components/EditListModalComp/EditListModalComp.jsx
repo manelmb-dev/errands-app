@@ -95,7 +95,14 @@ const EditListModalComp = () => {
         </Pressable>
       ),
     });
-  }, [navigation, theme, handleSave, watchedTitle, handleCancelAlert]);
+  }, [
+    navigation,
+    theme,
+    handleSave,
+    watchedTitle,
+    handleCancelAlert,
+    usersSharedWith,
+  ]);
 
   useEffect(() => {
     setValue("icon", assignedIcon);
