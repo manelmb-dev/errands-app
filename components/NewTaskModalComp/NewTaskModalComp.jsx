@@ -42,11 +42,12 @@ const NewTaskModal = () => {
   const navigation = useNavigation();
   const router = useRouter();
 
-  const { contact } = useLocalSearchParams();
+  const { contact, list } = useLocalSearchParams();
   const currentContact = useMemo(
     () => contact && JSON.parse(contact),
     [contact]
   );
+  const currentList = useMemo(() => list && JSON.parse(list), [list]);
 
   const [user] = useAtom(userAtom);
   const [theme] = useAtom(themeAtom);
@@ -110,6 +111,13 @@ const NewTaskModal = () => {
       setListAssigned({ id: "", title: i18n.t("shared") });
     }
   }, [currentContact, setUserAssigned, setListAssigned, setValue]);
+
+  useEffect(() => {
+    if (currentList) {
+      setListAssigned(currentList);
+      setUserAssigned(user);
+    }
+  }, [currentList, user, setUserAssigned, setListAssigned]);
 
   useEffect(() => {
     navigation.setOptions({

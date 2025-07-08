@@ -141,7 +141,7 @@ export default function ListPopup({ list, showCompleted, setShowCompleted }) {
           optionWrapper: {
             paddingVertical: 12,
             paddingHorizontal: 16,
-            borderBottomColor: "#e0e0e0",
+            borderBottomColor: themes[theme].borderColor,
             borderBottomWidth: 1,
           },
           optionText: {
@@ -186,7 +186,16 @@ export default function ListPopup({ list, showCompleted, setShowCompleted }) {
           </View>
         </MenuOption>
         {list.ownerId === user.id ? (
-          <MenuOption onSelect={() => confirmDeleteList(list.id)}>
+          <MenuOption
+            onSelect={() => confirmDeleteList(list.id)}
+            customStyles={{
+              optionWrapper: {
+                paddingVertical: 12,
+                paddingHorizontal: 16,
+                borderBottomWidth: 0,
+              },
+            }}
+          >
             <View className="flex-row justify-between items-center">
               <Text className={`text-lg text-red-500`}>
                 {i18n.t("deleteList")}
@@ -195,7 +204,16 @@ export default function ListPopup({ list, showCompleted, setShowCompleted }) {
             </View>
           </MenuOption>
         ) : (
-          <MenuOption onSelect={() => confirmLeaveList(list.id)}>
+          <MenuOption
+            onSelect={() => confirmLeaveList(list.id)}
+            customStyles={{
+              optionWrapper: {
+                paddingVertical: 12,
+                paddingHorizontal: 16,
+                borderBottomWidth: 0,
+              },
+            }}
+          >
             <View className="flex-row justify-between items-center">
               <Text className={`text-lg text-red-500`}>
                 {i18n.t("leaveList")}

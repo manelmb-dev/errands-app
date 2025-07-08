@@ -1,10 +1,4 @@
-import {
-  View,
-  Text,
-  Pressable,
-  TouchableHighlight,
-  TouchableOpacity,
-} from "react-native";
+import { View, Text, TouchableHighlight } from "react-native";
 import { useRouter } from "expo-router";
 
 import Ionicons from "react-native-vector-icons/Ionicons";
