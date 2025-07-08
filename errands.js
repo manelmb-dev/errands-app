@@ -599,6 +599,29 @@ const errandsData = [
     seen: false,
     deleted: false,
   },
+
+  {
+    id: "37249flka987",
+    ownerId: "100002",
+    assignedId: "100001",
+    title: "Get last 3 work payrolls",
+    description: "",
+    dateErrand: today,
+    timeErrand: "17:00",
+    completed: false,
+    dateNotice: "",
+    timeNotice: "",
+    repeat: "never",
+    marked: false,
+    location: "Cabrera de Mar",
+    priority: "none",
+    listId: "po2531",
+    subtasks: {},
+    completedDateErrand: "",
+    completedTimeErrand: "",
+    seen: false,
+    deleted: false,
+  },
 ];
 
 export default errandsData;
