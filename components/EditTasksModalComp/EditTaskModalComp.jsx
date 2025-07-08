@@ -346,23 +346,23 @@ const EditTaskModal = () => {
                 color={themes["light"].background}
               />
               <View
-                className={`py-3 flex-1 gap-4 flex-row justify-between items-center border-b border-[${themes[theme].borderColor}]`}
+                className={`py-3 flex-1 flex-row justify-between items-center border-b border-[${themes[theme].borderColor}]`}
               >
                 <Text className={`text-[${themes[theme].text}] text-base`}>
                   {i18n.t("inCharge")}
                 </Text>
                 <View
-                  className={`mr-4 px-3 py-1 rounded-2xl gap-1 flex-row items-center ${theme === "light" ? "bg-blue-100" : "bg-blue-600"}`}
+                  className={`mr-4 px-2 py-1 rounded-2xl gap-1 flex-row items-center ${theme === "light" ? "bg-blue-100" : "bg-blue-600"}`}
                 >
-                  <FontAwesome6
-                    name="arrows-up-down"
-                    size={12}
+                  <Text className={`text-lg text-[${themes[theme].text}]`}>
+                    {userAssigned.name} {userAssigned.surname}
+                    {userAssigned.id === user.id && ` (${i18n.t("me")})`}
+                  </Text>
+                  <Ionicons
+                    name="chevron-forward"
+                    size={18}
                     color={themes["light"].text}
                   />
-                  <Text className={`text-lg text-[${themes[theme].text}]`}>
-                    {userAssigned.name} {userAssigned.surname}{" "}
-                    {userAssigned.id === user.id && `(${i18n.t("me")})`}
-                  </Text>
                 </View>
               </View>
             </View>
@@ -386,21 +386,21 @@ const EditTaskModal = () => {
                 size={22}
                 color={themes["light"].background}
               />
-              <View className="py-3 gap-4 flex-1 flex-row justify-between items-center">
+              <View className="py-3 flex-1 flex-row justify-between items-center">
                 <Text className={`text-[${themes[theme].text}] text-base`}>
                   {i18n.t("list")}
                 </Text>
                 <View
-                  className={`mr-4 px-3 py-1 gap-1 flex-row items-center ${listAssigned.id === "" || listAssigned === false ? `bg-[${themes[theme].buttonMenuBackground}]` : `${theme === "light" ? "bg-slate-300" : "bg-slate-600"}`} rounded-2xl`}
+                  className={`mr-4 px-2 py-1 gap-1 flex-row items-center ${listAssigned.id === "" || listAssigned === false ? `bg-[${themes[theme].buttonMenuBackground}]` : `${theme === "light" ? "bg-slate-300" : "bg-slate-600"}`} rounded-2xl`}
                 >
-                  <FontAwesome6
-                    name="arrows-up-down"
-                    size={12}
-                    color={themes["light"].text}
-                  />
                   <Text className={`text-lg text-[${themes[theme].text}]`}>
                     {listAssigned ? `${listAssigned.title}` : i18n.t("shared")}
                   </Text>
+                  <Ionicons
+                    name="chevron-forward"
+                    size={18}
+                    color={themes["light"].text}
+                  />
                 </View>
               </View>
             </View>
@@ -553,13 +553,8 @@ const EditTaskModal = () => {
                   </Text>
                 </View>
                 <View
-                  className={`mr-4 px-3 py-1 gap-1 flex-row items-center ${watch("repeat") === "never" ? `bg-[${themes[theme].buttonMenuBackground}]` : `${theme === "light" ? "bg-violet-300" : "bg-violet-500"}`} rounded-2xl`}
+                  className={`mr-4 px-2 py-1 gap-1 flex-row items-center ${watch("repeat") === "never" ? `bg-[${themes[theme].buttonMenuBackground}]` : `${theme === "light" ? "bg-violet-300" : "bg-violet-500"}`} rounded-2xl`}
                 >
-                  <FontAwesome6
-                    name="arrows-up-down"
-                    size={14}
-                    color={themes["light"].text}
-                  />
                   <Text className={`text-lg text-[${themes[theme].text}]`}>
                     {
                       repeatOptions.find(
@@ -567,6 +562,11 @@ const EditTaskModal = () => {
                       )?.label
                     }
                   </Text>
+                  <Ionicons
+                    name="chevron-forward"
+                    size={18}
+                    color={themes["light"].text}
+                  />
                 </View>
               </View>
             </TouchableHighlight>
@@ -626,13 +626,8 @@ const EditTaskModal = () => {
                 </Text>
               </View>
               <View
-                className={`mr-4 px-3 py-1 gap-1 flex-row items-center ${watch("priority") === "none" ? `bg-[${themes[theme].buttonMenuBackground}]` : `${theme === "light" ? "bg-rose-300" : "bg-rose-500"}`} rounded-2xl`}
+                className={`mr-4 px-2 py-1 gap-1 flex-row items-center ${watch("priority") === "none" ? `bg-[${themes[theme].buttonMenuBackground}]` : `${theme === "light" ? "bg-rose-300" : "bg-rose-500"}`} rounded-2xl`}
               >
-                <FontAwesome6
-                  name="arrows-up-down"
-                  size={12}
-                  color={themes["light"].text}
-                />
                 <Text className={`text-lg text-[${themes[theme].text}]`}>
                   {
                     priorityOptions.find(
@@ -640,6 +635,11 @@ const EditTaskModal = () => {
                     )?.label
                   }
                 </Text>
+                <Ionicons
+                  name="chevron-forward"
+                  size={18}
+                  color={themes["light"].text}
+                />
               </View>
             </View>
           </TouchableHighlight>
