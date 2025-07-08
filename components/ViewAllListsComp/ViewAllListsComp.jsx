@@ -54,17 +54,17 @@ const ViewAllListsComp = () => {
 
   const confirmDeleteList = (listId) => {
     Alert.alert(
-      `${i18n.t("deleteList")}`,
+      `${i18n.t("deleteList?")}`,
       `${listErrandsCount(listId) === 0 ? `${i18n.t("areYouSureDeleteList")}` : `${i18n.t("thisListContains")} ${listErrandsCount(listId)} ${listErrandsCount(listId) > 1 ? `${i18n.t("errands").toLowerCase()}` : `${i18n.t("errand").toLowerCase()}`}. ${i18n.t("deleteListTextAlert")}`} `,
       [
-        {
-          text: i18n.t("cancel"),
-          style: "cancel",
-        },
         {
           text: i18n.t("delete"),
           onPress: () => deleteList(listId),
           style: "destructive",
+        },
+        {
+          text: i18n.t("cancel"),
+          style: "cancel",
         },
       ]
     );

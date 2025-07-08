@@ -146,19 +146,19 @@ const EditListModalComp = () => {
   );
 
   // Function to handle changes in list
-  console.log("Compponent usersSharedWith", usersSharedWith);
   const handleSave = handleSubmit((data) => {
-    console.log("Handle save usersSharedWith", usersSharedWith);
-
     const updatedList = {
       ...data,
       id: currentList.id,
       usersShared: [user.id, ...usersSharedWith],
     };
 
+    // Update list locally
     setLists((prevLists) =>
       prevLists.map((l) => (l.id === updatedList.id ? updatedList : l))
     );
+
+    // FIRESTONE UPDATEEE FIXX THIS
 
     setUsersSharedWith([]);
     navigation.goBack();

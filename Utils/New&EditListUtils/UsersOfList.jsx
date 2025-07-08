@@ -41,8 +41,6 @@ const UsersOfList = ({ listOwner }) => {
     setUsersSharedWith((prev) => prev.filter((id) => id !== userId));
   };
 
-  console.log("usersSharedWith", usersSharedWith);
-
   return (
     <ScrollView
       contentContainerStyle={{

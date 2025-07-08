@@ -9,11 +9,12 @@ import { errandsAtom, themeAtom } from "../../constants/storeAtoms";
 import { useAtom } from "jotai";
 
 import UndoCompleteErrandButton from "../../Utils/UndoCompleteErrandButton";
+import UndoDeleteErrandButton from "../../Utils/UndoDeleteErrandButton";
 import SwipeableFullErrand from "../../Utils/SwipeableFullErrand";
 import { useErrandActions } from "../../hooks/useErrandActions";
 import { themes } from "../../constants/themes";
+import ListPopup from "./ListPopup/ListPopup";
 import i18n from "../../constants/i18n";
-import UndoDeleteErrandButton from "../../Utils/UndoDeleteErrandButton";
 
 function ListTasksComp() {
   const navigation = useNavigation();
@@ -57,7 +58,11 @@ function ListTasksComp() {
       },
       headerShadowVisible: false,
       headerRight: () => (
-        <Ionicons name="options" color={themes[theme].blueHeadText} size={24} />
+        <ListPopup
+          showCompleted={showCompleted}
+          setShowCompleted={setShowCompleted}
+          list={currentList}
+        />
       ),
     });
   }, [navigation, theme, currentList]);
