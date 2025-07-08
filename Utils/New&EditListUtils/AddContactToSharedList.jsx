@@ -15,7 +15,7 @@ import Octicons from "react-native-vector-icons/Octicons";
 
 import { themes } from "../../constants/themes";
 import i18n from "../../constants/i18n";
-import addContactToSharedList from "../../app/Modals/addContactToSharedListModal";
+
 const AddContactToSharedList = () => {
   const navigation = useNavigation();
 

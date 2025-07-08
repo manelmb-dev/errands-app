@@ -175,7 +175,7 @@ function ListTasksComp() {
               <View className="items-center">
                 <Pressable
                   onPress={() => setShowCompleted(false)}
-                  className={`p-3 border border-[${themes[theme].borderColor}] rounded-3xl`}
+                  className={`p-5 border border-[${themes[theme].borderColor}] rounded-3xl`}
                 >
                   <Text>{i18n.t("hideCompleted")}</Text>
                 </Pressable>

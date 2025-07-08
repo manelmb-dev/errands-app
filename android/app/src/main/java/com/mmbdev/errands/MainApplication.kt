@@ -1,4 +1,4 @@
-package com.errands
+package com.mmbdev.errands
 
 import android.app.Application
 import android.content.res.Configuration

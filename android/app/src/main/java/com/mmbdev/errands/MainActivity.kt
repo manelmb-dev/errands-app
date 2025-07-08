@@ -1,4 +1,4 @@
-package com.errands
+package com.mmbdev.errands
 
 import android.os.Build
 import android.os.Bundle
