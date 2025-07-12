@@ -144,7 +144,8 @@ const NewListModal = () => {
     // Add list to DB locally
     const newListWithId = setListToFS(updatedList);
     setLists((prevLists) => [...prevLists, newListWithId]);
-    // Reset form values
+
+    setUsersSharedWith([]);
     navigation.goBack();
   });
 
