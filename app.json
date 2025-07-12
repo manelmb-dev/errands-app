@@ -18,14 +18,16 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.mmbdev.errands"
+      "bundleIdentifier": "com.mmbdev.errands",
+      "icon": "./assets/icon.png"
     },
     "android": {
       "package": "com.mmbdev.errands",
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "icon": "./assets/icon.png"
     },
     "web": {
       "favicon": "./assets/favicon.png",
