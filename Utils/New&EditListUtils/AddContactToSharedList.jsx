@@ -1,4 +1,4 @@
-import { View, Text, Pressable, ScrollView, FlatList } from "react-native";
+import { View, Text, Pressable, FlatList, Image } from "react-native";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useNavigation } from "expo-router";
 
@@ -16,16 +16,23 @@ import Octicons from "react-native-vector-icons/Octicons";
 import { themes } from "../../constants/themes";
 import i18n from "../../constants/i18n";
 
+const sortByFavoriteAndNameSurname = (a, b) => {
+  if (a.favorite && !b.favorite) return -1;
+  if (!a.favorite && b.favorite) return 1;
+
+  const fullNameA = `${a.name ?? ""}${a.surname ?? ""}`.toLowerCase();
+  const fullNameB = `${b.name ?? ""}${b.surname ?? ""}`.toLowerCase();
+  return fullNameA.localeCompare(fullNameB);
+};
+
 const AddContactToSharedList = () => {
   const navigation = useNavigation();
 
-  const [user] = useAtom(userAtom);
-  const [contacts] = useAtom(contactsAtom);
   const [theme] = useAtom(themeAtom);
+  const [contacts] = useAtom(contactsAtom);
   const [usersSharedWith, setUsersSharedWith] = useAtom(usersSharedWithAtom);
 
   const [contactSearchedInput, setContactSearchedInput] = useState("");
-  const [filteredContacts, setFilteredContacts] = useState(contacts);
 
   const handleOk = useCallback(() => {
     navigation.goBack();
@@ -59,22 +66,27 @@ const AddContactToSharedList = () => {
         </Pressable>
       ),
     });
-  }, [navigation, theme, contactSearchedInput, handleOk]);
+  }, [navigation, theme, handleOk]);
 
   const sharedUsers = useMemo(
-    () => contacts.filter((c) => usersSharedWith.includes(c.id)),
+    () =>
+      contacts
+        .filter((c) => usersSharedWith.includes(c.id))
+        .sort(sortByFavoriteAndNameSurname),
     [contacts, usersSharedWith]
   );
 
   const filteredUsersNotInSharedList = useMemo(
     () =>
-      contacts.filter(
-        (c) =>
-          !usersSharedWith.includes(c.id) &&
-          (c.name + c.surname)
-            .toLowerCase()
-            .includes(contactSearchedInput.toLowerCase().trim())
-      ),
+      contacts
+        .filter(
+          (c) =>
+            !usersSharedWith.includes(c.id) &&
+            (c.name + c.surname)
+              .toLowerCase()
+              .includes(contactSearchedInput.toLowerCase().trim())
+        )
+        .sort(sortByFavoriteAndNameSurname),
     [contacts, usersSharedWith, contactSearchedInput]
   );
 
@@ -88,23 +100,34 @@ const AddContactToSharedList = () => {
     <View className="px-3 py-1 flex-row justify-between items-center">
       <View className="flex-row items-center gap-3">
         {/* FIX THISSSS if the contact has no image, show the default icon */}
-        <Ionicons
-          name="person-circle-outline"
-          size={36}
-          color={themes["light"].taskSecondText}
-        />
+        {item.photoUrl ? (
+          <Image
+            source={{ uri: item.photoUrl }}
+            className="w-9 h-9 rounded-full"
+          />
+        ) : (
+          <Ionicons
+            name="person-circle-outline"
+            size={36}
+            color={themes["light"].taskSecondText}
+          />
+        )}
         <Text className={`text-lg text-[${themes[theme].text}]`}>
           {item.name} {item.surname}
         </Text>
       </View>
-      <Octicons
-        onPress={() => toggleUser(item.id)}
-        hitSlop={8}
-        className="px-3"
-        name={isShared ? "check-circle-fill" : "circle"}
-        size={20}
-        color={isShared ? themes[theme].text : themes[theme].taskSecondText}
-      />
+      <View className="mr-3 flex-row items-center gap-4">
+        {item.favorite && (
+          <Octicons name="star-fill" size={20} color="#FFD700" />
+        )}
+        <Pressable onPress={() => toggleUser(item.id)} hitSlop={8}>
+          <Octicons
+            name={isShared ? "check-circle-fill" : "circle"}
+            size={20}
+            color={isShared ? themes[theme].text : themes[theme].taskSecondText}
+          />
+        </Pressable>
+      </View>
     </View>
   );
 
@@ -112,12 +135,14 @@ const AddContactToSharedList = () => {
     <FlatList
       className={`flex-1 bg-[${themes[theme].background}]`}
       ListHeaderComponent={
-        <>
-          <Text
-            className={`p-4 text-base font-semibold text-[${themes[theme].text}]`}
-          >
-            {i18n.t("sharedWith")}
-          </Text>
+        <View>
+          {sharedUsers.length !== 0 && (
+            <Text
+              className={`p-4 text-base font-semibold text-[${themes[theme].text}]`}
+            >
+              {i18n.t("sharedWith")}
+            </Text>
+          )}
           {sharedUsers.map((contact) => (
             <View key={contact.id}>
               {renderContactItem({ item: contact, isShared: true })}
@@ -128,7 +153,7 @@ const AddContactToSharedList = () => {
           >
             {i18n.t("addContact")}
           </Text>
-        </>
+        </View>
       }
       data={filteredUsersNotInSharedList}
       keyExtractor={(item) => item.id}

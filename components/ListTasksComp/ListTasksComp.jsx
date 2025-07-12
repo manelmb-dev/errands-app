@@ -1,11 +1,10 @@
+import { useLocalSearchParams, useNavigation, useRouter } from "expo-router";
 import Swipeable from "react-native-gesture-handler/ReanimatedSwipeable";
 import Animated, { LinearTransition } from "react-native-reanimated";
-import { useLocalSearchParams, useNavigation, useRouter } from "expo-router";
 import { useEffect, useMemo, useRef, useState } from "react";
 import {
   Pressable,
   Text,
-  TouchableHighlight,
   TouchableOpacity,
   View,
 } from "react-native";
@@ -14,7 +13,6 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 import Ionicons from "react-native-vector-icons/Ionicons";
 
 import {
-  contactsAtom,
   errandsAtom,
   themeAtom,
   userAtom,
@@ -41,7 +39,6 @@ function ListTasksComp() {
   const swipeableRefs = useRef({});
 
   const [user] = useAtom(userAtom);
-  const [contacts] = useAtom(contactsAtom);
   const [theme] = useAtom(themeAtom);
   const [errands, setErrands] = useAtom(errandsAtom);
   const [usersSharedWith, setUsersSharedWith] = useAtom(usersSharedWithAtom);
