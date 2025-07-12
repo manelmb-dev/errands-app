@@ -2,22 +2,36 @@ import Swipeable from "react-native-gesture-handler/ReanimatedSwipeable";
 import Animated, { LinearTransition } from "react-native-reanimated";
 import { useLocalSearchParams, useNavigation, useRouter } from "expo-router";
 import { useEffect, useMemo, useRef, useState } from "react";
-import { Pressable, Text, TouchableOpacity, View } from "react-native";
+import {
+  Pressable,
+  Text,
+  TouchableHighlight,
+  TouchableOpacity,
+  View,
+} from "react-native";
 
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import Ionicons from "react-native-vector-icons/Ionicons";
 
-import { errandsAtom, themeAtom } from "../../constants/storeAtoms";
+import {
+  contactsAtom,
+  errandsAtom,
+  themeAtom,
+  userAtom,
+  usersSharedWithAtom,
+} from "../../constants/storeAtoms";
 import { useAtom } from "jotai";
 
+import RenderRightActionsCompletedErrand from "../../Utils/RenderRightActionsCompletedErrand";
 import UndoCompleteErrandButton from "../../Utils/UndoCompleteErrandButton";
 import UndoDeleteErrandButton from "../../Utils/UndoDeleteErrandButton";
 import SwipeableFullErrand from "../../Utils/SwipeableFullErrand";
 import { useErrandActions } from "../../hooks/useErrandActions";
+import ListSharedUsers from "./ListSharedUsers/ListSharedUsers";
+import CompletedErrand from "../../Utils/CompletedErrand";
 import { themes } from "../../constants/themes";
 import ListPopup from "./ListPopup/ListPopup";
 import i18n from "../../constants/i18n";
-import RenderRightActionsCompletedErrand from "../../Utils/RenderRightActionsCompletedErrand";
-import CompletedErrand from "../../Utils/CompletedErrand";
 
 function ListTasksComp() {
   const navigation = useNavigation();
@@ -26,12 +40,16 @@ function ListTasksComp() {
   const openSwipeableRef = useRef(null);
   const swipeableRefs = useRef({});
 
+  const [user] = useAtom(userAtom);
+  const [contacts] = useAtom(contactsAtom);
   const [theme] = useAtom(themeAtom);
   const [errands, setErrands] = useAtom(errandsAtom);
+  const [usersSharedWith, setUsersSharedWith] = useAtom(usersSharedWithAtom);
 
   const { list } = useLocalSearchParams();
   const currentList = JSON.parse(list);
 
+  const [showUsersSharedWith, setShowUsersSharedWith] = useState(false);
   const [showCompleted, setShowCompleted] = useState(false);
   const [possibleUndoCompleteErrand, setPossibleUndoCompleteErrand] =
     useState(null);
@@ -52,6 +70,10 @@ function ListTasksComp() {
   });
 
   useEffect(() => {
+    setUsersSharedWith(currentList.usersShared.filter((id) => id !== user.id));
+  }, [setUsersSharedWith, currentList.id, user.id]);
+
+  useEffect(() => {
     navigation.setOptions({
       title: currentList.title,
       headerBackTitle: i18n.t("back"),
@@ -70,14 +92,12 @@ function ListTasksComp() {
         />
       ),
     });
-  }, [navigation, theme, currentList]);
+  }, [navigation, theme, currentList, showCompleted]);
 
   const flatListData = useMemo(
     () =>
       errands
-        .filter((errand) => !errand.deleted)
-        .filter((errand) => errand.listId === currentList.id)
-        .filter((errand) => !errand.completed)
+        .filter((errand) => !errand.deleted && !errand.completed && errand.listId === currentList.id)
         .sort((a, b) => {
           const dateA = new Date(`${a.dateErrand}T${a.timeErrand || "20:00"}`);
           const dateB = new Date(`${b.dateErrand}T${b.timeErrand || "20:00"}`);
@@ -89,9 +109,7 @@ function ListTasksComp() {
   const completedErrandsFlatlistData = useMemo(
     () =>
       errands
-        .filter((errand) => !errand.deleted)
-        .filter((errand) => errand.listId === currentList.id)
-        .filter((errand) => errand.completed)
+        .filter((errand) => !errand.deleted && errand.completed && errand.listId === currentList.id)
         .sort((a, b) => {
           const dateA = new Date(`${a.dateErrand}T${a.timeErrand || "20:00"}`);
           const dateB = new Date(`${b.dateErrand}T${b.timeErrand || "20:00"}`);
@@ -112,11 +130,73 @@ function ListTasksComp() {
         return false;
       }}
     >
+      <View className={`bg-[${themes[theme].background}]`}></View>
       <Animated.FlatList
         itemLayoutAnimation={LinearTransition}
         data={flatListData}
         keyExtractor={(item) => item.id}
-        keyboardShouldPersistTaps="handled"
+        keyboardShouldPersistTaps="always"
+        ListHeaderComponent={
+          <>
+            {usersSharedWith.length > 0 && (
+              <>
+                {/* Users shared with */}
+                <TouchableOpacity
+                  activeOpacity={0.8}
+                  onPress={() => {
+                    setShowUsersSharedWith((prev) => !prev);
+                  }}
+                >
+                  <View
+                    className={`flex-row items-center bg-[${themes[theme].background}] border-b border-[${themes[theme].borderColor}]`}
+                  >
+                    <MaterialCommunityIcons
+                      className="mx-4 p-1.5 bg-slate-400 rounded-lg"
+                      name="account-group"
+                      size={24}
+                      color={themes["light"].background}
+                    />
+                    <View
+                      className={`py-4 flex-row flex-1 gap-4 items-center justify-between`}
+                    >
+                      <Text className={`text-lg text-[${themes[theme].text}]`}>
+                        {i18n.t("listShared")}
+                      </Text>
+                      <View className="mr-4 flex-row gap-3 items-center">
+                        <Text
+                          className={`text-lg text-[${themes[theme].listTitle}]`}
+                        >
+                          {usersSharedWith.length}
+                        </Text>
+                        <Ionicons
+                          name={
+                            showUsersSharedWith
+                              ? "chevron-down-outline"
+                              : "chevron-forward-outline"
+                          }
+                          size={23}
+                          color={themes["light"].taskSecondText}
+                        />
+                      </View>
+                    </View>
+                  </View>
+                </TouchableOpacity>
+                {showUsersSharedWith && (
+                  <ListSharedUsers listOwner={currentList.ownerId} />
+                )}
+              </>
+            )}
+            {flatListData.length > 0 && (
+              <View className={`p-6`}>
+                <Text
+                  className={`text-2xl font-semibold text-[${themes[theme].text}]`}
+                >
+                  {i18n.t("pendingTasks")}
+                </Text>
+              </View>
+            )}
+          </>
+        }
         renderItem={({ item }) => {
           return (
             <SwipeableFullErrand
@@ -142,7 +222,7 @@ function ListTasksComp() {
             <View>
               <View>
                 <Text
-                  className={`pl-5 text-[${themes[theme].listTitle}] text-xl font-semibold mt-4 mb-2`}
+                  className={`p-6 text-[${themes[theme].listTitle}] text-2xl font-semibold`}
                 >
                   {i18n.t("completed")}
                 </Text>
@@ -184,7 +264,7 @@ function ListTasksComp() {
           ) : (
             <View className="p-8 gap-3 items-center">
               <Text
-                className={`font-semibold text-center text-[${themes[theme].text}]`}
+                className={`text-lg font-semibold text-center text-[${themes[theme].text}]`}
               >
                 {i18n.t("thereAreNoCompletedErrands")}
               </Text>
@@ -192,7 +272,7 @@ function ListTasksComp() {
                 onPress={() => setShowCompleted(false)}
                 className={`border border-[${themes[theme].borderColor}] p-3 rounded-3xl`}
               >
-                <Text>{i18n.t("hideCompleted")}</Text>
+                <Text>{i18n.t("hide")}</Text>
               </Pressable>
             </View>
           ))

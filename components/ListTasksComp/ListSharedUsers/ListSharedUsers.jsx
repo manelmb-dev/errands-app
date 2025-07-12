@@ -11,22 +11,19 @@ import {
   themeAtom,
   userAtom,
   usersSharedWithAtom,
-} from "../../constants/storeAtoms";
+} from "../../../constants/storeAtoms";
 import { useAtom } from "jotai";
 
 import Ionicons from "react-native-vector-icons/Ionicons";
 
-import { themes } from "../../constants/themes";
-import i18n from "../../constants/i18n";
-import { useRouter } from "expo-router";
+import { themes } from "../../../constants/themes";
+import i18n from "../../../constants/i18n";
 
-const UsersOfList = ({ listOwner }) => {
-  const router = useRouter();
-
+const ListSharedUsers = ({ listOwner }) => {
   const [user] = useAtom(userAtom);
   const [contacts] = useAtom(contactsAtom);
   const [theme] = useAtom(themeAtom);
-  const [usersSharedWith, setUsersSharedWith] = useAtom(usersSharedWithAtom);
+  const [usersSharedWith] = useAtom(usersSharedWithAtom);
 
   const sharedUsers = usersSharedWith.map((userId) => {
     const contact = contacts.find((c) => c.id === userId);
@@ -37,10 +34,6 @@ const UsersOfList = ({ listOwner }) => {
     if (unknownContact) return { id: userId, name: unknownContact.username };
   });
 
-  const removeUserFromShared = (userId) => {
-    setUsersSharedWith((prev) => prev.filter((id) => id !== userId));
-  };
-
   return (
     <ScrollView
       contentContainerStyle={{
@@ -48,11 +41,11 @@ const UsersOfList = ({ listOwner }) => {
         borderBottomWidth: 1,
       }}
     >
-      <View className={`flex-1 bg-[${themes[theme].buttonMenuBackground}]`}>
+      <View className={`flex-1 bg-[${themes[theme].background}]`}>
         {/* Display the current user at the top */}
         <View
           key={user.id}
-          className="px-3 py-1 flex-row justify-between items-center"
+          className="px-3.5 py-2 flex-row justify-between items-center"
         >
           <View className="flex-row items-center gap-3">
             {/* If there is no picture, show the default icon */}
@@ -78,7 +71,7 @@ const UsersOfList = ({ listOwner }) => {
         {sharedUsers.map((contact) => (
           <View
             key={contact.id}
-            className="px-3 py-1 flex-row justify-between items-center"
+            className="px-3.5 py-2 flex-row justify-between items-center"
           >
             <View className="flex-row items-center gap-3">
               {/* If there is no picture, show the default icon */}
@@ -91,19 +84,6 @@ const UsersOfList = ({ listOwner }) => {
                 {contact.name} {contact.surname || ""}
               </Text>
             </View>
-            {listOwner === user.id && (
-              <Pressable
-                onPress={() => removeUserFromShared(contact.id)}
-                hitSlop={3}
-              >
-                <Ionicons
-                  className="mr-1.5"
-                  name="close-outline"
-                  size={22}
-                  color={themes["light"].taskSecondText}
-                />
-              </Pressable>
-            )}
             {listOwner === contact.id && (
               <Text
                 className={`mr-2 text-base text-[${themes[theme].taskSecondText}]`}
@@ -113,32 +93,9 @@ const UsersOfList = ({ listOwner }) => {
             )}
           </View>
         ))}
-
-        {/* Add user button */}
-        {listOwner === user.id && (
-          <View>
-            <TouchableHighlight
-              underlayColor={themes[theme].borderColor}
-              onPress={() => {
-                router.push("/Modals/addContactToSharedListModal");
-              }}
-            >
-              <View className={`px-3 py-1 flex-row items-center gap-3`}>
-                <Ionicons
-                  name="add-circle-outline"
-                  size={36}
-                  color={themes["light"].taskSecondText}
-                />
-                <Text className={`text-lg text-[${themes[theme].text}]`}>
-                  {i18n.t("addUser")}
-                </Text>
-              </View>
-            </TouchableHighlight>
-          </View>
-        )}
       </View>
     </ScrollView>
   );
 };
 
-export default UsersOfList;
+export default ListSharedUsers;

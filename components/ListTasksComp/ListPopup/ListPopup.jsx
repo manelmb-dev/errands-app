@@ -137,6 +137,7 @@ export default function ListPopup({ list, showCompleted, setShowCompleted }) {
             shadowOpacity: 0.6,
             shadowOffset: { width: 0, height: 5 },
             shadowRadius: 40,
+            minWidth: 220,
           },
           optionWrapper: {
             paddingVertical: 12,
