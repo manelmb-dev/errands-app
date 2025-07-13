@@ -169,6 +169,7 @@ function TodayTasks() {
         itemLayoutAnimation={LinearTransition}
         data={[...errandsAssignedToMe].sort(sortByDate)}
         keyExtractor={(item) => item.id}
+        contentContainerStyle={{ paddingBottom: 40 }}
         ListEmptyComponent={() => (
           <View className="flex-col items-center py-6 gap-1">
             <Octicons name="check-circle-fill" size={20} color="green" />

@@ -1,6 +1,6 @@
 import Animated, { LinearTransition } from "react-native-reanimated";
 import { useEffect, useMemo, useRef, useState } from "react";
-import { View, Text, Pressable } from "react-native";
+import { View, Text } from "react-native";
 import { useNavigation } from "expo-router";
 
 // import Octicons from "react-native-vector-icons/Octicons";
@@ -214,7 +214,7 @@ function AllTasksComp() {
         data={flatListData}
         showsVerticalScrollIndicator={false}
         keyExtractor={(item) => item.id}
-        contentContainerStyle={{ paddingBottom: 30 }}
+        contentContainerStyle={{ paddingBottom: 40 }}
         renderItem={({ item: list }) => (
           <View key={list.id}>
             {/* Header */}

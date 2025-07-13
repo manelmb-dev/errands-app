@@ -204,7 +204,7 @@ const SharedTasksComp = () => {
         itemLayoutAnimation={LinearTransition}
         data={sectionedErrands}
         keyExtractor={(item, index) => item.title + index}
-        contentContainerStyle={{ paddingBottom: 30 }}
+        contentContainerStyle={{ paddingBottom: 40 }}
         renderItem={({ item: section }) => (
           <View key={section.title}>
             {subFilter !== "completed" && (

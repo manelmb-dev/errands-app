@@ -100,6 +100,7 @@ function MarkedTasksComp() {
         itemLayoutAnimation={LinearTransition}
         data={markedActiveErrands}
         keyExtractor={(item) => item.id}
+        contentContainerStyle={{ paddingBottom: 40 }}
         renderItem={({ item }) => (
           <SwipeableFullErrand
             errand={item}
