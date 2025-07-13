@@ -5,6 +5,7 @@ import Ionicons from "react-native-vector-icons/Ionicons";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 import {
+  currentListAtom,
   errandsAtom,
   listsAtom,
   themeAtom,
@@ -22,6 +23,7 @@ export default function SharedListSection() {
   const [theme] = useAtom(themeAtom);
   const [user] = useAtom(userAtom);
   const [errands] = useAtom(errandsAtom);
+  const [ ,setCurrentList] = useAtom(currentListAtom);
   const [lists] = useAtom(listsAtom);
 
   const sharedLists = lists
@@ -51,12 +53,8 @@ export default function SharedListSection() {
                 className={`${index === 0 && "rounded-t-3xl pt-1"} ${index === sharedLists.length - 1 && "rounded-b-3xl pb-1"}`}
                 underlayColor={themes[theme].background}
                 onPress={() => {
-                  router.push({
-                    pathname: "/listTasks",
-                    params: {
-                      list: JSON.stringify(list),
-                    },
-                  });
+                  setCurrentList(list);
+                  router.push("/listTasks");
                 }}
               >
                 <View

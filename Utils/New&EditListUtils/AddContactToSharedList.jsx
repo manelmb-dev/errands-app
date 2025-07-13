@@ -4,6 +4,7 @@ import { useNavigation } from "expo-router";
 
 import {
   contactsAtom,
+  currentListAtom,
   themeAtom,
   userAtom,
   usersSharedWithAtom,
@@ -15,6 +16,7 @@ import Octicons from "react-native-vector-icons/Octicons";
 
 import { themes } from "../../constants/themes";
 import i18n from "../../constants/i18n";
+import { set } from "react-hook-form";
 
 const sortByFavoriteAndNameSurname = (a, b) => {
   if (a.favorite && !b.favorite) return -1;
@@ -30,6 +32,7 @@ const AddContactToSharedList = () => {
 
   const [theme] = useAtom(themeAtom);
   const [contacts] = useAtom(contactsAtom);
+  const [currentList, setCurrentList] = useAtom(currentListAtom);
   const [usersSharedWith, setUsersSharedWith] = useAtom(usersSharedWithAtom);
 
   const [contactSearchedInput, setContactSearchedInput] = useState("");
@@ -90,10 +93,18 @@ const AddContactToSharedList = () => {
     [contacts, usersSharedWith, contactSearchedInput]
   );
 
-  const toggleUser = (id) => {
+  const toggleUser = (userId) => {
     setUsersSharedWith((prev) =>
-      prev.includes(id) ? prev.filter((uid) => uid !== id) : [...prev, id]
+      prev.includes(userId)
+        ? prev.filter((id) => id !== userId)
+        : [...prev, userId]
     );
+    setCurrentList((prev) => ({
+      ...prev,
+      usersShared: prev.usersShared.includes(userId)
+        ? prev.usersShared.filter((id) => id !== userId)
+        : [...prev.usersShared, userId],
+    }));
   };
 
   const renderContactItem = ({ item, isShared }) => (

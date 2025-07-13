@@ -8,6 +8,7 @@ import {
 
 import {
   contactsAtom,
+  currentListAtom,
   themeAtom,
   userAtom,
   usersSharedWithAtom,
@@ -20,12 +21,13 @@ import { themes } from "../../constants/themes";
 import i18n from "../../constants/i18n";
 import { useRouter } from "expo-router";
 
-const UsersOfList = ({ listOwner }) => {
+const UsersOfList = () => {
   const router = useRouter();
 
   const [user] = useAtom(userAtom);
-  const [contacts] = useAtom(contactsAtom);
   const [theme] = useAtom(themeAtom);
+  const [contacts] = useAtom(contactsAtom);
+  const [currentList, setCurrentList] = useAtom(currentListAtom);
   const [usersSharedWith, setUsersSharedWith] = useAtom(usersSharedWithAtom);
 
   const sharedUsers = usersSharedWith.map((userId) => {
@@ -39,6 +41,12 @@ const UsersOfList = ({ listOwner }) => {
 
   const removeUserFromShared = (userId) => {
     setUsersSharedWith((prev) => prev.filter((id) => id !== userId));
+    setCurrentList((prev) => ({
+      ...prev,
+      usersShared: prev.usersShared.includes(userId)
+        ? prev.usersShared.filter((id) => id !== userId)
+        : [...prev.usersShared, userId],
+    }));
   };
 
   return (
@@ -65,7 +73,7 @@ const UsersOfList = ({ listOwner }) => {
               {user.name} {user.surname}
             </Text>
           </View>
-          {listOwner === user.id && (
+          {currentList.ownerId === user.id && (
             <Text
               className={`mr-2 text-base text-[${themes[theme].taskSecondText}]`}
             >
@@ -91,7 +99,7 @@ const UsersOfList = ({ listOwner }) => {
                 {contact.name} {contact.surname || ""}
               </Text>
             </View>
-            {listOwner === user.id && (
+            {currentList.ownerId === user.id && (
               <Pressable
                 onPress={() => removeUserFromShared(contact.id)}
                 hitSlop={3}
@@ -104,7 +112,7 @@ const UsersOfList = ({ listOwner }) => {
                 />
               </Pressable>
             )}
-            {listOwner === contact.id && (
+            {currentList.ownerId === contact.id && (
               <Text
                 className={`mr-2 text-base text-[${themes[theme].taskSecondText}]`}
               >
@@ -115,7 +123,7 @@ const UsersOfList = ({ listOwner }) => {
         ))}
 
         {/* Add user button */}
-        {listOwner === user.id && (
+        {currentList.ownerId === user.id && (
           <View>
             <TouchableHighlight
               underlayColor={themes[theme].borderColor}

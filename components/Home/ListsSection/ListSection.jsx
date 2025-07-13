@@ -1,10 +1,11 @@
-import { View, Text, Pressable, TouchableHighlight } from "react-native";
+import { View, Text, TouchableHighlight } from "react-native";
 import { useRouter } from "expo-router";
 
 import Ionicons from "react-native-vector-icons/Ionicons";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 import {
+  currentListAtom,
   errandsAtom,
   listsAtom,
   themeAtom,
@@ -12,8 +13,8 @@ import {
 } from "../../../constants/storeAtoms";
 import { useAtom } from "jotai";
 
-import { themes } from "../../../constants/themes";
 import ListPopupMenu from "./ListPopupMenu/ListPopupMenu";
+import { themes } from "../../../constants/themes";
 import i18n from "../../../constants/i18n";
 
 export default function ListSection() {
@@ -22,6 +23,7 @@ export default function ListSection() {
   const [theme] = useAtom(themeAtom);
   const [user] = useAtom(userAtom);
   const [errands] = useAtom(errandsAtom);
+  const [, setCurrentList] = useAtom(currentListAtom);
   const [lists] = useAtom(listsAtom);
 
   const totalErrandsDeleted = errands
@@ -52,12 +54,8 @@ export default function ListSection() {
               className={`${index === 0 && "rounded-t-3xl pt-1"}`}
               underlayColor={themes[theme].background}
               onPress={() => {
-                router.push({
-                  pathname: "/listTasks",
-                  params: {
-                    list: JSON.stringify(list),
-                  },
-                });
+                setCurrentList(list);
+                router.push("/listTasks");
               }}
             >
               <View

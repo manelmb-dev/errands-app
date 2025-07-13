@@ -323,6 +323,7 @@ export const errandsAtom = atom(errandsData);
 export const listsAtom = atom(lists);
 export const usersSharedWithAtom = atom([]);
 export const currentErrandAtom = atom(null);
+export const currentListAtom = atom(null);
 export const userAssignedAtom = atom(userExample);
 export const listAssignedAtom = atom(false);
 export const contactsAtom = atom(userExample.contacts);

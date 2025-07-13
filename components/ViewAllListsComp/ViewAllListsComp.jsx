@@ -3,6 +3,7 @@ import { useNavigation, useRouter } from "expo-router";
 import DraggableFlatList from "react-native-draggable-flatlist";
 
 import {
+  currentListAtom,
   errandsAtom,
   listsAtom,
   themeAtom,
@@ -24,6 +25,7 @@ const ViewAllListsComp = () => {
   const [user] = useAtom(userAtom);
   const [theme] = useAtom(themeAtom);
   const [errands, setErrands] = useAtom(errandsAtom);
+  const [ ,setCurrentList] = useAtom(currentListAtom)
   const [lists, setLists] = useAtom(listsAtom);
 
   const listErrandsCount = (listId) => {
@@ -135,12 +137,10 @@ const ViewAllListsComp = () => {
       </View>
       <View className="flex-row gap-4">
         <Pressable
-          onPress={() =>
-            router.push({
-              pathname: "/Modals/editListModal",
-              params: { list: JSON.stringify(item) },
-            })
-          }
+          onPress={() => {
+            setCurrentList(item);
+            router.push("/Modals/editListModal");
+          }}
         >
           <Feather
             className={`p-2 rounded-xl ${theme === "light" ? `bg-blue-300` : `bg-blue-600`}`}

@@ -13,6 +13,7 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 import Ionicons from "react-native-vector-icons/Ionicons";
 
 import {
+  currentListAtom,
   errandsAtom,
   themeAtom,
   userAtom,
@@ -41,10 +42,8 @@ function ListTasksComp() {
   const [user] = useAtom(userAtom);
   const [theme] = useAtom(themeAtom);
   const [errands, setErrands] = useAtom(errandsAtom);
+  const [currentList] = useAtom(currentListAtom);
   const [usersSharedWith, setUsersSharedWith] = useAtom(usersSharedWithAtom);
-
-  const { list } = useLocalSearchParams();
-  const currentList = JSON.parse(list);
 
   const [showUsersSharedWith, setShowUsersSharedWith] = useState(false);
   const [showCompleted, setShowCompleted] = useState(false);
@@ -68,7 +67,7 @@ function ListTasksComp() {
 
   useEffect(() => {
     setUsersSharedWith(currentList.usersShared.filter((id) => id !== user.id));
-  }, [setUsersSharedWith, currentList.id, user.id]);
+  }, [setUsersSharedWith, user.id]);
 
   useEffect(() => {
     navigation.setOptions({
@@ -85,11 +84,10 @@ function ListTasksComp() {
         <ListPopup
           showCompleted={showCompleted}
           setShowCompleted={setShowCompleted}
-          list={currentList}
         />
       ),
     });
-  }, [navigation, theme, currentList, showCompleted]);
+  }, [navigation, theme, currentList.title, showCompleted]);
 
   const flatListData = useMemo(
     () =>
@@ -100,7 +98,7 @@ function ListTasksComp() {
           const dateB = new Date(`${b.dateErrand}T${b.timeErrand || "20:00"}`);
           return dateA - dateB;
         }),
-    [errands, currentList]
+    [errands, currentList.id]
   );
 
   const completedErrandsFlatlistData = useMemo(
@@ -112,7 +110,7 @@ function ListTasksComp() {
           const dateB = new Date(`${b.dateErrand}T${b.timeErrand || "20:00"}`);
           return dateB - dateA;
         }),
-    [errands, currentList]
+    [errands, currentList.id]
   );
 
   return (

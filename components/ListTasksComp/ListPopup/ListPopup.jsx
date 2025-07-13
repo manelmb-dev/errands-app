@@ -9,6 +9,7 @@ import {
 } from "react-native-popup-menu";
 
 import {
+  currentListAtom,
   errandsAtom,
   listsAtom,
   themeAtom,
@@ -22,11 +23,12 @@ import { themes } from "../../../constants/themes";
 import i18n from "../../../constants/i18n";
 import { useRouter } from "expo-router";
 
-export default function ListPopup({ list, showCompleted, setShowCompleted }) {
+export default function ListPopup({ showCompleted, setShowCompleted }) {
   const router = useRouter();
 
   const [user] = useAtom(userAtom);
   const [errands, setErrands] = useAtom(errandsAtom);
+  const [currentList] = useAtom(currentListAtom);
   const [lists, setLists] = useAtom(listsAtom);
   const [theme] = useAtom(themeAtom);
 
@@ -151,14 +153,11 @@ export default function ListPopup({ list, showCompleted, setShowCompleted }) {
           },
         }}
       >
-        {list.ownerId === user.id && (
+        {currentList.ownerId === user.id && (
           <MenuOption
-            onSelect={() =>
-              router.push({
-                pathname: "/Modals/editListModal",
-                params: { list: JSON.stringify(list) },
-              })
-            }
+            onSelect={() => {
+              router.push("/Modals/editListModal");
+            }}
           >
             <View className="flex-row justify-between items-center">
               <Text className={`text-lg text-[${themes[theme].text}]`}>
@@ -186,9 +185,9 @@ export default function ListPopup({ list, showCompleted, setShowCompleted }) {
             />
           </View>
         </MenuOption>
-        {list.ownerId === user.id ? (
+        {currentList.ownerId === user.id ? (
           <MenuOption
-            onSelect={() => confirmDeleteList(list.id)}
+            onSelect={() => confirmDeleteList(currentList.id)}
             customStyles={{
               optionWrapper: {
                 paddingVertical: 12,
@@ -206,7 +205,7 @@ export default function ListPopup({ list, showCompleted, setShowCompleted }) {
           </MenuOption>
         ) : (
           <MenuOption
-            onSelect={() => confirmLeaveList(list.id)}
+            onSelect={() => confirmLeaveList(currentList.id)}
             customStyles={{
               optionWrapper: {
                 paddingVertical: 12,

@@ -14,6 +14,7 @@ import {
 } from "react-native";
 
 import {
+  currentListAtom,
   listsAtom,
   themeAtom,
   userAtom,
@@ -37,12 +38,10 @@ const EditListModalComp = () => {
   const [user] = useAtom(userAtom);
   const [theme] = useAtom(themeAtom);
   const [, setLists] = useAtom(listsAtom);
+  const [currentList, setCurrentList] = useAtom(currentListAtom);
   const [usersSharedWith, setUsersSharedWith] = useAtom(usersSharedWithAtom);
 
-  const { list } = useLocalSearchParams();
-  const currentList = useMemo(() => JSON.parse(list), [list]);
-
-  const initialValuesRef = useRef(currentList);
+  const listInitialValuesRef = useRef(currentList);
 
   const [assignedColor, setAssignedColor] = useState(currentList.color);
   const [assignedIcon, setAssignedIcon] = useState(currentList.icon);
@@ -102,6 +101,7 @@ const EditListModalComp = () => {
     watchedTitle,
     handleCancelAlert,
     usersSharedWith,
+    currentList
   ]);
 
   useEffect(() => {
@@ -127,7 +127,7 @@ const EditListModalComp = () => {
   const handleCancelAlert = useCallback(
     (onDiscard) => {
       const formValues = watch();
-      const hasChanges = !deepEqual(initialValuesRef.current, formValues);
+      const hasChanges = !deepEqual(listInitialValuesRef.current, formValues);
 
       if (hasChanges) {
         Alert.alert(i18n.t("changesInListWillBeDiscarded"), "", [
@@ -153,6 +153,8 @@ const EditListModalComp = () => {
       usersShared: [user.id, ...usersSharedWith],
     };
 
+    setCurrentList(updatedList)
+
     // Update list locally
     setLists((prevLists) =>
       prevLists.map((l) => (l.id === updatedList.id ? updatedList : l))
@@ -160,7 +162,6 @@ const EditListModalComp = () => {
 
     // FIRESTONE UPDATEEE FIXX THIS
 
-    setUsersSharedWith([]);
     navigation.goBack();
   });
 
@@ -245,7 +246,7 @@ const EditListModalComp = () => {
           </TouchableHighlight>
 
           {/* Users shown */}
-          {showUsersSharedWith && <UsersOfList listOwner={listOwner} />}
+          {showUsersSharedWith && <UsersOfList />}
 
           {/* Color */}
           <TouchableHighlight
