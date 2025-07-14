@@ -93,7 +93,6 @@ const NewTaskModal = () => {
       location: "",
       priority: "none",
       listId: "",
-      subtasks: {},
       completedDateErrand: "",
       completedtimeErrand: "",
     },

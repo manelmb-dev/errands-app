@@ -13,6 +13,14 @@ let lists = [
     usersShared: ["100001"],
   },
   {
+    id: "fsdf724",
+    ownerId: "100006",
+    title: "Cena fin de año",
+    icon: "beer",
+    color: "fuchsia",
+    usersShared: ["100001", "100004", "100006"],
+  },
+  {
     id: "12439l",
     ownerId: "100001",
     title: "Supermercado",
@@ -44,7 +52,6 @@ let lists = [
     color: "lime",
     usersShared: ["100001", "100002", "100003", "100004"],
   },
-
   {
     id: "vi83724",
     ownerId: "100002",
