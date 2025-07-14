@@ -1,3 +1,4 @@
+import { useRouter } from "expo-router";
 import {
   Pressable,
   ScrollView,
@@ -19,7 +20,12 @@ import Ionicons from "react-native-vector-icons/Ionicons";
 
 import { themes } from "../../constants/themes";
 import i18n from "../../constants/i18n";
-import { useRouter } from "expo-router";
+
+const sortByNameSurname = (a, b) => {
+  const fullNameA = `${a.name ?? ""}${a.surname ?? ""}`.toLowerCase();
+  const fullNameB = `${b.name ?? ""}${b.surname ?? ""}`.toLowerCase();
+  return fullNameA.localeCompare(fullNameB);
+};
 
 const UsersOfList = () => {
   const router = useRouter();
@@ -83,7 +89,7 @@ const UsersOfList = () => {
         </View>
 
         {/* Display the shared users */}
-        {sharedUsers.map((contact) => (
+        {sharedUsers.sort(sortByNameSurname).map((contact) => (
           <View
             key={contact.id}
             className="px-3 py-1 flex-row justify-between items-center"

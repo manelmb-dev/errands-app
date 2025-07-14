@@ -6,7 +6,6 @@ import {
   contactsAtom,
   currentListAtom,
   themeAtom,
-  userAtom,
   usersSharedWithAtom,
 } from "../../constants/storeAtoms";
 import { useAtom } from "jotai";
@@ -16,7 +15,6 @@ import Octicons from "react-native-vector-icons/Octicons";
 
 import { themes } from "../../constants/themes";
 import i18n from "../../constants/i18n";
-import { set } from "react-hook-form";
 
 const sortByFavoriteAndNameSurname = (a, b) => {
   if (a.favorite && !b.favorite) return -1;
@@ -32,7 +30,7 @@ const AddContactToSharedList = () => {
 
   const [theme] = useAtom(themeAtom);
   const [contacts] = useAtom(contactsAtom);
-  const [currentList, setCurrentList] = useAtom(currentListAtom);
+  const [, setCurrentList] = useAtom(currentListAtom);
   const [usersSharedWith, setUsersSharedWith] = useAtom(usersSharedWithAtom);
 
   const [contactSearchedInput, setContactSearchedInput] = useState("");

@@ -1,10 +1,4 @@
-import {
-  Pressable,
-  ScrollView,
-  Text,
-  TouchableHighlight,
-  View,
-} from "react-native";
+import { ScrollView, Text, View } from "react-native";
 
 import {
   contactsAtom,
@@ -18,6 +12,12 @@ import Ionicons from "react-native-vector-icons/Ionicons";
 
 import { themes } from "../../../constants/themes";
 import i18n from "../../../constants/i18n";
+
+const sortByNameSurname = (a, b) => {
+  const fullNameA = `${a.name ?? ""}${a.surname ?? ""}`.toLowerCase();
+  const fullNameB = `${b.name ?? ""}${b.surname ?? ""}`.toLowerCase();
+  return fullNameA.localeCompare(fullNameB);
+};
 
 const ListSharedUsers = ({ listOwner }) => {
   const [user] = useAtom(userAtom);
@@ -68,7 +68,7 @@ const ListSharedUsers = ({ listOwner }) => {
         </View>
 
         {/* Display the shared users */}
-        {sharedUsers.map((contact) => (
+        {sharedUsers.sort(sortByNameSurname).map((contact) => (
           <View
             key={contact.id}
             className="px-3.5 py-2 flex-row justify-between items-center"
