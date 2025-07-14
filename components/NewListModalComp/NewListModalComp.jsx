@@ -13,6 +13,7 @@ import {
 import { useForm, Controller } from "react-hook-form";
 
 import {
+  currentListAtom,
   listsAtom,
   themeAtom,
   userAtom,
@@ -29,6 +30,7 @@ import ColorGrid from "../../Utils/New&EditListUtils/ColorGrid";
 import IconGrid from "../../Utils/New&EditListUtils/IconGrid";
 import { themes } from "../../constants/themes";
 import i18n from "../../constants/i18n";
+import users from "../../users";
 
 const NewListModal = () => {
   const navigation = useNavigation();
@@ -36,6 +38,7 @@ const NewListModal = () => {
   const [user] = useAtom(userAtom);
   const [theme] = useAtom(themeAtom);
   const [, setLists] = useAtom(listsAtom);
+  const [, setCurrentList] = useAtom(currentListAtom);
   const [usersSharedWith, setUsersSharedWith] = useAtom(usersSharedWithAtom);
 
   const [assignedColor, setAssignedColor] = useState("slate");
@@ -61,12 +64,11 @@ const NewListModal = () => {
       title: "",
       icon: "",
       color: "",
-      usersShared: [user.id],
+      usersShared: [],
     },
   });
 
   const watchedTitle = watch("title");
-  const listOwner = watch("ownerId");
 
   useEffect(() => {
     navigation.setOptions({
@@ -96,7 +98,14 @@ const NewListModal = () => {
         </Pressable>
       ),
     });
-  }, [navigation, theme, handleAdd, watchedTitle, handleCancelAlert]);
+  }, [
+    navigation,
+    theme,
+    handleAdd,
+    watchedTitle,
+    handleCancelAlert,
+    usersSharedWith,
+  ]);
 
   useEffect(() => {
     setValue("icon", assignedIcon);
@@ -131,18 +140,16 @@ const NewListModal = () => {
     }
   }, [navigation, watch]);
 
-  //FIRESTONE FIXXX ALL THE COMPONENT
-
   // Function to handle add new list
   const handleAdd = handleSubmit((data) => {
     const updatedList = {
       ...data,
       usersShared: [user.id, ...usersSharedWith],
     };
-    console.log(updatedList); // Set to FIRESTORE
 
-    // Add list to DB locally
+    // Add list to DB backend
     const newListWithId = setListToFS(updatedList);
+    // Add list to DB locally
     setLists((prevLists) => [...prevLists, newListWithId]);
 
     setUsersSharedWith([]);
@@ -233,7 +240,7 @@ const NewListModal = () => {
           </TouchableHighlight>
 
           {/* Users shown */}
-          {showUsersSharedWith && <UsersOfList listOwner={listOwner} />}
+          {showUsersSharedWith && <UsersOfList />}
 
           {/* Color */}
           <TouchableHighlight

@@ -260,8 +260,9 @@ const NewTaskModal = () => {
   const handleAdd = handleSubmit(async (data) => {
     console.log(data); // Set to FIRESTOREEE
 
-    // Add errand to DB
+    // Add errand to DB backend
     const newErrandWithId = await setErrandToFS(data);
+    // Add errand to DB locally
     setErrands((prevErrands) => [...prevErrands, newErrandWithId]);
 
     setUserAssigned(user);

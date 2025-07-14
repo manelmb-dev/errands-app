@@ -1,5 +1,5 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { useLocalSearchParams, useNavigation } from "expo-router";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { useNavigation } from "expo-router";
 import { Controller, useForm } from "react-hook-form";
 import deepEqual from "fast-deep-equal";
 import {
@@ -26,11 +26,11 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import Ionicons from "react-native-vector-icons/Ionicons";
 
+import UsersOfList from "../../Utils/New&EditListUtils/UsersOfList";
 import ColorGrid from "../../Utils/New&EditListUtils/ColorGrid";
 import IconGrid from "../../Utils/New&EditListUtils/IconGrid";
 import { themes } from "../../constants/themes";
 import i18n from "../../constants/i18n";
-import UsersOfList from "../../Utils/New&EditListUtils/UsersOfList";
 const EditListModalComp = () => {
   const navigation = useNavigation();
   const shouldPreventClose = useRef(true);
@@ -55,7 +55,6 @@ const EditListModalComp = () => {
   });
 
   const watchedTitle = watch("title");
-  const listOwner = watch("ownerId");
 
   useEffect(() => {
     setUsersSharedWith(currentList.usersShared.filter((id) => id !== user.id));
@@ -101,7 +100,7 @@ const EditListModalComp = () => {
     watchedTitle,
     handleCancelAlert,
     usersSharedWith,
-    currentList
+    currentList,
   ]);
 
   useEffect(() => {

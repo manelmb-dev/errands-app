@@ -11,13 +11,21 @@ import {
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 
 import { useAtom } from "jotai";
-import { themeAtom } from "../../../../constants/storeAtoms";
+import {
+  currentListAtom,
+  themeAtom,
+  userAtom,
+  usersSharedWithAtom,
+} from "../../../../constants/storeAtoms";
 
 import { themes } from "../../../../constants/themes";
 import i18n from "../../../../constants/i18n";
 
 export default function ListPopupMenu() {
+  const [user] = useAtom(userAtom);
   const [theme] = useAtom(themeAtom);
+  const [, setCurrentList] = useAtom(currentListAtom);
+  const [, setUsersSharedWith] = useAtom(usersSharedWithAtom);
 
   return (
     <Menu>
@@ -49,7 +57,18 @@ export default function ListPopupMenu() {
         }}
       >
         <MenuOption
-          onSelect={() => router.push("/Modals/newListModal")}
+          onSelect={() => {
+            setCurrentList({
+              id: "",
+              ownerId: user.id,
+              title: "",
+              icon: "",
+              color: "",
+              usersShared: [],
+            });
+            setUsersSharedWith([]);
+            router.push("/Modals/newListModal");
+          }}
           text={i18n.t("addList")}
           customStyles={{
             optionTouchable: {

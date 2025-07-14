@@ -2,12 +2,7 @@ import { useLocalSearchParams, useNavigation, useRouter } from "expo-router";
 import Swipeable from "react-native-gesture-handler/ReanimatedSwipeable";
 import Animated, { LinearTransition } from "react-native-reanimated";
 import { useEffect, useMemo, useRef, useState } from "react";
-import {
-  Pressable,
-  Text,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import { Pressable, Text, TouchableOpacity, View } from "react-native";
 
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import Ionicons from "react-native-vector-icons/Ionicons";
@@ -67,7 +62,7 @@ function ListTasksComp() {
 
   useEffect(() => {
     setUsersSharedWith(currentList.usersShared.filter((id) => id !== user.id));
-  }, [setUsersSharedWith, user.id]);
+  }, [setUsersSharedWith, user.id, currentList.usersShared]);
 
   useEffect(() => {
     navigation.setOptions({
@@ -92,7 +87,12 @@ function ListTasksComp() {
   const flatListData = useMemo(
     () =>
       errands
-        .filter((errand) => !errand.deleted && !errand.completed && errand.listId === currentList.id)
+        .filter(
+          (errand) =>
+            !errand.deleted &&
+            !errand.completed &&
+            errand.listId === currentList.id
+        )
         .sort((a, b) => {
           const dateA = new Date(`${a.dateErrand}T${a.timeErrand || "20:00"}`);
           const dateB = new Date(`${b.dateErrand}T${b.timeErrand || "20:00"}`);
@@ -104,7 +104,12 @@ function ListTasksComp() {
   const completedErrandsFlatlistData = useMemo(
     () =>
       errands
-        .filter((errand) => !errand.deleted && errand.completed && errand.listId === currentList.id)
+        .filter(
+          (errand) =>
+            !errand.deleted &&
+            errand.completed &&
+            errand.listId === currentList.id
+        )
         .sort((a, b) => {
           const dateA = new Date(`${a.dateErrand}T${a.timeErrand || "20:00"}`);
           const dateB = new Date(`${b.dateErrand}T${b.timeErrand || "20:00"}`);
@@ -125,7 +130,6 @@ function ListTasksComp() {
         return false;
       }}
     >
-      <View className={`bg-[${themes[theme].background}]`}></View>
       <Animated.FlatList
         itemLayoutAnimation={LinearTransition}
         data={flatListData}

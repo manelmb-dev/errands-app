@@ -17,6 +17,7 @@ import {
   listsAtom,
   themeAtom,
   userAtom,
+  usersSharedWithAtom,
 } from "../../constants/storeAtoms";
 import { themes } from "../../constants/themes";
 import i18n from "../../constants/i18n";
@@ -24,11 +25,13 @@ import i18n from "../../constants/i18n";
 const ViewAllListsComp = () => {
   const router = useRouter();
   const navigation = useNavigation();
+
   const [user] = useAtom(userAtom);
   const [theme] = useAtom(themeAtom);
   const [errands, setErrands] = useAtom(errandsAtom);
-  const [, setCurrentList] = useAtom(currentListAtom);
   const [lists, setLists] = useAtom(listsAtom);
+  const [, setCurrentList] = useAtom(currentListAtom);
+  const [, setUsersSharedWith] = useAtom(usersSharedWithAtom);
 
   const listErrandsCount = (listId) =>
     errands.filter((e) => e.listId === listId && !e.completed && !e.deleted)
@@ -61,40 +64,39 @@ const ViewAllListsComp = () => {
   };
 
   const leaveList = (listId) => {
-      // Assign errands that are assigned to the user to another user of the usersShared list
-  
-      // Remove user from shared users list locally
-      const updatedLists = lists.map((list) =>
-        list.id === listId
-          ? {
-              ...list,
-              usersShared: list.usersShared.filter(
-                (userId) => userId !== user.id
-              ),
-            }
-          : list
-      );
-      setLists(updatedLists);
-  
-      // sent notification to the rest of the shared users
-  
-      // FIRESTONE UPDATEEE FIXX THIS
-  
-    };
-  
-    const confirmLeaveList = (listId) => {
-      Alert.alert(`${i18n.t("leaveList?")}`, `${i18n.t("textAlertLeaveList")}`, [
-        {
-          text: i18n.t("leaveList"),
-          onPress: () => leaveList(listId),
-          style: "destructive",
-        },
-        {
-          text: i18n.t("cancel"),
-          style: "cancel",
-        },
-      ]);
-    };
+    // Assign errands that are assigned to the user to another user of the usersShared list
+
+    // Remove user from shared users list locally
+    const updatedLists = lists.map((list) =>
+      list.id === listId
+        ? {
+            ...list,
+            usersShared: list.usersShared.filter(
+              (userId) => userId !== user.id
+            ),
+          }
+        : list
+    );
+    setLists(updatedLists);
+
+    // sent notification to the rest of the shared users
+
+    // FIRESTONE UPDATEEE FIXX THIS
+  };
+
+  const confirmLeaveList = (listId) => {
+    Alert.alert(`${i18n.t("leaveList?")}`, `${i18n.t("textAlertLeaveList")}`, [
+      {
+        text: i18n.t("leaveList"),
+        onPress: () => leaveList(listId),
+        style: "destructive",
+      },
+      {
+        text: i18n.t("cancel"),
+        style: "cancel",
+      },
+    ]);
+  };
 
   const ownLists = useMemo(
     () =>
@@ -104,14 +106,15 @@ const ViewAllListsComp = () => {
 
   const sharedLists = useMemo(
     () =>
-      lists.filter(
-        (l) => l.usersShared.length > 1 && l.usersShared.includes(user.id)
-      )
-      .sort((a, b) => {
-        const aIsOwner = a.ownerId === user.id ? 0 : 1;
-        const bIsOwner = b.ownerId === user.id ? 0 : 1;
-        return aIsOwner - bIsOwner;
-      }),
+      lists
+        .filter(
+          (l) => l.usersShared.length > 1 && l.usersShared.includes(user.id)
+        )
+        .sort((a, b) => {
+          const aIsOwner = a.ownerId === user.id ? 0 : 1;
+          const bIsOwner = b.ownerId === user.id ? 0 : 1;
+          return aIsOwner - bIsOwner;
+        }),
     [lists, user.id]
   );
 
@@ -183,7 +186,18 @@ const ViewAllListsComp = () => {
   const renderFooter = () => (
     <TouchableHighlight
       underlayColor={themes[theme].buttonMenuBackground}
-      onPress={() => router.push("/Modals/newListModal")}
+      onPress={() => {
+        setCurrentList({
+          id: "",
+          ownerId: user.id,
+          title: "",
+          icon: "",
+          color: "",
+          usersShared: [],
+        });
+        setUsersSharedWith([]);
+        router.push("/Modals/newListModal");
+      }}
       className="w-4/6 mt-6 self-center rounded-2xl"
     >
       <View

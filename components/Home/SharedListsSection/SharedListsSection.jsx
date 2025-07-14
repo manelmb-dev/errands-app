@@ -10,6 +10,7 @@ import {
   listsAtom,
   themeAtom,
   userAtom,
+  usersSharedWithAtom,
 } from "../../../constants/storeAtoms";
 import { useAtom } from "jotai";
 
@@ -23,8 +24,9 @@ export default function SharedListSection() {
   const [theme] = useAtom(themeAtom);
   const [user] = useAtom(userAtom);
   const [errands] = useAtom(errandsAtom);
-  const [ ,setCurrentList] = useAtom(currentListAtom);
+  const [, setCurrentList] = useAtom(currentListAtom);
   const [lists] = useAtom(listsAtom);
+  const [, setUsersSharedWith] = useAtom(usersSharedWithAtom);
 
   const sharedLists = lists
     .filter((list) => list.usersShared.length > 1)
@@ -101,7 +103,18 @@ export default function SharedListSection() {
             <TouchableHighlight
               className={`px-4 py-2 mt-3 w-[90%] border border-[${themes[theme].borderColor}] rounded-2xl bg-[${themes[theme].buttonMenuBackground}]`}
               underlayColor={themes[theme].background}
-              onPress={() => router.push("/Modals/newListModal")}
+              onPress={() => {
+                setCurrentList({
+                  id: "",
+                  ownerId: user.id,
+                  title: "",
+                  icon: "",
+                  color: "",
+                  usersShared: [],
+                });
+                setUsersSharedWith([]);
+                router.push("/Modals/newListModal");
+              }}
             >
               <Text
                 className={`text-lg text-center text-[${themes[theme].text}]`}
