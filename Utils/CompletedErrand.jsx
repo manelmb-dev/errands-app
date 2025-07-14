@@ -34,15 +34,15 @@ function CompletedErrand({ errand }) {
   ];
 
   const assignedContact = contacts.find(
-    (contact) => contact.id.toString() === errand.assignedId.toString(),
+    (contact) => contact.id.toString() === errand.assignedId.toString()
   );
 
   const creatorContact = contacts.find(
-    (contact) => contact.id.toString() === errand.ownerId.toString(),
+    (contact) => contact.id.toString() === errand.ownerId.toString()
   );
 
   const repeatOptionSelected = repeatOptions.find(
-    (option) => option.value === errand.repeat,
+    (option) => option.value === errand.repeat
   );
 
   const uncompleteErrand = () => {
@@ -58,14 +58,14 @@ function CompletedErrand({ errand }) {
           };
         }
         return e;
-      }),
+      })
     );
   };
 
   return (
     <Animated.View key={errand.id} exiting={FadeOut}>
       <Pressable
-        className={`flex-row bg-[${themes[theme].background}] rounded-xl mx-4 my-1.5 pr-2 pt-3 pb-2  border border-[${themes[theme].borderColor}] shadow-sm ${theme === "light" ? "shadow-gray-100" : "shadow-neutral-950"}`}
+        className={`flex-row bg-[${themes[theme].background}] rounded-xl mx-4 my-1.5 pr-2 pt-3 pb-2  border border-[${themes[theme].listsSeparator}] shadow-sm ${theme === "light" ? "shadow-gray-100" : "shadow-neutral-950"}`}
       >
         <Octicons
           onPress={uncompleteErrand}
@@ -82,14 +82,7 @@ function CompletedErrand({ errand }) {
               <View
                 className={`flex-row my-0.5 px-2 p-1 bg-[${themes[theme].taskIncomingFromBg}] rounded-lg items-center gap-2`}
               >
-                <Ionicons
-                  name="send"
-                  size={10}
-                  color="#6E727A"
-                  style={{
-                    transform: [{ rotateY: "180deg" }],
-                  }}
-                />
+                <Ionicons name="return-down-back" size={14} color="#6E727A" />
                 <Text
                   className={`text-sm text-[${themes[theme].taskSecondText}]`}
                 >
@@ -103,7 +96,11 @@ function CompletedErrand({ errand }) {
               <View
                 className={`flex-row my-0.5 px-2 p-1 bg-[${themes[theme].outgoingTaskToBg}] rounded-lg items-center gap-2`}
               >
-                <Ionicons name="send" size={10} color="#6E727A" />
+                <Ionicons
+                  name="return-down-forward"
+                  size={14}
+                  color="#6E727A"
+                />
                 <Text
                   className={`text-sm text-[${themes[theme].taskSecondText}]`}
                 >

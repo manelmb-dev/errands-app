@@ -4,7 +4,6 @@ import React from "react";
 
 import RenderRightActionsErrand from "./RenderRightActionsErrand";
 import FullErrand from "./fullErrand";
-import FullErrand2 from "./fullErrand2";
 
 const SwipeableFullErrand = ({
   errand,

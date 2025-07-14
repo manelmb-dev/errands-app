@@ -173,12 +173,7 @@ function FullErrand({
                 <View
                   className={`flex-row my-0.5 px-2 p-0.5 bg-[${themes[theme].taskIncomingFromBg}] rounded-lg items-center gap-2`}
                 >
-                  <Ionicons
-                    name="send"
-                    size={10}
-                    color="#6E727A"
-                    style={{ transform: [{ rotateY: "180deg" }] }}
-                  />
+                  <Ionicons name="return-down-back" size={18} color="#6E727A" />
                   <Text
                     className={`text-sm text-[${themes[theme].taskSecondText}]`}
                   >
@@ -193,7 +188,11 @@ function FullErrand({
                 <View
                   className={`flex-row my-0.5 px-2 p-0.5 bg-[${themes[theme].outgoingTaskToBg}] rounded-lg items-center gap-2`}
                 >
-                  <Ionicons name="send" size={10} color="#6E727A" />
+                  <Ionicons
+                    name="return-down-forward"
+                    size={18}
+                    color="#6E727A"
+                  />
                   <Text
                     className={`text-sm text-[${themes[theme].taskSecondText}]`}
                   >
