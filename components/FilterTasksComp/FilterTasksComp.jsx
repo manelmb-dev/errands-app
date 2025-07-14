@@ -101,6 +101,14 @@ function FilterTasksComp() {
   }
   const flatListData = useMemo(() => {
     const items = lists
+      .sort((a, b) => {
+        const aIsNotShared = a.usersShared?.length === 1;
+        const bIsNotShared = b.usersShared?.length === 1;
+
+        if (aIsNotShared && !bIsNotShared) return -1;
+        if (!aIsNotShared && bIsNotShared) return 1;
+        return 0;
+      })
       .map((list) => ({
         ...list,
         errands: filteredErrands.filter((errand) => errand.listId === list.id),
