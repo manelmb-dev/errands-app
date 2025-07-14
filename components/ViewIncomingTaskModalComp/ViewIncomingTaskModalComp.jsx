@@ -174,7 +174,7 @@ const ViewIncomingTaskModal = () => {
             )}
 
           {/* Repeat */}
-          {currentErrand.repeat && (
+          {currentErrand.repeat !== "never" && (
             <View className="flex-row items-center gap-3">
               <Ionicons
                 className={`p-1 rounded-lg border border-[${themes[theme].taskSecondText}]`}
