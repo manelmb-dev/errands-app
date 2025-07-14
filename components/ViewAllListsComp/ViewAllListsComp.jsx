@@ -223,6 +223,7 @@ const ViewAllListsComp = () => {
   return (
     <View className={`flex-1 bg-[${themes[theme].background}]`}>
       <FlatList
+        contentContainerStyle={{ paddingBottom: 60 }}
         data={[...sharedLists]}
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => renderListItem({ item })}
