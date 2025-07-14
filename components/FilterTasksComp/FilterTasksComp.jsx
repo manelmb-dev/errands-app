@@ -195,10 +195,12 @@ function FilterTasksComp() {
           showsVerticalScrollIndicator={false}
           contentContainerStyle={{ paddingBottom: 30 }}
           keyExtractor={(item) => item.id || "no-list"}
-          renderItem={({ item: list }) => (
+          renderItem={({ item: list, index }) => (
             <View key={list.id}>
               {/* Header */}
-              <View className="flex-row w-full justify-center items-center gap-2 mt-3 mb-2">
+              <View
+                className={`${index !== 0 ? "mt-7" : "mt-3"} mb-5 flex-row justify-center items-center gap-3`}
+              >
                 <Ionicons
                   className={`bg-${list.color}-300 p-1.5 rounded-xl`}
                   name={list.icon}
