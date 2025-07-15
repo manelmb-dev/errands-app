@@ -352,18 +352,22 @@ const EditTaskModal = () => {
                 color={themes["light"].background}
               />
               <View
-                className={`py-3 flex-1 flex-row justify-between items-center border-b border-[${themes[theme].borderColor}]`}
+                className={`py-3 flex-1 flex-row justify-between items-center gap-2 border-b border-[${themes[theme].borderColor}]`}
               >
                 <Text className={`text-[${themes[theme].text}] text-base`}>
                   {i18n.t("inCharge")}
                 </Text>
                 <View
-                  className={`mr-4 px-2 py-1 rounded-2xl gap-1 flex-row items-center ${theme === "light" ? "bg-blue-100" : "bg-blue-600"}`}
+                  className={`mr-4 py-1 px-2 flex-shrink rounded-2xl flex-row items-center ${theme === "light" ? "bg-blue-100" : "bg-blue-600"}`}
                 >
-                  <Text className={`text-lg text-[${themes[theme].text}]`}>
-                    {userAssigned.name}
-                    {userAssigned.surname ? ` ${userAssigned.surname}` : ""}
-                    {userAssigned.id === user.id && ` (${i18n.t("me")})`}
+                  <Text
+                    className={`text-lg flex-shrink text-[${themes[theme].text}]`}
+                    numberOfLines={1}
+                    ellipsizeMode="tail"
+                  >
+                    {userAssigned.id === user.id
+                      ? `${userAssigned.name} (${i18n.t("me")})`
+                      : `${userAssigned.name}${userAssigned.surname ? ` ${userAssigned.surname}` : ""}`}
                   </Text>
                   <Ionicons
                     name="chevron-forward"
