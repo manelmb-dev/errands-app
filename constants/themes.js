@@ -10,7 +10,7 @@ export const themes = {
     addNewTaskText: "#A2A6AD",
     outgoingTaskToBg: "#D3F3E0",
     taskIncomingFromBg: "#F0EEFD",
-    taskAssignedSharedListBg: "#9fcaf0",
+    taskAssignedSharedListBg: "#bad6f0",
     listTitle: "#161618",
     borderColor: "#e0e0e0",
     popupShadow: "#000000",
