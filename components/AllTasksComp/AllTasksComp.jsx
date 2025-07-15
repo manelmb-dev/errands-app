@@ -160,9 +160,7 @@ function AllTasksComp() {
 
     // const sharedErrands = selectedTabObj.errandsList
     const sharedErrands = errands
-      .filter((errand) => !errand.completed)
-      .filter((errand) => !errand.deleted)
-      .filter((e) => e.listId === "")
+      .filter((e) => !e.deleted && !e.completed && e.listId === "unassigned")
       .sort((a, b) => {
         const dateA = new Date(`${a.dateErrand}T${a.timeErrand || "20:00"}`);
         const dateB = new Date(`${b.dateErrand}T${b.timeErrand || "20:00"}`);
@@ -172,7 +170,7 @@ function AllTasksComp() {
     if (sharedErrands.length > 0) {
       items.push({
         id: "sharedErrandsId",
-        title: "Compartidos",
+        title: i18n.t("shared"),
         icon: "people",
         color: "slate",
         errands: sharedErrands,

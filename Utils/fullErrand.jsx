@@ -196,7 +196,7 @@ function FullErrand({
                   >
                     <Ionicons
                       name="return-down-back"
-                      size={18}
+                      size={16}
                       color="#6E727A"
                     />
                     <Text
@@ -221,7 +221,7 @@ function FullErrand({
                   >
                     <Ionicons
                       name="return-down-forward"
-                      size={18}
+                      size={16}
                       color="#6E727A"
                     />
                     <Text
