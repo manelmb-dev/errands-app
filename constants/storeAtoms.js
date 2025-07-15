@@ -121,7 +121,7 @@ let userExample = {
     {
       id: "100004",
       name: "Alejandro",
-      surname: "Ruiz",
+      surname: "",
       phoneNumber: "+34655544332",
       email: "alejandro.ruiz@email.com",
       favorite: true,

@@ -701,7 +701,7 @@ const errandsData = [
   {
     id: "22342rfwljkfd87",
     ownerId: "100003",
-    assignedId: "",
+    assignedId: "unassigned",
     title: "Avocado",
     description: "",
     dateErrand: tomorrow,
@@ -722,7 +722,7 @@ const errandsData = [
   {
     id: "2ksa4329jkfd87",
     ownerId: "100001",
-    assignedId: "",
+    assignedId: "unassigned",
     title: "Cheese",
     description: "",
     dateErrand: tomorrow,
