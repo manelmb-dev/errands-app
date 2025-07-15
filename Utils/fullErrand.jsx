@@ -280,7 +280,10 @@ function FullErrand({
                     : `${theme === "light" ? "bg-gray-200" : "bg-neutral-800 "}`
                 }`}
                 onPress={() => {
-                  if (errand.ownerId === user.id) {
+                  if (
+                    errand.ownerId === user.id ||
+                    errandList.usersShared.length > 1
+                  ) {
                     setIsDateTimePickerVisible(true);
                   } else {
                     router.push({
