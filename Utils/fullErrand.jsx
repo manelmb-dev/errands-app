@@ -241,7 +241,7 @@ function FullErrand({
               errandList.usersShared.length > 1 && (
                 <View className="flex-row">
                   <View
-                    className={`flex-row my-0.5 px-2 p-0.5 bg-[${themes[theme].taskIncomingFromBg}] rounded-lg items-center gap-2`}
+                    className={`flex-row my-0.5 px-2 p-0.5 bg-[${themes[theme].taskAssignedSharedListBg}] rounded-lg items-center gap-2`}
                   >
                     {/* <Ionicons
                       name="return-down-back"
