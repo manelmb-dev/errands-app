@@ -26,7 +26,7 @@ let lists = [
     title: "Supermercado",
     icon: "restaurant",
     color: "yellow",
-    usersShared: ["100001", "100002"],
+    usersShared: ["100001", "100002", "100004"],
   },
   {
     id: "9dsmnb",
