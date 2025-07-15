@@ -86,7 +86,10 @@ const SharedTasksComp = () => {
 
   const filteredErrands = useMemo(() => {
     let baseList = errands.filter(
-      (e) => !e.deleted && e.ownerId !== e.assignedId
+      (e) =>
+        !e.deleted &&
+        e.ownerId !== e.assignedId &&
+        e.assignedId !== "unassigned"
     );
 
     if (mainTab === "outgoing") {

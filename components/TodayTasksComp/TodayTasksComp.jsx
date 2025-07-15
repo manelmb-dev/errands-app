@@ -105,7 +105,8 @@ function TodayTasks() {
   const errandsAssignedToMe = useMemo(() => {
     return (
       selectedTabObj?.errandsList?.filter(
-        (errand) => errand.assignedId === user.id
+        (errand) =>
+          errand.assignedId === user.id || errand.assignedId === "unassigned"
       ) || []
     );
   }, [selectedTabObj, user.id]);
@@ -114,7 +115,8 @@ function TodayTasks() {
     return (
       selectedTabObj?.errandsList
         ?.filter((errand) => errand.ownerId === user.id)
-        .filter((errand) => errand.assignedId !== user.id) || []
+        .filter((errand) => errand.assignedId !== user.id)
+        .filter((errand) => errand.assignedId !== "unassigned") || []
     );
   }, [selectedTabObj, user.id]);
 
