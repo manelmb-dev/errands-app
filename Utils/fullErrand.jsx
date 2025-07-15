@@ -192,7 +192,7 @@ function FullErrand({
               errandList === undefined && (
                 <View className="flex-row">
                   <View
-                    className={`flex-row flex-shrink my-0.5 pl-1 py-0.5 bg-[${themes[theme].incomingTaskFromBg}] rounded-lg items-center gap-2`}
+                    className={`flex-row flex-shrink my-0.5 pl-1 py-0.5 bg-[${themes[theme].taskIncomingFromBg}] rounded-lg items-center gap-2`}
                   >
                     <Ionicons
                       name="return-down-back"
