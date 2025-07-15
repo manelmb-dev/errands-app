@@ -137,7 +137,7 @@ let userExample = {
     {
       id: "100005",
       name: "Lucía",
-      surname: "Martínez",
+      surname: "Martínez Garcia Santos Barreiro",
       phoneNumber: "+34699988877",
       favorite: false,
       blocked: false,
