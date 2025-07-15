@@ -115,7 +115,9 @@ function FilterTasksComp() {
       }))
       .filter((list) => list.errands.length > 0);
 
-    const sharedErrands = filteredErrands.filter((e) => e.listId === "");
+    const sharedErrands = filteredErrands.filter(
+      (e) => !e.deleted && e.listId === "unassigned"
+    );
     if (sharedErrands.length > 0) {
       items.push({
         id: "sharedErrandsId",
