@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 import {
   Alert,
   FlatList,
@@ -23,7 +23,6 @@ import {
 
 import { themes } from "../../constants/themes";
 import i18n from "../../constants/i18n";
-import { set } from "react-hook-form";
 
 const AssignContactSelector = () => {
   const navigation = useNavigation();
@@ -33,6 +32,20 @@ const AssignContactSelector = () => {
   const [, setUserAssigned] = useAtom(userAssignedAtom);
   const [listAssigned, setListAssigned] = useAtom(listAssignedAtom);
   const [theme] = useAtom(themeAtom);
+
+  const sortedLists = useMemo(() => {
+    return [...lists].sort((a, b) => {
+      const aIsShared = a.usersShared.length > 1;
+      const bIsShared = b.usersShared.length > 1;
+
+      // Si a no es compartida y b sí, a va primero
+      if (!aIsShared && bIsShared) return -1;
+      // Si a es compartida y b no, b va primero
+      if (aIsShared && !bIsShared) return 1;
+      // Si ambas son compartidas o no compartidas, mantener orden original
+      return 0;
+    });
+  }, [lists]);
 
   useEffect(() => {
     navigation.setOptions({
@@ -69,7 +82,7 @@ const AssignContactSelector = () => {
       </Text>
       <View>
         <FlatList
-          data={lists}
+          data={sortedLists}
           keyExtractor={(item) => item.id}
           renderItem={({ item }) => (
             <TouchableOpacity
@@ -110,7 +123,14 @@ const AssignContactSelector = () => {
                   <Text className={`text-lg text-[${themes[theme].text}]`}>
                     {item.title}
                   </Text>
-                  <View className="flex-row gap-4">
+                  <View className="flex-row gap-4 items-center">
+                    {item.usersShared.length > 1 && (
+                      <Text
+                        className={`text-sm text-[${themes[theme].taskSecondText}]`}
+                      >
+                        {i18n.t("sharedSingular")}
+                      </Text>
+                    )}
                     {listAssigned.id === item.id && (
                       <FontAwesome6
                         name="check"

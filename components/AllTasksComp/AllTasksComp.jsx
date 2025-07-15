@@ -132,11 +132,11 @@ function AllTasksComp() {
   const flatListData = useMemo(() => {
     const items = lists
       .sort((a, b) => {
-        const aIsNotShared = a.usersShared?.length === 1;
-        const bIsNotShared = b.usersShared?.length === 1;
+        const aIsShared = a.usersShared?.length > 1;
+        const bIsShared = b.usersShared?.length > 1;
 
-        if (aIsNotShared && !bIsNotShared) return -1;
-        if (!aIsNotShared && bIsNotShared) return 1;
+        if (!aIsShared && bIsShared) return -1;
+        if (aIsShared && !bIsShared) return 1;
         return 0;
       })
       .map((list) => ({
