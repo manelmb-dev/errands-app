@@ -185,7 +185,11 @@ const AssignContactSelector = () => {
                 listAssigned.usersShared.length === 1
               ) {
                 setUserAssigned(item);
-                setListAssigned({ id: "", title: i18n.t("shared") });
+                setListAssigned({
+                  id: "",
+                  title: i18n.t("shared"),
+                  usersShared: [user.id],
+                });
               }
               // If assigned list is a shared list, the user presses on a contact only the user assgined will be changed for the contact selected
               else if (
