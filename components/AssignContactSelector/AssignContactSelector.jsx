@@ -34,7 +34,7 @@ const AssignContactSelector = () => {
   const [contacts] = useAtom(contactsAtom);
   const [lists] = useAtom(listsAtom);
   const [userAssigned, setUserAssigned] = useAtom(userAssignedAtom);
-  const [, setListAssigned] = useAtom(listAssignedAtom);
+  const [listAssigned, setListAssigned] = useAtom(listAssignedAtom);
   const [theme] = useAtom(themeAtom);
 
   const [contactSearchedInput, setContactSearchedInput] = useState("");
@@ -68,30 +68,65 @@ const AssignContactSelector = () => {
   }, [navigation, theme, contactSearchedInput]);
 
   const sortedContacts = useMemo(() => {
-    return [
-      { ...user },
-      ...contacts
-        .filter((c) => c.favorite)
-        .sort(
-          (a, b) =>
-            a.name.localeCompare(b.name) || a.surname.localeCompare(b.surname)
-        ),
-      ...contacts
-        .filter((c) => !c.favorite)
-        .sort(
-          (a, b) =>
-            a.name.localeCompare(b.name) || a.surname.localeCompare(b.surname)
-        ),
-    ];
-  }, [contacts, user]);
+    // If list is not shared
+    if (listAssigned.usersShared.length === 1) {
+      return [
+        { ...user },
+        ...contacts
+          .filter((c) => c.favorite)
+          .sort(
+            (a, b) =>
+              a.name.localeCompare(b.name) ||
+              a.surname?.localeCompare(b.surname)
+          ),
+        ...contacts
+          .filter((c) => !c.favorite)
+          .sort(
+            (a, b) =>
+              a.name.localeCompare(b.name) ||
+              a.surname?.localeCompare(b.surname)
+          ),
+      ];
+    }
+
+    // If list is shared
+    if (listAssigned.usersShared.length !== 1) {
+      return [
+        { id: "unassigned", name: i18n.t("unassigned") },
+        { ...user },
+        ...contacts
+          .filter((c) => listAssigned.usersShared.includes(c.id))
+          .sort(
+            (a, b) =>
+              a.name.localeCompare(b.name) ||
+              a.surname?.localeCompare(b.surname)
+          ),
+        // FIX THISSSS Below: contacts will have to be users
+        ...contacts
+          .filter(
+            (c) =>
+              listAssigned.usersShared.includes(c.id) &&
+              !contacts.some((existing) => existing.id === c.id) &&
+              c.id !== user.id
+          )
+          .sort(
+            (a, b) =>
+              a.name.localeCompare(b.name) ||
+              a.surname?.localeCompare(b.surname)
+          ),
+      ];
+    }
+  }, [contacts, user, listAssigned.usersShared]);
 
   useEffect(() => {
     setFilteredContacts(
-      sortedContacts.filter((contact) =>
-        (contact.name + contact.surname)
+      sortedContacts.filter((contact) => {
+        const fullName =
+          contact.name + (contact.surname ? " " + contact.surname : "");
+        return fullName
           .toLowerCase()
-          .includes(contactSearchedInput.toLowerCase())
-      )
+          .includes(contactSearchedInput.toLowerCase());
+      })
     );
   }, [contactSearchedInput, sortedContacts]);
 
@@ -127,12 +162,37 @@ const AssignContactSelector = () => {
             className={`h-16 border-b border-[${themes[theme].borderColor}]`}
             underlayColor={themes[theme].background}
             onPress={() => {
-              if (item.id === user.id && userAssigned.id !== user.id) {
+              // If assigned list is NOT a shared list, current user assigned is not the user and the user presses on self the assigned list will be the first user list
+              if (
+                item.id === user.id &&
+                userAssigned.id !== user.id &&
+                listAssigned.usersShared.length === 1
+              ) {
                 setUserAssigned(item);
                 setListAssigned(lists[0]);
-              } else if (item.id !== user.id) {
+              }
+              // If assigned list is a shared list, current user assigned is not the user and the user presses on self only will change the user assigned
+              else if (
+                item.id === user.id &&
+                userAssigned.id !== user.id &&
+                listAssigned.usersShared.length !== 1
+              ) {
+                setUserAssigned(item);
+              }
+              // If assigned list is NOT a shared list, the user presses on a contact the user assgined will be the contact selected and the list assigned will be the general shared list
+              else if (
+                item.id !== user.id &&
+                listAssigned.usersShared.length === 1
+              ) {
                 setUserAssigned(item);
                 setListAssigned({ id: "", title: i18n.t("shared") });
+              }
+              // If assigned list is a shared list, the user presses on a contact only the user assgined will be changed for the contact selected
+              else if (
+                item.id !== user.id &&
+                listAssigned.usersShared.length !== 1
+              ) {
+                setUserAssigned(item);
               }
               navigation.goBack();
             }}

@@ -114,9 +114,10 @@ const NewTaskModal = () => {
   useEffect(() => {
     if (currentList) {
       setListAssigned(currentList);
-      setUserAssigned(user);
+      setUserAssigned({ id: "unassigned", name: i18n.t("unassigned") });
+      setValue("assignedId", "unassigned");
     }
-  }, [currentList, user, setUserAssigned, setListAssigned]);
+  }, [currentList, user, setUserAssigned, setListAssigned, setValue]);
 
   useEffect(() => {
     navigation.setOptions({
@@ -373,7 +374,8 @@ const NewTaskModal = () => {
                   className={`mr-4 px-2 py-1 rounded-2xl gap-1 flex-row items-center ${theme === "light" ? "bg-blue-100" : "bg-blue-600"}`}
                 >
                   <Text className={`text-lg text-[${themes[theme].text}]`}>
-                    {userAssigned.name} {userAssigned.surname}
+                    {userAssigned.name}
+                    {userAssigned.surname ? ` ${userAssigned.surname}` : ""}
                     {userAssigned.id === user.id && ` (${i18n.t("me")})`}
                   </Text>
                   <Ionicons

@@ -3,11 +3,12 @@ import Animated, { FadeOut } from "react-native-reanimated";
 import { Pressable, Text, TouchableOpacity, View } from "react-native";
 import { useForm } from "react-hook-form";
 import { router } from "expo-router";
-import { useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 
 import {
   contactsAtom,
   errandsAtom,
+  listsAtom,
   themeAtom,
   userAtom,
 } from "../constants/storeAtoms";
@@ -27,33 +28,48 @@ function FullErrand({
   onCompleteWithUndo,
 }) {
   const today = new Date().toISOString().split("T")[0];
+
   const [user] = useAtom(userAtom);
-  const [errands, setErrands] = useAtom(errandsAtom);
-  const [contacts] = useAtom(contactsAtom);
   const [theme] = useAtom(themeAtom);
+  const [contacts] = useAtom(contactsAtom);
+  const [lists] = useAtom(listsAtom);
+  const [errands, setErrands] = useAtom(errandsAtom);
 
   const [isDateTimePickerVisible, setIsDateTimePickerVisible] = useState(false);
 
-  const { handleSubmit, watch, setValue, getValues } = useForm({
+  const { watch, setValue } = useForm({
     defaultValues: { ...errand },
   });
 
-  const repeatOptions = [
-    { label: i18n.t("never"), value: "never" },
-    { label: i18n.t("daily"), value: "daily" },
-    { label: i18n.t("weekDays"), value: "weekDays" },
-    { label: i18n.t("weekendDays"), value: "weekendDays" },
-    { label: i18n.t("weekly"), value: "weekly" },
-    { label: i18n.t("monthly"), value: "monthly" },
-    { label: i18n.t("yearly"), value: "yearly" },
-  ];
+  const assignedContact = useMemo(() => {
+    if (errand.assignedId === user.id) return user;
 
-  const assignedContact = contacts.find(
-    (contact) => contact.id.toString() === errand.assignedId.toString()
+    const contact = contacts.find(
+      (contact) => contact.id === errand.assignedId
+    );
+    if (contact) return contact;
+
+    // FIX THISSSS Below: contacts will have to be replaced for users collection
+    const unknownContact = contacts.find(
+      (user) => user.id === errand.assignedId
+    );
+    if (unknownContact) {
+      return { id: errand.assignedId, name: unknownContact.username };
+    }
+    return null;
+  }, [contacts, errand.assignedId, user]);
+
+  const creatorContact = useMemo(
+    () =>
+      contacts.find(
+        (contact) => contact.id.toString() === errand.ownerId.toString()
+      ),
+    [contacts, errand.ownerId]
   );
 
-  const creatorContact = contacts.find(
-    (contact) => contact.id.toString() === errand.ownerId.toString()
+  const errandList = useMemo(
+    () => lists.find((list) => list.id === errand.listId),
+    [lists, errand.listId]
   );
 
   const handleDateTimeConfirm = (datetime) => {
@@ -115,33 +131,36 @@ function FullErrand({
       completedDateErrand: formattedDate,
       completedTimeErrand: formattedTime,
     });
+
+    // Send notifications if needed to all the users
   };
+
+  const navigateToModal = useCallback(() => {
+    if (
+      openSwipeableRef.current &&
+      openSwipeableRef.current !== swipeableRefs.current[errand.id]
+    ) {
+      openSwipeableRef.current.close();
+      openSwipeableRef.current = null;
+      return;
+    }
+
+    const pathname =
+      errand.ownerId === user.id || errandList !== undefined
+        ? "Modals/editTaskModal"
+        : "Modals/viewIncomingTaskModal";
+
+    router.push({
+      pathname,
+      params: { errand: JSON.stringify(errand) },
+    });
+  }, [errand, user.id, openSwipeableRef, swipeableRefs, errandList]);
 
   return (
     <Animated.View exiting={FadeOut}>
       <Pressable
         className={`pl-3 flex-row items-center justify-between bg-[${themes[theme].background}]`}
-        onPress={() => {
-          if (
-            openSwipeableRef.current &&
-            openSwipeableRef.current !== swipeableRefs.current[errand.id]
-          ) {
-            openSwipeableRef.current.close();
-            openSwipeableRef.current = null;
-            return;
-          }
-          if (errand.ownerId === user.id) {
-            router.push({
-              pathname: "Modals/editTaskModal",
-              params: { errand: JSON.stringify(errand) },
-            });
-          } else {
-            router.push({
-              pathname: "Modals/viewIncomingTaskModal",
-              params: { errand: JSON.stringify(errand) },
-            });
-          }
-        }}
+        onPress={navigateToModal}
       >
         {/* Check icon */}
         <Octicons
@@ -168,39 +187,78 @@ function FullErrand({
               {errand.title}
             </Text>
 
-            {user.id !== errand.ownerId && user.id === errand.assignedId && (
-              <View className="flex-row">
-                <View
-                  className={`flex-row my-0.5 px-2 p-0.5 bg-[${themes[theme].taskIncomingFromBg}] rounded-lg items-center gap-2`}
-                >
-                  <Ionicons name="return-down-back" size={18} color="#6E727A" />
-                  <Text
-                    className={`text-sm text-[${themes[theme].taskSecondText}]`}
+            {user.id !== errand.ownerId &&
+              user.id === errand.assignedId &&
+              errandList === undefined && (
+                <View className="flex-row">
+                  <View
+                    className={`flex-row my-0.5 px-2 p-0.5 bg-[${themes[theme].taskIncomingFromBg}] rounded-lg items-center gap-2`}
                   >
-                    {creatorContact.name} {creatorContact.surname}
-                  </Text>
+                    <Ionicons
+                      name="return-down-back"
+                      size={18}
+                      color="#6E727A"
+                    />
+                    <Text
+                      className={`text-sm text-[${themes[theme].taskSecondText}]`}
+                    >
+                      {creatorContact.name}
+                      {creatorContact.surname
+                        ? ` ${creatorContact.surname}`
+                        : ""}
+                    </Text>
+                  </View>
                 </View>
-              </View>
-            )}
+              )}
 
-            {errand.ownerId === user.id && user.id !== errand.assignedId && (
-              <View className="flex-row">
-                <View
-                  className={`flex-row my-0.5 px-2 p-0.5 bg-[${themes[theme].outgoingTaskToBg}] rounded-lg items-center gap-2`}
-                >
-                  <Ionicons
-                    name="return-down-forward"
-                    size={18}
-                    color="#6E727A"
-                  />
-                  <Text
-                    className={`text-sm text-[${themes[theme].taskSecondText}]`}
+            {errand.ownerId === user.id &&
+              user.id !== errand.assignedId &&
+              assignedContact !== undefined &&
+              errandList === undefined && (
+                <View className="flex-row">
+                  <View
+                    className={`flex-row my-0.5 px-2 p-0.5 bg-[${themes[theme].outgoingTaskToBg}] rounded-lg items-center gap-2`}
                   >
-                    {assignedContact.name} {assignedContact.surname}
-                  </Text>
+                    <Ionicons
+                      name="return-down-forward"
+                      size={18}
+                      color="#6E727A"
+                    />
+                    <Text
+                      className={`text-sm text-[${themes[theme].taskSecondText}]`}
+                    >
+                      {assignedContact.name}
+                      {assignedContact.surname
+                        ? ` ${assignedContact.surname}`
+                        : ""}
+                    </Text>
+                  </View>
                 </View>
-              </View>
-            )}
+              )}
+
+            {assignedContact &&
+              errandList !== undefined &&
+              errandList.usersShared.length > 1 && (
+                <View className="flex-row">
+                  <View
+                    className={`flex-row my-0.5 px-2 p-0.5 bg-[${themes[theme].taskIncomingFromBg}] rounded-lg items-center gap-2`}
+                  >
+                    {/* <Ionicons
+                      name="return-down-back"
+                      size={18}
+                      color="#6E727A"
+                    /> */}
+                    <Text
+                      className={`text-sm text-[${themes[theme].taskSecondText}]`}
+                    >
+                      {assignedContact.name}
+                      {assignedContact.surname
+                        ? ` ${assignedContact.surname}`
+                        : ""}
+                    </Text>
+                  </View>
+                </View>
+              )}
           </View>
 
           {/* Status icons */}

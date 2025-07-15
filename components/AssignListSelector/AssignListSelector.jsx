@@ -23,6 +23,7 @@ import {
 
 import { themes } from "../../constants/themes";
 import i18n from "../../constants/i18n";
+import { set } from "react-hook-form";
 
 const AssignContactSelector = () => {
   const navigation = useNavigation();
@@ -76,8 +77,19 @@ const AssignContactSelector = () => {
               underlayColor={themes[theme].background}
               className={`h-16 border-b border-[${themes[theme].borderColor}]`}
               onPress={() => {
-                setListAssigned(item);
-                setUserAssigned(user);
+                // If list is NOT shared set user assigned to user
+                if (item.usersShared.length === 1) {
+                  setListAssigned(item);
+                  setUserAssigned(user);
+                }
+                // If list is shared set user assigned to unassigned
+                else if (item.usersShared.length > 1) {
+                  setListAssigned(item);
+                  setUserAssigned({
+                    id: "unassigned",
+                    name: i18n.t("unassigned"),
+                  });
+                }
                 navigation.goBack();
               }}
             >
@@ -128,7 +140,14 @@ const AssignContactSelector = () => {
               i18n.t("invalidAction"),
               `${i18n.t("sharedListSelectedAlertText")}`,
               [
-                { text: i18n.t("ok") }, // Dismiss the alert,
+                {
+                  text: i18n.t("ok"),
+                  onPress: () => {
+                    navigation.goBack();
+                    setUserAssigned(user);
+                    setListAssigned(lists[0]);
+                  },
+                }, // Dismiss the alert,
               ]
             );
           }}

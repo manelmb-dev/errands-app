@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
+import { useForm, Controller } from "react-hook-form";
 import { useNavigation } from "expo-router";
 import {
   View,
@@ -10,7 +11,6 @@ import {
   Keyboard,
   TouchableWithoutFeedback,
 } from "react-native";
-import { useForm, Controller } from "react-hook-form";
 
 import {
   currentListAtom,
@@ -30,7 +30,6 @@ import ColorGrid from "../../Utils/New&EditListUtils/ColorGrid";
 import IconGrid from "../../Utils/New&EditListUtils/IconGrid";
 import { themes } from "../../constants/themes";
 import i18n from "../../constants/i18n";
-import users from "../../users";
 
 const NewListModal = () => {
   const navigation = useNavigation();

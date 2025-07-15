@@ -118,7 +118,13 @@ const EditTaskModal = () => {
       color: "slate",
     };
     const fullList = lists.find((list) => list.id === currentErrand.listId);
-    if (fullContact) setUserAssigned(fullContact);
+    if (fullContact) {
+      setUserAssigned(fullContact);
+    } else if (currentErrand.assignedId === "unassigned")
+      setUserAssigned({
+        id: "unassigned",
+        name: i18n.t("unassigned"),
+      });
     setListAssigned(fullList || sharedList);
   }, [contacts, lists, currentErrand, setUserAssigned, setListAssigned]);
 
@@ -355,7 +361,8 @@ const EditTaskModal = () => {
                   className={`mr-4 px-2 py-1 rounded-2xl gap-1 flex-row items-center ${theme === "light" ? "bg-blue-100" : "bg-blue-600"}`}
                 >
                   <Text className={`text-lg text-[${themes[theme].text}]`}>
-                    {userAssigned.name} {userAssigned.surname}
+                    {userAssigned.name}
+                    {userAssigned.surname ? ` ${userAssigned.surname}` : ""}
                     {userAssigned.id === user.id && ` (${i18n.t("me")})`}
                   </Text>
                   <Ionicons
@@ -374,9 +381,13 @@ const EditTaskModal = () => {
             underlayColor={themes[theme].background}
             onPress={() => {
               Keyboard.dismiss();
-              router.push({
-                pathname: "/Modals/assignListModal",
-              });
+              if (currentErrand.ownerId === user.id) {
+                router.push({
+                  pathname: "/Modals/assignListModal",
+                });
+              } else {
+                Alert.alert(`${i18n.t("changeListNotAllowedText")}`);
+              }
             }}
           >
             <View className={`flex-row items-center rounded-b-xl`}>
@@ -391,16 +402,18 @@ const EditTaskModal = () => {
                   {i18n.t("list")}
                 </Text>
                 <View
-                  className={`mr-4 px-2 py-1 gap-1 flex-row items-center ${listAssigned.id === "" || listAssigned === false ? `bg-[${themes[theme].buttonMenuBackground}]` : `${theme === "light" ? "bg-slate-300" : "bg-slate-600"}`} rounded-2xl`}
+                  className={`mr-4 px-2 py-1 gap-1 flex-row items-center ${listAssigned.id === "" || listAssigned === false || currentErrand.ownerId !== user.id ? `bg-[${themes[theme].buttonMenuBackground}]` : `${theme === "light" ? "bg-slate-300" : "bg-slate-600"}`} rounded-2xl`}
                 >
                   <Text className={`text-lg text-[${themes[theme].text}]`}>
                     {listAssigned ? `${listAssigned.title}` : i18n.t("shared")}
                   </Text>
-                  <Ionicons
-                    name="chevron-forward"
-                    size={18}
-                    color={themes["light"].text}
-                  />
+                  {currentErrand.ownerId === user.id && (
+                    <Ionicons
+                      name="chevron-forward"
+                      size={18}
+                      color={themes["light"].text}
+                    />
+                  )}
                 </View>
               </View>
             </View>

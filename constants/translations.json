@@ -15,6 +15,7 @@
         "wellDone!": "Well done!",
         "allYourTasksAreCompleted": "All your tasks are completed.",
         "assign": "Assign",
+        "unassigned": "Unassigned",
         "assignErrand": "Assign Errand",
         "errand": "Errand",
         "errands": "Errands",
@@ -100,6 +101,7 @@
         "noSearchErrands": "No errands found with this title",
         "addList": "Add list",
         "editLists": "Edit lists",
+        "changeListNotAllowedText": "This task can't be moved to another list because it was created by a different user.",
         "myLists": "My lists",
         "sharedLists": "Shared lists",
         "noSharedLists": "There are no shared lists",
@@ -237,6 +239,7 @@
       "wellDone!": "Buen trabajo!",
       "allYourTasksAreCompleted": "Todas tus tareas han sido completadas.",
       "assign": "Asignar",
+      "unassigned": "Sin asignar",
       "assignErrand": "Asignar tarea",
       "errand": "Tarea",
       "errands": "Tareas",
@@ -322,6 +325,7 @@
       "noSearchErrands": "No existen tareas con este título",
       "addList": "Añadir lista",
       "editLists": "Editar listas",
+      "changeListNotAllowedText": "Esta tarea no se puede mover a otra lista porque la creó otro usuario.",
       "myLists": "Mis listas",
       "sharedLists": "Listas compartidas",
       "noSharedLists": "No tienes listas compartidas",
@@ -428,7 +432,7 @@
       "changesInErrands": "Cambios en tareas",
       "ownTasks": "Tareas propias",
       "invalidAction": "Acción inválida",
-      "sharedListSelectedAlertText": "La lista compartida no se puede asignar a ningunatarea. Se seleccionará la lista compartida automáticamente si asignas la tarea a un contacto."
+      "sharedListSelectedAlertText": "La lista compartida no se puede asignar a ninguna tarea. Se seleccionará la lista compartida automáticamente si asignas la tarea a un contacto."
 
       
       
@@ -458,6 +462,7 @@
       "wellDone!": "Molt bé!",
       "allYourTasksAreCompleted": "Totes les tasques han estat completades.",
       "assign": "Assignar",
+      "unassigned": "Sense assignar",
       "assignErrand": "Assignar tasca",
       "errand": "Tasca",
       "errands": "Tasques",
@@ -543,6 +548,7 @@
       "noSearchErrands": "No existeixen tasques amb aquest títol",
       "addList": "Afegeix llista",
       "editLists": "Editar llistes",
+      "changeListNotAllowedText": "Aquesta tasca no es pot moure a una altra llista perquè l'ha creada un altre usuari.",
       "myLists": "Les meves llistes",
       "sharedLists": "Llistes compartides",
       "noSharedLists": "No tens llistes compartides",
@@ -649,7 +655,7 @@
       "changesInErrands": "Canvis en tasques",
       "ownTasks": "Tascas propies",
       "invalidAction": "Acció invàlida",
-      "sharedListSelectedAlertText": "Les llistes compartides no es poden assignar a tasques. Es seleccionarà la llista compartida si assignes la tasca a un contacte."
+      "sharedListSelectedAlertText": "La llista compartida no es pot assignar a cap tasca. Es seleccionarà la llista compartida si assignes la tasca a un contacte."
 
 
 
