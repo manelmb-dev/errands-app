@@ -132,13 +132,13 @@ export default function ListSection() {
                     className={`mr-7 text-lg font-semibold text-[${themes[theme].listTitle}]`}
                   >
                     {
-                      errands
-                        .filter((errand) => !errand.deleted)
-                        .filter((errand) => !errand.completed)
-                        .filter((errand) => errand.listId === "")
-                        .filter(
-                          (errand) => errand.ownerId !== errand.assignedId
-                        ).length
+                      errands.filter(
+                        (e) =>
+                          !e.deleted &&
+                          !e.completed &&
+                          e.ownerId !== e.assignedId &&
+                          e.assignedId !== "unassigned"
+                      ).length
                     }
                   </Text>
                 </View>

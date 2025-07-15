@@ -94,11 +94,11 @@ const SharedTasksComp = () => {
 
     if (mainTab === "outgoing") {
       baseList = baseList.filter(
-        (e) => !e.deleted && e.ownerId === user.id && e.assignedId !== user.id
+        (e) => e.ownerId === user.id && e.assignedId !== user.id
       );
     } else if (mainTab === "incoming") {
       baseList = baseList.filter(
-        (e) => !e.deleted && e.ownerId !== user.id && e.assignedId === user.id
+        (e) => e.ownerId !== user.id && e.assignedId === user.id
       );
     }
 
@@ -106,9 +106,9 @@ const SharedTasksComp = () => {
       new Date(`${e.dateErrand}T${e.timeErrand || "20:00"}`);
 
     if (subFilter === "pending") {
-      baseList = baseList.filter((e) => !e.deleted && !e.completed);
+      baseList = baseList.filter((e) => !e.completed);
     } else if (subFilter === "completed") {
-      baseList = baseList.filter((e) => !e.deleted && e.completed);
+      baseList = baseList.filter((e) => e.completed);
     }
 
     return baseList.sort((a, b) => {
