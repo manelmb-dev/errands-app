@@ -192,7 +192,7 @@ function FullErrand({
               errandList === undefined && (
                 <View className="flex-row">
                   <View
-                    className={`flex-row my-0.5 px-2 p-0.5 bg-[${themes[theme].taskIncomingFromBg}] rounded-lg items-center gap-2`}
+                    className={`flex-row flex-shrink my-0.5 pl-1 py-0.5 bg-[${themes[theme].incomingTaskFromBg}] rounded-lg items-center gap-2`}
                   >
                     <Ionicons
                       name="return-down-back"
@@ -200,7 +200,9 @@ function FullErrand({
                       color="#6E727A"
                     />
                     <Text
-                      className={`text-sm text-[${themes[theme].taskSecondText}]`}
+                      className={`mr-4 text-sm text-[${themes[theme].taskSecondText}]`}
+                      numberOfLines={1}
+                      ellipsizeMode="tail"
                     >
                       {creatorContact.name}
                       {creatorContact.surname
@@ -217,7 +219,7 @@ function FullErrand({
               errandList === undefined && (
                 <View className="flex-row">
                   <View
-                    className={`flex-row my-0.5 px-2 p-0.5 bg-[${themes[theme].outgoingTaskToBg}] rounded-lg items-center gap-2`}
+                    className={`flex-row flex-shrink my-0.5 pl-1 py-0.5 bg-[${themes[theme].outgoingTaskToBg}] rounded-lg items-center gap-2`}
                   >
                     <Ionicons
                       name="return-down-forward"
@@ -225,7 +227,9 @@ function FullErrand({
                       color="#6E727A"
                     />
                     <Text
-                      className={`text-sm text-[${themes[theme].taskSecondText}]`}
+                      className={`mr-4 text-sm text-[${themes[theme].taskSecondText}]`}
+                      numberOfLines={1}
+                      ellipsizeMode="tail"
                     >
                       {assignedContact.name}
                       {assignedContact.surname
@@ -241,7 +245,7 @@ function FullErrand({
               errandList.usersShared.length > 1 && (
                 <View className="flex-row">
                   <View
-                    className={`flex-row my-0.5 px-2 p-0.5 bg-[${themes[theme].taskAssignedSharedListBg}] rounded-lg items-center gap-2`}
+                    className={`flex-row flex-shrink my-0.5 px-2 py-0.5 bg-[${themes[theme].taskAssignedSharedListBg}] rounded-lg items-center`}
                   >
                     {/* <Ionicons
                       name="return-down-back"
@@ -250,6 +254,8 @@ function FullErrand({
                     /> */}
                     <Text
                       className={`text-sm text-[${themes[theme].taskSecondText}]`}
+                      numberOfLines={1}
+                      ellipsizeMode="tail"
                     >
                       {assignedContact.name}
                       {assignedContact.surname
