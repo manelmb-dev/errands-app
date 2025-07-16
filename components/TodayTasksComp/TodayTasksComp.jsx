@@ -75,8 +75,9 @@ function TodayTasks() {
       value: "pending",
       emptyListText: i18n.t("youAreUpToDate"),
       errandsList: errands
-        .filter((errand) => !errand.completed)
-        .filter((errand) => !errand.deleted)
+        .filter(
+          (errand) => !errand.completed && !errand.deleted && errand.dateErrand
+        )
         .filter(
           (errand) =>
             new Date(errand.dateErrand).toISOString().split("T")[0] <=
@@ -88,8 +89,13 @@ function TodayTasks() {
       value: "completed",
       emptyListText: i18n.t("thereAreNoCompletedErrands"),
       errandsList: errands
-        .filter((errand) => errand.completed)
-        .filter((errand) => !errand.deleted)
+        .filter(
+          (errand) =>
+            !errand.completed &&
+            !errand.deleted &&
+            errand.dateErrand &&
+            errand.completedDateErrand
+        )
         .filter(
           (errand) =>
             new Date(errand.dateErrand).toISOString().split("T")[0] ===
