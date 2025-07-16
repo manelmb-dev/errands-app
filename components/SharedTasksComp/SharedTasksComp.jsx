@@ -4,7 +4,12 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { View, Text, Pressable } from "react-native";
 import { useLocalSearchParams, useNavigation } from "expo-router";
 
-import { errandsAtom, themeAtom, userAtom } from "../../constants/storeAtoms";
+import {
+  errandsAtom,
+  listsAtom,
+  themeAtom,
+  userAtom,
+} from "../../constants/storeAtoms";
 import { useAtom } from "jotai";
 
 import Ionicons from "react-native-vector-icons/Ionicons";
@@ -27,6 +32,7 @@ const SharedTasksComp = () => {
 
   const [theme] = useAtom(themeAtom);
   const [user] = useAtom(userAtom);
+  const [lists] = useAtom(listsAtom);
   const [errands, setErrands] = useAtom(errandsAtom);
 
   const openSwipeableRef = useRef(null);
@@ -84,12 +90,14 @@ const SharedTasksComp = () => {
     { label: i18n.t("completed"), value: "completed" },
   ];
 
+  const errandList = (e) => lists.find((list) => list.id === e.listId);
+
   const filteredErrands = useMemo(() => {
     let baseList = errands.filter(
       (e) =>
         !e.deleted &&
         e.ownerId !== e.assignedId &&
-        e.assignedId !== "unassigned"
+        (errandList(e) === undefined || errandList(e).usersShared.length === 1)
     );
 
     if (mainTab === "outgoing") {
