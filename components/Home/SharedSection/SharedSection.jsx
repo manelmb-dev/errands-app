@@ -11,7 +11,7 @@ import {
 import { useAtom } from "jotai";
 
 import { themes } from "../../../constants/themes";
-import { getSharedSlides } from "./slides";
+import { useSharedSlides } from "./slides";
 
 export default function SharedSection() {
   const router = useRouter();
@@ -23,7 +23,7 @@ export default function SharedSection() {
   const [theme] = useAtom(themeAtom);
   const [errands] = useAtom(errandsAtom);
 
-  const slides = getSharedSlides(errands, user);
+  const slides = useSharedSlides(errands, user);
 
   return (
     <View

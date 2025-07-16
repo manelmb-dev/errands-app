@@ -1,6 +1,9 @@
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import i18n from "../../../constants/i18n";
 
+import { listsAtom } from "../../../constants/storeAtoms";
+import { useAtom } from "jotai";
+
 const getCurrentWeekRange = () => {
   const now = new Date();
   const day = now.getDay();
@@ -32,7 +35,11 @@ const getPending = (errands, now, end) =>
 
 const getOverdue = (errands, now) => errands.filter((e) => e.dateTime <= now);
 
-export const getSharedSlides = (errands, user) => {
+export const useSharedSlides = (errands, user) => {
+  const [lists] = useAtom(listsAtom);
+
+  const errandList = (e) => lists.find((list) => list.id === e.listId);
+
   const rightNow = new Date();
 
   const { startOfWeek, endOfWeek } = getCurrentWeekRange();
@@ -42,10 +49,10 @@ export const getSharedSlides = (errands, user) => {
   const outgoingErrands = enrichedErrands.filter(
     (e) =>
       !e.deleted &&
+      !e.completed &&
       e.ownerId === user.id &&
       e.assignedId !== user.id &&
-      e.assignedId !== "unassigned" &&
-      !e.completed &&
+      (errandList(e) === undefined || errandList(e).usersShared.length === 1) &&
       e.dateErrand &&
       e.dateTime <= endOfWeek
   );
@@ -56,6 +63,7 @@ export const getSharedSlides = (errands, user) => {
       e.ownerId !== user.id &&
       e.assignedId === user.id &&
       !e.completed &&
+      (errandList(e) === undefined || errandList(e).usersShared.length === 1) &&
       e.dateErrand &&
       e.dateTime <= endOfWeek
   );
@@ -64,7 +72,7 @@ export const getSharedSlides = (errands, user) => {
     (e) =>
       !e.deleted &&
       e.ownerId !== e.assignedId &&
-      e.assignedId !== "unassigned" &&
+      (errandList(e) === undefined || errandList(e).usersShared.length === 1) &&
       e.completed &&
       ((e.completedDateErrand >= startOfWeek &&
         e.completedDateErrand <= endOfWeek) ||
