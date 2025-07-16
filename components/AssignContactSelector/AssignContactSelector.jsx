@@ -137,7 +137,8 @@ const AssignContactSelector = () => {
       >
         {userAssigned.id === user.id
           ? i18n.t("errandForMe")
-          : userAssigned.name + " " + userAssigned.surname}
+          : userAssigned.name +
+            (userAssigned.surname ? ` ${userAssigned.surname}` : "")}
       </Text>
       {filteredContacts.length > 0 && (
         <Text
