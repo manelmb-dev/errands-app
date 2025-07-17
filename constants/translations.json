@@ -1,5 +1,13 @@
 {
     "en": {
+        "wellcome": "Wellcome",
+        "wellcomeText": "Create an account to start planning your life and share errands to your people.",
+        "getStarted": "Get started",
+        "next": "Next",
+        "phoneNumber": "Phone number",
+        "enterPhoneNumber": "Enter your phone number",
+        "inserValidPhoneNumber": "Insert a valid phone number",
+        "searchYourCountry": "Search your country",
         "pending": "Pending",
         "pendingTasks": "Pending tasks",
         "completed": "Completed",
@@ -224,6 +232,15 @@
 
     },
     "es": {
+      "wellcome": "Bienvenido",
+      "wellcomeText": "Crea una cuenta para empezar a planificar tu vida y compartir tareas a tus contactos.",
+      "getStarted": "Continuar",
+      "next": "Continuar",
+      "singUp": "Registrarse",
+      "phoneNumber": "Número de teléfono",
+      "enterPhoneNumber": "Introduce tu número de teléfono",
+      "inserValidPhoneNumber": "Inserta un número de teléfono válido",
+      "searchYourCountry": "Busca tu país",
       "pending": "Pendientes",
       "pendingTasks": "Tareas pendientes",
       "completed": "Completados",
@@ -447,6 +464,15 @@
 
     },
     "ca": {
+      "wellcome": "Benvingut",
+      "wellcomeText": "Crea una compte per començar a planificar la teva vida i compartir tasques a els teus contactes.",
+      "getStarted": "Continuar",
+      "next": "Continuar",
+      "singUp": "Registrar-se",
+      "phoneNumber": "Número de telèfon",
+      "enterPhoneNumber": "Introdueix el teu número de telèfon",
+      "inserValidPhoneNumber": "Introdueix un número de telèfon vàlid",
+      "searchYourCountry": "Busca el teu país",
       "pending": "Pendents",
       "pendingTasks": "Tasques pendents",
       "completed": "Completats",
