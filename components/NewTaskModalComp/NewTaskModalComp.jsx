@@ -306,7 +306,7 @@ const NewTaskModal = () => {
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <View className={`p-6 gap-4 bg-[${themes[theme].background}] h-full`}>
         <View
-          className={`bg-[${themes[theme].buttonMenuBackground}] rounded-xl border border-[${themes[theme].borderColor}] shadow-sm ${theme === "light" ? "shadow-gray-100" : "shadow-neutral-950"}`}
+          className={`bg-[${themes[theme].surfaceBackground}] rounded-xl border border-[${themes[theme].borderColor}] shadow-sm ${theme === "light" ? "shadow-gray-100" : "shadow-neutral-950"}`}
         >
           <Controller
             control={control}
@@ -344,7 +344,7 @@ const NewTaskModal = () => {
         </View>
 
         <View
-          className={`bg-[${themes[theme].buttonMenuBackground}] rounded-xl border border-[${themes[theme].borderColor}] shadow-sm ${theme === "light" ? "shadow-gray-100" : "shadow-neutral-950"}`}
+          className={`bg-[${themes[theme].surfaceBackground}] rounded-xl border border-[${themes[theme].borderColor}] shadow-sm ${theme === "light" ? "shadow-gray-100" : "shadow-neutral-950"}`}
         >
           {/* Assign errand */}
           <TouchableHighlight
@@ -432,7 +432,7 @@ const NewTaskModal = () => {
         </View>
 
         <View
-          className={`bg-[${themes[theme].buttonMenuBackground}] rounded-xl border border-[${themes[theme].borderColor}] shadow-sm ${theme === "light" ? "shadow-gray-100" : "shadow-neutral-950"}`}
+          className={`bg-[${themes[theme].surfaceBackground}] rounded-xl border border-[${themes[theme].borderColor}] shadow-sm ${theme === "light" ? "shadow-gray-100" : "shadow-neutral-950"}`}
         >
           {/* Date */}
           <TouchableHighlight
@@ -577,7 +577,7 @@ const NewTaskModal = () => {
                   </Text>
                 </View>
                 <View
-                  className={`mr-4 px-2 py-1 gap-1 flex-row items-center ${watch("repeat") === "never" ? `bg-[${themes[theme].buttonMenuBackground}]` : `${theme === "light" ? "bg-violet-300" : "bg-violet-500"}`} rounded-2xl`}
+                  className={`mr-4 px-2 py-1 gap-1 flex-row items-center ${watch("repeat") === "never" ? `bg-[${themes[theme].surfaceBackground}]` : `${theme === "light" ? "bg-violet-300" : "bg-violet-500"}`} rounded-2xl`}
                 >
                   <Text className={`text-lg text-[${themes[theme].text}]`}>
                     {
@@ -598,7 +598,7 @@ const NewTaskModal = () => {
         </View>
 
         <View
-          className={`bg-[${themes[theme].buttonMenuBackground}] rounded-xl border border-[${themes[theme].borderColor}] shadow-sm ${theme === "light" ? "shadow-gray-100" : "shadow-neutral-950"}`}
+          className={`bg-[${themes[theme].surfaceBackground}] rounded-xl border border-[${themes[theme].borderColor}] shadow-sm ${theme === "light" ? "shadow-gray-100" : "shadow-neutral-950"}`}
         >
           {/* Marked */}
           <TouchableHighlight
@@ -650,7 +650,7 @@ const NewTaskModal = () => {
                 </Text>
               </View>
               <View
-                className={`mr-4 px-2 py-1 gap-1 flex-row items-center ${watch("priority") === "none" ? `bg-[${themes[theme].buttonMenuBackground}]` : `${theme === "light" ? "bg-rose-300" : "bg-rose-500"}`} rounded-2xl`}
+                className={`mr-4 px-2 py-1 gap-1 flex-row items-center ${watch("priority") === "none" ? `bg-[${themes[theme].surfaceBackground}]` : `${theme === "light" ? "bg-rose-300" : "bg-rose-500"}`} rounded-2xl`}
               >
                 <Text className={`text-lg text-[${themes[theme].text}]`}>
                   {

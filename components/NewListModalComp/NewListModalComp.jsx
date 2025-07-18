@@ -171,7 +171,7 @@ const NewListModal = () => {
           />
         </View>
         <View
-          className={`w-full ${showIconGrid && "flex-1"} bg-[${themes[theme].buttonMenuBackground}] mb-8 rounded-xl border border-[${themes[theme].borderColor}] shadow-sm ${theme === "light" ? "shadow-gray-100" : "shadow-neutral-950"}`}
+          className={`w-full ${showIconGrid && "flex-1"} bg-[${themes[theme].surfaceBackground}] mb-8 rounded-xl border border-[${themes[theme].borderColor}] shadow-sm ${theme === "light" ? "shadow-gray-100" : "shadow-neutral-950"}`}
         >
           <Controller
             control={control}
@@ -200,7 +200,7 @@ const NewListModal = () => {
             }}
           >
             <View
-              className={`flex-row items-center bg-[${themes[theme].buttonMenuBackground}]`}
+              className={`flex-row items-center bg-[${themes[theme].surfaceBackground}]`}
             >
               <MaterialCommunityIcons
                 className="mx-4 p-1.5 bg-slate-400 rounded-lg"
@@ -251,7 +251,7 @@ const NewListModal = () => {
             }}
           >
             <View
-              className={`flex-row items-center bg-[${themes[theme].buttonMenuBackground}]`}
+              className={`flex-row items-center bg-[${themes[theme].surfaceBackground}]`}
             >
               <MaterialIcons
                 className="mx-4 p-1.5 bg-slate-400 rounded-lg"
@@ -302,7 +302,7 @@ const NewListModal = () => {
             }}
           >
             <View
-              className={`flex-row items-center bg-[${themes[theme].buttonMenuBackground}] ${showIconGrid ? "" : "rounded-b-xl"}`}
+              className={`flex-row items-center bg-[${themes[theme].surfaceBackground}] ${showIconGrid ? "" : "rounded-b-xl"}`}
             >
               <Ionicons
                 className="mx-4 p-1.5 bg-slate-400 rounded-lg"

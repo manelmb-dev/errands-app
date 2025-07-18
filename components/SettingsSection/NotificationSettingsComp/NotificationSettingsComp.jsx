@@ -152,7 +152,7 @@ const NotificationSettingsComp = () => {
   return (
     <View className={`p-4 h-full bg-[${themes[theme].background}]`}>
       <View
-        className={`mb-4 p-3 flex-row justify-between items-center bg-[${themes[theme].buttonMenuBackground}] rounded-xl border border-[${themes[theme].borderColor}] shadow-sm ${theme === "light" ? "shadow-gray-100" : "shadow-neutral-950"}`}
+        className={`mb-4 p-3 flex-row justify-between items-center bg-[${themes[theme].surfaceBackground}] rounded-xl border border-[${themes[theme].borderColor}] shadow-sm ${theme === "light" ? "shadow-gray-100" : "shadow-neutral-950"}`}
       >
         <View className="flex-row items-center gap-3">
           <Ionicons
@@ -173,7 +173,7 @@ const NotificationSettingsComp = () => {
       {/* Opciones individuales */}
       {notificationSettings.notificationsEnabled && (
         <View
-          className={`bg-[${themes[theme].buttonMenuBackground}] rounded-xl border border-[${themes[theme].borderColor}] shadow-sm ${theme === "light" ? "shadow-gray-100" : "shadow-neutral-950"}`}
+          className={`bg-[${themes[theme].surfaceBackground}] rounded-xl border border-[${themes[theme].borderColor}] shadow-sm ${theme === "light" ? "shadow-gray-100" : "shadow-neutral-950"}`}
         >
           {notificationOptions.map((option, index) => (
             <View

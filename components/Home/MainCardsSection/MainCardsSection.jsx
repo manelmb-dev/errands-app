@@ -96,7 +96,7 @@ function MainCardsSection() {
             onPress={() => router.push(card.route)}
           >
             <View
-              className={`flex-row justify-between bg-[${themes[theme].buttonMenuBackground}] p-3 rounded-2xl w-full h-full  border border-[${themes[theme].borderColor}] shadow-sm ${
+              className={`flex-row justify-between bg-[${themes[theme].surfaceBackground}] p-3 rounded-2xl w-full h-full  border border-[${themes[theme].borderColor}] shadow-sm ${
                 theme === "light" ? "shadow-gray-100" : "shadow-neutral-950"
               }`}
             >

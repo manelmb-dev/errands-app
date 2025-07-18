@@ -155,7 +155,7 @@ function TodayTasks() {
             className={`px-4 items-center justify-center py-3 rounded-full min-w-[90px] ${
               selectedTab === tab.value
                 ? `${theme === "light" ? "bg-gray-300" : "bg-gray-700"}`
-                : `bg-[${themes[theme].buttonMenuBackground}]`
+                : `bg-[${themes[theme].surfaceBackground}]`
             } shadow-sm ${theme === "light" ? "shadow-gray-200" : "shadow-neutral-950"}`}
           >
             <Text className={`text-[${themes[theme].text}] font-medium`}>

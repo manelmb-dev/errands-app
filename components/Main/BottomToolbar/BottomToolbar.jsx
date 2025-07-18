@@ -41,7 +41,7 @@ function BottomToolbar({ activeSection, setActiveSection }) {
 
       <TouchableHighlight
         onPress={() => router.push("/Modals/newTaskModal")}
-        className={`items-center p-2 px-4 bg-[${themes[theme].buttonMenuBackground}] rounded-2xl`}
+        className={`items-center p-2 px-4 bg-[${themes[theme].surfaceBackground}] rounded-2xl`}
         underlayColor={themes[theme].borderColor}
       >
         <Ionicons

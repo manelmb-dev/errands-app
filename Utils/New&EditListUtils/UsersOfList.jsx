@@ -62,7 +62,7 @@ const UsersOfList = () => {
         borderBottomWidth: 1,
       }}
     >
-      <View className={`flex-1 bg-[${themes[theme].buttonMenuBackground}]`}>
+      <View className={`flex-1 bg-[${themes[theme].surfaceBackground}]`}>
         {/* Display the current user at the top */}
         <View
           key={user.id}

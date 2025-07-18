@@ -164,7 +164,7 @@ export default function VerifyCodeScreen() {
                 <TextInput
                   key={index}
                   ref={(ref) => (inputRefs.current[index] = ref)}
-                  className={`flex-1 h-14 text-center text-2xl rounded-2xl leading-tight border bg-[${themes[theme].buttonMenuBackground}] border-[${themes[theme].borderColor}] text-[${themes[theme].text}]`}
+                  className={`flex-1 h-14 text-center text-2xl rounded-2xl leading-tight border bg-[${themes[theme].surfaceBackground}] border-[${themes[theme].borderColor}] text-[${themes[theme].text}]`}
                   keyboardType="numeric"
                   maxLength={1}
                   value={digit}

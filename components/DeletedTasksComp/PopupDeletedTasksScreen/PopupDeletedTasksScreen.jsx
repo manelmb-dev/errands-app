@@ -75,7 +75,7 @@ export default function PopupDeletedTasksScreen() {
             marginTop: -4,
           },
           optionsContainer: {
-            backgroundColor: themes[theme].buttonMenuBackground,
+            backgroundColor: themes[theme].surfaceBackground,
             borderRadius: 10,
             elevation: 12,
             shadowColor: "#000",

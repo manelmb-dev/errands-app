@@ -10,7 +10,6 @@ import {
 import Feather from "react-native-vector-icons/Feather";
 import Ionicons from "react-native-vector-icons/Ionicons";
 
-
 import { themes } from "../../../constants/themes";
 import i18n from "../../../constants/i18n";
 import { useAtom } from "jotai";
@@ -44,7 +43,7 @@ export default function FilterMainTabPopup({ mainTab, setMainTab }) {
         customStyles={{
           optionsContainer: {
             marginTop: 44,
-            backgroundColor: themes[theme].buttonMenuBackground,
+            backgroundColor: themes[theme].surfaceBackground,
             borderRadius: 10,
             elevation: 12,
             shadowColor: "#000",

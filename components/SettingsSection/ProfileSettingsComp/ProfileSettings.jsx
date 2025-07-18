@@ -46,7 +46,7 @@ function SettingsSection() {
     <View className={`mx-6 py-4 bg-[${themes[theme].background}]`}>
       {/* Header perfil */}
       <View
-        className={`flex-1 p-4 items-center gap-4 bg-[${themes[theme].buttonMenuBackground}]`}
+        className={`flex-1 p-4 items-center gap-4 bg-[${themes[theme].surfaceBackground}]`}
       >
         <TouchableOpacity
           className="h-20"

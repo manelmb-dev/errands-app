@@ -84,7 +84,7 @@ export default function MainPopupPage({ contactDetails }) {
           optionsContainer: {
             marginTop: 195,
             marginLeft: 92,
-            backgroundColor: themes[theme].buttonMenuBackground,
+            backgroundColor: themes[theme].surfaceBackground,
             borderRadius: 10,
             width: 280,
             elevation: 12,

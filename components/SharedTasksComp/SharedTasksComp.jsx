@@ -197,7 +197,7 @@ const SharedTasksComp = () => {
               className={`px-4 items-center justify-center py-3 ${
                 subFilter === filter.value
                   ? `${theme === "light" ? "bg-gray-300" : "bg-gray-700"}`
-                  : `bg-[${themes[theme].buttonMenuBackground}]`
+                  : `bg-[${themes[theme].surfaceBackground}]`
               } ${index === 0 ? "rounded-l-full" : ""} ${
                 index === subFilterOptions.length - 1 ? "rounded-r-full" : ""
               }`}

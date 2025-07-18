@@ -43,7 +43,7 @@ export default function SharedListSection() {
 
       {/* Lists section */}
       <View
-        className={`w-full bg-[${themes[theme].buttonMenuBackground}] border border-[${themes[theme].borderColor}] rounded-t-3xl rounded-b-3xl shadow-sm ${theme === "light" ? "shadow-gray-100" : "shadow-neutral-950"}`}
+        className={`w-full bg-[${themes[theme].surfaceBackground}] border border-[${themes[theme].borderColor}] rounded-t-3xl rounded-b-3xl shadow-sm ${theme === "light" ? "shadow-gray-100" : "shadow-neutral-950"}`}
       >
         {sharedLists.length > 0 ? (
           sharedLists.map((list, index) => (
@@ -101,7 +101,7 @@ export default function SharedListSection() {
               {i18n.t("noSharedLists")}
             </Text>
             <TouchableHighlight
-              className={`px-4 py-2 mt-3 w-[90%] border border-[${themes[theme].borderColor}] rounded-2xl bg-[${themes[theme].buttonMenuBackground}]`}
+              className={`px-4 py-2 mt-3 w-[90%] border border-[${themes[theme].borderColor}] rounded-2xl bg-[${themes[theme].surfaceBackground}]`}
               underlayColor={themes[theme].background}
               onPress={() => {
                 setCurrentList({

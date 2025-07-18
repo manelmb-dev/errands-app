@@ -122,7 +122,7 @@ const ContactDetailModalComp = () => {
       <View className="flex-row mb-6 gap-2 items-stretch">
         {/* Send errand to contact */}
         <TouchableOpacity
-          className={`flex-1 h-24 rounded-2xl items-center justify-evenly border border-gray-300 bg-[${themes[theme].buttonMenuBackground}]`}
+          className={`flex-1 h-24 rounded-2xl items-center justify-evenly border border-gray-300 bg-[${themes[theme].surfaceBackground}]`}
           activeOpacity={0.6}
           onPress={() => {
             router.push({
@@ -142,7 +142,7 @@ const ContactDetailModalComp = () => {
 
         {/* Toggle favorite contact */}
         <TouchableOpacity
-          className={`flex-1 h-24 rounded-2xl items-center justify-evenly border border-yellow-500 ${contactDetails.favorite ? `${theme === "light" ? "bg-yellow-200" : "bg-yellow-700"}` : `bg-[${themes[theme].buttonMenuBackground}]`}`}
+          className={`flex-1 h-24 rounded-2xl items-center justify-evenly border border-yellow-500 ${contactDetails.favorite ? `${theme === "light" ? "bg-yellow-200" : "bg-yellow-700"}` : `bg-[${themes[theme].surfaceBackground}]`}`}
           activeOpacity={0.7}
           onPress={toggleFavoriteContact}
         >
@@ -167,7 +167,7 @@ const ContactDetailModalComp = () => {
 
         {/* Toggle block contact */}
         <TouchableOpacity
-          className={`flex-1 h-24 rounded-2xl items-center justify-evenly border border-red-500 ${contactDetails.blocked ? `${theme === "light" ? "bg-red-200" : "bg-red-700"}` : `bg-[${themes[theme].buttonMenuBackground}]`}`}
+          className={`flex-1 h-24 rounded-2xl items-center justify-evenly border border-red-500 ${contactDetails.blocked ? `${theme === "light" ? "bg-red-200" : "bg-red-700"}` : `bg-[${themes[theme].surfaceBackground}]`}`}
           activeOpacity={0.7}
           onPress={toggleBlockContact}
         >

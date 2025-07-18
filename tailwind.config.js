@@ -93,10 +93,10 @@ module.exports = {
       colors: {
         light: {
           background: "#F5F5F5",
+          surfaceBackground: "#FFFFFF",
           iconColor: "#333333",
           blueHeadText: "#007AFF",
           text: "#1E1E1E",
-          buttonMenuBackground: "#FFFFFF",
           taskTitle: "#1E1E1E",
           taskSecondText: "#6E727A",
           addNewTaskText: "#A2A6AD",
@@ -109,10 +109,10 @@ module.exports = {
         },
         dark: {
           background: "#121212",
+          surfaceBackground: "#1f2120",
           iconColor: "#FDFDFD",
           blueHeadText: "#007AFF",
           text: "#FDFDFD",
-          buttonMenuBackground: "#1f2120",
           taskTitle: "#FDFDFD",
           taskSecondText: "#6E727A",
           addNewTaskText: "#4B4F55",

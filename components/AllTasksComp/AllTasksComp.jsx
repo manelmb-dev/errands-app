@@ -202,7 +202,7 @@ function AllTasksComp() {
             className={`px-4 py-2 rounded-full shadow ${theme === "light" ? "shadow-gray-200" : "shadow-neutral-950"} ${
               selectedTab === tab.value
                 ? "bg-blue-300"
-                : `bg-[${themes[theme].buttonMenuBackground}]`
+                : `bg-[${themes[theme].surfaceBackground}]`
             }`}
           >
             <Text

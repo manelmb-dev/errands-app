@@ -99,7 +99,7 @@ export default function AppearencePopupMenu() {
           optionsContainer: {
             marginLeft: 146,
             marginTop: 54,
-            backgroundColor: themes[theme].buttonMenuBackground,
+            backgroundColor: themes[theme].surfaceBackground,
             borderRadius: 10,
             elevation: 12,
             shadowColor: "#000",

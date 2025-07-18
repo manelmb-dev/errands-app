@@ -18,7 +18,7 @@ const ColorGrid = ({ assignedColor, setAssignedColor }) => {
         <TouchableOpacity
           key={color}
           onPress={() => setAssignedColor(color)}
-          className={`rounded-2xl p-0.5 bg-[${themes[theme].buttonMenuBackground}] ${
+          className={`rounded-2xl p-0.5 bg-[${themes[theme].surfaceBackground}] ${
             assignedColor === color
               ? "border-4 border-blue-600"
               : "border-4 border-transparent"

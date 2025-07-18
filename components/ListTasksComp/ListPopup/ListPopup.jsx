@@ -132,7 +132,7 @@ export default function ListPopup({ showCompleted, setShowCompleted }) {
             marginTop: 8, // Not working?
           },
           optionsContainer: {
-            backgroundColor: themes[theme].buttonMenuBackground,
+            backgroundColor: themes[theme].surfaceBackground,
             borderRadius: 10,
             elevation: 6, // shadow Android
             shadowColor: "#000",

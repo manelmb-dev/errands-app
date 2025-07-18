@@ -46,7 +46,7 @@ export default function ListPopupMenu() {
           optionsContainer: {
             marginLeft: 6,
             marginTop: 26,
-            backgroundColor: themes[theme].buttonMenuBackground,
+            backgroundColor: themes[theme].surfaceBackground,
             borderRadius: 10,
             elevation: 12,
             shadowColor: "#000",

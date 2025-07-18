@@ -185,7 +185,7 @@ const ViewAllListsComp = () => {
 
   const renderFooter = () => (
     <TouchableHighlight
-      underlayColor={themes[theme].buttonMenuBackground}
+      underlayColor={themes[theme].surfaceBackground}
       onPress={() => {
         setCurrentList({
           id: "",
@@ -205,7 +205,7 @@ const ViewAllListsComp = () => {
       >
         <View className={`flex-row items-center pl-5 gap-5`}>
           <Ionicons
-            className={`p-2 rounded-xl bg-[${themes[theme].buttonMenuBackground}] border border-dashed border-[${themes[theme].text}]`}
+            className={`p-2 rounded-xl bg-[${themes[theme].surfaceBackground}] border border-dashed border-[${themes[theme].text}]`}
             name="add"
             size={22}
             color={`${themes[theme].text}`}

@@ -187,7 +187,7 @@ export default function RegisterScreen() {
           </Text>
           <View>
             <TouchableOpacity
-              className={`p-5 flex-row items-center justify-between rounded-3xl border border-[${themes[theme].borderColor}] bg-[${themes[theme].buttonMenuBackground}]`}
+              className={`p-5 flex-row items-center justify-between rounded-3xl border border-[${themes[theme].borderColor}] bg-[${themes[theme].surfaceBackground}]`}
               activeOpacity={0.8}
               onPress={() => setShowCountryPicker(true)}
             >
@@ -202,7 +202,7 @@ export default function RegisterScreen() {
             </TouchableOpacity>
           </View>
           <View
-            className={`flex-row rounded-3xl border border-[${themes[theme].borderColor}] bg-[${themes[theme].buttonMenuBackground}]`}
+            className={`flex-row rounded-3xl border border-[${themes[theme].borderColor}] bg-[${themes[theme].surfaceBackground}]`}
           >
             <Text
               className={`p-5 text-2xl leading-tight text-[${themes[theme].text}] border-r border-[${themes[theme].borderColor}]`}

@@ -46,7 +46,7 @@ export default function ListSection() {
 
       {/* Lists section */}
       <View
-        className={`w-full bg-[${themes[theme].buttonMenuBackground}] border border-[${themes[theme].borderColor}] rounded-t-3xl rounded-b-3xl shadow-sm ${theme === "light" ? "shadow-gray-100" : "shadow-neutral-950"}`}
+        className={`w-full bg-[${themes[theme].surfaceBackground}] border border-[${themes[theme].borderColor}] rounded-t-3xl rounded-b-3xl shadow-sm ${theme === "light" ? "shadow-gray-100" : "shadow-neutral-950"}`}
       >
         {ownNotSahredLists.map((list, index) => (
           <View key={list.id} className={`${index === 0 && "rounded-t-3xl"}`}>
