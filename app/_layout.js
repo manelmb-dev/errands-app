@@ -9,6 +9,7 @@ import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { ActionSheetProvider } from "@expo/react-native-action-sheet";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { MenuProvider } from "react-native-popup-menu";
+import * as Localization from "expo-localization";
 import { StatusBar } from "expo-status-bar";
 import { Stack } from "expo-router";
 
@@ -37,16 +38,28 @@ export default function Layout() {
       const savedLang = await AsyncStorage.getItem("languagePreference");
       const phone = await AsyncStorage.getItem("userPhoneNumber");
 
+      // Language
+      const supportedLanguages = ["es", "en", "ca"];
+      let langToUse = savedLang;
+
+      if (!savedLang) {
+        const deviceLang = Localization.getLocales()[0]?.languageCode || "en";
+        langToUse = supportedLanguages.includes(deviceLang) ? deviceLang : "en";
+        await AsyncStorage.setItem("languagePreference", langToUse);
+      }
+
+      I18n.locale = langToUse;
+      setLanguage(langToUse);
+
+      // Theme
       if (savedTheme === "auto") {
         setTheme(system);
       } else {
         setTheme(savedTheme || "light");
       }
 
-      setLanguage(savedLang || "es");
-      I18n.locale = savedLang || "es";
-
-      // setUserExists(!!phone);
+      // User
+      setUserExists(!!phone);
       setReady(true);
     };
     loadPreferences();
