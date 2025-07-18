@@ -7,6 +7,9 @@ import {
   TouchableOpacity,
   TouchableWithoutFeedback,
   Keyboard,
+  Animated,
+  Platform,
+  Easing,
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import CountryPicker from "react-native-country-picker-modal";
@@ -14,7 +17,7 @@ import { getCallingCode } from "react-native-country-picker-modal";
 import * as Localization from "expo-localization";
 
 import { useNavigation, useRouter } from "expo-router";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import { themeAtom } from "../../../constants/storeAtoms";
 import { useAtom } from "jotai";
@@ -65,12 +68,43 @@ export default function RegisterScreen() {
     });
   }, [navigation, theme]);
 
+  const translateY = useRef(new Animated.Value(0)).current;
+
+  useEffect(() => {
+    const keyboardShow =
+      Platform.OS === "ios" ? "keyboardWillShow" : "keyboardDidShow";
+    const keyboardHide =
+      Platform.OS === "ios" ? "keyboardWillHide" : "keyboardDidHide";
+
+    const showSub = Keyboard.addListener(keyboardShow, () => {
+      Animated.timing(translateY, {
+        toValue: -70, // ajusta este valor según tu diseño
+        duration: 250,
+        easing: Easing.out(Easing.ease),
+        useNativeDriver: true,
+      }).start();
+    });
+
+    const hideSub = Keyboard.addListener(keyboardHide, () => {
+      Animated.timing(translateY, {
+        toValue: 0,
+        duration: 250,
+        easing: Easing.out(Easing.ease),
+        useNativeDriver: true,
+      }).start();
+    });
+
+    return () => {
+      showSub.remove();
+      hideSub.remove();
+    };
+  }, [translateY]);
+
   useEffect(() => {
     const region = Localization.getLocales()[0];
     const regionCode = region?.regionCode;
 
     if (regionCode && countryCodes.includes(regionCode)) {
-
       const lang = Localization.getLocales()[0]?.languageCode || "en";
       const translatedName =
         countryNames[regionCode]?.[lang] ||
@@ -114,7 +148,10 @@ export default function RegisterScreen() {
         // Redirigir a la app
       } else {
         Alert.alert("Error en el registro");
-        router.push("/verifyCode");
+        router.push({
+          pathname: "/verifyCode",
+          params: { callingCode: callingCode, phone: phone },
+        });
       }
     } catch (err) {
       console.error(err);
@@ -127,8 +164,15 @@ export default function RegisterScreen() {
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-      <View
-        className={`flex-1 px-10 justify-center gap-60 bg-[${themes[theme].background}]`}
+      <Animated.View
+        style={{
+          transform: [{ translateY }],
+          flex: 1,
+          backgroundColor: themes[theme].background,
+          paddingHorizontal: 40,
+          justifyContent: "center",
+          gap: 60,
+        }}
       >
         <Text
           className={`text-4xl font-bold text-[${themes[theme].text}] self-center`}
@@ -194,17 +238,22 @@ export default function RegisterScreen() {
           theme={{
             backgroundColor: themes[theme].background,
             onBackgroundTextColor: themes[theme].text,
+            paddingHorizontal: 20,
+          }}
+          flatListProps={{
+            paddingHorizontal: 10,
           }}
           withFilter
           withFlag
           withCallingCode
           withEmoji
+          withCloseButton
           // withAlphaFilter
           filterProps={{
             fontSize: 22,
             placeholderTextColor: themes[theme].text,
             placeholder: i18n.t("searchYourCountry"),
-            paddingVertical: 15,
+            marginVertical: 15,
           }}
           preferredCountries={["ES", "GB", "US", "FR", "IT", "DE", "PT"]}
           onClose={() => setShowCountryPicker(false)}
@@ -214,7 +263,7 @@ export default function RegisterScreen() {
             setShowCountryPicker(false);
           }}
         />
-      </View>
+      </Animated.View>
     </TouchableWithoutFeedback>
   );
 }
