@@ -29,10 +29,13 @@ export default function Layout() {
 
   const [ready, setReady] = useState(false);
 
+  const [userExists, setUserExists] = useState(false);
+
   useEffect(() => {
     const loadPreferences = async () => {
       const savedTheme = await AsyncStorage.getItem("themePreference");
       const savedLang = await AsyncStorage.getItem("languagePreference");
+      const phone = await AsyncStorage.getItem("userPhoneNumber");
 
       if (savedTheme === "auto") {
         setTheme(system);
@@ -43,10 +46,13 @@ export default function Layout() {
       setLanguage(savedLang || "es");
       I18n.locale = savedLang || "es";
 
+      // setUserExists(!!phone);
       setReady(true);
     };
     loadPreferences();
   }, [setLanguage, setTheme, system]);
+
+  console.log(userExists);
 
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
@@ -56,8 +62,8 @@ export default function Layout() {
           <MenuProvider>
             <ActionSheetProvider>
               <View className={`flex-1 bg-[${themes[theme].background}]`}>
-                {ready ? (
-                  <Stack />
+                {ready && userExists !== null ? (
+                  <Stack initialRouteName={userExists ? "main" : "wellcome"} />
                 ) : (
                   <View className="flex-1 justify-center items-center">
                     <ActivityIndicator
