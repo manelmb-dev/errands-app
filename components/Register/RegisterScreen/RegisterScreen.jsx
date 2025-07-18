@@ -32,9 +32,9 @@ import { countryCodes } from "./countryCodes";
 import { countryNames } from "./countryNames";
 
 const langToTranslationCode = {
-  en: "common", // default (inglés)
+  en: "common", // default (English)
   es: "spa",
-  ca: "spa", // catalán → fallback a español
+  ca: "spa", // catalán → fallback to spanish
   fr: "fra",
   de: "deu",
   pt: "por",
@@ -44,8 +44,6 @@ const langToTranslationCode = {
   ru: "rus",
   nl: "nld",
   fi: "fin",
-  sv: "svk", // sueco → fallback aproximado
-  he: "isr", // hebreo (isr usado aquí)
   hr: "hrv",
 };
 
