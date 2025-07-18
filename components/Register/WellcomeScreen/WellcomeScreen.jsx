@@ -1,6 +1,6 @@
 // components/RegisterScreen.jsx
 import { useNavigation, useRouter } from "expo-router";
-import { View, Text, TouchableOpacity } from "react-native";
+import { View, Text, TouchableOpacity, Image } from "react-native";
 import { useEffect } from "react";
 
 import { themeAtom } from "../../../constants/storeAtoms";
@@ -27,17 +27,17 @@ export default function WellcomeScreen() {
 
   return (
     <View
-      className={`flex-1 px-10 justify-center items-center bg-[${themes[theme].background}]`}
+      className={`flex-1 px-10 justify-center items-center gap-20 bg-[${themes[theme].background}]`}
     >
-      <View className={`py-16 items-center`}>
-        <Text
-          className={`p-3 text-4xl font-semibold text-[${themes[theme].text}]`}
-        >
+      <Image
+        source={require("../../../assets/icon.png")}
+        style={{ width: 125, height: 125, borderRadius: 25 }}
+      />
+      <View className="items-center gap-2">
+        <Text className={`text-4xl font-semibold text-[${themes[theme].text}]`}>
           {i18n.t("wellcome")}
         </Text>
-        <Text
-          className={`p-3 text-lg font-semiboldtext-[${themes[theme].text}]`}
-        >
+        <Text className={` text-lg font-semiboldtext-[${themes[theme].text}]`}>
           {i18n.t("wellcomeText")}
         </Text>
       </View>
