@@ -10,6 +10,8 @@ import {
   Animated,
   Platform,
   Easing,
+  Image,
+  Pressable,
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import CountryPicker from "react-native-country-picker-modal";
@@ -78,7 +80,7 @@ export default function RegisterScreen() {
 
     const showSub = Keyboard.addListener(keyboardShow, () => {
       Animated.timing(translateY, {
-        toValue: -70, // ajusta este valor según tu diseño
+        toValue: -100, // ajusta este valor según tu diseño
         duration: 250,
         easing: Easing.out(Easing.ease),
         useNativeDriver: true,
@@ -162,6 +164,15 @@ export default function RegisterScreen() {
   const lang = Localization.getLocales()[0]?.languageCode || "en";
   const translationCode = langToTranslationCode[lang] || "common";
 
+  const isNumberValid = (number) => {
+    const regex = /^[0-9]*$/;
+    if (regex.test(number) && number.length > 8) {
+      return true;
+    } else {
+      return false;
+    }
+  };
+
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <Animated.View
@@ -171,64 +182,77 @@ export default function RegisterScreen() {
           backgroundColor: themes[theme].background,
           paddingHorizontal: 40,
           justifyContent: "center",
-          gap: 60,
+          gap: 20,
         }}
       >
-        <Text
-          className={`text-4xl font-bold text-[${themes[theme].text}] self-center`}
-        >
-          Errands
-        </Text>
-        <View className="w-full gap-4">
+        <View className="items-center gap-6">
+          <Image
+            source={require("../../../assets/icon.png")}
+            style={{ width: 125, height: 125, borderRadius: 25 }}
+          />
           <Text
-            className={`p-1 text-xl font-semiboldtext-[${themes[theme].text}]`}
+            className={`text-5xl font-bold text-[${themes[theme].text}] self-center`}
           >
+            Errands
+          </Text>
+        </View>
+        <View className="w-full gap-1">
+          <Text className={`p-1 text-xl text-[${themes[theme].text}]`}>
             {i18n.t("enterPhoneNumber")}
           </Text>
-          <View>
-            <TouchableOpacity
-              className={`p-5 flex-row items-center justify-between rounded-3xl border border-[${themes[theme].borderColor}] bg-[${themes[theme].surfaceBackground}]`}
-              activeOpacity={0.8}
-              onPress={() => setShowCountryPicker(true)}
+          <View className="gap-3">
+            <View>
+              <TouchableOpacity
+                className={`p-5 flex-row items-center justify-between rounded-3xl border border-[${themes[theme].borderColor}] bg-[${themes[theme].surfaceBackground}]`}
+                activeOpacity={0.7}
+                onPress={() => setShowCountryPicker(true)}
+              >
+                <Text
+                  className={`text-2xl text-[${themes[theme].blueHeadText}]`}
+                >
+                  {countryName}
+                </Text>
+                <Ionicons
+                  name="chevron-forward"
+                  size={18}
+                  color={themes["light"].text}
+                />
+              </TouchableOpacity>
+            </View>
+            <View
+              className={`flex-row rounded-3xl border border-[${themes[theme].borderColor}] bg-[${themes[theme].surfaceBackground}]`}
             >
-              <Text className={`text-2xl text-[${themes[theme].blueHeadText}]`}>
-                {countryName}
-              </Text>
-              <Ionicons
-                name="chevron-forward"
-                size={18}
-                color={themes["light"].text}
+              <Pressable
+                className={`p-5 border-r border-[${themes[theme].borderColor}]`}
+                onPress={() => setShowCountryPicker(true)}
+              >
+                <Text
+                  className={`text-2xl leading-tight text-[${themes[theme].text}]`}
+                >{`+${callingCode}`}</Text>
+              </Pressable>
+              <TextInput
+                className={`flex-1 p-5 text-2xl
+                leading-tight text-[${themes[theme].text}]`}
+                value={phone}
+                onChangeText={setPhone}
+                placeholder={i18n.t("phoneNumber")}
+                keyboardType="phone-pad"
+                maxLength={15}
               />
+            </View>
+            <TouchableOpacity
+              className={`p-3 rounded-3xl items-center justify-center bg-[${themes[theme].blueHeadText}] ${!isNumberValid(phone) ? "opacity-50" : ""}`}
+              activeOpacity={0.6}
+              disabled={!isNumberValid(phone)}
+              onPress={handleRegister}
+            >
+              <Text
+                className={`p-2 text-2xl font-semibold text-[${themes[theme === "dark" ? "light" : "dark"].text}]`}
+              >
+                {i18n.t("next")}
+              </Text>
             </TouchableOpacity>
           </View>
-          <View
-            className={`flex-row rounded-3xl border border-[${themes[theme].borderColor}] bg-[${themes[theme].surfaceBackground}]`}
-          >
-            <Text
-              className={`p-5 text-2xl leading-tight text-[${themes[theme].text}] border-r border-[${themes[theme].borderColor}]`}
-            >
-              {`+${callingCode}`}
-            </Text>
-            <TextInput
-              className={`p-5 text-2xl
-              leading-tight text-[${themes[theme].text}]`}
-              value={phone}
-              onChangeText={setPhone}
-              placeholder={i18n.t("phoneNumber")}
-              keyboardType="phone-pad"
-            />
-          </View>
-          <TouchableOpacity
-            className={`p-3 rounded-3xl items-center justify-center bg-[${themes[theme].blueHeadText}]`}
-            activeOpacity={0.6}
-            onPress={handleRegister}
-          >
-            <Text
-              className={`p-2 text-2xl font-semibold text-[${themes[theme === "dark" ? "light" : "dark"].text}]`}
-            >
-              {i18n.t("next")}
-            </Text>
-          </TouchableOpacity>
         </View>
         <CountryPicker
           containerButtonStyle={{ display: "none" }}
@@ -259,7 +283,11 @@ export default function RegisterScreen() {
           onClose={() => setShowCountryPicker(false)}
           onSelect={(country) => {
             setCallingCode(country.callingCode[0]);
-            setCountryName(country.name);
+            setCountryName(
+              typeof country.name === "string"
+                ? country.name
+                : country.name.common
+            );
             setShowCountryPicker(false);
           }}
         />
