@@ -34,7 +34,7 @@ import { countryNames } from "./countryNames";
 const langToTranslationCode = {
   en: "common", // default (English)
   es: "spa",
-  ca: "spa", // catalán → fallback to spanish
+  ca: "spa", // catalán → fallback to Spanish
   fr: "fra",
   de: "deu",
   pt: "por",
@@ -129,7 +129,7 @@ export default function RegisterScreen() {
   }, []);
 
   const handleRegister = async () => {
-    if (!phone) return Alert.alert(i18n.t("inserValidPhoneNumber"));
+    if (!phone) return Alert.alert(i18n.t("insertValidPhoneNumber"));
 
     const fullPhone = `+${callingCode}${phone.replace(/\s+/g, "")}`;
 
@@ -141,21 +141,23 @@ export default function RegisterScreen() {
       });
 
       const data = await response.json();
-      if (data.success) {
-        await AsyncStorage.setItem("userPhoneNumber", fullPhone);
-        await AsyncStorage.setItem("password", data.password); // temporal
-        Alert.alert("Usuario registrado");
-        // Redirigir a la app
-      } else {
-        Alert.alert("Error en el registro");
-        router.push({
-          pathname: "/verifyCode",
-          params: { callingCode: callingCode, phone: phone },
-        });
+      console.log(data);
+
+      if (!data.success) {
+        return Alert.alert(i18n.t("registerErrorTryLater"));
       }
+
+      await AsyncStorage.setItem("userPhoneNumber", fullPhone);
+      await AsyncStorage.setItem("password", data.password); // temporal
+
+      // Verify Code
+      router.push({
+        pathname: "/verifyCode",
+        params: { callingCode, phone },
+      });
     } catch (err) {
       console.error(err);
-      Alert.alert("Error de conexión");
+      Alert.alert(i18n.t("connectionError"));
     }
   };
 
@@ -284,7 +286,7 @@ export default function RegisterScreen() {
             setCountryName(
               typeof country.name === "string"
                 ? country.name
-                : country.name.common
+                : country.name.common,
             );
             setShowCountryPicker(false);
           }}
