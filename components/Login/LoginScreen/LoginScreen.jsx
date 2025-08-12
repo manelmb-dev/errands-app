@@ -1,4 +1,4 @@
-// components/RegisterScreen.jsx
+// components/Login/LoginScreen/LoginScreen.jsx
 import {
   View,
   Text,
@@ -14,8 +14,8 @@ import {
   Pressable,
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { getCallingCode } from "react-native-country-picker-modal";
 import CountryPicker from "react-native-country-picker-modal";
+import { getCallingCode } from "react-native-country-picker-modal";
 import * as Localization from "expo-localization";
 
 import { useNavigation, useRouter } from "expo-router";
@@ -28,8 +28,6 @@ import Ionicons from "react-native-vector-icons/Ionicons";
 
 import { themes } from "../../../constants/themes";
 import i18n from "../../../constants/i18n";
-import { countryCodes } from "./countryCodes";
-import { countryNames } from "./countryNames";
 
 const langToTranslationCode = {
   en: "common", // default (English)
@@ -47,7 +45,7 @@ const langToTranslationCode = {
   hr: "hrv",
 };
 
-export default function RegisterScreen() {
+export default function LoginScreen() {
   const navigation = useNavigation();
   const router = useRouter();
 
@@ -100,55 +98,8 @@ export default function RegisterScreen() {
     };
   }, [translateY]);
 
-  useEffect(() => {
-    const region = Localization.getLocales()[0];
-    const regionCode = region?.regionCode;
-
-    if (regionCode && countryCodes.includes(regionCode)) {
-      const lang = Localization.getLocales()[0]?.languageCode || "en";
-      const translatedName =
-        countryNames[regionCode]?.[lang] ||
-        countryNames[regionCode]?.en ||
-        regionCode;
-
-      setCountryName(translatedName);
-
-      getCallingCode(regionCode)
-        .then((code) => {
-          setCallingCode(code);
-        })
-        .catch((err) => {
-          console.warn("No calling code found", err);
-        });
-    } else {
-      // Fallback manual
-      const fallbackCode = "ES";
-      setCountryName(countryNames[fallbackCode]?.es || "España");
-      setCallingCode("34");
-    }
-  }, []);
-
-  const handleRegister = async () => {
-    if (!phone) return Alert.alert(i18n.t("insertValidPhoneNumber"));
-
-    const fullPhone = `+${callingCode}${phone.replace(/\s+/g, "")}`;
-
-    router.push({
-      pathname: "/verifyCode",
-      params: { callingCode, phone },
-    });
-  };
-
-  const lang = Localization.getLocales()[0]?.languageCode || "en";
-  const translationCode = langToTranslationCode[lang] || "common";
-
-  const isNumberValid = (number) => {
-    const regex = /^[0-9]*$/;
-    if (regex.test(number) && number.length > 8) {
-      return true;
-    } else {
-      return false;
-    }
+  const handleLogin = async () => {
+    console.log("login");
   };
 
   return (
@@ -220,72 +171,34 @@ export default function RegisterScreen() {
             </View>
             <View className="justify-center gap-2">
               <TouchableOpacity
-                className={`p-3 rounded-3xl items-center justify-center bg-[${themes[theme].blueHeadText}] ${!isNumberValid(phone) ? "opacity-50" : ""}`}
+                className={`p-3 rounded-3xl items-center justify-center bg-[${themes[theme].blueHeadText}]`}
                 activeOpacity={0.6}
-                disabled={!isNumberValid(phone)}
-                onPress={handleRegister}
+                onPress={handleLogin}
               >
                 <Text
                   className={`p-2 text-2xl font-semibold text-[${themes[theme === "dark" ? "light" : "dark"].text}]`}
                 >
-                  {i18n.t("next")}
+                  {i18n.t("login")}
                 </Text>
               </TouchableOpacity>
               <View className="flex-row items-center justify-center gap-2">
                 <Text className={`text-sm text-[${themes[theme].text}]`}>
-                  {i18n.t("alreadyHaveAccount")}
+                  {i18n.t("noAccount")}
                 </Text>
                 <TouchableOpacity
-                  onPress={() => router.push("/login")}
+                  onPress={() => router.push("/register")}
                   activeOpacity={0.6}
                 >
                   <Text
                     className={`text-sm font-semibold text-[${themes[theme].blueHeadText}]`}
                   >
-                    {i18n.t("login")}
+                    {i18n.t("signUp")}
                   </Text>
                 </TouchableOpacity>
               </View>
             </View>
           </View>
         </View>
-        <CountryPicker
-          containerButtonStyle={{ display: "none" }}
-          visible={showCountryPicker}
-          translation={translationCode}
-          countryCodes={countryCodes}
-          theme={{
-            backgroundColor: themes[theme].background,
-            onBackgroundTextColor: themes[theme].text,
-            paddingHorizontal: 20,
-          }}
-          flatListProps={{
-            paddingHorizontal: 10,
-          }}
-          withFilter
-          withFlag
-          withCallingCode
-          withEmoji
-          withCloseButton
-          // withAlphaFilter
-          filterProps={{
-            fontSize: 22,
-            placeholderTextColor: themes[theme].text,
-            placeholder: i18n.t("searchYourCountry"),
-            marginVertical: 15,
-          }}
-          preferredCountries={["ES", "GB", "US", "FR", "IT", "DE", "PT"]}
-          onClose={() => setShowCountryPicker(false)}
-          onSelect={(country) => {
-            setCallingCode(country.callingCode[0]);
-            setCountryName(
-              typeof country.name === "string"
-                ? country.name
-                : country.name.common,
-            );
-            setShowCountryPicker(false);
-          }}
-        />
       </Animated.View>
     </TouchableWithoutFeedback>
   );

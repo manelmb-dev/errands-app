@@ -13,6 +13,7 @@ import {
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useLocalSearchParams } from "expo-router";
+import auth from "@react-native-firebase/auth";
 
 import { useNavigation, useRouter } from "expo-router";
 import { useEffect, useRef, useState } from "react";
@@ -22,6 +23,7 @@ import { useAtom } from "jotai";
 
 import { themes } from "../../../constants/themes";
 import i18n from "../../../constants/i18n";
+import { Image } from "react-native";
 
 export default function VerifyCodeScreen() {
   const navigation = useNavigation();
@@ -34,8 +36,24 @@ export default function VerifyCodeScreen() {
   const [theme] = useAtom(themeAtom);
 
   const [codeDigits, setCodeDigits] = useState(["", "", "", "", "", ""]);
+  const [confirmationResult, setConfirmationResult] = useState(null);
 
   const translateY = useRef(new Animated.Value(0)).current;
+
+  useEffect(() => {
+    const sendFirebaseCode = async () => {
+      const fullPhone = `+${callingCode}${phone}`;
+      try {
+        const confirmation = await auth().signInWithPhoneNumber(fullPhone);
+        console.log("confirmation", confirmation);
+        setConfirmationResult(confirmation); // guárdalo en estado
+      } catch (error) {
+        Alert.alert("Error enviando código", error.message);
+      }
+    };
+
+    sendFirebaseCode();
+  }, [callingCode, phone]);
 
   useEffect(() => {
     const keyboardShow =
@@ -103,32 +121,40 @@ export default function VerifyCodeScreen() {
   };
 
   const handleCodeVerification = async () => {
-    const code = codeDigits.join("");
-
-    if (code.length < 6) {
-      return Alert.alert(i18n.t("enterValidCode"));
-    }
-
     try {
-      const response = await fetch("http://127.0.0.1:5000/verify-code", {
+      const code = codeDigits.join("");
+      const credential = auth.PhoneAuthProvider.credential(
+        confirmationResult.verificationId,
+        code,
+      );
+
+      console.log("credential", credential);
+
+      // Verifica el código con Firebase
+      await auth().signInWithCredential(credential);
+
+      // Luego consulta si el número ya está vinculado a una cuenta
+      const phoneFull = `+${callingCode}${phone}`;
+      const response = await fetch("http://127.0.0.1:5000/check-phone", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          phone: `+${callingCode}${phone.replace(/\s+/g, "")}`,
-          code: code,
-        }),
+        body: JSON.stringify({ phone: phoneFull }),
       });
 
       const data = await response.json();
-      if (data.success) {
-        Alert.alert(i18n.t("verified"));
-        router.push("/");
+      if (data.exists) {
+        router.push({
+          pathname: "/chooseAccountOption",
+          params: { phone: phoneFull },
+        });
       } else {
-        Alert.alert(i18n.t("invalidCode"));
+        router.push({
+          pathname: "/completeAccount",
+          params: { phone: phoneFull },
+        });
       }
-    } catch (err) {
-      console.error(err);
-      Alert.alert(i18n.t("connectionError"));
+    } catch (error) {
+      Alert.alert("Código incorrecto", error.message);
     }
   };
 
@@ -148,11 +174,17 @@ export default function VerifyCodeScreen() {
           },
         ]}
       >
-        <Text
-          className={`text-4xl font-bold text-[${themes[theme].text}] self-center`}
-        >
-          Errands
-        </Text>
+        <View className="items-center gap-6">
+          <Image
+            source={require("../../../assets/icon.png")}
+            style={{ width: 125, height: 125, borderRadius: 25 }}
+          />
+          <Text
+            className={`text-5xl font-bold text-[${themes[theme].text}] self-center`}
+          >
+            Errands
+          </Text>
+        </View>
         <View className="w-full gap-4">
           <Text className={`p-1 text-xl text-[${themes[theme].text}]`}>
             {i18n.t("enterVerificationCode") +

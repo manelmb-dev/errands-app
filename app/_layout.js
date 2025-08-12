@@ -11,7 +11,7 @@ import { SafeAreaProvider } from "react-native-safe-area-context";
 import { MenuProvider } from "react-native-popup-menu";
 import * as Localization from "expo-localization";
 import { StatusBar } from "expo-status-bar";
-import { Stack } from "expo-router";
+import { Redirect, Stack } from "expo-router";
 
 import { useAtom } from "jotai";
 
@@ -30,7 +30,7 @@ export default function Layout() {
 
   const [ready, setReady] = useState(false);
 
-  const [userExists, setUserExists] = useState(false);
+  const [userExists, setUserExists] = useState(null);
 
   useEffect(() => {
     const loadPreferences = async () => {
@@ -65,8 +65,6 @@ export default function Layout() {
     loadPreferences();
   }, [setLanguage, setTheme, system]);
 
-  console.log(userExists);
-
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <SafeAreaProvider>
@@ -75,8 +73,15 @@ export default function Layout() {
           <MenuProvider>
             <ActionSheetProvider>
               <View className={`flex-1 bg-[${themes[theme].background}]`}>
-                {ready && userExists !== null ? (
-                  <Stack initialRouteName={userExists ? "main" : "wellcome"} />
+                {ready ? (
+                  userExists === true ? (
+                    <Stack />
+                  ) : (
+                    <>
+                      <Redirect href="/wellcome" />
+                      <Stack />
+                    </>
+                  )
                 ) : (
                   <View className="flex-1 justify-center items-center">
                     <ActivityIndicator
