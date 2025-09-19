@@ -107,16 +107,20 @@ export default function VerifyCodeScreen() {
     });
   }, [navigation, theme]);
 
-  const handleResend = async () => {
+  // 1. send SMS
+  const sendSMS = async (phoneNumber) => {
+    const confirmation = await auth().signInWithPhoneNumber(phoneNumber);
+    setConfirmationResult(confirmation);
+  };
+
+  const handleResendSMS = async () => {
     try {
-      await fetch("http://127.0.0.1:5000/resend-code", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ phone }),
-      });
-      Alert.alert("Código reenviado");
-    } catch (err) {
-      Alert.alert("Error al reenviar: " + err.message);
+      const fullPhone = `+${callingCode}${phone}`;
+      const confirmation = await auth().signInWithPhoneNumber(fullPhone, true);
+      setConfirmationResult(confirmation);
+      Alert.alert(i18n.t("codeResent"));
+    } catch (error) {
+      Alert.alert("Error", error.message);
     }
   };
 
@@ -243,7 +247,7 @@ export default function VerifyCodeScreen() {
             <TouchableOpacity
               className={`p-1 items-end justify-center bg-[${themes[theme].background}]`}
               activeOpacity={0.6}
-              onPress={handleResend}
+              onPress={handleResendSMS}
             >
               <Text className={`text-lg text-[${themes[theme].text}]`}>
                 {i18n.t("resendCode")}
