@@ -226,7 +226,18 @@
         "changesInErrands": "Changes in errands",
         "ownTasks": "Own tasks",
         "invalidAction": "Invalid action",
-        "sharedListSelectedAlertText": "Shared lists cannot be assigned to errands. Shared list will be selected if you assign the errand to a contact."
+        "sharedListSelectedAlertText": "Shared lists cannot be assigned to errands. Shared list will be selected if you assign the errand to a contact.",
+        "setNewPhoto": "Set new photo",
+        "name": "Name",
+        "surname": "Surname",
+        "email": "Email",
+        "birthdate": "Date of birth",
+        "username": "Username",
+        "usernameAlreadyTaken": "Sorry, this username is already taken",
+        "deleteAccount": "Detele account",
+        "confirmSaveChanges": "Do you want to save the changes made to your profile?",
+        "confirmDeleteAccount": "All your tasks and lists will also be deleted. This action cannot be undone."
+
 
 
           
@@ -468,7 +479,18 @@
       "changesInErrands": "Cambios en tareas",
       "ownTasks": "Tareas propias",
       "invalidAction": "Acción inválida",
-      "sharedListSelectedAlertText": "La lista compartida no se puede asignar a ninguna tarea. Se seleccionará la lista compartida automáticamente si asignas la tarea a un contacto."
+      "sharedListSelectedAlertText": "La lista compartida no se puede asignar a ninguna tarea. Se seleccionará la lista compartida automáticamente si asignas la tarea a un contacto.",
+      "setNewPhoto": "Cambiar foto",
+      "name": "Nombre",
+      "surname": "Apellidos",
+      "email": "Email",
+      "birthdate": "Fecha de nacimiento",
+      "username": "Nombre de usuario",
+      "usernameAlreadyTaken": "Lo sentimos, este nombre de usuario ya está en uso.",
+      "deleteAccount": "Eliminar cuenta",
+      "confirmSaveChanges": "¿Quieres guardar los cambios realizados en tu perfil?",
+      "confirmDeleteAccount": "También se eliminarán todas tus tareas y listas. Esta acción no se puede deshacer."
+
 
       
       
@@ -709,7 +731,18 @@
       "changesInErrands": "Canvis en tasques",
       "ownTasks": "Tascas propies",
       "invalidAction": "Acció invàlida",
-      "sharedListSelectedAlertText": "La llista compartida no es pot assignar a cap tasca. Es seleccionarà la llista compartida si assignes la tasca a un contacte."
+      "sharedListSelectedAlertText": "La llista compartida no es pot assignar a cap tasca. Es seleccionarà la llista compartida si assignes la tasca a un contacte.",
+      "setNewPhoto": "Canviar foto",
+      "name": "Nom",
+      "surname": "Cognoms",
+      "email": "Email",
+      "birthdate": "Data de naixement",
+      "username": "Nom d'usuari",
+      "usernameAlreadyTaken": "Ho sentim, aquest nom d'usuari ja està en ús.",
+      "deleteAccount": "Eliminar compte",
+      "confirmDeleteAccount": "També s'eliminaran totes les teves tasques i llistes. Aquesta acció no es pot desfer.",
+      "confirmSaveChanges": "Vols desar els canvis realitzats al teu perfil?"
+
 
 
 
