@@ -6,7 +6,7 @@ const users = [
     surname: "Fernández Martínez",
     email: "maria.fernandez@example.com",
     phoneNumber: "+34-600-234-567",
-    profilePhoto: "",
+    photoURL: false,
     contacts: [
       "100001",
       "100003",
@@ -43,7 +43,7 @@ const users = [
     surname: "Pérez Sánchez",
     email: "juan.perez@example.com",
     phoneNumber: "+34-600-345-678",
-    profilePhoto: "",
+    photoURL: false,
     contacts: [
       "100001",
       "100002",
@@ -81,7 +81,7 @@ const users = [
     surname: "Ruiz Hernández",
     email: "ana.ruiz@example.com",
     phoneNumber: "+34-600-456-789",
-    profilePhoto: "",
+    photoURL: false,
     contacts: [
       "100001",
       "100002",
@@ -120,7 +120,7 @@ const users = [
     surname: "Gómez Torres",
     email: "lucia.gomez@example.com",
     phoneNumber: "+34-600-567-890",
-    profilePhoto: "",
+    photoURL: false,
     contacts: [
       "100001",
       "100002",
@@ -160,7 +160,7 @@ const users = [
     surname: "Tarin Rojo",
     email: "maxi.tarin@example.com",
     phoneNumber: "+34-600-234-567",
-    profilePhoto: "",
+    photoURL: false,
     contacts: [
       "100001",
       "100003",

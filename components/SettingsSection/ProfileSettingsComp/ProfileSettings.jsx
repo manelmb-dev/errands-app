@@ -8,6 +8,7 @@ import {
   Alert,
 } from "react-native";
 import { useEffect, useState } from "react";
+import * as ImagePicker from "expo-image-picker";
 
 import { themeAtom, userAtom } from "../../../constants/storeAtoms";
 import { useAtom } from "jotai";
@@ -44,6 +45,56 @@ function SettingsSection() {
       headerRight: () => null,
     });
   }, [navigation, theme]);
+
+  const pickImageAndUpload = async () => {
+    // Require permission
+    const permissionResult =
+      await ImagePicker.requestMediaLibraryPermissionsAsync();
+
+    if (permissionResult.status !== "granted") {
+      Alert.alert(i18n.t("permissionDenied"), i18n.t("galleryAccessNeeded"));
+      return;
+    }
+
+    // open galery
+    const result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ["images"],
+      allowsEditing: true,
+      aspect: [1, 1],
+      quality: 1,
+    });
+
+    // if (!result.canceled) {
+    //   const imageUri = result.assets[0].uri;
+
+    //   try {
+    //     // Upload photo to firebase storage
+    //     const fileName = `profilePhotos/${formData.id}.jpg`;
+    //     const ref = storage().ref(fileName);
+
+    //     await ref.putFile(imageUri);
+    //     const downloadURL = await ref.getDownloadURL();
+
+    //     // Save the URL in firestore and in the local storage
+    //     const updatedUser = { ...formData, photoURL: downloadURL };
+    //     setFormData(updatedUser);
+    //     setUser(updatedUser);
+
+    //     // Update in firestore here if you are connected
+    //     console.log("Imagen subida correctamente:", downloadURL);
+    //   } catch (error) {
+    //     console.error("Error al subir la imagen:", error);
+    //   }
+    // }
+
+    if (!result.canceled) {
+      const imageUri = result.assets[0].uri;
+
+      const updatedUser = { ...formData, photoURL: imageUri };
+      setFormData(updatedUser);
+      setUser(updatedUser);
+    }
+  };
 
   const handleChange = (field, value) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
@@ -109,12 +160,12 @@ function SettingsSection() {
   return (
     <View className={`h-full px-6 py-4 bg-[${themes[theme].background}] gap-6`}>
       {/* Header profile */}
-      <View className={`flex items-center`}>
-        <TouchableOpacity onPress={() => console.log("Cambiar foto UPDATEEE")}>
+      <View className={`flex items-center gap-2`}>
+        <TouchableOpacity onPress={pickImageAndUpload}>
           {formData.photoURL ? (
             <Image
               source={{ uri: formData.photoURL }}
-              className="h-24 rounded-full"
+              className="h-24 w-24 rounded-full"
             />
           ) : (
             <Ionicons
@@ -124,7 +175,7 @@ function SettingsSection() {
             />
           )}
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => console.log("Cambiar foto UPDATEEE")}>
+        <TouchableOpacity onPress={pickImageAndUpload}>
           <Text
             className={`text-lg font-semibold text-[${themes[theme].blueHeadText}]`}
           >
