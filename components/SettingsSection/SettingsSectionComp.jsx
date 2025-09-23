@@ -1,5 +1,5 @@
 import { useNavigation, useRouter } from "expo-router";
-import { View, Text, ScrollView, TouchableHighlight } from "react-native";
+import { View, Text, ScrollView, TouchableHighlight, Image } from "react-native";
 import { useEffect, useState } from "react";
 
 import { languageAtom, themeAtom, userAtom } from "../../constants/storeAtoms";
@@ -124,11 +124,18 @@ function SettingsSectionComp() {
             onPress={() => router.push("/Settings/profileSettings")}
           >
             <View className="flex-row flex-1 p-4 items-center gap-4">
-              <Ionicons
-                name="person-circle-outline"
-                size={70}
-                color={themes[theme].text}
-              />
+              {user.photoURL ? (
+                <Image
+                  source={{ uri: user.photoURL }}
+                  className="h-20 w-20 rounded-full"
+                />
+              ) : (
+                <Ionicons
+                  name="person-circle-outline"
+                  size={80}
+                  color={themes[theme].iconColor}
+                />
+              )}
               <View className="justify-center">
                 <Text
                   className={`text-2xl font-semibold text-[${themes[theme].text}]`}
