@@ -67,11 +67,11 @@ const ContactsSectionComp = () => {
           className="mr-2"
         />
         <TextInput
-          placeholder={i18n.t("searchContacts")}
+          placeholder={i18n.t("searchContact")}
           placeholderTextColor={themes[theme].gray}
           value={searchQuery}
           onChangeText={setSearchQuery}
-          className="flex-1 h-10 text-base"
+          className="flex-1 h-14 text-xl leading-tight"
           style={{ color: themes[theme].text }}
         />
       </View>
