@@ -165,12 +165,12 @@ function SettingsSection() {
           {formData.photoURL ? (
             <Image
               source={{ uri: formData.photoURL }}
-              className="h-24 w-24 rounded-full"
+              className="h-40 w-40 rounded-full"
             />
           ) : (
             <Ionicons
               name="person-circle-outline"
-              size={90}
+              size={165}
               color={themes[theme].iconColor}
             />
           )}
