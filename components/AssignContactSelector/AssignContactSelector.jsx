@@ -24,7 +24,7 @@ import {
 } from "../../constants/storeAtoms";
 
 import { themes } from "../../constants/themes";
-import { SafeAreaView } from "react-native-safe-area-context";
+import { SafeAreaProvider } from "react-native-safe-area-context";
 import i18n from "../../constants/i18n";
 
 const AssignContactSelector = () => {
@@ -131,7 +131,7 @@ const AssignContactSelector = () => {
   }, [contactSearchedInput, sortedContacts]);
 
   return (
-    <SafeAreaView className={`flex-1 bg-[${themes[theme].background}]`}>
+    <SafeAreaProvider className={`flex-1 bg-[${themes[theme].background}]`}>
       <Text
         className={`py-5 text-lg font-bold text-center text-[${themes[theme].text}]  ${theme === "light" ? "bg-blue-300" : "bg-blue-700"}`}
       >
@@ -239,7 +239,7 @@ const AssignContactSelector = () => {
           </TouchableOpacity>
         )}
       />
-    </SafeAreaView>
+    </SafeAreaProvider>
   );
 };
 
