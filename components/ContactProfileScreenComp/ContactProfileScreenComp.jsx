@@ -1,4 +1,4 @@
-import { View, Text, ScrollView, TouchableOpacity, Image } from "react-native";
+import { View, Text, TouchableOpacity, Image } from "react-native";
 import { useLocalSearchParams, useNavigation, useRouter } from "expo-router";
 import React, { useEffect, useMemo, useState } from "react";
 
@@ -6,11 +6,7 @@ import Octicons from "react-native-vector-icons/Octicons";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import Feather from "react-native-vector-icons/Feather";
 
-import {
-  themeAtom,
-  errandsAtom,
-  contactsAtom,
-} from "../../constants/storeAtoms";
+import { themeAtom, contactsAtom } from "../../constants/storeAtoms";
 import { useAtom } from "jotai";
 
 import ContactSharedTasks from "./ContactSharedTasks/ContactSharedTasks";
@@ -18,7 +14,7 @@ import MuteOptionsPopup from "./MuteOptionsPopup/MuteOptionsPopup";
 import { themes } from "../../constants/themes";
 import i18n from "../../constants/i18n";
 
-const ContactDetailModalComp = () => {
+const ContactProfileScreenComp = () => {
   const navigation = useNavigation();
   const router = useRouter();
 
@@ -169,4 +165,4 @@ const ContactDetailModalComp = () => {
   );
 };
 
-export default ContactDetailModalComp;
+export default ContactProfileScreenComp;
