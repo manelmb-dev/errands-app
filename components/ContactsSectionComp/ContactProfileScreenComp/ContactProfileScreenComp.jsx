@@ -18,7 +18,7 @@ const ContactProfileScreenComp = () => {
   const currentContact = useMemo(() => JSON.parse(contact), [contact]);
 
   return (
-    <View className={`flex-1 bg-[${themes[theme].background}]`}>
+    <View className={`flex-1 px-4 bg-[${themes[theme].background}]`}>
       {/* Contact details */}
 
       {/* Image contact or icon */}

@@ -52,7 +52,7 @@ const ContactActions = ({ currentContact }) => {
   };
 
   return (
-    <View className="flex-row w-11/12 mb-6 gap-2 items-stretch self-center">
+    <View className="flex-row w-full mb-6 gap-2 items-stretch self-center">
       {/* Send errand to contact */}
       <TouchableOpacity
         className={`flex-1 h-24 rounded-2xl items-center justify-evenly border border-gray-300 bg-[${themes[theme].surfaceBackground}]`}
