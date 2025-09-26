@@ -11,10 +11,10 @@ import Feather from "react-native-vector-icons/Feather";
 import Ionicons from "react-native-vector-icons/Ionicons";
 
 import { useAtom } from "jotai";
-import { themeAtom } from "../../../../constants/storeAtoms";
+import { themeAtom } from "../../../../../constants/storeAtoms";
 
-import i18n from "../../../../constants/i18n";
-import { themes } from "../../../../constants/themes";
+import i18n from "../../../../../constants/i18n";
+import { themes } from "../../../../../constants/themes";
 
 export default function FilterMainTabPopup({ mainTab, setMainTab }) {
   const [theme] = useAtom(themeAtom);

@@ -7,18 +7,18 @@ import {
   errandsAtom,
   themeAtom,
   userAtom,
-} from "../../../constants/storeAtoms";
+} from "../../../../constants/storeAtoms";
 
-import RenderRightActionsCompletedErrand from "../../../Utils/RenderRightActionsCompletedErrand";
-import UndoCompleteErrandButton from "../../../Utils/UndoCompleteErrandButton";
-import UndoDeleteErrandButton from "../../../Utils/UndoDeleteErrandButton";
+import RenderRightActionsCompletedErrand from "../../../../Utils/RenderRightActionsCompletedErrand";
+import UndoCompleteErrandButton from "../../../../Utils/UndoCompleteErrandButton";
+import UndoDeleteErrandButton from "../../../../Utils/UndoDeleteErrandButton";
 import FilterMainTabPopup from "./FilterMainTabPopup/FilterMainTabPopup";
 import Animated, { LinearTransition } from "react-native-reanimated";
-import SwipeableFullErrand from "../../../Utils/SwipeableFullErrand";
-import { useErrandActions } from "../../../hooks/useErrandActions";
-import CompletedErrand from "../../../Utils/CompletedErrand";
-import { themes } from "../../../constants/themes";
-import i18n from "../../../constants/i18n";
+import SwipeableFullErrand from "../../../../Utils/SwipeableFullErrand";
+import { useErrandActions } from "../../../../hooks/useErrandActions";
+import CompletedErrand from "../../../../Utils/CompletedErrand";
+import { themes } from "../../../../constants/themes";
+import i18n from "../../../../constants/i18n";
 
 const ContactSharedTasks = ({ currentContact }) => {
   const [theme] = useAtom(themeAtom);

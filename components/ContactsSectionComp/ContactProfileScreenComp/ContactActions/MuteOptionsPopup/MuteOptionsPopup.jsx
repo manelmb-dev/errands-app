@@ -8,10 +8,10 @@ import {
 } from "react-native-popup-menu";
 
 import { useAtom } from "jotai";
-import { themeAtom } from "../../../constants/storeAtoms";
+import { themeAtom } from "../../../../../constants/storeAtoms";
 import Ionicons from "react-native-vector-icons/Ionicons";
-import { themes } from "../../../constants/themes";
-import i18n from "../../../constants/i18n";
+import { themes } from "../../../../../constants/themes";
+import i18n from "../../../../../constants/i18n";
 
 export default function MainPopupPage({ contactDetails }) {
   const [theme] = useAtom(themeAtom);
