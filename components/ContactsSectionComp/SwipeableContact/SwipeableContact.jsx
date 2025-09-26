@@ -51,7 +51,7 @@ const SwipeableContact = ({ contact, openSwipeableRef, swipeableRefs }) => {
             return;
           }
           router.push({
-            pathname: `/ContactProfileScreen`,
+            pathname: `/contactProfileScreen`,
             params: { contact: JSON.stringify(contact) },
           });
         }}
