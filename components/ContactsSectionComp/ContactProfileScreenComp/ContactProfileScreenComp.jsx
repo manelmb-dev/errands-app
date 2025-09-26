@@ -7,10 +7,10 @@ import Ionicons from "react-native-vector-icons/Ionicons";
 import { themeAtom } from "../../../constants/storeAtoms";
 import { useAtom } from "jotai";
 
-import ContactSharedTasks from "./ContactSharedTasks/ContactSharedTasks";
 import ContactActions from "./ContactActions/ContactActions";
 import { themes } from "../../../constants/themes";
 import i18n from "../../../constants/i18n";
+import ContactSharedTasksMenu from "./ContactSharedTasksMenu/ContactSharedTasksMenu";
 
 const ContactProfileScreenComp = () => {
   const navigation = useNavigation();
@@ -57,7 +57,7 @@ const ContactProfileScreenComp = () => {
 
       <ContactActions currentContact={currentContact} />
 
-      <ContactSharedTasks currentContact={currentContact} />
+      <ContactSharedTasksMenu currentContact={currentContact} />
     </View>
   );
 };
