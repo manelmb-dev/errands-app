@@ -1,12 +1,12 @@
-import React from "react";
-import { Platform, Alert, TouchableOpacity, View, Text } from "react-native";
-import ContextMenuView from "react-native-context-menu-view";
+import { Alert, TouchableOpacity, View, Text } from "react-native";
+import { useNavigation, useRouter } from "expo-router";
 import {
   Menu,
   MenuTrigger,
   MenuOptions,
   MenuOption,
 } from "react-native-popup-menu";
+import React from "react";
 
 import {
   currentListAtom,
@@ -21,10 +21,10 @@ import Ionicons from "react-native-vector-icons/Ionicons";
 
 import { themes } from "../../../constants/themes";
 import i18n from "../../../constants/i18n";
-import { useRouter } from "expo-router";
 
 export default function ListPopup({ showCompleted, setShowCompleted }) {
   const router = useRouter();
+  const navigation = useNavigation();
 
   const [user] = useAtom(userAtom);
   const [errands, setErrands] = useAtom(errandsAtom);
@@ -59,7 +59,7 @@ export default function ListPopup({ showCompleted, setShowCompleted }) {
 
     // FIRESTONE UPDATEEE FIXX THIS
 
-    router.push(`/`);
+    navigation.goBack();
   };
 
   const confirmDeleteList = (listId) => {
@@ -100,7 +100,7 @@ export default function ListPopup({ showCompleted, setShowCompleted }) {
 
     // FIRESTONE UPDATEEE FIXX THIS
 
-    router.push(`/`);
+    navigation.goBack();
   };
 
   const confirmLeaveList = (listId) => {
