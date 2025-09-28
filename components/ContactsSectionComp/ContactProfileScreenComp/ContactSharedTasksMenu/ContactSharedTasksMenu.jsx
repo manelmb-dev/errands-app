@@ -22,16 +22,16 @@ const ContactSharedTasksMenu = ({ currentContact }) => {
       route: "/contactSharedPendingTasks",
     },
     {
-      label: i18n.t("sharedLists"),
-      icon: "list-outline",
-      size: 25,
-      route: "/contactSharedLists",
-    },
-    {
       label: i18n.t("completedErrands"),
       icon: "checkmark-done-outline",
       size: 25,
       route: "/contactSharedCompletedTasks",
+    },
+    {
+      label: i18n.t("sharedLists"),
+      icon: "list-outline",
+      size: 25,
+      route: "/contactSharedLists",
     },
   ];
   return (
