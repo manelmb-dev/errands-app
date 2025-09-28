@@ -158,6 +158,16 @@ export default function ListPopup({ showCompleted, setShowCompleted }) {
             onSelect={() => {
               router.push("/Modals/editListModal");
             }}
+            customStyles={{
+              optionTouchable: {
+                activeOpacity: 70,
+                style: {
+                  borderTopLeftRadius: 10,
+                  borderTopRightRadius: 10,
+                  overflow: "hidden",
+                },
+              },
+            }}
           >
             <View className="flex-row justify-between items-center">
               <Text className={`text-lg text-[${themes[theme].text}]`}>
@@ -171,7 +181,19 @@ export default function ListPopup({ showCompleted, setShowCompleted }) {
             </View>
           </MenuOption>
         )}
-        <MenuOption onSelect={() => setShowCompleted(!showCompleted)}>
+        <MenuOption
+          onSelect={() => setShowCompleted(!showCompleted)}
+          customStyles={{
+            optionTouchable: currentList.ownerId !== user.id && {
+              activeOpacity: 70,
+              style: {
+                borderTopLeftRadius: 10,
+                borderTopRightRadius: 10,
+                overflow: "hidden",
+              },
+            },
+          }}
+        >
           <View className="flex-row justify-between items-center">
             <Text className={`text-lg text-[${themes[theme].text}]`}>
               {showCompleted
@@ -194,6 +216,14 @@ export default function ListPopup({ showCompleted, setShowCompleted }) {
                 paddingHorizontal: 16,
                 borderBottomWidth: 0,
               },
+              optionTouchable: {
+                activeOpacity: 70,
+                style: {
+                  borderBottomLeftRadius: 10,
+                  borderBottomRightRadius: 10,
+                  overflow: "hidden",
+                },
+              },
             }}
           >
             <View className="flex-row justify-between items-center">
@@ -211,6 +241,14 @@ export default function ListPopup({ showCompleted, setShowCompleted }) {
                 paddingVertical: 12,
                 paddingHorizontal: 16,
                 borderBottomWidth: 0,
+              },
+              optionTouchable: {
+                activeOpacity: 70,
+                style: {
+                  borderBottomLeftRadius: 10,
+                  borderBottomRightRadius: 10,
+                  overflow: "hidden",
+                },
               },
             }}
           >
