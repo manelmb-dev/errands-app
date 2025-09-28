@@ -146,7 +146,7 @@ const ContactSharedPendingTasks = () => {
   }, [filteredErrands]);
 
   return (
-    <View className={`bg-[${themes[theme].background}]`}>
+    <View className={`h-full bg-[${themes[theme].background}]`}>
       {/* Tabs */}
       <View
         className={`flex-row items-center rounded-full self-center shadow-sm ${theme === "light" ? "shadow-gray-200" : "shadow-neutral-950"}`}
