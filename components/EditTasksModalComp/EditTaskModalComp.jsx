@@ -306,9 +306,7 @@ const EditTaskModal = () => {
                 value={value}
                 onChangeText={onChange}
                 placeholder={i18n.t("title")}
-                placeholderTextColor={
-                  theme === "dark" && themes[theme].taskSecondText
-                }
+                placeholderTextColor={themes[theme].taskSecondText}
               />
             )}
           />
@@ -321,9 +319,7 @@ const EditTaskModal = () => {
                 value={value}
                 onChangeText={onChange}
                 placeholder={i18n.t("description")}
-                placeholderTextColor={
-                  theme === "dark" && themes[theme].taskSecondText
-                }
+                placeholderTextColor={themes[theme].taskSecondText}
                 multiline={true}
               />
             )}

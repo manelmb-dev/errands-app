@@ -319,9 +319,7 @@ const NewTaskModal = () => {
                 value={value}
                 onChangeText={onChange}
                 placeholder={i18n.t("title")}
-                placeholderTextColor={
-                  theme === "dark" && themes[theme].taskSecondText
-                }
+                placeholderTextColor={themes[theme].taskSecondText}
               />
             )}
           />
@@ -334,9 +332,7 @@ const NewTaskModal = () => {
                 value={value}
                 onChangeText={onChange}
                 placeholder="Descripción"
-                placeholderTextColor={
-                  theme === "dark" && themes[theme].taskSecondText
-                }
+                placeholderTextColor={themes[theme].taskSecondText}
                 multiline={true}
               />
             )}
