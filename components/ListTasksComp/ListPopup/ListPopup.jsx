@@ -207,59 +207,45 @@ export default function ListPopup({ showCompleted, setShowCompleted }) {
             />
           </View>
         </MenuOption>
-        {currentList.ownerId === user.id ? (
-          <MenuOption
-            onSelect={() => confirmDeleteList(currentList.id)}
-            customStyles={{
-              optionWrapper: {
-                paddingVertical: 12,
-                paddingHorizontal: 16,
-                borderBottomWidth: 0,
+        <MenuOption
+          onSelect={() =>
+            currentList.ownerId === user.id
+              ? confirmDeleteList(currentList.id)
+              : confirmLeaveList(currentList.id)
+          }
+          customStyles={{
+            optionWrapper: {
+              paddingVertical: 12,
+              paddingHorizontal: 16,
+              borderBottomWidth: 0,
+            },
+            optionTouchable: {
+              activeOpacity: 70,
+              style: {
+                borderBottomLeftRadius: 10,
+                borderBottomRightRadius: 10,
+                overflow: "hidden",
               },
-              optionTouchable: {
-                activeOpacity: 70,
-                style: {
-                  borderBottomLeftRadius: 10,
-                  borderBottomRightRadius: 10,
-                  overflow: "hidden",
-                },
-              },
-            }}
-          >
-            <View className="flex-row justify-between items-center">
-              <Text className={`text-lg text-red-500`}>
-                {i18n.t("deleteList")}
-              </Text>
-              <Ionicons name="trash-outline" size={20} color="red" />
-            </View>
-          </MenuOption>
-        ) : (
-          <MenuOption
-            onSelect={() => confirmLeaveList(currentList.id)}
-            customStyles={{
-              optionWrapper: {
-                paddingVertical: 12,
-                paddingHorizontal: 16,
-                borderBottomWidth: 0,
-              },
-              optionTouchable: {
-                activeOpacity: 70,
-                style: {
-                  borderBottomLeftRadius: 10,
-                  borderBottomRightRadius: 10,
-                  overflow: "hidden",
-                },
-              },
-            }}
-          >
-            <View className="flex-row justify-between items-center">
-              <Text className={`text-lg text-red-500`}>
-                {i18n.t("leaveList")}
-              </Text>
-              <Ionicons name="exit-outline" size={20} color="red" />
-            </View>
-          </MenuOption>
-        )}
+            },
+          }}
+        >
+          <View className="flex-row justify-between items-center">
+            <Text className={`text-lg text-red-500`}>
+              {currentList.ownerId === user.id
+                ? i18n.t("deleteList")
+                : i18n.t("leaveList")}
+            </Text>
+            <Ionicons
+              name={
+                currentList.ownerId === user.id
+                  ? "trash-outline"
+                  : "exit-outline"
+              }
+              size={20}
+              color="red"
+            />
+          </View>
+        </MenuOption>
       </MenuOptions>
     </Menu>
   );
