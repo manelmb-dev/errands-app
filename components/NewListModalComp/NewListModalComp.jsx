@@ -1,6 +1,6 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
+import { useLocalSearchParams, useNavigation } from "expo-router";
 import { useForm, Controller } from "react-hook-form";
-import { useNavigation } from "expo-router";
 import {
   View,
   Text,
@@ -13,7 +13,6 @@ import {
 } from "react-native";
 
 import {
-  currentListAtom,
   listsAtom,
   themeAtom,
   userAtom,
@@ -37,8 +36,19 @@ const NewListModal = () => {
   const [user] = useAtom(userAtom);
   const [theme] = useAtom(themeAtom);
   const [, setLists] = useAtom(listsAtom);
-  const [, setCurrentList] = useAtom(currentListAtom);
   const [usersSharedWith, setUsersSharedWith] = useAtom(usersSharedWithAtom);
+
+  const { contact } = useLocalSearchParams();
+  const currentContact = useMemo(
+    () => contact && JSON.parse(contact),
+    [contact]
+  );
+
+  useEffect(() => {
+    if (currentContact) {
+      setUsersSharedWith([currentContact.id]);
+    }
+  }, [currentContact, setUsersSharedWith]);
 
   const [assignedColor, setAssignedColor] = useState("slate");
   const [assignedIcon, setAssignedIcon] = useState("list");
