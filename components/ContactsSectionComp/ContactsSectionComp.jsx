@@ -63,12 +63,12 @@ const ContactsSectionComp = () => {
         <Ionicons
           name="search"
           size={20}
-          color={themes[theme].gray}
+          color={themes[theme].iconColor}
           className="mr-2"
         />
         <TextInput
           placeholder={i18n.t("searchContact")}
-          placeholderTextColor={themes[theme].gray}
+          placeholderTextColor={themes[theme].background}
           value={searchQuery}
           onChangeText={setSearchQuery}
           className="flex-1 h-14 text-xl leading-tight"
