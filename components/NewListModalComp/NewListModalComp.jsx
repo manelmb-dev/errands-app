@@ -193,9 +193,7 @@ const NewListModal = () => {
                 value={value}
                 onChangeText={onChange}
                 placeholder={i18n.t("listTitle")}
-                placeholderTextColor={
-                  theme === "dark" && themes[theme].taskSecondText
-                }
+                placeholderTextColor={themes[theme].taskSecondText}
               />
             )}
           />
