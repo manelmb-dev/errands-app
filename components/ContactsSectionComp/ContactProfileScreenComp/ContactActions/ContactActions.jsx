@@ -7,7 +7,6 @@ import { useAtom } from "jotai";
 
 import Octicons from "react-native-vector-icons/Octicons";
 import Ionicons from "react-native-vector-icons/Ionicons";
-import Feather from "react-native-vector-icons/Feather";
 
 import MuteOptionsPopup from "./MuteOptionsPopup/MuteOptionsPopup";
 import { themes } from "../../../../constants/themes";
@@ -20,21 +19,6 @@ const ContactActions = ({ currentContact }) => {
   const [, setContacts] = useAtom(contactsAtom);
 
   const [contactDetails, setContactDetails] = useState(currentContact);
-
-  const toggleBlockContact = () => {
-    const updatedContact = {
-      ...contactDetails,
-      blocked: !contactDetails.blocked,
-    };
-
-    setContactDetails(updatedContact);
-
-    setContacts((prev) =>
-      prev.map((c) => (c.id === updatedContact.id ? updatedContact : c))
-    );
-
-    // TODO: FIRESTORE UPDATEEE FIX THISSS
-  };
 
   const toggleFavoriteContact = () => {
     const updatedContact = {
@@ -93,23 +77,8 @@ const ContactActions = ({ currentContact }) => {
       <View className="flex-1">
         <MuteOptionsPopup contactDetails={contactDetails} />
       </View>
-
-      {/* Toggle block contact */}
-      <TouchableOpacity
-        className={`flex-1 h-24 rounded-2xl items-center justify-evenly border border-red-500 ${contactDetails.blocked ? `${theme === "light" ? "bg-red-200" : "bg-red-700"}` : `bg-[${themes[theme].surfaceBackground}]`}`}
-        activeOpacity={0.7}
-        onPress={toggleBlockContact}
-      >
-        <Feather
-          name={contactDetails.blocked ? "user-check" : "user-x"}
-          size={28}
-          color={themes[theme].text}
-        />
-        <Text className={`text-base text-center text-[${themes[theme].text}]`}>
-          {contactDetails.blocked ? i18n.t("unblock") : i18n.t("block")}
-        </Text>
-      </TouchableOpacity>
     </View>
   );
 };
+
 export default ContactActions;
