@@ -7,6 +7,7 @@ const users = [
     email: "maria.fernandez@example.com",
     phoneNumber: "+34-600-234-567",
     photoURL: false,
+    blockedUsers: [],
     contacts: [
       "100001",
       "100003",
@@ -35,6 +36,7 @@ const users = [
     createdAt: "2023-10-01T12:00:00.000Z",
     updatedAt: "2023-10-01T12:00:00.000Z",
     lastLogin: "2023-10-05T14:23:00.000Z",
+    blockedUsers: [],
   },
   {
     id: "100003",
@@ -44,6 +46,7 @@ const users = [
     email: "juan.perez@example.com",
     phoneNumber: "+34-600-345-678",
     photoURL: false,
+    blockedUsers: [],
     contacts: [
       "100001",
       "100002",
@@ -82,6 +85,7 @@ const users = [
     email: "ana.ruiz@example.com",
     phoneNumber: "+34-600-456-789",
     photoURL: false,
+    blockedUsers: [],
     contacts: [
       "100001",
       "100002",
@@ -121,6 +125,7 @@ const users = [
     email: "lucia.gomez@example.com",
     phoneNumber: "+34-600-567-890",
     photoURL: false,
+    blockedUsers: [],
     contacts: [
       "100001",
       "100002",
@@ -161,6 +166,7 @@ const users = [
     email: "maxi.tarin@example.com",
     phoneNumber: "+34-600-234-567",
     photoURL: false,
+    blockedUsers: [],
     contacts: [
       "100001",
       "100003",

@@ -86,6 +86,7 @@ let userExample = {
     },
   },
   photoURL: false,
+  blockedUsers: [],
   contacts: [
     {
       id: "100002",
@@ -94,7 +95,6 @@ let userExample = {
       phoneNumber: "+34678901234",
       email: "carlos.fernandez@email.com",
       favorite: true,
-      blocked: false,
       muted: {
         muteAll: false,
         muteMessages: false,
@@ -109,7 +109,6 @@ let userExample = {
       surname: "Gómez",
       phoneNumber: "+34612345678",
       favorite: false,
-      blocked: false,
       muted: {
         muteAll: false,
         muteMessages: false,
@@ -125,7 +124,6 @@ let userExample = {
       phoneNumber: "+34655544332",
       email: "alejandro.ruiz@email.com",
       favorite: true,
-      blocked: false,
       muted: {
         muteAll: false,
         muteMessages: true,
@@ -140,7 +138,6 @@ let userExample = {
       surname: "Martínez Garcia Santos Barreiro",
       phoneNumber: "+34699988877",
       favorite: false,
-      blocked: false,
       muted: {
         muteAll: true,
         muteMessages: true,
@@ -156,7 +153,6 @@ let userExample = {
       phoneNumber: "+34677766655",
       email: "javier.lopez@email.com",
       favorite: true,
-      blocked: false,
       muted: {
         muteAll: true,
         muteMessages: true,
@@ -171,7 +167,6 @@ let userExample = {
       surname: "Hernández",
       phoneNumber: "+34623456789",
       favorite: false,
-      blocked: false,
       muted: {
         muteAll: true,
         muteMessages: true,
@@ -187,7 +182,6 @@ let userExample = {
       phoneNumber: "+34687654321",
       email: "daniel.perez@email.com",
       favorite: true,
-      blocked: false,
       muted: {
         muteAll: false,
         muteMessages: false,
@@ -202,7 +196,6 @@ let userExample = {
       surname: "Díaz",
       phoneNumber: "+34611223344",
       favorite: false,
-      blocked: false,
       muted: {
         muteAll: false,
         muteMessages: false,
@@ -218,7 +211,6 @@ let userExample = {
       phoneNumber: "+34655667788",
       email: "pedro.torres@email.com",
       favorite: false,
-      blocked: false,
       muted: {
         muteAll: false,
         muteMessages: false,
@@ -233,7 +225,6 @@ let userExample = {
       surname: "Romero",
       phoneNumber: "+34699887766",
       favorite: false,
-      blocked: false,
       muted: {
         muteAll: false,
         muteMessages: false,
@@ -249,7 +240,6 @@ let userExample = {
       phoneNumber: "+34622334455",
       email: "hugo.sanchez@email.com",
       favorite: true,
-      blocked: false,
       muted: {
         muteAll: false,
         muteMessages: true,
@@ -264,7 +254,6 @@ let userExample = {
       surname: "Vargas",
       phoneNumber: "+34633445566",
       favorite: false,
-      blocked: false,
       muted: {
         muteAll: false,
         muteMessages: true,
@@ -280,7 +269,6 @@ let userExample = {
       phoneNumber: "+34644556677",
       email: "miguel.navarro@email.com",
       favorite: true,
-      blocked: false,
       muted: {
         muteAll: false,
         muteMessages: true,
@@ -295,7 +283,6 @@ let userExample = {
       surname: "Ortega",
       phoneNumber: "+34655667799",
       favorite: false,
-      blocked: false,
       muted: {
         muteAll: false,
         muteMessages: true,
@@ -311,7 +298,6 @@ let userExample = {
       phoneNumber: "+34666778899",
       email: "fernando.castro@email.com",
       favorite: true,
-      blocked: false,
       muted: {
         muteAll: false,
         muteMessages: false,

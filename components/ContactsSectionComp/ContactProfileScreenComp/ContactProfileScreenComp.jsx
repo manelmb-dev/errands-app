@@ -5,7 +5,11 @@ import React, { useEffect } from "react";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import Feather from "react-native-vector-icons/Feather";
 
-import { contactsAtom, themeAtom } from "../../../constants/storeAtoms";
+import {
+  contactsAtom,
+  themeAtom,
+  userAtom,
+} from "../../../constants/storeAtoms";
 import { useAtom } from "jotai";
 
 import ContactSharedTasksMenu from "./ContactSharedTasksMenu/ContactSharedTasksMenu";
@@ -17,13 +21,16 @@ const ContactProfileScreenComp = () => {
   const navigation = useNavigation();
 
   const [theme] = useAtom(themeAtom);
-  const [contacts, setContacts] = useAtom(contactsAtom);
+  const [contacts] = useAtom(contactsAtom);
+  const [user, setUser] = useAtom(userAtom);
 
   const { contact } = useLocalSearchParams();
   const parsedContact = JSON.parse(contact);
 
   const currentContact =
     contacts.find((c) => c.id === parsedContact.id) || parsedContact;
+
+  const isContactBlocked = user.blockedUsers.includes(currentContact.id);
 
   useEffect(() => {
     navigation.setOptions({
@@ -56,15 +63,24 @@ const ContactProfileScreenComp = () => {
   };
 
   const toogleBlockContact = () => {
-    const updatedContact = {
-      ...currentContact,
-      blocked: !currentContact.blocked,
-    };
-    setContacts((prev) =>
-      prev.map((c) => (c.id === updatedContact.id ? updatedContact : c))
-    );
+    let updatedBlockedUsers;
+
+    if (isContactBlocked) {
+      updatedBlockedUsers = user.blockedUsers.filter(
+        (id) => id !== currentContact.id
+      );
+    } else {
+      updatedBlockedUsers = [...user.blockedUsers, currentContact.id];
+    }
+
+    const updatedUser = { ...user, blockedUsers: updatedBlockedUsers };
+
+    setUser(updatedUser);
 
     // TODO: FIRESTORE UPDATEEE FIX THISSS
+    // setUser((prev) =>
+    //   prev.map((user) => (user.id === updatedUser.id ? updatedUser : user))
+    // );
   };
 
   return (
@@ -98,21 +114,17 @@ const ContactProfileScreenComp = () => {
           className={`rounded-xl`}
           underlayColor={themes[theme].background}
           activeOpacity={0.8}
-          onPress={
-            currentContact.blocked ? toogleBlockContact : confirmBlockContact
-          }
+          onPress={isContactBlocked ? toogleBlockContact : confirmBlockContact}
         >
           <View className={`py-4 flex-row items-center pl-5 gap-5`}>
             <Feather
-              name={currentContact.blocked ? "user-check" : "user-x"}
+              name={isContactBlocked ? "user-check" : "user-x"}
               size={28}
               color="red"
             />
             <View className={`flex-1 flex-row justify-between`}>
               <Text className={`text-red-500 text-lg font-medium`}>
-                {currentContact.blocked
-                  ? i18n.t("unblockUser")
-                  : i18n.t("blockUser")}
+                {isContactBlocked ? i18n.t("unblockUser") : i18n.t("blockUser")}
               </Text>
             </View>
           </View>
