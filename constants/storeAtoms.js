@@ -86,8 +86,8 @@ let userExample = {
     },
   },
   photoURL: false,
-  favoriteUsers: [100002, 100004, 100006, 100008, 100012, 100016],
-  blockedUsers: [],
+  favoriteUsers: ["100002", "100004", "100006", "100008", "100012", "100016"],
+  blockedUsers: ["100005", "1000015"],
   mutedUsers: {
     100004: {
       muteAll: false,
