@@ -83,7 +83,6 @@ export default function MainPopupPage({ contactDetails }) {
         customStyles={{
           optionsContainer: {
             marginTop: 100,
-            marginLeft: 92,
             backgroundColor: themes[theme].surfaceBackground,
             borderRadius: 10,
             width: 280,
