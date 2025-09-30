@@ -41,14 +41,18 @@ const ContactProfileScreenComp = () => {
   }, [navigation, currentContact, theme]);
 
   const confirmBlockContact = () => {
-    Alert.alert(`${i18n.t("blockUser")}?`, `${i18n.t("blockUserText")}`, [
-      { text: i18n.t("cancel") },
-      {
-        text: i18n.t("block"),
-        onPress: toogleBlockContact,
-        style: "destructive",
-      },
-    ]);
+    Alert.alert(
+      `${i18n.t("blockUserQuestion")} ${currentContact.name} ${currentContact.surname}?`,
+      `${i18n.t("blockUserText")}`,
+      [
+        { text: i18n.t("cancel") },
+        {
+          text: i18n.t("block"),
+          onPress: toogleBlockContact,
+          style: "destructive",
+        },
+      ]
+    );
   };
 
   const toogleBlockContact = () => {
