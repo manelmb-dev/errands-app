@@ -55,14 +55,14 @@ const ContactProfileScreenComp = () => {
         { text: i18n.t("cancel") },
         {
           text: i18n.t("block"),
-          onPress: toogleBlockContact,
+          onPress: toggleBlockContact,
           style: "destructive",
         },
       ]
     );
   };
 
-  const toogleBlockContact = () => {
+  const toggleBlockContact = () => {
     let updatedBlockedUsers;
 
     if (isContactBlocked) {
@@ -114,7 +114,7 @@ const ContactProfileScreenComp = () => {
           className={`rounded-xl`}
           underlayColor={themes[theme].background}
           activeOpacity={0.8}
-          onPress={isContactBlocked ? toogleBlockContact : confirmBlockContact}
+          onPress={isContactBlocked ? toggleBlockContact : confirmBlockContact}
         >
           <View className={`py-4 flex-row items-center pl-5 gap-5`}>
             <Feather
