@@ -68,7 +68,7 @@ const ContactsSectionComp = () => {
         />
         <TextInput
           placeholder={i18n.t("searchContact")}
-          placeholderTextColor={themes[theme].background}
+          placeholderTextColor={themes[theme].taskSecondText}
           value={searchQuery}
           onChangeText={setSearchQuery}
           className="flex-1 h-14 text-xl leading-tight"
