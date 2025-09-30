@@ -1,21 +1,23 @@
 import React, { useState, useEffect, useMemo, useRef } from "react";
-import { useNavigation } from "expo-router";
 import { View, FlatList, TextInput } from "react-native";
+import { useNavigation } from "expo-router";
 
-import { contactsAtom, themeAtom } from "../../constants/storeAtoms";
+import { contactsAtom, themeAtom, userAtom } from "../../constants/storeAtoms";
 import { useAtom } from "jotai";
 
 import Ionicons from "react-native-vector-icons/Ionicons";
 
+import SwipeableContact from "./SwipeableContact/SwipeableContact";
 import { themes } from "../../constants/themes";
 import i18n from "../../constants/i18n";
-import SwipeableContact from "./SwipeableContact/SwipeableContact";
 
 const ContactsSectionComp = () => {
   const navigation = useNavigation();
+
   const swipeableRefs = useRef({});
   const openSwipeableRef = useRef(null);
 
+  const [user] = useAtom(userAtom);
   const [theme] = useAtom(themeAtom);
   const [contacts] = useAtom(contactsAtom);
 
@@ -45,11 +47,19 @@ const ContactsSectionComp = () => {
         `${c.name} ${c.surnames} ${c.alias}`.toLowerCase().includes(query)
       )
       .sort((a, b) => {
-        if (a.favorite && !b.favorite) return -1;
-        if (!a.favorite && b.favorite) return 1;
+        if (
+          user.favoriteUsers.includes(a.id) &&
+          !user.favoriteUsers.includes(b.id)
+        )
+          return -1;
+        if (
+          !user.favoriteUsers.includes(a.id) &&
+          user.favoriteUsers.includes(b.id)
+        )
+          return 1;
         return a.name.localeCompare(b.name);
       });
-  }, [contacts, searchQuery]);
+  }, [contacts, searchQuery, user]);
 
   return (
     <View className={`flex-1 bg-[${themes[theme].background}]`}>

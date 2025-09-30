@@ -1,30 +1,45 @@
-import { Pressable, Touchable, TouchableOpacity, View } from "react-native";
+import { TouchableOpacity, View } from "react-native";
 import { useRouter } from "expo-router";
 
-import { contactsAtom } from "../constants/storeAtoms";
+import { contactsAtom, userAtom } from "../constants/storeAtoms";
 import { useAtom } from "jotai";
 
 import MaterialDesignIcons from "@react-native-vector-icons/material-design-icons";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import Octicons from "react-native-vector-icons/Octicons";
 
-const RenderRightActionsContact = ({ contact, openSwipeableRef }) => {
+const RenderRightActionsContact = ({
+  contact,
+  openSwipeableRef,
+  isContactFavorite,
+}) => {
   const router = useRouter();
 
-  const [, setContacts] = useAtom(contactsAtom);
+  const [user, setUser] = useAtom(userAtom);
 
-  const toggleFavorite = async () => {
-    // Update contact locally
-    setContacts((prev) =>
-      prev.map((c) =>
-        c.id === contact.id ? { ...c, favorite: !c.favorite } : c
-      )
-    );
+  const toggleFavoriteContact = () => {
+    let updatedFavoriteUsers;
 
-    openSwipeableRef.current?.close();
+    if (isContactFavorite) {
+      updatedFavoriteUsers = user.favoriteUsers.filter(
+        (id) => id !== contact.id
+      );
+    } else {
+      updatedFavoriteUsers = [...user.favoriteUsers, contact.id];
+    }
+    const updatedUser = {
+      ...user,
+      favoriteUsers: updatedFavoriteUsers,
+    };
 
-    // TODO: FIRESTORE UPDATEEE
-    // await updateContactInFirestore(contact);
+    setUser(updatedUser);
+
+    openSwipeableRef.current.close();
+
+    // TODO: FIRESTORE UPDATEEE FIX THISSS
+    // setUser((prev) =>
+    //   prev.map((c) => (c.id === updatedContact.id ? updatedContact : c))
+    // );
   };
 
   return (
@@ -32,7 +47,7 @@ const RenderRightActionsContact = ({ contact, openSwipeableRef }) => {
       <TouchableOpacity
         className="w-20 bg-yellow-300 justify-center items-center"
         activeOpacity={0.6}
-        onPress={toggleFavorite}
+        onPress={toggleFavoriteContact}
       >
         <Octicons name="star" size={26} color="white" />
       </TouchableOpacity>

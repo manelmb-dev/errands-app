@@ -3,7 +3,7 @@ import { Pressable, Text, View } from "react-native";
 import { useRouter } from "expo-router";
 import React from "react";
 
-import { themeAtom } from "../../../constants/storeAtoms";
+import { themeAtom, userAtom } from "../../../constants/storeAtoms";
 import { useAtom } from "jotai";
 
 import Ionicons from "react-native-vector-icons/Ionicons";
@@ -17,6 +17,9 @@ const SwipeableContact = ({ contact, openSwipeableRef, swipeableRefs }) => {
   const router = useRouter();
 
   const [theme] = useAtom(themeAtom);
+  const [user] = useAtom(userAtom);
+
+  const isContactFavorite = user.favoriteUsers.includes(contact.id);
 
   return (
     <Swipeable
@@ -25,6 +28,7 @@ const SwipeableContact = ({ contact, openSwipeableRef, swipeableRefs }) => {
         <RenderRightActionsContact
           contact={contact}
           openSwipeableRef={openSwipeableRef}
+          isContactFavorite={isContactFavorite}
         />
       )}
       onSwipeableOpenStartDrag={() => {
@@ -73,7 +77,7 @@ const SwipeableContact = ({ contact, openSwipeableRef, swipeableRefs }) => {
           {contact.blocked && (
             <Feather name="user-x" size={25} color="#dc2626" />
           )}
-          {contact.favorite && (
+          {isContactFavorite && (
             <Octicons name="star-fill" size={25} color="#FFD700" />
           )}
         </View>

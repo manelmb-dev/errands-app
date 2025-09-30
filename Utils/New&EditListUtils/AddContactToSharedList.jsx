@@ -6,6 +6,7 @@ import {
   contactsAtom,
   currentListAtom,
   themeAtom,
+  userAtom,
   usersSharedWithAtom,
 } from "../../constants/storeAtoms";
 import { useAtom } from "jotai";
@@ -16,24 +17,27 @@ import Octicons from "react-native-vector-icons/Octicons";
 import { themes } from "../../constants/themes";
 import i18n from "../../constants/i18n";
 
-const sortByFavoriteAndNameSurname = (a, b) => {
-  if (a.favorite && !b.favorite) return -1;
-  if (!a.favorite && b.favorite) return 1;
-
-  const fullNameA = `${a.name ?? ""}${a.surname ?? ""}`.toLowerCase();
-  const fullNameB = `${b.name ?? ""}${b.surname ?? ""}`.toLowerCase();
-  return fullNameA.localeCompare(fullNameB);
-};
-
 const AddContactToSharedList = () => {
   const navigation = useNavigation();
 
+  const [user] = useAtom(userAtom);
   const [theme] = useAtom(themeAtom);
   const [contacts] = useAtom(contactsAtom);
   const [, setCurrentList] = useAtom(currentListAtom);
   const [usersSharedWith, setUsersSharedWith] = useAtom(usersSharedWithAtom);
 
   const [contactSearchedInput, setContactSearchedInput] = useState("");
+
+  const sortByFavoriteAndNameSurname = (a, b) => {
+    if (user.favoriteUsers.includes(a.id) && !user.favoriteUsers.includes(b.id))
+      return -1;
+    if (!user.favoriteUsers.includes(a.id) && user.favoriteUsers.includes(b.id))
+      return 1;
+
+    const fullNameA = `${a.name ?? ""}${a.surname ?? ""}`.toLowerCase();
+    const fullNameB = `${b.name ?? ""}${b.surname ?? ""}`.toLowerCase();
+    return fullNameA.localeCompare(fullNameB);
+  };
 
   const handleOk = useCallback(() => {
     navigation.goBack();
@@ -126,7 +130,7 @@ const AddContactToSharedList = () => {
         </Text>
       </View>
       <View className="mr-3 flex-row items-center gap-4">
-        {item.favorite && (
+        {user.favoriteUsers.includes(item.id) && (
           <Octicons name="star-fill" size={20} color="#FFD700" />
         )}
         <Pressable onPress={() => toggleUser(item.id)} hitSlop={8}>

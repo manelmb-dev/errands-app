@@ -73,14 +73,14 @@ const AssignContactSelector = () => {
       return [
         { ...user },
         ...contacts
-          .filter((c) => c.favorite)
+          .filter((c) => user.favoriteUsers.includes(c.id))
           .sort(
             (a, b) =>
               a.name.localeCompare(b.name) ||
               a.surname?.localeCompare(b.surname)
           ),
         ...contacts
-          .filter((c) => !c.favorite)
+          .filter((c) => !user.favoriteUsers.includes(c.id))
           .sort(
             (a, b) =>
               a.name.localeCompare(b.name) ||
@@ -96,6 +96,15 @@ const AssignContactSelector = () => {
         { ...user },
         ...contacts
           .filter((c) => listAssigned.usersShared.includes(c.id))
+          .filter((c) => user.favoriteUsers.includes(c.id))
+          .sort(
+            (a, b) =>
+              a.name.localeCompare(b.name) ||
+              a.surname?.localeCompare(b.surname)
+          ),
+        ...contacts
+          .filter((c) => listAssigned.usersShared.includes(c.id))
+          .filter((c) => !user.favoriteUsers.includes(c.id))
           .sort(
             (a, b) =>
               a.name.localeCompare(b.name) ||
@@ -227,7 +236,7 @@ const AssignContactSelector = () => {
                       color={themes["light"].blueHeadText}
                     />
                   )}
-                  {item.favorite === true && (
+                  {user.favoriteUsers.includes(item.id) && (
                     <Octicons name="star-fill" size={25} color="#FFD700" />
                   )}
                   {item.id === user.id && (

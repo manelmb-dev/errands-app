@@ -2,7 +2,7 @@ import { View, Text, TouchableOpacity } from "react-native";
 import { useRouter } from "expo-router";
 import { useState } from "react";
 
-import { contactsAtom, themeAtom } from "../../../../constants/storeAtoms";
+import { themeAtom, userAtom } from "../../../../constants/storeAtoms";
 import { useAtom } from "jotai";
 
 import Octicons from "react-native-vector-icons/Octicons";
@@ -16,23 +16,33 @@ const ContactActions = ({ currentContact }) => {
   const router = useRouter();
 
   const [theme] = useAtom(themeAtom);
-  const [, setContacts] = useAtom(contactsAtom);
+  const [user, setUser] = useAtom(userAtom);
 
-  const [contactDetails, setContactDetails] = useState(currentContact);
+  const [contactDetails] = useState(currentContact);
+
+  const isContactFavorite = user.favoriteUsers.includes(currentContact.id);
 
   const toggleFavoriteContact = () => {
-    const updatedContact = {
-      ...contactDetails,
-      favorite: !contactDetails.favorite,
+    let updatedFavoriteUsers;
+
+    if (isContactFavorite) {
+      updatedFavoriteUsers = user.favoriteUsers.filter(
+        (id) => id !== currentContact.id
+      );
+    } else {
+      updatedFavoriteUsers = [...user.favoriteUsers, currentContact.id];
+    }
+    const updatedUser = {
+      ...user,
+      favoriteUsers: updatedFavoriteUsers,
     };
 
-    setContactDetails(updatedContact);
-
-    setContacts((prev) =>
-      prev.map((c) => (c.id === updatedContact.id ? updatedContact : c))
-    );
+    setUser(updatedUser);
 
     // TODO: FIRESTORE UPDATEEE FIX THISSS
+    // setUser((prev) =>
+    //   prev.map((c) => (c.id === updatedContact.id ? updatedContact : c))
+    // );
   };
 
   return (
@@ -59,17 +69,17 @@ const ContactActions = ({ currentContact }) => {
 
       {/* Toggle favorite contact */}
       <TouchableOpacity
-        className={`flex-1 h-24 rounded-2xl items-center justify-evenly border border-yellow-500 ${contactDetails.favorite ? `${theme === "light" ? "bg-yellow-200" : "bg-yellow-700"}` : `bg-[${themes[theme].surfaceBackground}]`}`}
+        className={`flex-1 h-24 rounded-2xl items-center justify-evenly border border-yellow-500 ${isContactFavorite ? `${theme === "light" ? "bg-yellow-200" : "bg-yellow-700"}` : `bg-[${themes[theme].surfaceBackground}]`}`}
         activeOpacity={0.7}
         onPress={toggleFavoriteContact}
       >
         <Octicons
-          name={contactDetails.favorite ? "star-fill" : "star"}
+          name={isContactFavorite ? "star-fill" : "star"}
           size={25}
           color={themes[theme].text}
         />
         <Text className={`text-base text-center text-[${themes[theme].text}]`}>
-          {contactDetails.favorite ? i18n.t("unfavorite") : i18n.t("favorite")}
+          {isContactFavorite ? i18n.t("unfavorite") : i18n.t("favorite")}
         </Text>
       </TouchableOpacity>
 
