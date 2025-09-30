@@ -1,6 +1,5 @@
 import { View, Text, TouchableOpacity } from "react-native";
 import { useRouter } from "expo-router";
-import { useState } from "react";
 
 import { themeAtom, userAtom } from "../../../../constants/storeAtoms";
 import { useAtom } from "jotai";
@@ -17,8 +16,6 @@ const ContactActions = ({ currentContact }) => {
 
   const [theme] = useAtom(themeAtom);
   const [user, setUser] = useAtom(userAtom);
-
-  const [contactDetails] = useState(currentContact);
 
   const isContactFavorite = user.favoriteUsers.includes(currentContact.id);
 
@@ -54,7 +51,7 @@ const ContactActions = ({ currentContact }) => {
         onPress={() => {
           router.push({
             pathname: "/Modals/newTaskModal",
-            params: { contact: JSON.stringify(contactDetails) },
+            params: { contact: JSON.stringify(currentContact) },
           });
         }}
       >
@@ -85,7 +82,7 @@ const ContactActions = ({ currentContact }) => {
 
       {/* Mute Popup contact */}
       <View className="flex-1">
-        <MuteOptionsPopup contactDetails={contactDetails} />
+        <MuteOptionsPopup currentContact={currentContact} />
       </View>
     </View>
   );

@@ -88,6 +88,43 @@ let userExample = {
   photoURL: false,
   favoriteUsers: [100002, 100004, 100006, 100008, 100012, 100016],
   blockedUsers: [],
+  mutedUsers: {
+    100004: {
+      muteAll: false,
+      muteMessages: true,
+      muteNewErrands: false,
+      muteReminders: false,
+      muteChangesInErrands: false,
+    },
+    100005: {
+      muteAll: true,
+      muteMessages: true,
+      muteNewErrands: true,
+      muteReminders: true,
+      muteChangesInErrands: true,
+    },
+    100006: {
+      muteAll: true,
+      muteMessages: true,
+      muteNewErrands: true,
+      muteReminders: true,
+      muteChangesInErrands: true,
+    },
+    100007: {
+      muteAll: true,
+      muteMessages: true,
+      muteNewErrands: true,
+      muteReminders: true,
+      muteChangesInErrands: true,
+    },
+    100008: {
+      muteAll: false,
+      muteMessages: false,
+      muteNewErrands: true,
+      muteReminders: false,
+      muteChangesInErrands: true,
+    },
+  },
   contacts: [
     {
       id: "100002",

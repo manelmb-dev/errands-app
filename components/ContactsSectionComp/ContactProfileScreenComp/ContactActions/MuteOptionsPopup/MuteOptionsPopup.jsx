@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Text, TouchableOpacity, View, Switch } from "react-native";
 import {
   Menu,
@@ -7,22 +7,50 @@ import {
   MenuOption,
 } from "react-native-popup-menu";
 
+import { themeAtom, userAtom } from "../../../../../constants/storeAtoms";
 import { useAtom } from "jotai";
-import { themeAtom } from "../../../../../constants/storeAtoms";
+
 import Ionicons from "react-native-vector-icons/Ionicons";
 import { themes } from "../../../../../constants/themes";
 import i18n from "../../../../../constants/i18n";
 
-export default function MainPopupPage({ contactDetails }) {
+export default function MainPopupPage({ currentContact }) {
   const [theme] = useAtom(themeAtom);
+  const [user, setUser] = useAtom(userAtom);
 
-  const [muteSettings, setMuteSettings] = useState({
-    muteAll: contactDetails.muted.muteAll || false,
-    muteMessages: contactDetails.muted.muteMessages || false,
-    muteNewErrands: contactDetails.muted.muteNewErrands || false,
-    muteReminders: contactDetails.muted.muteReminders || false,
-    muteChangesInErrands: contactDetails.muted.muteChangesInErrands || false,
+  console.log("array", user.mutedUsers);
+
+  const [muteSettings, setMuteSettings] = useState(() => {
+    const override = user.mutedUsers?.[currentContact.id] ?? {};
+    return {
+      muteAll: override.muteAll ?? false,
+      muteMessages: override.muteMessages ?? false,
+      muteNewErrands: override.muteNewErrands ?? false,
+      muteReminders: override.muteReminders ?? false,
+      muteChangesInErrands: override.muteChangesInErrands ?? false,
+    };
   });
+
+  useEffect(() => {
+    if (!currentContact?.id) return;
+
+    const hasAnyMute = Object.values(muteSettings).some((v) => v);
+
+    setUser((prev) => {
+      const updatedMutedUsers = { ...prev.mutedUsers };
+
+      if (hasAnyMute) {
+        updatedMutedUsers[currentContact.id] = muteSettings;
+      } else {
+        delete updatedMutedUsers[currentContact.id];
+      }
+
+      return {
+        ...prev,
+        mutedUsers: updatedMutedUsers,
+      };
+    });
+  }, [muteSettings, currentContact.id, setUser]);
 
   const toggleMute = (key) => {
     setMuteSettings((prev) => {
@@ -104,7 +132,7 @@ export default function MainPopupPage({ contactDetails }) {
             label: i18n.t("muteChangesInErrands"),
           },
         ].map(({ key, label }, index, array) => (
-          <MenuOption key={key} onSelect={() => {}}>
+          <MenuOption key={key}>
             <View
               className={`p-3 flex-row justify-between items-center ${index < array.length - 1 && `border-b-hairline border-[${themes[theme].borderColor}]`}`}
             >
