@@ -18,8 +18,6 @@ export default function MainPopupPage({ currentContact }) {
   const [theme] = useAtom(themeAtom);
   const [user, setUser] = useAtom(userAtom);
 
-  console.log("array", user.mutedUsers);
-
   const [muteSettings, setMuteSettings] = useState(() => {
     const override = user.mutedUsers?.[currentContact.id] ?? {};
     return {
