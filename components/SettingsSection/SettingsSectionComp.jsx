@@ -1,5 +1,11 @@
 import { useNavigation, useRouter } from "expo-router";
-import { View, Text, ScrollView, TouchableHighlight, Image } from "react-native";
+import {
+  View,
+  Text,
+  ScrollView,
+  TouchableHighlight,
+  Image,
+} from "react-native";
 import { useEffect, useState } from "react";
 
 import { languageAtom, themeAtom, userAtom } from "../../constants/storeAtoms";
@@ -7,9 +13,9 @@ import { useAtom } from "jotai";
 
 import Ionicons from "react-native-vector-icons/Ionicons";
 
-import { themes } from "../../constants/themes";
 import AppearencePopupMenu from "./AppearencePopupMenu/AppearencePopupMenu";
 import LanguagePopupMenu from "./LanguagePopupMenu/LanguagePopupMenu";
+import { themes } from "../../constants/themes";
 import i18n from "../../constants/i18n";
 
 function SettingsSectionComp() {
@@ -63,6 +69,12 @@ function SettingsSectionComp() {
       icon: "people-outline",
       size: 25,
       route: "/Settings/contactsSection",
+    },
+    {
+      label: i18n.t("blockedAccounts"),
+      icon: "ban-outline",
+      size: 25,
+      route: "/Settings/blockedAccounts",
     },
     {
       label: i18n.t("notifications"),

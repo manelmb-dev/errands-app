@@ -149,7 +149,7 @@ let userExample = {
     {
       id: "100005",
       name: "Lucía",
-      surname: "Martínez Garcia Santos Barreiro",
+      surname: "Martínez Garcia Santos Barreiro Tortosa",
       phoneNumber: "+34699988877",
     },
     {
@@ -216,6 +216,7 @@ let userExample = {
       name: "Laura",
       surname: "Ortega",
       phoneNumber: "+34655667799",
+      username: "lauOrt01",
     },
     {
       id: "100016",
