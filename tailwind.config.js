@@ -48,6 +48,7 @@ module.exports = {
     "bg-fuchsia-300",
     "bg-pink-300",
     "bg-rose-300",
+    "bg-gray-300",
     "bg-slate-600",
     "bg-zinc-600",
     "bg-stone-600",
@@ -68,6 +69,7 @@ module.exports = {
     "bg-fuchsia-600",
     "bg-pink-600",
     "bg-rose-600",
+    "bg-gray-600",
     // Text colors
     "text-[#007AFF]",
     "text-[#1E1E1E]",
