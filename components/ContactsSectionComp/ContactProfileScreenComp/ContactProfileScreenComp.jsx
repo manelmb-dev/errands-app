@@ -63,19 +63,26 @@ const ContactProfileScreenComp = () => {
   };
 
   const toggleBlockContact = () => {
-    let updatedBlockedUsers;
-
+    setUser((prev) => {
+    // Unblock
     if (isContactBlocked) {
-      updatedBlockedUsers = user.blockedUsers.filter(
-        (id) => id !== currentContact.id
-      );
-    } else {
-      updatedBlockedUsers = [...user.blockedUsers, currentContact.id];
+      return {
+        ...prev,
+        blockedUsers: prev.blockedUsers.filter(
+          (id) => id !== currentContact.id
+        ),
+      };
     }
 
-    const updatedUser = { ...user, blockedUsers: updatedBlockedUsers };
-
-    setUser(updatedUser);
+    // Block
+    return {
+      ...prev,
+      blockedUsers: [...prev.blockedUsers, currentContact.id],
+      favoriteUsers: prev.favoriteUsers.filter(
+        (id) => id !== currentContact.id
+      ),
+    };
+  });
 
     // TODO: FIRESTORE UPDATEEE FIX THISSS
     // setUser((prev) =>

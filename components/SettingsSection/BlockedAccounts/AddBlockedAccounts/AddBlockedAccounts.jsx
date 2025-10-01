@@ -54,6 +54,7 @@ const AddBlockedAccounts = () => {
     setUser((prev) => ({
       ...prev,
       blockedUsers: [...prev.blockedUsers, accountId],
+      favoriteUsers: prev.favoriteUsers.filter((id) => id !== accountId),
     }));
 
     navigation.goBack();
