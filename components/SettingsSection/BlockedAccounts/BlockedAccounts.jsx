@@ -35,6 +35,9 @@ const BlockedAccounts = () => {
     navigation.setOptions({
       headerShown: true,
       title: i18n.t("blockedAccounts"),
+      headerTitleStyle: {
+        color: themes[theme].text,
+      },
       headerStyle: {
         backgroundColor: themes[theme].background,
       },
