@@ -1,6 +1,6 @@
 import { View, Image, TouchableHighlight, Text, Alert } from "react-native";
 import { useLocalSearchParams, useNavigation } from "expo-router";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 
 import Ionicons from "react-native-vector-icons/Ionicons";
 import Feather from "react-native-vector-icons/Feather";
@@ -13,6 +13,8 @@ import {
 import { useAtom } from "jotai";
 
 import ContactSharedTasksMenu from "./ContactSharedTasksMenu/ContactSharedTasksMenu";
+import UnblockUserPopup from "../../../Utils/Block&UnblockUsers/UnblockUserPopup";
+import BlockUserPopup from "../../../Utils/Block&UnblockUsers/BlockUserPopup";
 import ContactActions from "./ContactActions/ContactActions";
 import { themes } from "../../../constants/themes";
 import i18n from "../../../constants/i18n";
@@ -23,6 +25,9 @@ const ContactProfileScreenComp = () => {
   const [theme] = useAtom(themeAtom);
   const [contacts] = useAtom(contactsAtom);
   const [user, setUser] = useAtom(userAtom);
+
+  const [showBlockedUserPopup, setShowBlockedUserPopup] = useState(false);
+  const [showUnblockedUserPopup, setShowUnblockedUserPopup] = useState(false);
 
   const { contact } = useLocalSearchParams();
   const parsedContact = JSON.parse(contact);
@@ -64,25 +69,37 @@ const ContactProfileScreenComp = () => {
 
   const toggleBlockContact = () => {
     setUser((prev) => {
-    // Unblock
-    if (isContactBlocked) {
+      // Unblock
+      if (isContactBlocked) {
+        setShowBlockedUserPopup(false);
+        setShowUnblockedUserPopup(true);
+        setTimeout(() => {
+          setShowUnblockedUserPopup(null);
+        }, 2000);
+
+        return {
+          ...prev,
+          blockedUsers: prev.blockedUsers.filter(
+            (id) => id !== currentContact.id
+          ),
+        };
+      }
+
+      // Block
+      setShowUnblockedUserPopup(false);
+      setShowBlockedUserPopup(true);
+      setTimeout(() => {
+        setShowBlockedUserPopup(null);
+      }, 2000);
+
       return {
         ...prev,
-        blockedUsers: prev.blockedUsers.filter(
+        blockedUsers: [...prev.blockedUsers, currentContact.id],
+        favoriteUsers: prev.favoriteUsers.filter(
           (id) => id !== currentContact.id
         ),
       };
-    }
-
-    // Block
-    return {
-      ...prev,
-      blockedUsers: [...prev.blockedUsers, currentContact.id],
-      favoriteUsers: prev.favoriteUsers.filter(
-        (id) => id !== currentContact.id
-      ),
-    };
-  });
+    });
 
     // TODO: FIRESTORE UPDATEEE FIX THISSS
     // setUser((prev) =>
@@ -91,52 +108,72 @@ const ContactProfileScreenComp = () => {
   };
 
   return (
-    <View className={`flex-1 px-4 bg-[${themes[theme].background}] gap-4`}>
-      {/* Contact details */}
+    <View className={`flex-1 px-4 bg-[${themes[theme].background}]`}>
+      <View className="flex-1 gap-4">
+        {/* Contact details */}
 
-      {/* Image contact or icon */}
-      <View className="flex items-center">
-        {currentContact.photoURL ? (
-          <Image
-            className="w-20 h-20 rounded-full"
-            source={{ uri: currentContact.photoURL }}
-          />
-        ) : (
-          <Ionicons
-            name="person-circle-outline"
-            size={80}
-            color={themes[theme].iconColor}
-          />
-        )}
-      </View>
-
-      <ContactActions currentContact={currentContact} />
-
-      <ContactSharedTasksMenu currentContact={currentContact} />
-
-      <View
-        className={`bg-[${themes[theme].surfaceBackground}] rounded-xl border border-[${themes[theme].borderColor}] shadow-sm ${theme === "light" ? "shadow-gray-100" : "shadow-neutral-950"}`}
-      >
-        <TouchableHighlight
-          className={`rounded-xl`}
-          underlayColor={themes[theme].background}
-          activeOpacity={0.8}
-          onPress={isContactBlocked ? toggleBlockContact : confirmBlockContact}
-        >
-          <View className={`py-4 flex-row items-center pl-5 gap-5`}>
-            <Feather
-              name={isContactBlocked ? "user-check" : "user-x"}
-              size={28}
-              color="red"
+        {/* Image contact or icon */}
+        <View className="flex items-center">
+          {currentContact.photoURL ? (
+            <Image
+              className="w-20 h-20 rounded-full"
+              source={{ uri: currentContact.photoURL }}
             />
-            <View className={`flex-1 flex-row justify-between`}>
-              <Text className={`text-red-500 text-lg font-medium`}>
-                {isContactBlocked ? i18n.t("unblockUser") : i18n.t("blockUser")}
-              </Text>
+          ) : (
+            <Ionicons
+              name="person-circle-outline"
+              size={80}
+              color={themes[theme].iconColor}
+            />
+          )}
+        </View>
+
+        <ContactActions currentContact={currentContact} />
+
+        <ContactSharedTasksMenu currentContact={currentContact} />
+
+        <View
+          className={`bg-[${themes[theme].surfaceBackground}] rounded-xl border border-[${themes[theme].borderColor}] shadow-sm ${theme === "light" ? "shadow-gray-100" : "shadow-neutral-950"}`}
+        >
+          <TouchableHighlight
+            className={`rounded-xl`}
+            underlayColor={themes[theme].background}
+            activeOpacity={0.8}
+            onPress={
+              isContactBlocked ? toggleBlockContact : confirmBlockContact
+            }
+          >
+            <View className={`py-4 flex-row items-center pl-5 gap-5`}>
+              <Feather
+                name={isContactBlocked ? "user-check" : "user-x"}
+                size={28}
+                color="red"
+              />
+              <View className={`flex-1 flex-row justify-between`}>
+                <Text className={`text-red-500 text-lg font-medium`}>
+                  {isContactBlocked
+                    ? i18n.t("unblockUser")
+                    : i18n.t("blockUser")}
+                </Text>
+              </View>
             </View>
-          </View>
-        </TouchableHighlight>
+          </TouchableHighlight>
+        </View>
       </View>
+
+      {showBlockedUserPopup && (
+        <BlockUserPopup
+          user={currentContact}
+          setShowBlockedUserPopup={setShowBlockedUserPopup}
+        />
+      )}
+
+      {showUnblockedUserPopup && (
+        <UnblockUserPopup
+          user={currentContact}
+          setShowUnblockedUserPopup={setShowUnblockedUserPopup}
+        />
+      )}
     </View>
   );
 };

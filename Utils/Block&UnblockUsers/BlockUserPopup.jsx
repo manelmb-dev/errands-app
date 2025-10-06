@@ -1,0 +1,46 @@
+import Animated, { FadeInDown, FadeOutDown } from "react-native-reanimated";
+import { View, Text, Pressable } from "react-native";
+
+import { useAtom } from "jotai";
+import { languageAtom, themeAtom } from "../../constants/storeAtoms";
+
+import Ionicons from "react-native-vector-icons/Ionicons";
+
+import { themes } from "../../constants/themes";
+import i18n from "../../constants/i18n";
+
+const BlockUserPopup = ({ user, setShowBlockedUserPopup }) => {
+  const [theme] = useAtom(themeAtom);
+  const [lang] = useAtom(languageAtom);
+
+  return (
+    <Pressable
+      onPress={() => {
+        setShowBlockedUserPopup(null);
+      }}
+    >
+      <Animated.View
+        entering={FadeInDown}
+        exiting={FadeOutDown}
+        className={`flex-row items-center justify-between gap-4 px-4 py-4 mx-3 absolute bottom-10 rounded-2xl bg-[${themes[theme].background}] shadow shadow-[${themes[theme].popupShadow}] border border-[${themes[theme].borderColor}]`}
+      >
+        <Ionicons name="ban" size={27} color="gray" />
+        <View className="flex-1">
+          {lang === "en" ? (
+            <Text className="text-gray-800 text-base font-semibold">
+              {user.name}
+              {user.surname ? " " + user.surname : ""}{" "}
+              {i18n.t("userHasBeenBlocked")}.
+            </Text>
+          ) : (
+            <Text className="text-gray-800 text-base font-semibold">
+              {i18n.t("userHasBeenBlocked")} {user.name}
+              {user.surname ? " " + user.surname : ""}.
+            </Text>
+          )}
+        </View>
+      </Animated.View>
+    </Pressable>
+  );
+};
+export default BlockUserPopup;
