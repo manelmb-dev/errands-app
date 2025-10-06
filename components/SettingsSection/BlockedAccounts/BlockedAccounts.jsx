@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
   Alert,
 } from "react-native";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 import {
   contactsAtom,
@@ -21,6 +21,7 @@ import Ionicons from "react-native-vector-icons/Ionicons";
 
 import { themes } from "../../../constants/themes";
 import i18n from "../../../constants/i18n";
+import UnblockUserPopup from "../../../Utils/Block&UnblockUsers/UnblockUserPopup";
 
 const BlockedAccounts = () => {
   const navigation = useNavigation();
@@ -30,6 +31,9 @@ const BlockedAccounts = () => {
   const [lang] = useAtom(languageAtom);
   const [contacts] = useAtom(contactsAtom);
   const [user, setUser] = useAtom(userAtom);
+
+  const [contactToUnblock, setContactToUnblock] = useState(null);
+  const [showUnblockedUserPopup, setShowUnblockedUserPopup] = useState(false);
 
   useEffect(() => {
     navigation.setOptions({
@@ -58,18 +62,31 @@ const BlockedAccounts = () => {
     user.blockedUsers.includes(c.id)
   );
 
-  const unblockAccount = (accountId) => {
+  const unblockAccount = (account) => {
+    setContactToUnblock(account);
+    setShowUnblockedUserPopup(true);
+
     const updatedBlockedUsers = user.blockedUsers.filter(
-      (id) => id !== accountId
+      (id) => id !== account.id
     );
 
-    setUser((prev) => {
-      return {
-        ...prev,
-        blockedUsers: updatedBlockedUsers,
-      };
-    });
+    setUser((prev) => ({
+      ...prev,
+      blockedUsers: updatedBlockedUsers,
+    }));
+
+    // TODO: FIRESTORE UPDATEEE FIX THIS
   };
+
+  useEffect(() => {
+    if (showUnblockedUserPopup) {
+      const timer = setTimeout(() => {
+        setShowUnblockedUserPopup(false);
+        setContactToUnblock(null);
+      }, 2000);
+      return () => clearTimeout(timer);
+    }
+  }, [showUnblockedUserPopup]);
 
   const confirmUnblockAccount = (account) => {
     Alert.alert(
@@ -79,7 +96,7 @@ const BlockedAccounts = () => {
         { text: i18n.t("cancel") },
         {
           text: i18n.t("unblock"),
-          onPress: () => unblockAccount(account.id),
+          onPress: () => unblockAccount(account),
           style: "destructive",
         },
       ]
@@ -149,6 +166,13 @@ const BlockedAccounts = () => {
           </View>
         )}
       />
+
+      {showUnblockedUserPopup && (
+        <UnblockUserPopup
+          user={contactToUnblock}
+          setShowUnblockedUserPopup={setShowUnblockedUserPopup}
+        />
+      )}
     </View>
   );
 };
