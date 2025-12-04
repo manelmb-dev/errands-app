@@ -9,7 +9,7 @@ const firebaseConfig = {
   projectId: "errands-app-mmb",
   storageBucket: "errands-app-mmb.firebasestorage.app",
   messagingSenderId: "97985870085",
-  appId: "1:97985870085:web:daaff6a1e92b8dad481f6c",
+  appId: "1:97985870085:web:9fb95951f51b5a01481f6c",
 };
 
 // Initialize Firebase
