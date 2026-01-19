@@ -19,7 +19,8 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.mmbdev.errands",
-      "icon": "./assets/icon.png"
+      "icon": "./assets/icon.png",
+      "googleServicesFile": "./GoogleService-Info.plist"
     },
     "android": {
       "package": "com.mmbdev.errands",
@@ -27,7 +28,8 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "icon": "./assets/icon.png"
+      "icon": "./assets/icon.png",
+      "googleServicesFile": "./google-services.json"
     },
     "web": {
       "favicon": "./assets/favicon.png",
@@ -37,7 +39,15 @@
     },
     "plugins": [
       "expo-router",
-      "expo-localization"
-    ]
+      "expo-localization",
+      "@react-native-firebase/app",
+      "@react-native-firebase/auth"
+     ],
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "538de43e-bda6-4ea5-8f1b-19209ddadedf"
+      }
+    }
   }
 }

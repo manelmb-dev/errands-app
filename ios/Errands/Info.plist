@@ -31,6 +31,12 @@
           <string>com.mmbdev.errands</string>
         </array>
       </dict>
+      <dict>
+        <key>CFBundleURLSchemes</key>
+        <array>
+          <string>com.googleusercontent.apps.97985870085-mkl8md5btdilag1t9vlq3r5tdpsmhjr4</string>
+        </array>
+      </dict>
     </array>
     <key>CFBundleVersion</key>
     <string>1</string>
