@@ -10,20 +10,25 @@ import {
   Platform,
   Animated,
   Easing,
+  Image,
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useEffect, useRef, useState } from "react";
 import { useLocalSearchParams } from "expo-router";
-import auth from "@react-native-firebase/auth";
 
 import { useNavigation, useRouter } from "expo-router";
-import { useEffect, useRef, useState } from "react";
 
 import { themeAtom } from "../../../constants/storeAtoms";
 import { useAtom } from "jotai";
 
 import { themes } from "../../../constants/themes";
 import i18n from "../../../constants/i18n";
-import { Image } from "react-native";
+
+import {
+  getAuth,
+  onAuthStateChanged,
+  signInWithPhoneNumber,
+} from "@react-native-firebase/auth";
 
 export default function VerifyCodeScreen() {
   const navigation = useNavigation();
@@ -44,11 +49,13 @@ export default function VerifyCodeScreen() {
     const sendFirebaseCode = async () => {
       const fullPhone = `+${callingCode}${phone}`;
       try {
-        const confirmation = await auth().signInWithPhoneNumber(fullPhone);
-        console.log("confirmation", confirmation);
-        setConfirmationResult(confirmation); // guárdalo en estado
+        const confirmation = await signInWithPhoneNumber(getAuth(), fullPhone);
+
+        console.log("confirmation: ", confirmation);
+        setConfirmationResult(confirmation);
       } catch (error) {
-        Alert.alert("Error enviando código", error.message);
+        Alert.alert("Error sending code", error.message);
+        console.log("error sending code: ", error.message);
       }
     };
 
@@ -109,36 +116,39 @@ export default function VerifyCodeScreen() {
 
   // 1. send SMS
   const sendSMS = async (phoneNumber) => {
-    const confirmation = await auth().signInWithPhoneNumber(phoneNumber);
+    const confirmation = await signInWithPhoneNumber(getAuth(), phoneNumber);
     setConfirmationResult(confirmation);
   };
 
   const handleResendSMS = async () => {
     try {
       const fullPhone = `+${callingCode}${phone}`;
-      const confirmation = await auth().signInWithPhoneNumber(fullPhone, true);
+      const confirmation = await signInWithPhoneNumber(getAuth(), fullPhone);
       setConfirmationResult(confirmation);
       Alert.alert(i18n.t("codeResent"));
     } catch (error) {
-      Alert.alert("Error", error.message);
+      Alert.alert("Error resending code", error.message);
     }
   };
 
   const handleCodeVerification = async () => {
     try {
       const code = codeDigits.join("");
-      const credential = auth.PhoneAuthProvider.credential(
-        confirmationResult.verificationId,
-        code,
-      );
 
-      console.log("credential", credential);
+      if (!confirmationResult) {
+        return Alert.alert("Error", "Código no enviado");
+      }
 
-      // Verifica el código con Firebase
-      await auth().signInWithCredential(credential);
+      // ✅ VERIFICA OTP
+      const userCredential = await confirmationResult.confirm(code);
+      console.log("user credential: ", userCredential)
 
-      // Luego consulta si el número ya está vinculado a una cuenta
-      const phoneFull = `+${callingCode}${phone}`;
+      const phoneFull = userCredential.user.phoneNumber;
+      console.log("user credential full phone: ", phoneFull);
+
+      await AsyncStorage.setItem("userPhoneNumber", phoneFull);
+
+      // 🔁 Consulta backend
       const response = await fetch("http://127.0.0.1:5000/check-phone", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -146,19 +156,14 @@ export default function VerifyCodeScreen() {
       });
 
       const data = await response.json();
+
       if (data.exists) {
-        router.push({
-          pathname: "/chooseAccountOption",
-          params: { phone: phoneFull },
-        });
+        router.replace("/chooseAccountOption");
       } else {
-        router.push({
-          pathname: "/completeAccount",
-          params: { phone: phoneFull },
-        });
+        router.replace("/completeAccount");
       }
     } catch (error) {
-      Alert.alert("Código incorrecto", error.message);
+      Alert.alert(i18n.t("invalidCode: ", error));
     }
   };
 

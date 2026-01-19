@@ -32,11 +32,27 @@ export default function Layout() {
 
   const [userExists, setUserExists] = useState(null);
 
+  // useEffect(() => {
+  //   const resetStorage = async () => {
+  //     await AsyncStorage.clear();
+  //     console.log("✅ AsyncStorage cleared");
+  //   };
+
+  //   resetStorage();
+  // }, []);
+
   useEffect(() => {
     const loadPreferences = async () => {
       const savedTheme = await AsyncStorage.getItem("themePreference");
       const savedLang = await AsyncStorage.getItem("languagePreference");
       const phone = await AsyncStorage.getItem("userPhoneNumber");
+      console.log("Phone: ", phone);
+      console.log("Device storage: ", await AsyncStorage.getAllKeys());
+      console.log("Language storage: ", await AsyncStorage.getItem("languagePreference"))
+      console.log("Phone Number storage: ", await AsyncStorage.getItem("userPhoneNumber"))
+      console.log("Theme storage: ", await AsyncStorage.getItem("themePreference"))
+
+
 
       // Language
       const supportedLanguages = ["es", "en", "ca"];
@@ -64,6 +80,8 @@ export default function Layout() {
     };
     loadPreferences();
   }, [setLanguage, setTheme, system]);
+
+  console.log("User exists: ", userExists);
 
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
