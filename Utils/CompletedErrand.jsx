@@ -55,6 +55,7 @@ function CompletedErrand({ errand }) {
             completed: false,
             completedDateErrand: "",
             completedTimeErrand: "",
+            completedBy: null,
           };
         }
         return e;

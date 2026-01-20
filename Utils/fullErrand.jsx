@@ -115,13 +115,14 @@ function FullErrand({
       prev.map((e) =>
         e.id === errand.id
           ? {
-            ...e,
-            completed: true,
-            completedDateErrand: formattedDate,
-            completedTimeErrand: formattedTime,
-          }
-          : e
-      )
+              ...e,
+              completed: true,
+              completedDateErrand: formattedDate,
+              completedTimeErrand: formattedTime,
+              completedBy: user.id,
+            }
+          : e,
+      ),
     );
 
     // Complete errand after timeout
@@ -130,6 +131,7 @@ function FullErrand({
       completed: true,
       completedDateErrand: formattedDate,
       completedTimeErrand: formattedTime,
+      completedBy: user.id,
     });
 
     // Send notifications if needed to all the users
@@ -174,8 +176,7 @@ function FullErrand({
         {/* Content errand */}
         <View
           style={{ height: 61 }}
-          className={`px-1 flex-1 flex-row justify-between items-center border-b ${theme === "light" ? "border-gray-300" : "border-neutral-700"
-            }`}
+          className={`px-1 flex-1 flex-row justify-between items-center border-b ${theme === "light" ? "border-gray-300" : "border-neutral-700"}`}
         >
           {/* Title & shared user */}
           <View className="flex-1 flex-col px-1">
@@ -278,8 +279,8 @@ function FullErrand({
                 className={`py-1 px-0.5 rounded-lg items-center justify-center min-w-[88px] ${new Date(
                   `${errand.dateErrand}T${errand.timeErrand || "24:00"}`
                 ) < new Date()
-                    ? `${theme === "light" ? "bg-red-100" : "bg-red-950 "}`
-                    : `${theme === "light" ? "bg-gray-200" : "bg-neutral-800 "}`
+                  ? `${theme === "light" ? "bg-red-100" : "bg-red-950 "}`
+                  : `${theme === "light" ? "bg-gray-200" : "bg-neutral-800 "}`
                   }`}
                 onPress={() => {
                   if (
@@ -299,8 +300,8 @@ function FullErrand({
                   className={` ${new Date(
                     `${errand.dateErrand}T${errand.timeErrand || "24:00"}`
                   ) < new Date()
-                      ? `${theme === "light" ? "text-red-400" : "text-red-500"}`
-                      : `text-[${themes[theme].taskSecondText}]`
+                    ? `${theme === "light" ? "text-red-400" : "text-red-500"}`
+                    : `text-[${themes[theme].taskSecondText}]`
                     }`}
                 >
                   {formatErrandDate(errand)}

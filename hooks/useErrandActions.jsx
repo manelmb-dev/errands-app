@@ -64,9 +64,10 @@ export function useErrandActions({
               completed: false,
               completedDateErrand: "",
               completedTimeErrand: "",
+              completedBy: null,
             }
-          : e
-      )
+          : e,
+      ),
     );
     setPossibleUndoCompleteErrand(null);
   }, [setErrands, setPossibleUndoCompleteErrand, previousUndoErrandRef]);
