@@ -60,20 +60,22 @@ const SwipeableContact = ({ contact, openSwipeableRef, swipeableRefs }) => {
           });
         }}
       >
-        <View className="flex-row items-center gap-3">
+        <View className="flex-row items-center gap-3 flex-1 min-w-0">
           <Ionicons
             name="person-circle-outline"
             size={46}
             color={themes["light"].taskSecondText}
           />
           <Text
-            className="text-lg font-semibold"
+            numberOfLines={1}
+            ellipsizeMode="tail"
+            className="text-lg font-semibold flex-shrink"
             style={{ color: themes[theme].text }}
           >
             {contact.name} {contact.surname}
           </Text>
         </View>
-        <View className="flex-row items-center gap-3">
+        <View className="flex-row items-center gap-3 flex-shrink-0">
           {contact.blocked && (
             <Feather name="user-x" size={25} color="#dc2626" />
           )}
