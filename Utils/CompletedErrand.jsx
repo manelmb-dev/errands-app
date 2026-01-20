@@ -145,9 +145,15 @@ function CompletedErrand({ errand }) {
           </View>
           <View className="flex-row items-center">
             <Text className={`text-sm text-[${themes[theme].taskSecondText}]`}>
-              {`Completado: ${formatCompletedErrandDate(errand)}, ${errand.completedTimeErrand}`}
+              {`${i18n.t("completed")}: ${formatCompletedErrandDate(errand)}, ${errand.completedTimeErrand}`}
             </Text>
           </View>
+          {/* find user by id. think about when to put completed by or not. 
+          <View className="flex-row items-center">
+            <Text className={`text-sm text-[${themes[theme].taskSecondText}]`}>
+              {`Completado por: ${errand.completedBy}, ${errand.completedBy}`}
+            </Text>
+          </View> */}
         </View>
         <View className="flex-row justify-end">
           {errand.marked && (
