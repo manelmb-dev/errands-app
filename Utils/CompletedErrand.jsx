@@ -74,9 +74,8 @@ function CompletedErrand({ errand }) {
           size={20}
           color="green"
         />
-        <View className="flex-1">
-          {/* <TextInput className="text-[#6E727A]" defaultValue={errand.title} /> */}
-          <Text className="text-[#6E727A]">{errand.title}</Text>
+        <View className="flex-1 flex-shrink">
+          <Text className="text-[#6E727A] flex-shrink">{errand.title}</Text>
           {user.id !== errand.ownerId && user.id === errand.assignedId && (
             <View className="flex-row">
               <View
@@ -84,7 +83,9 @@ function CompletedErrand({ errand }) {
               >
                 <Ionicons name="return-down-back" size={14} color="#6E727A" />
                 <Text
-                  className={`text-sm text-[${themes[theme].taskSecondText}]`}
+                  numberOfLines={1}
+                  ellipsizeMode="tail"
+                  className={`flex-shrink text-sm text-[${themes[theme].taskSecondText}]`}
                 >
                   {creatorContact.name} {creatorContact.surname}
                 </Text>
@@ -102,7 +103,9 @@ function CompletedErrand({ errand }) {
                   color="#6E727A"
                 />
                 <Text
-                  className={`text-sm text-[${themes[theme].taskSecondText}]`}
+                  numberOfLines={1}
+                  ellipsizeMode="tail"
+                  className={`flex-shrink text-sm text-[${themes[theme].taskSecondText}]`}
                 >
                   {assignedContact.name} {assignedContact.surname}
                 </Text>
