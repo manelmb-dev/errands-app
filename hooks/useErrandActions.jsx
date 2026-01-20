@@ -62,8 +62,8 @@ export function useErrandActions({
           ? {
               ...e,
               completed: false,
-              completedDateErrand: "",
-              completedTimeErrand: "",
+              completedDateErrand: null,
+              completedTimeErrand: null,
               completedBy: null,
             }
           : e,
