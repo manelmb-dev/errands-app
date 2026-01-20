@@ -115,12 +115,12 @@ function FullErrand({
       prev.map((e) =>
         e.id === errand.id
           ? {
-              ...e,
-              completed: true,
-              completedDateErrand: formattedDate,
-              completedTimeErrand: formattedTime,
-              completedBy: user.id,
-            }
+            ...e,
+            completed: true,
+            completedDateErrand: formattedDate,
+            completedTimeErrand: formattedTime,
+            completedBy: user.id,
+          }
           : e,
       ),
     );
@@ -179,10 +179,11 @@ function FullErrand({
           className={`px-1 flex-1 flex-row justify-between items-center border-b ${theme === "light" ? "border-gray-300" : "border-neutral-700"}`}
         >
           {/* Title & shared user */}
-          <View className="flex-1 flex-col px-1">
+          <View className="flex-1 flex-col items-start min-w-0">
             <Text
               className={`text-[${themes[theme].taskTitle}] text-lg`}
               numberOfLines={1}
+              ellipsizeMode="tail"
             >
               {errand.title}
             </Text>
@@ -190,26 +191,18 @@ function FullErrand({
             {user.id !== errand.ownerId &&
               user.id === errand.assignedId &&
               errandList === undefined && (
-                <View className="flex-row">
-                  <View
-                    className={`flex-row flex-shrink my-0.5 pl-1 py-0.5 bg-[${themes[theme].taskIncomingFromBg}] rounded-lg items-center gap-2`}
+                <View
+                  className={`self-start flex-row my-0.5 p-2 py-0.5 bg-[${themes[theme].taskIncomingFromBg}] rounded-lg items-center gap-2 max-w-full`}
+                >
+                  <Ionicons name="return-down-back" size={16} color="#6E727A" />
+                  <Text
+                    className={`flex-shrink text-sm text-[${themes[theme].taskSecondText}]`}
+                    numberOfLines={1}
+                    ellipsizeMode="tail"
                   >
-                    <Ionicons
-                      name="return-down-back"
-                      size={16}
-                      color="#6E727A"
-                    />
-                    <Text
-                      className={`flex-1 text-sm text-[${themes[theme].taskSecondText}]`}
-                      numberOfLines={1}
-                      ellipsizeMode="tail"
-                    >
-                      {creatorContact.name}
-                      {creatorContact.surname
-                        ? ` ${creatorContact.surname}`
-                        : ""}
-                    </Text>
-                  </View>
+                    {creatorContact.name}
+                    {creatorContact.surname ? ` ${creatorContact.surname}` : ""}
+                  </Text>
                 </View>
               )}
 
@@ -218,7 +211,7 @@ function FullErrand({
               assignedContact !== undefined &&
               errandList === undefined && (
                 <View
-                  className={`flex-row flex-shrink my-0.5 pl-1 py-0.5 bg-[${themes[theme].outgoingTaskToBg}] rounded-lg items-center gap-2`}
+                  className={`self-start flex-row my-0.5 p-2 py-0.5 bg-[${themes[theme].outgoingTaskToBg}] rounded-lg items-center gap-2 max-w-full`}
                 >
                   <Ionicons
                     name="return-down-forward"
@@ -226,7 +219,7 @@ function FullErrand({
                     color="#6E727A"
                   />
                   <Text
-                    className={`flex-1 text-sm text-[${themes[theme].taskSecondText}]`}
+                  className={`flex-shrink text-sm text-[${themes[theme].taskSecondText}]`}
                     numberOfLines={1}
                     ellipsizeMode="tail"
                   >
@@ -241,26 +234,24 @@ function FullErrand({
             {assignedContact &&
               errandList !== undefined &&
               errandList.usersShared.length > 1 && (
-                <View className="flex-row">
-                  <View
-                    className={`flex-row flex-shrink my-0.5 px-2 py-0.5 bg-[${themes[theme].taskAssignedSharedListBg}] rounded-lg items-center`}
-                  >
-                    {/* <Ionicons
+                <View
+                  className={`self-start flex-row my-0.5 px-2 py-0.5 bg-[${themes[theme].taskAssignedSharedListBg}] rounded-lg items-center max-w-full`}
+                >
+                  {/* <Ionicons
                       name="return-down-back"
                       size={18}
                       color="#6E727A"
                     /> */}
-                    <Text
-                      className={`flex-1 text-sm text-[${themes[theme].taskSecondText}]`}
-                      numberOfLines={1}
-                      ellipsizeMode="tail"
-                    >
-                      {assignedContact.name}
-                      {assignedContact.surname
-                        ? ` ${assignedContact.surname}`
-                        : ""}
-                    </Text>
-                  </View>
+                  <Text
+                    className={`flex-shrink text-sm text-[${themes[theme].taskSecondText}]`}
+                    numberOfLines={1}
+                    ellipsizeMode="tail"
+                  >
+                    {assignedContact.name}
+                    {assignedContact.surname
+                      ? ` ${assignedContact.surname}`
+                      : ""}
+                  </Text>
                 </View>
               )}
           </View>
@@ -276,12 +267,7 @@ function FullErrand({
             {errand.dateErrand ? (
               <TouchableOpacity
                 activeOpacity={0.6}
-                className={`py-1 px-0.5 rounded-lg items-center justify-center min-w-[88px] ${new Date(
-                  `${errand.dateErrand}T${errand.timeErrand || "24:00"}`
-                ) < new Date()
-                  ? `${theme === "light" ? "bg-red-100" : "bg-red-950 "}`
-                  : `${theme === "light" ? "bg-gray-200" : "bg-neutral-800 "}`
-                  }`}
+                className={`py-1 px-0.5 rounded-lg items-center justify-center min-w-[88px] ${new Date(`${errand.dateErrand}T${errand.timeErrand || "24:00"}`) < new Date() ? `${theme === "light" ? "bg-red-100" : "bg-red-950 "}` : `${theme === "light" ? "bg-gray-200" : "bg-neutral-800 "}`}`}
                 onPress={() => {
                   if (
                     errand.ownerId === user.id ||
@@ -297,12 +283,7 @@ function FullErrand({
                 }}
               >
                 <Text
-                  className={` ${new Date(
-                    `${errand.dateErrand}T${errand.timeErrand || "24:00"}`
-                  ) < new Date()
-                    ? `${theme === "light" ? "text-red-400" : "text-red-500"}`
-                    : `text-[${themes[theme].taskSecondText}]`
-                    }`}
+                  className={` ${new Date(`${errand.dateErrand}T${errand.timeErrand || "24:00"}`) < new Date() ? `${theme === "light" ? "text-red-400" : "text-red-500"}` : `text-[${themes[theme].taskSecondText}]`}`}
                 >
                   {formatErrandDate(errand)}
                 </Text>
