@@ -24,28 +24,19 @@ function SettingsSectionComp() {
 
   const [user] = useAtom(userAtom);
   const [theme] = useAtom(themeAtom);
-  // languageAtom is used to force rerender after changing language
-  useAtom(languageAtom);
+  const [language, setLanguage] = useAtom(languageAtom);
 
   const [modalSettingsVisible, setModalSettingsVisible] = useState(false);
 
   useEffect(() => {
     navigation.setOptions({
       headerShown: true,
-      title: "",
+      title: i18n.t("settings"),
       headerStyle: {
         backgroundColor: themes[theme].background,
       },
       headerShadowVisible: true,
-      headerLeft: () => (
-        <View className="flex-1">
-          <Text
-            className={`text-3xl font-semibold text-[${themes[theme].text}]`}
-          >
-            {i18n.t("settings")}
-          </Text>
-        </View>
-      ),
+      headerLeft: () => null,
       headerRight: () => (
         <Ionicons
           name="options"
@@ -55,7 +46,7 @@ function SettingsSectionComp() {
         />
       ),
     });
-  }, [navigation, theme]);
+  }, [navigation, theme, language]);
 
   const userSections = [
     {
