@@ -52,15 +52,11 @@ const BlockedAccounts = () => {
         <Pressable
           hitSlop={10}
           onPress={() => router.push("/Settings/addBlockedAccounts")}
+          className={
+            Platform.OS === "ios" && Platform.Version >= 26 ? "pl-1" : ""
+          }
         >
-          <Ionicons
-            name="add"
-            className={
-              Platform.OS === "ios" && Platform.Version >= 26 ? "pl-1" : ""
-            }
-            color={themes[theme].text}
-            size={30}
-          />
+          <Ionicons name="add" color={themes[theme].text} size={30} />
         </Pressable>
       ),
     });
