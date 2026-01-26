@@ -37,14 +37,7 @@ function SettingsSectionComp() {
       },
       headerShadowVisible: true,
       headerLeft: () => null,
-      headerRight: () => (
-        <Ionicons
-          name="options"
-          color={themes[theme].blueHeadText}
-          size={24}
-          onPress={() => setModalSettingsVisible(true)}
-        />
-      ),
+      headerRight: () => null,
     });
   }, [navigation, theme, language]);
 
