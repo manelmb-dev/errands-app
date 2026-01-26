@@ -6,7 +6,7 @@ import {
   TouchableHighlight,
   Image,
 } from "react-native";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
 import { languageAtom, themeAtom, userAtom } from "../../constants/storeAtoms";
 import { useAtom } from "jotai";
@@ -24,9 +24,7 @@ function SettingsSectionComp() {
 
   const [user] = useAtom(userAtom);
   const [theme] = useAtom(themeAtom);
-  const [language, setLanguage] = useAtom(languageAtom);
-
-  const [modalSettingsVisible, setModalSettingsVisible] = useState(false);
+  const [language] = useAtom(languageAtom);
 
   useEffect(() => {
     navigation.setOptions({
@@ -69,12 +67,6 @@ function SettingsSectionComp() {
   ];
 
   const helpSections = [
-    // {
-    //   label: i18n.t("config"),
-    //   icon: "settings-outline",
-    //   size: 25,
-    //   route: "/Settings/configurationScreen",
-    // },
     {
       label: i18n.t("account"),
       icon: "person-circle-outline",
