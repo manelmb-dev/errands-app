@@ -26,7 +26,6 @@ const ContactsSectionComp = () => {
   useEffect(() => {
     navigation.setOptions({
       title: i18n.t("contacts"),
-      headerBackTitle: i18n.t("back"),
       headerTitleStyle: {
         color: themes[theme].text,
       },
