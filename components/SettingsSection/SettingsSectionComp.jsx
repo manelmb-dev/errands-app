@@ -85,12 +85,12 @@ function SettingsSectionComp() {
   ];
 
   const helpSections = [
-    {
-      label: i18n.t("config"),
-      icon: "settings-outline",
-      size: 25,
-      route: "/Settings/configurationScreen",
-    },
+    // {
+    //   label: i18n.t("config"),
+    //   icon: "settings-outline",
+    //   size: 25,
+    //   route: "/Settings/configurationScreen",
+    // },
     {
       label: i18n.t("account"),
       icon: "person-circle-outline",
