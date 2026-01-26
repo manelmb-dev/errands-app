@@ -6,6 +6,7 @@ import {
   Pressable,
   TouchableOpacity,
   Alert,
+  Platform,
 } from "react-native";
 import { useEffect, useState } from "react";
 
@@ -19,8 +20,8 @@ import { useAtom } from "jotai";
 
 import Ionicons from "react-native-vector-icons/Ionicons";
 
-import { themes } from "../../../constants/themes";
 import i18n from "../../../constants/i18n";
+import { themes } from "../../../constants/themes";
 import UnblockUserPopup from "../../../Utils/Block&UnblockUsers/UnblockUserPopup";
 
 const BlockedAccounts = () => {
@@ -48,15 +49,24 @@ const BlockedAccounts = () => {
       headerShadowVisible: true,
       headerLeft: () => null,
       headerRight: () => (
-        <Ionicons
-          name="add"
-          color={themes[theme].blueHeadText}
-          size={24}
+        <Pressable
+          hitSlop={10}
           onPress={() => router.push("/Settings/addBlockedAccounts")}
-        />
+        >
+          <Ionicons
+            name="add"
+            className={
+              Platform.OS === "ios" && Platform.Version >= 26 ? "pl-1" : ""
+            }
+            color={themes[theme].text}
+            size={30}
+          />
+        </Pressable>
       ),
     });
   }, [navigation, theme, router]);
+
+  console.log(Platform)
 
   const blockedContacts = contacts.filter((c) =>
     user.blockedUsers.includes(c.id)
@@ -110,9 +120,8 @@ const BlockedAccounts = () => {
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => (
           <Pressable
-            className={`w-full py-2.5 px-4 flex-row items-center justify-between bg-[${themes[theme].background}] border-b ${
-              theme === "light" ? "border-gray-300" : "border-gray-700"
-            }`}
+            className={`w-full py-2.5 px-4 flex-row items-center justify-between bg-[${themes[theme].background}] border-b ${theme === "light" ? "border-gray-300" : "border-gray-700"
+              }`}
             onPress={() => {
               router.push({
                 pathname: `/contactProfileScreen`,
