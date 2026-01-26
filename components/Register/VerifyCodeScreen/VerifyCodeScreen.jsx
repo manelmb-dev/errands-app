@@ -13,7 +13,7 @@ import {
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useLocalSearchParams } from "expo-router";
-import auth from "@react-native-firebase/auth";
+// import auth from "@react-native-firebase/auth";
 
 import { useNavigation, useRouter } from "expo-router";
 import { useEffect, useRef, useState } from "react";

@@ -78,7 +78,7 @@ export default function Layout() {
                     <Stack />
                   ) : (
                     <>
-                      <Redirect href="/wellcome" />
+                      {/* <Redirect href="/wellcome" /> */}
                       <Stack />
                     </>
                   )
