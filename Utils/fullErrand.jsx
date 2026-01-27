@@ -62,14 +62,14 @@ function FullErrand({
   const creatorContact = useMemo(
     () =>
       contacts.find(
-        (contact) => contact.id.toString() === errand.ownerId.toString()
+        (contact) => contact.id.toString() === errand.ownerId.toString(),
       ),
-    [contacts, errand.ownerId]
+    [contacts, errand.ownerId],
   );
 
   const errandList = useMemo(
     () => lists.find((list) => list.id === errand.listId),
-    [lists, errand.listId]
+    [lists, errand.listId],
   );
 
   const handleDateTimeConfirm = (datetime) => {
@@ -90,7 +90,7 @@ function FullErrand({
     };
 
     setErrands((prevErrands) =>
-      prevErrands.map((e) => (e.id === updatedErrand.id ? updatedErrand : e))
+      prevErrands.map((e) => (e.id === updatedErrand.id ? updatedErrand : e)),
     );
 
     errands.sort((a, b) => {
@@ -115,11 +115,11 @@ function FullErrand({
       prev.map((e) =>
         e.id === errand.id
           ? {
-            ...e,
-            completed: true,
-            completedDateErrand: formattedDate,
-            completedTimeErrand: formattedTime,
-            completedBy: user.id,
+              ...e,
+              completed: true,
+              completedDateErrand: formattedDate,
+              completedTimeErrand: formattedTime,
+              completedBy: user.id,
           }
           : e,
       ),
@@ -219,7 +219,7 @@ function FullErrand({
                     color="#6E727A"
                   />
                   <Text
-                  className={`flex-shrink text-sm text-[${themes[theme].taskSecondText}]`}
+                    className={`flex-shrink text-sm text-[${themes[theme].taskSecondText}]`}
                     numberOfLines={1}
                     ellipsizeMode="tail"
                   >
@@ -271,7 +271,7 @@ function FullErrand({
                 onPress={() => {
                   if (
                     errand.ownerId === user.id ||
-                    errandList.usersShared.length > 1
+                    (errandList && errandList.usersShared.length > 1)
                   ) {
                     setIsDateTimePickerVisible(true);
                   } else {
