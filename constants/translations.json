@@ -267,7 +267,19 @@
     "helpAccount": "Account and privacy",
     "helpAccountText": "Your account is linked to your personal information and contacts. You can edit your profile, change your photo, manage privacy settings, and control who can interact with you at any time.",
     "helpSupport": "Help and support",
-    "helpSupportText": "If you need help or have questions, you can contact support from this section. We are always working to improve Errands and your feedback is very important to us."
+    "helpSupportText": "If you need help or have questions, you can contact support from this section. We are always working to improve Errands and your feedback is very important to us.",
+    "helpFaqIsErrandsReminder": "Is Errands a reminder app?",
+    "helpFaqIsErrandsReminderText": "Errands is not a traditional reminder app. It is designed to send tasks, reminders, and messages to other people, not just to yourself.",
+    "helpFaqUseAlone": "Can I use Errands alone?",
+    "helpFaqUseAloneText": "You can use Errands on your own, but it works best when you use it with other people to share and assign errands.",
+    "helpFaqMultipleAssignees": "Can I assign an errand to more than one person?",
+    "helpFaqMultipleAssigneesText": "Yes. You can assign the same errand to multiple people, and each person can complete it independently.",
+    "helpFaqWhenCompleted": "What happens when an errand is completed?",
+    "helpFaqWhenCompletedText": "When someone completes an errand, everyone involved can see the update in real time.",
+    "helpFaqNoNotifications": "Why am I not receiving notifications?",
+    "helpFaqNoNotificationsText": "Check your notification settings, mute options, and system permissions to make sure notifications are enabled.",
+    "helpFaqMuteDifference": "What is the difference between muting and blocking?",
+    "helpFaqMuteDifferenceText": "Muting stops notifications, while blocking completely prevents communication and sharing with that contact."
   },
   "es": {
     "wellcome": "Bienvenido",
@@ -537,7 +549,19 @@
     "helpAccount": "Cuenta y privacidad",
     "helpAccountText": "Tu cuenta está vinculada a tu información personal y a tus contactos. Puedes editar tu perfil, cambiar tu foto, gestionar la privacidad y controlar quién puede interactuar contigo en cualquier momento.",
     "helpSupport": "Ayuda y soporte",
-    "helpSupportText": "Si necesitas ayuda o tienes alguna duda, puedes contactar con soporte desde esta sección. Trabajamos constantemente para mejorar Errands y tu opinión es muy importante."
+    "helpSupportText": "Si necesitas ayuda o tienes alguna duda, puedes contactar con soporte desde esta sección. Trabajamos constantemente para mejorar Errands y tu opinión es muy importante.",
+    "helpFaqIsErrandsReminder": "¿Errands es una app de recordatorios?",
+    "helpFaqIsErrandsReminderText": "Errands no es una app de recordatorios tradicional. Está pensada para enviar tareas, recordatorios y mensajes a otras personas.",
+    "helpFaqUseAlone": "¿Puedo usar Errands yo solo?",
+    "helpFaqUseAloneText": "Puedes usar Errands solo, pero funciona mucho mejor cuando la usas con otras personas para compartir y asignar tareas.",
+    "helpFaqMultipleAssignees": "¿Puedo asignar una tarea a varias personas?",
+    "helpFaqMultipleAssigneesText": "Sí. Puedes asignar la misma tarea a varias personas y cada una puede completarla de forma independiente.",
+    "helpFaqWhenCompleted": "¿Qué pasa cuando una tarea se completa?",
+    "helpFaqWhenCompletedText": "Cuando alguien completa una tarea, todas las personas implicadas ven la actualización en tiempo real.",
+    "helpFaqNoNotifications": "¿Por qué no recibo notificaciones?",
+    "helpFaqNoNotificationsText": "Revisa los ajustes de notificaciones, opciones de silencio y permisos del sistema.",
+    "helpFaqMuteDifference": "¿Cuál es la diferencia entre silenciar y bloquear?",
+    "helpFaqMuteDifferenceText": "Silenciar solo detiene las notificaciones. Bloquear impide completamente la comunicación y el contenido compartido."
   },
   "ca": {
     "wellcome": "Benvingut",
@@ -807,6 +831,18 @@
     "helpAccount": "Compte i privadesa",
     "helpAccountText": "El teu compte està vinculat a la teva informació personal i als teus contactes. Pots editar el perfil, canviar la foto, gestionar la privadesa i controlar qui pot interactuar amb tu en qualsevol moment.",
     "helpSupport": "Ajuda i suport",
-    "helpSupportText": "Si necessites ajuda o tens qualsevol dubte, pots contactar amb el suport des d’aquesta secció. Treballem constantment per millorar Errands i la teva opinió és molt important."
+    "helpSupportText": "Si necessites ajuda o tens qualsevol dubte, pots contactar amb el suport des d’aquesta secció. Treballem constantment per millorar Errands i la teva opinió és molt important.",
+    "helpFaqIsErrandsReminder": "Errands és una app de recordatoris?",
+    "helpFaqIsErrandsReminderText": "Errands no és una app de recordatoris tradicional. Està pensada per enviar tasques, recordatoris i missatges a altres persones.",
+    "helpFaqUseAlone": "Puc utilitzar Errands tot sol?",
+    "helpFaqUseAloneText": "Pots utilitzar Errands sol, però funciona molt millor quan la fas servir amb altres persones.",
+    "helpFaqMultipleAssignees": "Puc assignar una tasca a diverses persones?",
+    "helpFaqMultipleAssigneesText": "Sí. Pots assignar la mateixa tasca a diverses persones i cadascuna la pot completar de manera independent.",
+    "helpFaqWhenCompleted": "Què passa quan una tasca es completa?",
+    "helpFaqWhenCompletedText": "Quan algú completa una tasca, totes les persones implicades veuen l’actualització en temps real.",
+    "helpFaqNoNotifications": "Per què no rebo notificacions?",
+    "helpFaqNoNotificationsText": "Revisa els ajustos de notificacions, les opcions de silenci i els permisos del sistema.",
+    "helpFaqMuteDifference": "Quina diferència hi ha entre silenciar i bloquejar?",
+    "helpFaqMuteDifferenceText": "Silenciar només atura les notificacions. Bloquejar impedeix completament la comunicació."
   }
 }

@@ -36,11 +36,31 @@ const HelpSection = () => {
         <HelpAccordionItem
           title={i18n.t("helpWhatIsErrands")}
           description={i18n.t("helpWhatIsErrandsText")}
+          faqs={[
+            {
+              question: i18n.t("helpFaqIsErrandsReminder"),
+              answer: i18n.t("helpFaqIsErrandsReminderText"),
+            },
+            {
+              question: i18n.t("helpFaqUseAlone"),
+              answer: i18n.t("helpFaqUseAloneText"),
+            },
+          ]}
         />
 
         <HelpAccordionItem
           title={i18n.t("helpHowErrandsWork")}
           description={i18n.t("helpHowErrandsWorkText")}
+          faqs={[
+            {
+              question: i18n.t("helpFaqMultipleAssignees"),
+              answer: i18n.t("helpFaqMultipleAssigneesText"),
+            },
+            {
+              question: i18n.t("helpFaqWhenCompleted"),
+              answer: i18n.t("helpFaqWhenCompletedText"),
+            },
+          ]}
         />
 
         <HelpAccordionItem
@@ -56,6 +76,16 @@ const HelpSection = () => {
         <HelpAccordionItem
           title={i18n.t("helpNotifications")}
           description={i18n.t("helpNotificationsText")}
+          faqs={[
+            {
+              question: i18n.t("helpFaqNoNotifications"),
+              answer: i18n.t("helpFaqNoNotificationsText"),
+            },
+            {
+              question: i18n.t("helpFaqMuteDifference"),
+              answer: i18n.t("helpFaqMuteDifferenceText"),
+            },
+          ]}
         />
 
         <HelpAccordionItem

@@ -8,7 +8,7 @@ import { useAtom } from "jotai";
 
 import { themes } from "../../../../constants/themes";
 
-const HelpAccordionItem = ({ title, description }) => {
+const HelpAccordionItem = ({ title, description, faqs = [] }) => {
   const [open, setOpen] = useState(false);
 
   const [theme] = useAtom(themeAtom);
@@ -31,10 +31,29 @@ const HelpAccordionItem = ({ title, description }) => {
       </TouchableOpacity>
 
       {open && (
-        <View className="px-4 pb-4">
+        <View className="px-4 pb-4 gap-3">
           <Text className={`text-base text-[${themes[theme].taskSecondText}]`}>
             {description}
           </Text>
+          {/* FAQs */}
+          {faqs.length > 0 && (
+            <View className="pl-4 gap-3">
+              {faqs.map((faq, index) => (
+                <View key={index} className="gap-1">
+                  <Text
+                    className={`text-base font-medium text-[${themes[theme].text}]`}
+                  >
+                    {faq.question}
+                  </Text>
+                  <Text
+                    className={`text-base text-[${themes[theme].taskSecondText}]`}
+                  >
+                    {faq.answer}
+                  </Text>
+                </View>
+              ))}
+            </View>
+          )}
         </View>
       )}
     </View>
