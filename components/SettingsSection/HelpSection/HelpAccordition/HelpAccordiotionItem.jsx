@@ -1,0 +1,44 @@
+import { View, Text, TouchableOpacity } from "react-native";
+import { useState } from "react";
+
+import Ionicons from "react-native-vector-icons/Ionicons";
+
+import { themeAtom } from "../../../../constants/storeAtoms";
+import { useAtom } from "jotai";
+
+import { themes } from "../../../../constants/themes";
+
+const HelpAccordionItem = ({ title, description }) => {
+  const [open, setOpen] = useState(false);
+
+  const [theme] = useAtom(themeAtom);
+
+  return (
+    <View className={`border-b border-[${themes[theme].borderColor}]`}>
+      <TouchableOpacity
+        onPress={() => setOpen(!open)}
+        className="flex-row items-center justify-between p-4"
+        activeOpacity={0.7}
+      >
+        <Text className={`text-lg font-medium text-[${themes[theme].text}]`}>
+          {title}
+        </Text>
+        <Ionicons
+          name={open ? "chevron-up" : "chevron-down"}
+          size={20}
+          color={themes[theme].taskSecondText}
+        />
+      </TouchableOpacity>
+
+      {open && (
+        <View className="px-4 pb-4">
+          <Text className={`text-base text-[${themes[theme].taskSecondText}]`}>
+            {description}
+          </Text>
+        </View>
+      )}
+    </View>
+  );
+};
+
+export default HelpAccordionItem;
