@@ -34,34 +34,31 @@ function Home() {
 
   useEffect(() => {
     navigation.setOptions({
-      headerShown: true,
+      headerShown: false,
       title: "",
       headerStyle: {
         backgroundColor: themes[theme].background,
       },
       headerShadowVisible: false,
       headerSearchBarOptions: null,
-      headerLeft: () => (
-        <View className="flex-1">
-          <Text
-            className={`text-base font-medium text-[${themes[theme].text}]`}
-          >
-            {todayFormatted}
-          </Text>
-          <Text className={`text-3xl font-medium text-[${themes[theme].text}]`}>
-            {`${i18n.locale === "es" ? "¡" : ""}${greeting()}, ${user.name}!`}
-          </Text>
-        </View>
-      ),
+      headerLeft: () => null,
       headerRight: () => null,
     });
-  }, [navigation, theme, user.name, todayFormatted]);
+  }, [navigation, theme]);
 
   return (
     <View
-      className={`flex-1 pt-4 bg-[${themes[theme].background}] items-center`}
+      className={`w-full px-4 flex-1 bg-[${themes[theme].background}] items-center`}
     >
-      <View className="flex-1 px-4">
+      <View className="w-full pt-14 pb-3">
+        <Text className={`text-base font-medium text-[${themes[theme].text}]`}>
+          {todayFormatted}
+        </Text>
+        <Text className={`text-3xl font-medium text-[${themes[theme].text}]`}>
+          {`${i18n.locale === "es" ? "¡" : ""}${greeting()}, ${user.name}!`}
+        </Text>
+      </View>
+      <View className="flex-1">
         <ScrollView showsVerticalScrollIndicator={false}>
           <Pressable className="flex-row pb-5 flex-wrap justify-between">
             {/* Cards section */}
