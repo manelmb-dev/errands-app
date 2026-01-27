@@ -146,115 +146,94 @@ function SettingsSection() {
     ]);
   };
 
-  const handleDeleteAccount = () => {
-    Alert.alert(i18n.t("deleteAccount"), i18n.t("confirmDeleteAccount"), [
-      { text: i18n.t("cancel"), style: "cancel" },
-      {
-        text: i18n.t("delete"),
-        style: "destructive",
-        onPress: () => console.log("Eliminar cuenta de Firestore UPDATEEEE"),
-      },
-    ]);
-  };
-
   return (
-    <View className={`h-full px-6 py-4 bg-[${themes[theme].background}] gap-6`}>
-      {/* Header profile */}
-      <View className={`flex items-center gap-2`}>
-        <TouchableOpacity onPress={pickImageAndUpload}>
-          {formData.photoURL ? (
-            <Image
-              source={{ uri: formData.photoURL }}
-              className="h-40 w-40 rounded-full"
-            />
-          ) : (
-            <Ionicons
-              name="person-circle-outline"
-              size={165}
-              color={themes[theme].iconColor}
-            />
-          )}
-        </TouchableOpacity>
-        <TouchableOpacity onPress={pickImageAndUpload}>
-          <Text
-            className={`text-lg font-semibold text-[${themes[theme].blueHeadText}]`}
-          >
-            {i18n.t("setNewPhoto")}
-          </Text>
-        </TouchableOpacity>
-      </View>
-
-      {/* Form */}
-      {/* Name & Surname */}
-      <View className="gap-6">
-        <View
-          className={`bg-[${themes[theme].surfaceBackground}] rounded-xl border border-[${themes[theme].borderColor}] shadow-sm ${theme === "light" ? "shadow-gray-100" : "shadow-neutral-950"}`}
-        >
-          <TextInput
-            className={`p-5 text-lg leading-tight text-[${themes[theme].text}] border-b border-[${themes[theme].borderColor}]`}
-            placeholder={i18n.t("name")}
-            placeholderTextColor="red"
-            value={formData.name}
-            onChangeText={(text) => handleChange("name", text)}
-          />
-          <TextInput
-            className={`p-5 text-lg leading-tight text-[${themes[theme].text}]`}
-            placeholder={i18n.t("surname")}
-            placeholderTextColor="red"
-            value={formData.surname.trim()}
-            onChangeText={(text) => handleChange("surname", text)}
-          />
+    <View className={`h-full px-6 pt-4 pb-12 bg-[${themes[theme].background}]`}>
+      <View className="flex-1 gap-6">
+        {/* Header profile */}
+        <View className={`flex items-center gap-2`}>
+          <TouchableOpacity onPress={pickImageAndUpload}>
+            {formData.photoURL ? (
+              <Image
+                source={{ uri: formData.photoURL }}
+                className="h-40 w-40 rounded-full"
+              />
+            ) : (
+              <Ionicons
+                name="person-circle-outline"
+                size={165}
+                color={themes[theme].iconColor}
+              />
+            )}
+          </TouchableOpacity>
+          <TouchableOpacity onPress={pickImageAndUpload}>
+            <Text
+              className={`text-lg font-semibold text-[${themes[theme].blueHeadText}]`}
+            >
+              {i18n.t("setNewPhoto")}
+            </Text>
+          </TouchableOpacity>
         </View>
 
-        {/* Birthdate, Email & Username */}
-        <View>
+        {/* Form */}
+        <View className="gap-6">
+          {/* Name & Surname */}
           <View
             className={`bg-[${themes[theme].surfaceBackground}] rounded-xl border border-[${themes[theme].borderColor}] shadow-sm ${theme === "light" ? "shadow-gray-100" : "shadow-neutral-950"}`}
           >
-            {/* <TextInput
+            <TextInput
+              className={`p-5 text-lg leading-tight text-[${themes[theme].text}] border-b border-[${themes[theme].borderColor}]`}
+              placeholder={i18n.t("name")}
+              placeholderTextColor="red"
+              value={formData.name}
+              onChangeText={(text) => handleChange("name", text)}
+            />
+            <TextInput
+              className={`p-5 text-lg leading-tight text-[${themes[theme].text}]`}
+              placeholder={i18n.t("surname")}
+              placeholderTextColor="red"
+              value={formData.surname.trim()}
+              onChangeText={(text) => handleChange("surname", text)}
+            />
+          </View>
+
+          {/* Birthdate, Email & Username */}
+          <View>
+            <View
+              className={`bg-[${themes[theme].surfaceBackground}] rounded-xl border border-[${themes[theme].borderColor}] shadow-sm ${theme === "light" ? "shadow-gray-100" : "shadow-neutral-950"}`}
+            >
+              {/* <TextInput
               className={`p-5 text-lg leading-tight text-[${themes[theme].text}] border-b border-[${themes[theme].borderColor}]`}
               placeholder={i18n.t("birthdate")}
               placeholderTextColor={themes[theme].taskSecondText}
               value={formData.birthdate}
               onChangeText={(text) => handleChange("birthdate", text)}
             /> */}
-            <Text
-              className={`p-5 text-lg leading-tight text-[${themes[theme].text}] border-b border-[${themes[theme].borderColor}]`}
-            >
-              {formData.email}
+              <Text
+                className={`p-5 text-lg leading-tight text-[${themes[theme].text}] border-b border-[${themes[theme].borderColor}]`}
+              >
+                {formData.email}
+              </Text>
+              <TextInput
+                className={`p-5 text-lg leading-tight text-[${themes[theme].text}]`}
+                placeholder={i18n.t("username")}
+                placeholderTextColor="red"
+                value={formData.username}
+                onChangeText={(text) => handleChangeUsername(text)}
+                autoCapitalize="none"
+              />
+            </View>
+            <Text className={`p-1 text-sm text-red-500`}>
+              {usernameTaken ? i18n.t("usernameAlreadyTaken") : ""}
             </Text>
-            <TextInput
-              className={`p-5 text-lg leading-tight text-[${themes[theme].text}]`}
-              placeholder={i18n.t("username")}
-              placeholderTextColor="red"
-              value={formData.username}
-              onChangeText={(text) => handleChangeUsername(text)}
-              autoCapitalize="none"
-            />
           </View>
-          <Text className={`p-1 text-sm text-red-500`}>
-            {usernameTaken ? i18n.t("usernameAlreadyTaken") : ""}
-          </Text>
         </View>
       </View>
-
-      <TouchableOpacity
-        className={`mt-6 rounded-xl border-hairline ${theme === "light" ? "border-red-500 bg-red-100" : "border-red-300 bg-red-950 opacity-80"} `}
-        onPress={handleDeleteAccount}
-      >
-        <Text className={`p-5 text-lg leading-tight text-red-500`}>
-          {i18n.t("deleteAccount")}
-        </Text>
-      </TouchableOpacity>
 
       {/* Save changes button */}
       <TouchableOpacity
         onPress={confirmChangesAlert}
-        className={`rounded-xl p-4 ${
-          usernameTaken || !formData.name.trim() || !formData.surname.trim()
-            ? "bg-gray-500"
-            : "bg-blue-600"
-        }`}
+        className={`rounded-xl p-4
+          ${usernameTaken || !formData.name.trim() || !formData.surname.trim() ? "bg-gray-500" : "bg-blue-600"}`}
         disabled={
           usernameTaken || !formData.name.trim() || !formData.surname.trim()
         }
