@@ -47,14 +47,15 @@ const ViewIncomingTaskModal = () => {
         backgroundColor: themes[theme].background,
       },
       headerShadowVisible: false,
-      headerLeft: () => null,
       headerRight: () => (
         <Pressable
+          className="pl-1"
           onPress={() => navigation.goBack()}
-          disabled={!watchedTitle.trim()}
+          // disabled={!watchedTitle.trim()}
         >
           <Text
-            className={`text-2xl font-bold ${watchedTitle.trim() ? `text-[${themes[theme].blueHeadText}]` : `text-[${themes[theme].taskSecondText}]`}`}
+            className={`text-2xl font-semibold text-[${themes[theme].blueHeadText}]`}
+            // className={`text-2xl font-bold ${watchedTitle.trim() ? `text-[${themes[theme].blueHeadText}]` : `text-[${themes[theme].taskSecondText}]`}`}
           >
             {i18n.t("ok")}
           </Text>
