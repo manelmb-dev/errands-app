@@ -279,7 +279,14 @@
     "helpFaqNoNotifications": "Why am I not receiving notifications?",
     "helpFaqNoNotificationsText": "Check your notification settings, mute options, and system permissions to make sure notifications are enabled.",
     "helpFaqMuteDifference": "What is the difference between muting and blocking?",
-    "helpFaqMuteDifferenceText": "Muting stops notifications, while blocking completely prevents communication and sharing with that contact."
+    "helpFaqMuteDifferenceText": "Muting stops notifications, while blocking completely prevents communication and sharing with that contact.",
+    "accountInfo": "Account information",
+    "recoveryEmail": "Recovery email",
+    "addRecoveryEmail": "Add a recovery email",
+    "confirmSaveRecoveryEmail": "Do you want to save this recovery email?",
+    "accountSecurityInfo": "Account security",
+    "accountSecurityDescription": "Your account is linked to your phone number. If you lose access to your number, we’ll help you recover your account using your email.",
+    "noUserEmail": "You don't have an email associated to your account"
   },
   "es": {
     "wellcome": "Bienvenido",
@@ -561,7 +568,14 @@
     "helpFaqNoNotifications": "¿Por qué no recibo notificaciones?",
     "helpFaqNoNotificationsText": "Revisa los ajustes de notificaciones, opciones de silencio y permisos del sistema.",
     "helpFaqMuteDifference": "¿Cuál es la diferencia entre silenciar y bloquear?",
-    "helpFaqMuteDifferenceText": "Silenciar solo detiene las notificaciones. Bloquear impide completamente la comunicación y el contenido compartido."
+    "helpFaqMuteDifferenceText": "Silenciar solo detiene las notificaciones. Bloquear impide completamente la comunicación y el contenido compartido.",
+    "accountInfo": "Información de la cuenta",
+    "recoveryEmail": "Correo de recuperación",
+    "addRecoveryEmail": "Añadir correo de recuperación",
+    "confirmSaveRecoveryEmail": "¿Quieres guardar este correo de recuperación?",
+    "accountSecurityInfo": "Seguridad de la cuenta",
+    "accountSecurityDescription": "Tu cuenta está vinculada a tu número de teléfono. Si pierdes acceso a tu número, te ayudaremos a recuperar tu cuenta usando tu correo de electrónico.",
+    "noUserEmail": "No tienes ningún correo electrónico vinculado"
   },
   "ca": {
     "wellcome": "Benvingut",
@@ -843,6 +857,13 @@
     "helpFaqNoNotifications": "Per què no rebo notificacions?",
     "helpFaqNoNotificationsText": "Revisa els ajustos de notificacions, les opcions de silenci i els permisos del sistema.",
     "helpFaqMuteDifference": "Quina diferència hi ha entre silenciar i bloquejar?",
-    "helpFaqMuteDifferenceText": "Silenciar només atura les notificacions. Bloquejar impedeix completament la comunicació."
+    "helpFaqMuteDifferenceText": "Silenciar només atura les notificacions. Bloquejar impedeix completament la comunicació.",
+    "accountInfo": "Informació del compte",
+    "recoveryEmail": "Correu de recuperació",
+    "addRecoveryEmail": "Afegir correu de recuperació",
+    "confirmSaveRecoveryEmail": "Vols desar aquest correu de recuperació?",
+    "accountSecurityInfo": "Seguretat del compte",
+    "accountSecurityDescription": "El teu compte està vinculat al teu número de telèfon. Si perds accés al número, t’ajudarem a recuperar el compte mitjançant el correu electrònic.",
+    "noUserEmail": "No tens cap correu electrònic vinculat"
   }
 }
