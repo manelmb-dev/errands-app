@@ -76,23 +76,23 @@ export default function ListPopup({ showCompleted, setShowCompleted }) {
           text: i18n.t("cancel"),
           style: "cancel",
         },
-      ]
+      ],
     );
   };
 
   const leaveList = (listId) => {
-    // Assign errands that are assigned to the user to another user of the usersShared list
+    // Assign errands that are assigned to the user to another user of the usersShared list (owner of the errand)
 
     // Remove user from shared users list locally
     const updatedLists = lists.map((list) =>
       list.id === listId
         ? {
-            ...list,
-            usersShared: list.usersShared.filter(
-              (userId) => userId !== user.id
-            ),
-          }
-        : list
+          ...list,
+          usersShared: list.usersShared.filter(
+            (userId) => userId !== user.id,
+          ),
+        }
+        : list,
     );
     setLists(updatedLists);
 
@@ -124,7 +124,12 @@ export default function ListPopup({ showCompleted, setShowCompleted }) {
           TriggerTouchableComponent: TouchableOpacity,
         }}
       >
-        <Ionicons name="options" size={24} color={themes[theme].blueHeadText} />
+        <Ionicons
+          className="pl-1.5"
+          name="options"
+          size={26}
+          color={themes[theme].text}
+        />
       </MenuTrigger>
       <MenuOptions
         customStyles={{
