@@ -93,26 +93,28 @@ function CompletedErrand({ errand }) {
               </View>
             </View>
           )}
-          {errand.ownerId === user.id && user.id !== errand.assignedId && (
-            <View className="flex-row">
-              <View
-                className={`flex-row my-0.5 px-2 p-1 bg-[${themes[theme].outgoingTaskToBg}] rounded-lg items-center gap-2`}
-              >
-                <Ionicons
-                  name="return-down-forward"
-                  size={14}
-                  color="#6E727A"
-                />
-                <Text
-                  numberOfLines={1}
-                  ellipsizeMode="tail"
-                  className={`flex-shrink text-sm text-[${themes[theme].taskSecondText}]`}
+          {errand.ownerId === user.id &&
+            user.id !== errand.assignedId &&
+            errand.assignedId !== "unassigned" && (
+              <View className="flex-row">
+                <View
+                  className={`flex-row my-0.5 px-2 p-1 bg-[${themes[theme].outgoingTaskToBg}] rounded-lg items-center gap-2`}
                 >
-                  {assignedContact.name} {assignedContact.surname}
-                </Text>
+                  <Ionicons
+                    name="return-down-forward"
+                    size={14}
+                    color="#6E727A"
+                  />
+                  <Text
+                    numberOfLines={1}
+                    ellipsizeMode="tail"
+                    className={`flex-shrink text-sm text-[${themes[theme].taskSecondText}]`}
+                  >
+                    {assignedContact.name} {assignedContact.surname}
+                  </Text>
+                </View>
               </View>
-            </View>
-          )}
+            )}
           {errand.description && (
             <View>
               <Text
