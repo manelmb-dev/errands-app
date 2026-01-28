@@ -3,15 +3,8 @@ import { useEffect, useRef, useState } from "react";
 import { useNavigation } from "expo-router";
 import { Text, View } from "react-native";
 
-import Ionicons from "react-native-vector-icons/Ionicons";
-
 import { useAtom } from "jotai";
-import {
-  errandsAtom,
-  listsAtom,
-  themeAtom,
-  userAtom,
-} from "../../constants/storeAtoms";
+import { errandsAtom, themeAtom, userAtom } from "../../constants/storeAtoms";
 
 import UndoCompleteErrandButton from "../../Utils/UndoCompleteErrandButton";
 import SwipeableFullErrand from "../../Utils/SwipeableFullErrand";
@@ -29,8 +22,8 @@ function MarkedTasksComp() {
   const [theme] = useAtom(themeAtom);
   const [errands, setErrands] = useAtom(errandsAtom);
 
-  const [showCompleted, setShowCompleted] = useState(false);
-  const [possibleUndoCompleteErrand, setPossibleUndoCompleteErrand] = useState(null);
+  const [possibleUndoCompleteErrand, setPossibleUndoCompleteErrand] =
+    useState(null);
   const [possibleUndoDeleteErrand, setPossibleUndoDeleteErrand] =
     useState(null);
 
@@ -58,9 +51,7 @@ function MarkedTasksComp() {
         backgroundColor: themes[theme].background,
       },
       headerShadowVisible: false,
-      headerRight: () => (
-        <Ionicons name="options" color={themes[theme].blueHeadText} size={24} />
-      ),
+      headerRight: () => null,
     });
   }, [navigation, theme]);
 
