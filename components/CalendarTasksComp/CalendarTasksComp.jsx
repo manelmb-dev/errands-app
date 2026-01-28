@@ -13,9 +13,9 @@ import SwipeableFullErrand from "../../Utils/SwipeableFullErrand";
 import { useErrandActions } from "../../hooks/useErrandActions";
 import { themes } from "../../constants/themes";
 
+import UndoDeleteErrandButton from "../../Utils/UndoDeleteErrandButton";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import i18n from "../../constants/i18n";
-import UndoDeleteErrandButton from "../../Utils/UndoDeleteErrandButton";
 
 LocaleConfig.locales[i18n.locale] = {
   monthNames: [
@@ -72,11 +72,12 @@ LocaleConfig.defaultLocale = i18n.locale;
 function CalendarTasksComp() {
   const today = new Date().toISOString().split("T")[0];
   const navigation = useNavigation();
+
   const openSwipeableRef = useRef(null);
   const swipeableRefs = useRef({});
 
-  const [theme] = useAtom(themeAtom);
   const [errands, setErrands] = useAtom(errandsAtom);
+  const [theme] = useAtom(themeAtom);
 
   const [selectedDate, setSelectedDate] = useState(today);
   const [currentMonth, setCurrentMonth] = useState(new Date());
@@ -111,9 +112,7 @@ function CalendarTasksComp() {
         backgroundColor: themes[theme].background,
       },
       headerShadowVisible: false,
-      headerRight: () => (
-        <Ionicons name="options" color={themes[theme].blueHeadText} size={24} />
-      ),
+      headerRight: () => null,
     });
   }, [navigation, theme]);
 
