@@ -34,7 +34,7 @@ export default function PopupDeletedTasksScreen() {
   const deleteAllDeletedErrands = () => {
     //delete deleted errands locally
     setErrands((prev) =>
-      prev.filter((e) => !e.deleted).filter((e) => e.ownerId === user.id)
+      prev.filter((e) => !e.deleted).filter((e) => e.ownerId === user.id),
     );
 
     // TODO: FIRESTORE UPDATEEE
@@ -55,7 +55,7 @@ export default function PopupDeletedTasksScreen() {
             style: "destructive",
           },
           { text: i18n.t("cancel"), style: "cancel" },
-        ]
+        ],
       );
     }
   };
@@ -67,7 +67,12 @@ export default function PopupDeletedTasksScreen() {
           TriggerTouchableComponent: TouchableOpacity,
         }}
       >
-        <Ionicons name="options" size={24} color={themes[theme].blueHeadText} />
+        <Ionicons
+          className="pl-1.5"
+          name="options"
+          size={26}
+          color={themes[theme].text}
+        />
       </MenuTrigger>
       <MenuOptions
         customStyles={{
