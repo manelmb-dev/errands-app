@@ -1,8 +1,8 @@
 import Swipeable from "react-native-gesture-handler/ReanimatedSwipeable";
 import Animated, { LinearTransition } from "react-native-reanimated";
+import { useLocalSearchParams, useNavigation } from "expo-router";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { View, Text, Pressable } from "react-native";
-import { useLocalSearchParams, useNavigation } from "expo-router";
 
 import {
   errandsAtom,
@@ -14,15 +14,15 @@ import { useAtom } from "jotai";
 
 import Ionicons from "react-native-vector-icons/Ionicons";
 
-import UndoCompleteErrandButton from "../../Utils/UndoCompleteErrandButton";
-import SwipeableFullErrand from "../../Utils/SwipeableFullErrand";
-import { useErrandActions } from "../../hooks/useErrandActions";
-import { themes } from "../../constants/themes";
-import CompletedErrand from "../../Utils/CompletedErrand";
 import RenderRightActionsCompletedErrand from "../../Utils/RenderRightActionsCompletedErrand";
-import i18n from "../../constants/i18n";
+import UndoCompleteErrandButton from "../../Utils/UndoCompleteErrandButton";
 import FilterMainTabPopup from "./FilterMainTabPopup/FilterMainTabPopup";
 import UndoDeleteErrandButton from "../../Utils/UndoDeleteErrandButton";
+import SwipeableFullErrand from "../../Utils/SwipeableFullErrand";
+import { useErrandActions } from "../../hooks/useErrandActions";
+import CompletedErrand from "../../Utils/CompletedErrand";
+import { themes } from "../../constants/themes";
+import i18n from "../../constants/i18n";
 
 const SharedTasksComp = () => {
   const navigation = useNavigation();
@@ -73,40 +73,31 @@ const SharedTasksComp = () => {
       headerShadowVisible: false,
       headerSearchBarOptions: null,
       headerLeft: () => null,
-      headerRight: () => (
-        <Ionicons name="options" color={themes[theme].blueHeadText} size={24} />
-      ),
+      headerRight: () => null,
     });
   }, [navigation, theme]);
-
-  const tabOptions = [
-    { label: i18n.t("all"), value: "all" },
-    { label: i18n.t("outgoing"), value: "outgoing" },
-    { label: i18n.t("incoming"), value: "incoming" },
-  ];
 
   const subFilterOptions = [
     { label: i18n.t("pending"), value: "pending" },
     { label: i18n.t("completed"), value: "completed" },
   ];
 
-  const errandList = (e) => lists.find((list) => list.id === e.listId);
-
   const filteredErrands = useMemo(() => {
+    const errandList = (e) => lists.find((list) => list.id === e.listId);
     let baseList = errands.filter(
       (e) =>
         !e.deleted &&
         e.ownerId !== e.assignedId &&
-        (errandList(e) === undefined || errandList(e).usersShared.length === 1)
+        (errandList(e) === undefined || errandList(e).usersShared.length === 1),
     );
 
     if (mainTab === "outgoing") {
       baseList = baseList.filter(
-        (e) => e.ownerId === user.id && e.assignedId !== user.id
+        (e) => e.ownerId === user.id && e.assignedId !== user.id,
       );
     } else if (mainTab === "incoming") {
       baseList = baseList.filter(
-        (e) => e.ownerId !== user.id && e.assignedId === user.id
+        (e) => e.ownerId !== user.id && e.assignedId === user.id,
       );
     }
 
@@ -124,7 +115,7 @@ const SharedTasksComp = () => {
       const dateB = getErrandDateTime(b);
       return subFilter === "completed" ? dateB - dateA : dateA - dateB;
     });
-  }, [errands, mainTab, subFilter, user]);
+  }, [errands, mainTab, subFilter, user, lists]);
 
   const sectionedErrands = useMemo(() => {
     const sections = {};
