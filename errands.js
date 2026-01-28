@@ -774,6 +774,28 @@ const errandsData = [
     seen: false,
     deleted: false,
   },
+  {
+    id: "2ksadadsaakfd87",
+    ownerId: "100003",
+    assignedId: "100004",
+    title: "Wine",
+    description: "",
+    dateErrand: tomorrow,
+    timeErrand: "19:00",
+    completed: false,
+    dateNotice: "",
+    timeNotice: "",
+    repeat: "never",
+    marked: true,
+    location: "Barcelona",
+    priority: "none",
+    listId: "12439l",
+    completedDateErrand: null,
+    completedTimeErrand: null,
+    completedBy: null,
+    seen: false,
+    deleted: false,
+  },
 ];
 
 export default errandsData;

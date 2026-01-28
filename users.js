@@ -37,7 +37,6 @@ const users = [
     createdAt: "2023-10-01T12:00:00.000Z",
     updatedAt: "2023-10-01T12:00:00.000Z",
     lastLogin: "2023-10-05T14:23:00.000Z",
-    blockedUsers: [],
   },
   {
     id: "100003",
