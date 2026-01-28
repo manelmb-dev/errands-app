@@ -123,9 +123,7 @@ function AllTasksComp() {
         backgroundColor: themes[theme].background,
       },
       headerShadowVisible: false,
-      headerRight: () => (
-        <Ionicons name="options" color={themes[theme].blueHeadText} size={24} />
-      ),
+      headerRight: () => null,
     });
   }, [navigation, theme]);
 
