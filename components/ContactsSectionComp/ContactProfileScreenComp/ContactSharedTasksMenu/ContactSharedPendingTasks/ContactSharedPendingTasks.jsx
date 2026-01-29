@@ -78,9 +78,12 @@ const ContactSharedPendingTasks = () => {
 
   const contactSharedPendingErrands = useMemo(() => {
     return errands
-      .filter((errand) => !errand.deleted)
-      .filter((errand) => !errand.completed)
-      .filter((errand) => errand.listId === "unassigned")
+      .filter(
+        (errand) =>
+          !errand.deleted &&
+          !errand.completed &&
+          errand.listId === "unassigned",
+      )
       .filter(
         (errand) =>
           errand.ownerId === currentContact.id ||
