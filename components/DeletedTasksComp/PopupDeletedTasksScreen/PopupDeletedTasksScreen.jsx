@@ -27,14 +27,14 @@ export default function PopupDeletedTasksScreen() {
   const [language] = useAtom(languageAtom);
   const [errands, setErrands] = useAtom(errandsAtom);
 
-  const totalErrandsDeleted = errands
-    .filter((errand) => errand.deleted)
-    .filter((e) => e.ownerId === user.id).length;
+  const totalErrandsDeleted = errands.filter(
+    (errand) => errand.deleted && errand.ownerId === user.id,
+  ).length;
 
   const deleteAllDeletedErrands = () => {
     //delete deleted errands locally
     setErrands((prev) =>
-      prev.filter((e) => !e.deleted).filter((e) => e.ownerId === user.id),
+      prev.filter((e) => !e.deleted && e.ownerId === user.id),
     );
 
     // TODO: FIRESTORE UPDATEEE
