@@ -21,6 +21,12 @@ import { themes } from "../../constants/themes";
 import i18n from "../../constants/i18n";
 import UndoDeleteErrandButton from "../../Utils/UndoDeleteErrandButton";
 
+const sortByDate = (a, b) => {
+  const dateA = new Date(`${a.dateErrand}T${a.timeErrand || "20:00"}`);
+  const dateB = new Date(`${b.dateErrand}T${b.timeErrand || "20:00"}`);
+  return dateA - dateB;
+};
+
 function AllTasksComp() {
   const navigation = useNavigation();
 
@@ -141,41 +147,31 @@ function AllTasksComp() {
         ...list,
         // errands: selectedTabObj.errandsList
         errands: errands
-          .filter((errand) => !errand.deleted)
-          .filter((errand) => !errand.completed)
-          .filter((errand) => errand.listId === list.id)
-          .sort((a, b) => {
-            const dateA = new Date(
-              `${a.dateErrand}T${a.timeErrand || "20:00"}`
-            );
-            const dateB = new Date(
-              `${b.dateErrand}T${b.timeErrand || "20:00"}`
-            );
-            return dateA - dateB;
-          }),
+          .filter(
+            (errand) =>
+              errand.listId === list.id && !errand.completed && !errand.deleted,
+          )
+          .sort(sortByDate),
       }))
       .filter((list) => list.errands.length > 0);
 
     // const sharedErrands = selectedTabObj.errandsList
     const sharedErrands = errands
       .filter((e) => !e.deleted && !e.completed && e.listId === "unassigned")
-      .sort((a, b) => {
-        const dateA = new Date(`${a.dateErrand}T${a.timeErrand || "20:00"}`);
-        const dateB = new Date(`${b.dateErrand}T${b.timeErrand || "20:00"}`);
-        return dateA - dateB;
-      });
+      .sort(sortByDate);
 
-    if (sharedErrands.length > 0) {
-      items.push({
-        id: "sharedErrandsId",
-        title: i18n.t("shared"),
-        icon: "people",
-        color: "slate",
-        errands: sharedErrands,
-      });
-    }
-
-    return items;
+    return sharedErrands.length > 0
+      ? [
+          ...items,
+          {
+            id: "sharedErrandsId",
+            title: i18n.t("shared"),
+            icon: "people",
+            color: "slate",
+            errands: sharedErrands,
+          },
+        ]
+      : items;
   }, [lists, errands]);
 
   return (
