@@ -113,7 +113,7 @@ const EditTaskModal = () => {
     const fullContact = contacts.find((c) => c.id === currentErrand.assignedId);
     const sharedList = {
       title: i18n.t("shared"),
-      id: "",
+      id: "unassigned",
       icon: "people",
       color: "slate",
     };
@@ -402,7 +402,7 @@ const EditTaskModal = () => {
                   {i18n.t("list")}
                 </Text>
                 <View
-                  className={`mr-4 px-2 py-1 gap-1 flex-row items-center ${listAssigned.id === "" || listAssigned === false || currentErrand.ownerId !== user.id ? `bg-[${themes[theme].surfaceBackground}]` : `${theme === "light" ? "bg-slate-300" : "bg-slate-600"}`} rounded-2xl`}
+                  className={`mr-4 px-2 py-1 gap-1 flex-row items-center ${listAssigned.id === "unassigned" || listAssigned === false || currentErrand.ownerId !== user.id ? `bg-[${themes[theme].surfaceBackground}]` : `${theme === "light" ? "bg-slate-300" : "bg-slate-600"}`} rounded-2xl`}
                 >
                   <Text className={`text-lg text-[${themes[theme].text}]`}>
                     {listAssigned ? `${listAssigned.title}` : i18n.t("shared")}

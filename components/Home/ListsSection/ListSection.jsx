@@ -26,14 +26,21 @@ export default function ListSection() {
   const [, setCurrentList] = useAtom(currentListAtom);
   const [lists] = useAtom(listsAtom);
 
-  const totalErrandsDeleted = errands
-    .filter((errand) => errand.deleted)
-    .filter((e) => e.ownerId === user.id).length;
+  const sharedErrandsCount = errands
+    .filter((e) => !e.deleted)
+    .filter((e) => !e.completed)
+    .filter((e) => e.ownerId !== e.assignedId)
+    .filter((e) => e.assignedId !== "unassigned")
+    .filter((e) => e.listId === "unassigned").length;
 
   const ownNotSahredLists = lists
     .filter((list) => list.ownerId === user.id)
     .filter((list) => list.usersShared.length === 1)
     .filter((list) => list.usersShared[0] === user.id);
+
+  const totalErrandsDeleted = errands
+    .filter((errand) => errand.deleted)
+    .filter((e) => e.ownerId === user.id).length;
 
   return (
     <View>
@@ -131,15 +138,7 @@ export default function ListSection() {
                   <Text
                     className={`mr-7 text-lg font-semibold text-[${themes[theme].listTitle}]`}
                   >
-                    {
-                      errands.filter(
-                        (e) =>
-                          !e.deleted &&
-                          !e.completed &&
-                          e.ownerId !== e.assignedId &&
-                          e.assignedId !== "unassigned"
-                      ).length
-                    }
+                    {sharedErrandsCount}
                   </Text>
                 </View>
               </View>

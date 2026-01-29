@@ -25,17 +25,17 @@ import {
   userAtom,
 } from "../../constants/storeAtoms";
 
+import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import FontAwesome6 from "react-native-vector-icons/FontAwesome6";
 import Ionicons from "react-native-vector-icons/Ionicons";
-import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 
-import { themes } from "../../constants/themes";
 import formatDay from "../../constants/formatDay";
+import { themes } from "../../constants/themes";
+import i18n from "../../constants/i18n";
 import {
   priorityOptions,
   repeatOptions,
 } from "../../constants/repeatPriorityOptions";
-import i18n from "../../constants/i18n";
 
 const NewTaskModal = () => {
   const { showActionSheetWithOptions } = useActionSheet();
@@ -45,7 +45,7 @@ const NewTaskModal = () => {
   const { contact, list } = useLocalSearchParams();
   const currentContact = useMemo(
     () => contact && JSON.parse(contact),
-    [contact]
+    [contact],
   );
   const currentList = useMemo(() => list && JSON.parse(list), [list]);
 
@@ -107,7 +107,12 @@ const NewTaskModal = () => {
   useEffect(() => {
     if (currentContact) {
       setUserAssigned(currentContact);
-      setListAssigned({ id: "", title: i18n.t("shared") });
+      setListAssigned({
+        id: "unassigned",
+        title: i18n.t("shared"),
+        icon: "people",
+        color: "slate",
+      });
     }
   }, [currentContact, setUserAssigned, setListAssigned, setValue]);
 
@@ -191,7 +196,7 @@ const NewTaskModal = () => {
     !watch("dateErrand") && setValue("dateErrand", today);
     setValue(
       "timeErrand",
-      time.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })
+      time.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
     );
     SetHourSwitchEnabled(true);
     SetDateSwitchEnabled(true);
@@ -282,7 +287,7 @@ const NewTaskModal = () => {
       (index) => {
         if (index === options.length - 1) return;
         setValue("repeat", repeatOptions[index].value);
-      }
+      },
     );
   };
 
@@ -298,7 +303,7 @@ const NewTaskModal = () => {
       (index) => {
         if (index === options.length - 1) return;
         setValue("priority", priorityOptions[index].value);
-      }
+      },
     );
   };
 
@@ -651,7 +656,7 @@ const NewTaskModal = () => {
                 <Text className={`text-lg text-[${themes[theme].text}]`}>
                   {
                     priorityOptions.find(
-                      (option) => option.value === watch("priority")
+                      (option) => option.value === watch("priority"),
                     )?.label
                   }
                 </Text>

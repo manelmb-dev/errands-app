@@ -135,7 +135,7 @@ const AssignContactSelector = () => {
         return fullName
           .toLowerCase()
           .includes(contactSearchedInput.toLowerCase());
-      })
+      }),
     );
   }, [contactSearchedInput, sortedContacts]);
 
@@ -172,11 +172,11 @@ const AssignContactSelector = () => {
             className={`h-16 border-b border-[${themes[theme].borderColor}]`}
             underlayColor={themes[theme].background}
             onPress={() => {
-              // If assigned list is NOT a shared list, current user assigned is not the user and the user presses on self the assigned list will be the first user list
+              // If assigned list is unassigned, current user assigned is not the user and the user presses on self the assigned list will be the first user list
               if (
                 item.id === user.id &&
                 userAssigned.id !== user.id &&
-                listAssigned.usersShared.length === 1
+                listAssigned.id === "unassigned"
               ) {
                 setUserAssigned(item);
                 setListAssigned(lists[0]);
@@ -196,7 +196,7 @@ const AssignContactSelector = () => {
               ) {
                 setUserAssigned(item);
                 setListAssigned({
-                  id: "",
+                  id: "unassigned",
                   title: i18n.t("shared"),
                   usersShared: [user.id],
                 });
