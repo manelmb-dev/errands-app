@@ -50,7 +50,7 @@ const ContactSharedLists = () => {
     return lists.filter(
       (list) =>
         list.usersShared.includes(currentContact.id) &&
-        list.usersShared.includes(user.id)
+        list.usersShared.includes(user.id),
     );
   }, [lists, currentContact, user]);
 
@@ -99,10 +99,12 @@ const ContactSharedLists = () => {
                             className={` text-lg font-semibold text-[${themes[theme].listTitle}]`}
                           >
                             {
-                              errands
-                                .filter((errand) => errand.listId === list.id)
-                                .filter((errand) => !errand.deleted)
-                                .filter((errand) => !errand.completed).length
+                              errands.filter(
+                                (errand) =>
+                                  errand.listId === list.id &&
+                                  !errand.deleted &&
+                                  !errand.completed,
+                              ).length
                             }
                           </Text>
                           <Ionicons
