@@ -23,9 +23,12 @@ import {
   userAtom,
 } from "../../constants/storeAtoms";
 
-import { themes } from "../../constants/themes";
 import { SafeAreaProvider } from "react-native-safe-area-context";
+import { themes } from "../../constants/themes";
 import i18n from "../../constants/i18n";
+
+const sortByName = (a, b) =>
+  a.name.localeCompare(b.name) || a.surname?.localeCompare(b.surname);
 
 const AssignContactSelector = () => {
   const navigation = useNavigation();
@@ -74,18 +77,10 @@ const AssignContactSelector = () => {
         { ...user },
         ...contacts
           .filter((c) => user.favoriteUsers.includes(c.id))
-          .sort(
-            (a, b) =>
-              a.name.localeCompare(b.name) ||
-              a.surname?.localeCompare(b.surname)
-          ),
+          .sort(sortByName),
         ...contacts
           .filter((c) => !user.favoriteUsers.includes(c.id))
-          .sort(
-            (a, b) =>
-              a.name.localeCompare(b.name) ||
-              a.surname?.localeCompare(b.surname)
-          ),
+          .sort(sortByName),
       ];
     }
 
@@ -95,34 +90,28 @@ const AssignContactSelector = () => {
         { id: "unassigned", name: i18n.t("unassigned") },
         { ...user },
         ...contacts
-          .filter((c) => listAssigned.usersShared.includes(c.id))
-          .filter((c) => user.favoriteUsers.includes(c.id))
-          .sort(
-            (a, b) =>
-              a.name.localeCompare(b.name) ||
-              a.surname?.localeCompare(b.surname)
-          ),
+          .filter(
+            (c) =>
+              listAssigned.usersShared.includes(c.id) &&
+              user.favoriteUsers.includes(c.id),
+          )
+          .sort(sortByName),
         ...contacts
-          .filter((c) => listAssigned.usersShared.includes(c.id))
-          .filter((c) => !user.favoriteUsers.includes(c.id))
-          .sort(
-            (a, b) =>
-              a.name.localeCompare(b.name) ||
-              a.surname?.localeCompare(b.surname)
-          ),
+          .filter(
+            (c) =>
+              listAssigned.usersShared.includes(c.id) &&
+              !user.favoriteUsers.includes(c.id),
+          )
+          .sort(sortByName),
         // FIX THISSSS Below: contacts will have to be users
         ...contacts
           .filter(
             (c) =>
               listAssigned.usersShared.includes(c.id) &&
               !contacts.some((existing) => existing.id === c.id) &&
-              c.id !== user.id
+              c.id !== user.id,
           )
-          .sort(
-            (a, b) =>
-              a.name.localeCompare(b.name) ||
-              a.surname?.localeCompare(b.surname)
-          ),
+          .sort(sortByName),
       ];
     }
   }, [contacts, user, listAssigned.usersShared]);
