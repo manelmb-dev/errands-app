@@ -69,6 +69,12 @@ LocaleConfig.locales[i18n.locale] = {
 
 LocaleConfig.defaultLocale = i18n.locale;
 
+const sortByDate = (a, b) => {
+  const dateA = new Date(`${a.dateErrand}T${a.timeErrand || "20:00"}`);
+  const dateB = new Date(`${b.dateErrand}T${b.timeErrand || "20:00"}`);
+  return dateA - dateB;
+};
+
 function CalendarTasksComp() {
   const today = new Date().toISOString().split("T")[0];
   const navigation = useNavigation();
@@ -258,11 +264,7 @@ function CalendarTasksComp() {
 
       {/* {errands
         .filter((errand) => errand.dateErrand === selectedDate)
-        .sort((a, b) => {
-          const dateA = new Date(`${a.dateErrand}T${a.timeErrand || "20:00"}`);
-          const dateB = new Date(`${b.dateErrand}T${b.timeErrand || "20:00"}`);
-          return dateA - dateB;
-        })
+        .sort(sortByDate)
         .map((errand, index) => (
           <FullErrand key={errand.id} errand={errand} />
         ))} */}
@@ -271,18 +273,13 @@ function CalendarTasksComp() {
         itemLayoutAnimation={LinearTransition}
         data={
           errands
-            .filter((errand) => errand.dateErrand === selectedDate)
-            .filter((errand) => !errand.deleted)
-            .filter((errand) => errand.completed === false)
-            .sort((a, b) => {
-              const dateA = new Date(
-                `${a.dateErrand}T${a.timeErrand || "20:00"}`
-              );
-              const dateB = new Date(
-                `${b.dateErrand}T${b.timeErrand || "20:00"}`
-              );
-              return dateA - dateB;
-            }) || []
+            .filter(
+              (errand) =>
+                errand.dateErrand === selectedDate &&
+                errand.completed === false &&
+                !errand.deleted,
+            )
+            .sort(sortByDate) || []
         }
         keyExtractor={(item) => item.id}
         contentContainerStyle={{ paddingBottom: 40 }}
