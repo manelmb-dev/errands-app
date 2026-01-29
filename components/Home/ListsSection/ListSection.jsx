@@ -26,21 +26,25 @@ export default function ListSection() {
   const [, setCurrentList] = useAtom(currentListAtom);
   const [lists] = useAtom(listsAtom);
 
-  const sharedErrandsCount = errands
-    .filter((e) => !e.deleted)
-    .filter((e) => !e.completed)
-    .filter((e) => e.ownerId !== e.assignedId)
-    .filter((e) => e.assignedId !== "unassigned")
-    .filter((e) => e.listId === "unassigned").length;
+  const sharedErrandsCount = errands.filter(
+    (e) =>
+      !e.deleted &&
+      !e.completed &&
+      e.ownerId !== e.assignedId &&
+      e.assignedId !== "unassigned" &&
+      e.listId === "unassigned",
+  ).length;
 
-  const ownNotSahredLists = lists
-    .filter((list) => list.ownerId === user.id)
-    .filter((list) => list.usersShared.length === 1)
-    .filter((list) => list.usersShared[0] === user.id);
+  const ownNotSahredLists = lists.filter(
+    (list) =>
+      list.ownerId === user.id &&
+      list.usersShared.length === 1 &&
+      list.usersShared[0] === user.id,
+  );
 
-  const totalErrandsDeleted = errands
-    .filter((errand) => errand.deleted)
-    .filter((e) => e.ownerId === user.id).length;
+  const totalErrandsDeleted = errands.filter(
+    (errand) => errand.ownerId === user.id && errand.deleted,
+  ).length;
 
   return (
     <View>
@@ -89,10 +93,12 @@ export default function ListSection() {
                       className={`mr-7 text-lg font-semibold text-[${themes[theme].listTitle}]`}
                     >
                       {
-                        errands
-                          .filter((errand) => errand.listId === list.id)
-                          .filter((errand) => !errand.deleted)
-                          .filter((errand) => !errand.completed).length
+                        errands.filter(
+                          (errand) =>
+                            errand.listId === list.id &&
+                            !errand.deleted &&
+                            !errand.completed,
+                        ).length
                       }
                     </Text>
                   </View>
@@ -180,9 +186,11 @@ export default function ListSection() {
                       className={`mr-7 text-lg font-semibold text-[${themes[theme].listTitle}]`}
                     >
                       {
-                        errands
-                          .filter((errand) => errand.deleted === true)
-                          .filter((errand) => errand.ownerId === user.id).length
+                        errands.filter(
+                          (errand) =>
+                            errand.ownerId === user.id &&
+                            errand.deleted === true,
+                        ).length
                       }
                     </Text>
                   </View>
