@@ -29,23 +29,23 @@ function MainCardsSection() {
   const [errandsMarked, setErrandsMarked] = useState(0);
 
   useEffect(() => {
-    const notCompleted = errands
-      .filter((errand) => !errand.deleted)
-      .filter((errand) => !errand.completed);
+    const notCompleted = errands.filter(
+      (errand) => !errand.deleted && !errand.completed,
+    );
 
     const today = errands
-      .filter((errand) => !errand.deleted)
       .filter((errand) => {
         if (errand.dateErrand === "") return false;
         const errandDate = new Date(errand.dateErrand)
           .toISOString()
           .split("T")[0];
         return errandDate <= todayDate && !errand.completed;
-      });
+      })
+      .filter((errand) => !errand.deleted);
 
-    const marked = errands
-      .filter((errand) => !errand.deleted)
-      .filter((errand) => errand.marked && !errand.completed);
+    const marked = errands.filter(
+      (errand) => errand.marked && !errand.deleted && !errand.completed,
+    );
 
     setErrandsNotCompleted(notCompleted.length);
     setErrandsToday(today.length);
@@ -96,9 +96,8 @@ function MainCardsSection() {
             onPress={() => router.push(card.route)}
           >
             <View
-              className={`flex-row justify-between bg-[${themes[theme].surfaceBackground}] p-3 rounded-2xl w-full h-full  border border-[${themes[theme].borderColor}] shadow-sm ${
-                theme === "light" ? "shadow-gray-100" : "shadow-neutral-950"
-              }`}
+              className={`flex-row justify-between bg-[${themes[theme].surfaceBackground}] p-3 rounded-2xl w-full h-full  border border-[${themes[theme].borderColor}] shadow-sm ${theme === "light" ? "shadow-gray-100" : "shadow-neutral-950"
+                }`}
             >
               <View className="ml-1 flex-column justify-between">
                 <Icon
