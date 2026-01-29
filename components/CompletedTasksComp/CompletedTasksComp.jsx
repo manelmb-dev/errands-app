@@ -11,11 +11,17 @@ import { errandsAtom, themeAtom } from "../../constants/storeAtoms";
 import { useAtom } from "jotai";
 
 import RenderRightActionsCompletedErrand from "../../Utils/RenderRightActionsCompletedErrand";
+import UndoDeleteErrandButton from "../../Utils/UndoDeleteErrandButton";
+import { useErrandActions } from "../../hooks/useErrandActions";
 import CompletedErrand from "../../Utils/CompletedErrand";
 import { themes } from "../../constants/themes";
 import i18n from "../../constants/i18n";
-import { useErrandActions } from "../../hooks/useErrandActions";
-import UndoDeleteErrandButton from "../../Utils/UndoDeleteErrandButton";
+
+const sortByDate = (a, b) => {
+  const dateA = new Date(`${a.dateErrand}T${a.timeErrand || "20:00"}`);
+  const dateB = new Date(`${b.dateErrand}T${b.timeErrand || "20:00"}`);
+  return dateA - dateB;
+};
 
 function CompletedTasksComp() {
   const { showActionSheetWithOptions } = useActionSheet();
@@ -38,14 +44,9 @@ function CompletedTasksComp() {
   const completedErrands = useMemo(
     () =>
       errands
-        .filter((errand) => errand.completed)
-        .filter((errand) => !errand.deleted)
-        .sort((a, b) => {
-          const dateA = new Date(`${a.dateErrand}T${a.timeErrand || "20:00"}`);
-          const dateB = new Date(`${b.dateErrand}T${b.timeErrand || "20:00"}`);
-          return dateB - dateA;
-        }),
-    [errands]
+        .filter((errand) => errand.completed && !errand.deleted)
+        .sort(sortByDate),
+    [errands],
   );
 
   const totalErrandsCompleted = completedErrands.length;
@@ -92,7 +93,7 @@ function CompletedTasksComp() {
           style: "destructive",
         },
         { text: i18n.t("cancel") },
-      ]
+      ],
     );
   };
 
@@ -104,7 +105,7 @@ function CompletedTasksComp() {
       errands.filter((errand) => {
         const errandCompletedDate = new Date(`${errand.completedDateErrand}`);
         return errandCompletedDate > oneMonthAgo || !errand.completed;
-      })
+      }),
     );
   };
   // REVISARRRRRR lo de arriba
@@ -120,7 +121,7 @@ function CompletedTasksComp() {
           style: "destructive",
         },
         { text: i18n.t("cancel") },
-      ]
+      ],
     );
   };
 
@@ -154,7 +155,7 @@ function CompletedTasksComp() {
       (selectedIndex) => {
         if (selectedIndex === cancelButtonIndex) return;
         deleteOptions[selectedIndex].delete();
-      }
+      },
     );
   };
 
