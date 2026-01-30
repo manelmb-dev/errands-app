@@ -48,24 +48,24 @@ export const useSharedSlides = (errands, user) => {
   // Sahred errands
   const outgoingErrands = enrichedErrands.filter(
     (e) =>
-      !e.deleted &&
       !e.completed &&
+      e.dateErrand &&
+      e.dateTime <= endOfWeek &&
+      !e.deleted &&
       e.ownerId === user.id &&
       e.assignedId !== user.id &&
-      (errandList(e) === undefined || errandList(e).usersShared.length === 1) &&
-      e.dateErrand &&
-      e.dateTime <= endOfWeek
+      (errandList(e) === undefined || errandList(e).usersShared.length === 1),
   );
 
   const incomingErrands = enrichedErrands.filter(
     (e) =>
+      !e.completed &&
+      e.dateErrand &&
+      e.dateTime <= endOfWeek &&
       !e.deleted &&
       e.ownerId !== user.id &&
       e.assignedId === user.id &&
-      !e.completed &&
-      (errandList(e) === undefined || errandList(e).usersShared.length === 1) &&
-      e.dateErrand &&
-      e.dateTime <= endOfWeek
+      (errandList(e) === undefined || errandList(e).usersShared.length === 1),
   );
 
   const completedSharedErrands = enrichedErrands.filter(
@@ -76,7 +76,7 @@ export const useSharedSlides = (errands, user) => {
       e.completed &&
       ((e.completedDateErrand >= startOfWeek &&
         e.completedDateErrand <= endOfWeek) ||
-        (e.dateErrand && e.dateTime >= startOfWeek && e.dateTime <= endOfWeek))
+        (e.dateErrand && e.dateTime >= startOfWeek && e.dateTime <= endOfWeek)),
   );
 
   // Incoming errands
@@ -85,7 +85,7 @@ export const useSharedSlides = (errands, user) => {
   const incomingOverdue = getOverdue(incomingErrands, rightNow);
 
   const incomingCompleted = completedSharedErrands.filter(
-    (e) => e.ownerId !== user.id && e.assignedId === user.id
+    (e) => e.ownerId !== user.id && e.assignedId === user.id,
   );
 
   // Outgoing errands
@@ -94,7 +94,7 @@ export const useSharedSlides = (errands, user) => {
   const outgoingOverdue = getOverdue(outgoingErrands, rightNow);
 
   const outgoingCompleted = completedSharedErrands.filter(
-    (e) => e.ownerId === user.id && e.assignedId !== user.id
+    (e) => e.ownerId === user.id && e.assignedId !== user.id,
   );
 
   const sharedCards = [
