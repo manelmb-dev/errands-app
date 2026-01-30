@@ -41,10 +41,10 @@ export default function ListPopup({ showCompleted, setShowCompleted }) {
   };
 
   const listErrandsCount = (listId) => {
-    return errands
-      .filter((errand) => errand.listId === listId)
-      .filter((errand) => !errand.completed)
-      .filter((errand) => !errand.deleted).length;
+    return errands.filter(
+      (errand) =>
+        errand.listId === listId && !errand.completed && !errand.deleted,
+    ).length;
   };
 
   const deleteList = (listId) => {
@@ -87,11 +87,11 @@ export default function ListPopup({ showCompleted, setShowCompleted }) {
     const updatedLists = lists.map((list) =>
       list.id === listId
         ? {
-          ...list,
-          usersShared: list.usersShared.filter(
-            (userId) => userId !== user.id,
-          ),
-        }
+            ...list,
+            usersShared: list.usersShared.filter(
+              (userId) => userId !== user.id,
+            ),
+          }
         : list,
     );
     setLists(updatedLists);
