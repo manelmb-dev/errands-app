@@ -3,15 +3,15 @@ import { useEffect, useRef, useState } from "react";
 import { useNavigation } from "expo-router";
 import { Text, View } from "react-native";
 
-import { useAtom } from "jotai";
 import { errandsAtom, themeAtom, userAtom } from "../../constants/storeAtoms";
+import { useAtom } from "jotai";
 
 import UndoCompleteErrandButton from "../../Utils/UndoCompleteErrandButton";
+import UndoDeleteErrandButton from "../../Utils/UndoDeleteErrandButton";
 import SwipeableFullErrand from "../../Utils/SwipeableFullErrand";
 import { useErrandActions } from "../../hooks/useErrandActions";
 import { themes } from "../../constants/themes";
 import i18n from "../../constants/i18n";
-import UndoDeleteErrandButton from "../../Utils/UndoDeleteErrandButton";
 
 function MarkedTasksComp() {
   const navigation = useNavigation();
@@ -56,9 +56,7 @@ function MarkedTasksComp() {
   }, [navigation, theme]);
 
   const markedActiveErrands = errands
-    .filter((errand) => errand.marked)
-    .filter((errand) => !errand.completed)
-    .filter((errand) => !errand.deleted)
+    .filter((errand) => errand.marked && !errand.completed && !errand.deleted)
     .sort((a, b) => {
       const dateA = new Date(`${a.dateErrand}T${a.timeErrand || "20:00"}`);
       const dateB = new Date(`${b.dateErrand}T${b.timeErrand || "20:00"}`);
@@ -66,9 +64,7 @@ function MarkedTasksComp() {
     });
 
   const markedCompletedErrands = errands
-    .filter((errand) => errand.marked)
-    .filter((errand) => !errand.deleted)
-    .filter((errand) => errand.completed)
+    .filter((errand) => errand.marked && !errand.deleted && errand.completed)
     .sort((a, b) => {
       const dateA = new Date(`${a.dateErrand}T${a.timeErrand || "20:00"}`);
       const dateB = new Date(`${b.dateErrand}T${b.timeErrand || "20:00"}`);
