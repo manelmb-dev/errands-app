@@ -14,9 +14,9 @@ import {
 } from "../../../constants/storeAtoms";
 import { useAtom } from "jotai";
 
+import ListPopupMenu from "../ListsSection/ListPopupMenu/ListPopupMenu";
 import { themes } from "../../../constants/themes";
 import i18n from "../../../constants/i18n";
-import ListPopupMenu from "../ListsSection/ListPopupMenu/ListPopupMenu";
 
 export default function SharedListSection() {
   const router = useRouter();
@@ -28,9 +28,9 @@ export default function SharedListSection() {
   const [lists] = useAtom(listsAtom);
   const [, setUsersSharedWith] = useAtom(usersSharedWithAtom);
 
-  const sharedLists = lists
-    .filter((list) => list.usersShared.length > 1)
-    .filter((list) => list.usersShared.includes(user.id));
+  const sharedLists = lists.filter(
+    (list) => list.usersShared.length > 1 && list.usersShared.includes(user.id),
+  );
 
   return (
     <View>
@@ -83,10 +83,12 @@ export default function SharedListSection() {
                         className={`mr-7 text-lg font-semibold text-[${themes[theme].listTitle}]`}
                       >
                         {
-                          errands
-                            .filter((errand) => errand.listId === list.id)
-                            .filter((errand) => !errand.deleted)
-                            .filter((errand) => !errand.completed).length
+                          errands.filter(
+                            (errand) =>
+                              errand.listId === list.id &&
+                              !errand.deleted &&
+                              !errand.completed,
+                          ).length
                         }
                       </Text>
                     </View>
