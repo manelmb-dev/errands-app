@@ -74,12 +74,12 @@ function TodayTasks() {
       emptyListText: i18n.t("youAreUpToDate"),
       errandsList: errands
         .filter(
-          (errand) => !errand.completed && !errand.deleted && errand.dateErrand
+          (errand) => !errand.completed && !errand.deleted && errand.dateErrand,
         )
         .filter(
           (errand) =>
             new Date(errand.dateErrand).toISOString().split("T")[0] <=
-            new Date().toISOString().split("T")[0]
+            new Date().toISOString().split("T")[0],
         ),
     },
     {
@@ -92,14 +92,14 @@ function TodayTasks() {
             !errand.completed &&
             !errand.deleted &&
             errand.dateErrand &&
-            errand.completedDateErrand
+            errand.completedDateErrand,
         )
         .filter(
           (errand) =>
             new Date(errand.dateErrand).toISOString().split("T")[0] ===
               new Date().toISOString().split("T")[0] ||
             new Date(errand.completedDateErrand).toISOString().split("T")[0] ===
-              new Date().toISOString().split("T")[0]
+              new Date().toISOString().split("T")[0],
         ),
     },
   ];
@@ -110,17 +110,19 @@ function TodayTasks() {
     return (
       selectedTabObj?.errandsList?.filter(
         (errand) =>
-          errand.assignedId === user.id || errand.assignedId === "unassigned"
+          errand.assignedId === user.id || errand.assignedId === "unassigned",
       ) || []
     );
   }, [selectedTabObj, user.id]);
 
   const errandsOutgoingFromMe = useMemo(() => {
     return (
-      selectedTabObj?.errandsList
-        ?.filter((errand) => errand.ownerId === user.id)
-        .filter((errand) => errand.assignedId !== user.id)
-        .filter((errand) => errand.assignedId !== "unassigned") || []
+      selectedTabObj?.errandsList?.filter(
+        (errand) =>
+          errand.ownerId === user.id &&
+          errand.assignedId !== user.id &&
+          errand.assignedId !== "unassigned",
+      ) || []
     );
   }, [selectedTabObj, user.id]);
 
