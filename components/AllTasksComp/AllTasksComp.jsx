@@ -15,11 +15,11 @@ import {
 } from "../../constants/storeAtoms";
 
 import UndoCompleteErrandButton from "../../Utils/UndoCompleteErrandButton";
+import UndoDeleteErrandButton from "../../Utils/UndoDeleteErrandButton";
 import SwipeableFullErrand from "../../Utils/SwipeableFullErrand";
 import { useErrandActions } from "../../hooks/useErrandActions";
 import { themes } from "../../constants/themes";
 import i18n from "../../constants/i18n";
-import UndoDeleteErrandButton from "../../Utils/UndoDeleteErrandButton";
 
 const sortByDate = (a, b) => {
   const dateA = new Date(`${a.dateErrand}T${a.timeErrand || "20:00"}`);
@@ -239,10 +239,10 @@ function AllTasksComp() {
               .filter((errand) => !errand.completed)
               .sort((a, b) => {
                 const dateA = new Date(
-                  `${a.dateErrand}T${a.timeErrand || "20:00"}`
+                  `${a.dateErrand}T${a.timeErrand || "20:00"}`,
                 );
                 const dateB = new Date(
-                  `${b.dateErrand}T${b.timeErrand || "20:00"}`
+                  `${b.dateErrand}T${b.timeErrand || "20:00"}`,
                 );
                 return dateA - dateB;
               })
