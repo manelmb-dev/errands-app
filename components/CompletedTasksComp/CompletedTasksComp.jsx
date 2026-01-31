@@ -1,8 +1,8 @@
 import Swipeable from "react-native-gesture-handler/ReanimatedSwipeable";
 import Animated, { LinearTransition } from "react-native-reanimated";
 import { useActionSheet } from "@expo/react-native-action-sheet";
-import { View, Text, Pressable, Alert } from "react-native";
 import { useEffect, useMemo, useRef, useState } from "react";
+import { View, Text, Pressable, Alert } from "react-native";
 import { useNavigation } from "expo-router";
 
 import Ionicons from "react-native-vector-icons/Ionicons";
@@ -16,12 +16,6 @@ import { useErrandActions } from "../../hooks/useErrandActions";
 import CompletedErrand from "../../Utils/CompletedErrand";
 import { themes } from "../../constants/themes";
 import i18n from "../../constants/i18n";
-
-const sortByDate = (a, b) => {
-  const dateA = new Date(`${a.dateErrand}T${a.timeErrand || "20:00"}`);
-  const dateB = new Date(`${b.dateErrand}T${b.timeErrand || "20:00"}`);
-  return dateA - dateB;
-};
 
 function CompletedTasksComp() {
   const { showActionSheetWithOptions } = useActionSheet();
@@ -45,8 +39,12 @@ function CompletedTasksComp() {
     () =>
       errands
         .filter((errand) => errand.completed && !errand.deleted)
-        .sort(sortByDate),
-    [errands],
+        .sort((a, b) => {
+          const dateA = new Date(`${a.dateErrand}T${a.timeErrand || "20:00"}`);
+          const dateB = new Date(`${b.dateErrand}T${b.timeErrand || "20:00"}`);
+          return dateB - dateA;
+        }),
+    [errands]
   );
 
   const totalErrandsCompleted = completedErrands.length;
@@ -93,7 +91,7 @@ function CompletedTasksComp() {
           style: "destructive",
         },
         { text: i18n.t("cancel") },
-      ],
+      ]
     );
   };
 
@@ -105,7 +103,7 @@ function CompletedTasksComp() {
       errands.filter((errand) => {
         const errandCompletedDate = new Date(`${errand.completedDateErrand}`);
         return errandCompletedDate > oneMonthAgo || !errand.completed;
-      }),
+      })
     );
   };
   // REVISARRRRRR lo de arriba
@@ -121,7 +119,7 @@ function CompletedTasksComp() {
           style: "destructive",
         },
         { text: i18n.t("cancel") },
-      ],
+      ]
     );
   };
 
@@ -155,7 +153,7 @@ function CompletedTasksComp() {
       (selectedIndex) => {
         if (selectedIndex === cancelButtonIndex) return;
         deleteOptions[selectedIndex].delete();
-      },
+      }
     );
   };
 
