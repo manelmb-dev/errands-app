@@ -64,13 +64,14 @@ const ContactSharedCompletedTasks = () => {
 
   const contactSharedCompletedErrands = useMemo(() => {
     return errands
-      .filter((errand) => !errand.deleted)
-      .filter((errand) => errand.completed)
-      .filter((errand) => errand.listId === "unassigned")
+      .filter(
+        (errand) =>
+          !errand.deleted && errand.completed && errand.listId === "unassigned",
+      )
       .filter(
         (errand) =>
           errand.ownerId === currentContact.id ||
-          errand.assignedId === currentContact.id
+          errand.assignedId === currentContact.id,
       );
   }, [errands, currentContact]);
 
