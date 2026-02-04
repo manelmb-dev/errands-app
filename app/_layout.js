@@ -68,7 +68,11 @@ export default function Layout() {
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <SafeAreaProvider>
-        <StatusBar style={theme === "dark" ? "light" : "dark"} />
+        <StatusBar
+          style={theme === "dark" ? "light" : "dark"}
+          animated
+          translucent
+        />
         <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
           <MenuProvider>
             <ActionSheetProvider>
