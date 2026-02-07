@@ -1,8 +1,6 @@
 import { Pressable, ScrollView, Text, View, Platform } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { useNavigation } from "expo-router";
-import { StatusBar } from "expo-status-bar";
-import { BlurView } from "expo-blur";
 import { useEffect } from "react";
 
 import { themeAtom, userAtom } from "../../constants/storeAtoms";
