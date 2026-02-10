@@ -5,11 +5,7 @@ import { useNavigation } from "expo-router";
 import { Text, View, Pressable, Alert } from "react-native";
 
 import { useAtom } from "jotai";
-import {
-  errandsAtom,
-  listsAtom,
-  themeAtom,
-} from "../../constants/storeAtoms";
+import { errandsAtom, listsAtom, themeAtom } from "../../constants/storeAtoms";
 
 import Ionicons from "react-native-vector-icons/Ionicons";
 
@@ -46,8 +42,10 @@ function FilterTasksComp() {
 
   const [searchQuery, setSearchQuery] = useState("");
   const [showCompleted, setShowCompleted] = useState(true);
-  const [possibleUndoCompleteErrand, setPossibleUndoCompleteErrand] = useState(null);
-  const [possibleUndoDeleteErrand, setPossibleUndoDeleteErrand] = useState(null);
+  const [possibleUndoCompleteErrand, setPossibleUndoCompleteErrand] =
+    useState(null);
+  const [possibleUndoDeleteErrand, setPossibleUndoDeleteErrand] =
+    useState(null);
 
   const {
     onCompleteWithUndo,
@@ -94,7 +92,7 @@ function FilterTasksComp() {
     return errands
       .filter((errand) => !errand.deleted)
       .filter((errand) =>
-        errand.title.toLowerCase().includes(searchQuery.toLowerCase().trim())
+        errand.title.toLowerCase().includes(searchQuery.toLowerCase().trim()),
       );
   }, [searchQuery, errands]);
 
@@ -115,7 +113,9 @@ function FilterTasksComp() {
           text: i18n.t("delete"),
           style: "destructive",
           onPress: () => {
-            const completedErrands = filteredErrands.filter((errand) => errand.completed);
+            const completedErrands = filteredErrands.filter(
+              (errand) => errand.completed,
+            );
             const updatedErrands = errands.map((errand) => {
               if (completedErrands.find((ce) => ce.id === errand.id)) {
                 return { ...errand, deleted: true };
@@ -127,7 +127,7 @@ function FilterTasksComp() {
             // FIRESTOREEEE FIXXX THIS
           },
         },
-      ]
+      ],
     );
   };
 
@@ -173,9 +173,9 @@ function FilterTasksComp() {
   const hasResults = searchQuery.trim() && filteredErrands.length > 0;
 
   return (
-    <View className={`flex-1 bg-[${themes[theme].background}]`}>
+    <View className="flex-1 w-full bg-[${themes[theme].background}]">
       <View
-        className="flex-1 pt-36"
+        className="flex-1 w-full pt-36"
         onStartShouldSetResponder={() => {
           if (openSwipeableRef.current) {
             openSwipeableRef.current.close();
@@ -188,13 +188,17 @@ function FilterTasksComp() {
         {hasResults && (
           <View className="mx-4 mb-2 p-2 flex-row items-center justify-between">
             <View className="flex-row items-center gap-2">
-              <Text className={`text-[${themes[theme].taskSecondText}] text-base`}>
+              <Text
+                className={`text-[${themes[theme].taskSecondText}] text-base`}
+              >
                 {completedCount} {i18n.t("completed").toLowerCase()}
                 {completedCount > 0 && "  |"}
               </Text>
               {completedCount > 0 && (
                 <Pressable onPress={handleDeleteAllCompleted}>
-                  <Text className={`text-[${themes[theme].blueHeadText}] font-semibold text-base`}>
+                  <Text
+                    className={`text-[${themes[theme].blueHeadText}] font-semibold text-base`}
+                  >
                     {i18n.t("delete")}
                   </Text>
                 </Pressable>
@@ -205,7 +209,9 @@ function FilterTasksComp() {
                 onPress={() => setShowCompleted(!showCompleted)}
                 className="flex-row items-center gap-1.5"
               >
-                <Text className={`text-[${themes[theme].blueHeadText}] font-semibold text-base`}>
+                <Text
+                  className={`text-[${themes[theme].blueHeadText}] font-semibold text-base`}
+                >
                   {showCompleted ? i18n.t("hide") : i18n.t("show")}
                 </Text>
               </Pressable>
@@ -231,7 +237,9 @@ function FilterTasksComp() {
                   size={19}
                   color={themes[theme].text}
                 />
-                <Text className={`text-[${themes[theme].listTitle}] text-2xl font-bold`}>
+                <Text
+                  className={`text-[${themes[theme].listTitle}] text-2xl font-bold`}
+                >
                   {list.title}
                 </Text>
               </View>
@@ -271,11 +279,13 @@ function FilterTasksComp() {
                       onSwipeableOpenStartDrag={() => {
                         if (
                           openSwipeableRef.current &&
-                          openSwipeableRef.current !== swipeableRefs.current[errand.id]
+                          openSwipeableRef.current !==
+                            swipeableRefs.current[errand.id]
                         ) {
                           openSwipeableRef.current.close();
                         }
-                        openSwipeableRef.current = swipeableRefs.current[errand.id];
+                        openSwipeableRef.current =
+                          swipeableRefs.current[errand.id];
                       }}
                     >
                       <CompletedErrand errand={errand} />
