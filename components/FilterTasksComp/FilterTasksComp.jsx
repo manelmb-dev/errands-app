@@ -2,42 +2,52 @@ import Swipeable from "react-native-gesture-handler/ReanimatedSwipeable";
 import Animated, { LinearTransition } from "react-native-reanimated";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useNavigation } from "expo-router";
-import { Text, View } from "react-native";
+import { Text, View, Pressable, Alert } from "react-native";
 
 import { useAtom } from "jotai";
 import {
   errandsAtom,
   listsAtom,
   themeAtom,
-  userAtom,
 } from "../../constants/storeAtoms";
 
 import Ionicons from "react-native-vector-icons/Ionicons";
 
+import RenderRightActionsCompletedErrand from "../../Utils/RenderRightActionsCompletedErrand";
 import UndoCompleteErrandButton from "../../Utils/UndoCompleteErrandButton";
+import UndoDeleteErrandButton from "../../Utils/UndoDeleteErrandButton";
 import SwipeableFullErrand from "../../Utils/SwipeableFullErrand";
 import { useErrandActions } from "../../hooks/useErrandActions";
 import CompletedErrand from "../../Utils/CompletedErrand";
 import { themes } from "../../constants/themes";
-import RenderRightActionsCompletedErrand from "../../Utils/RenderRightActionsCompletedErrand";
 import i18n from "../../constants/i18n";
-import UndoDeleteErrandButton from "../../Utils/UndoDeleteErrandButton";
+
+const sortByDate = (a, b) => {
+  const dateA = new Date(`${a.dateErrand}T${a.timeErrand || "20:00"}`);
+  const dateB = new Date(`${b.dateErrand}T${b.timeErrand || "20:00"}`);
+  return dateA - dateB;
+};
+
+const sortByDateDesc = (a, b) => {
+  const dateA = new Date(`${a.dateErrand}T${a.timeErrand || "20:00"}`);
+  const dateB = new Date(`${b.dateErrand}T${b.timeErrand || "20:00"}`);
+  return dateB - dateA;
+};
 
 function FilterTasksComp() {
   const navigation = useNavigation();
 
-  const [user] = useAtom(userAtom);
   const [theme] = useAtom(themeAtom);
-  const [errands, setErrands] = useAtom(errandsAtom);
   const [lists] = useAtom(listsAtom);
+  const [errands, setErrands] = useAtom(errandsAtom);
 
   const openSwipeableRef = useRef(null);
   const swipeableRefs = useRef({});
 
-  const [possibleUndoCompleteErrand, setPossibleUndoCompleteErrand] =
-    useState(null);
-  const [possibleUndoDeleteErrand, setPossibleUndoDeleteErrand] =
-    useState(null);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [showCompleted, setShowCompleted] = useState(true);
+  const [possibleUndoCompleteErrand, setPossibleUndoCompleteErrand] = useState(null);
+  const [possibleUndoDeleteErrand, setPossibleUndoDeleteErrand] = useState(null);
 
   const {
     onCompleteWithUndo,
@@ -52,52 +62,75 @@ function FilterTasksComp() {
     possibleUndoDeleteErrand,
   });
 
-  const [uncompletedErrands, setUncompletedErrands] = useState(0);
-  const [todayErrands, setTodayErrands] = useState(0);
-  const [personalErrands, setPersonalErrands] = useState(0);
-  const [incomingErrands, setIncomingErrands] = useState(0);
-  const [outgoingErrands, setOutgoingErrands] = useState(0);
-  const [markedErrands, setMarkedErrands] = useState(0);
-
-  const [modalSettingsVisible, setModalSettingsVisible] = useState(false);
-  const [taskSearchInput, settaskSearchInput] = useState("");
-  const [filteredErrands, setFilteredErrands] = useState(errands);
-
   useEffect(() => {
     navigation.setOptions({
+      headerShown: true,
       title: "",
+      headerBackTitle: i18n.t("back"),
+      headerTitleStyle: {
+        color: themes[theme].text,
+      },
       headerStyle: {
         backgroundColor: themes[theme].background,
       },
       headerShadowVisible: false,
-      // headerSearchBarOptions: {
-      //   placeholder: {i18n.t("search")},
-      //   obscureBackground: taskSearchInput.length > 0 ? false : true,
-      //   onChangeText: (event) => {
-      //     settaskSearchInput(event.nativeEvent.text);
-      //   },
-      // },
-      headerLeft: () => null,
-      headerRight: () => null,
+      headerSearchBarOptions: {
+        placeholder: i18n.t("search"),
+        hideWhenScrolling: false,
+        obscureBackground: false,
+        autoCapitalize: "none",
+        onChangeText: (event) => {
+          setSearchQuery(event.nativeEvent.text);
+        },
+      },
     });
-  }, [navigation, theme, taskSearchInput]);
+  }, [navigation, theme]);
 
-  {
-    /* Filter errands*/
-  }
-  useEffect(() => {
-    setFilteredErrands(
-      errands
-        .filter((errand) => !errand.deleted)
-        .filter((errand) =>
-          errand.title.toLowerCase().includes(taskSearchInput.toLowerCase())
-        )
+  const filteredErrands = useMemo(() => {
+    if (!searchQuery.trim()) {
+      return [];
+    }
+
+    return errands
+      .filter((errand) => !errand.deleted)
+      .filter((errand) =>
+        errand.title.toLowerCase().includes(searchQuery.toLowerCase().trim())
+      );
+  }, [searchQuery, errands]);
+
+  const completedCount = useMemo(() => {
+    return filteredErrands.filter((errand) => errand.completed).length;
+  }, [filteredErrands]);
+
+  const handleDeleteAllCompleted = () => {
+    Alert.alert(
+      i18n.t("deleteCompletedErrands"),
+      i18n.t("areYouSureDeleteAllCompletedErrands"),
+      [
+        {
+          text: i18n.t("cancel"),
+          style: "cancel",
+        },
+        {
+          text: i18n.t("delete"),
+          style: "destructive",
+          onPress: () => {
+            const completedErrands = filteredErrands.filter((errand) => errand.completed);
+            const updatedErrands = errands.map((errand) => {
+              if (completedErrands.find((ce) => ce.id === errand.id)) {
+                return { ...errand, deleted: true };
+              }
+              return errand;
+            });
+            setErrands(updatedErrands);
+
+            // FIRESTOREEEE FIXXX THIS
+          },
+        },
+      ]
     );
-  }, [taskSearchInput, errands]);
+  };
 
-  {
-    /* Prepare errands for FlatList */
-  }
   const flatListData = useMemo(() => {
     const items = lists
       .sort((a, b) => {
@@ -110,13 +143,20 @@ function FilterTasksComp() {
       })
       .map((list) => ({
         ...list,
-        errands: filteredErrands.filter((errand) => errand.listId === list.id),
+        errands: filteredErrands.filter((errand) => {
+          if (errand.listId !== list.id) return false;
+          if (!showCompleted && errand.completed) return false;
+          return true;
+        }),
       }))
       .filter((list) => list.errands.length > 0);
 
-    const sharedErrands = filteredErrands.filter(
-      (e) => !e.deleted && e.listId === "unassigned"
-    );
+    const sharedErrands = filteredErrands.filter((e) => {
+      if (e.deleted || e.listId !== "unassigned") return false;
+      if (!showCompleted && e.completed) return false;
+      return true;
+    });
+
     if (sharedErrands.length > 0) {
       items.push({
         id: "sharedErrandsId",
@@ -128,67 +168,14 @@ function FilterTasksComp() {
     }
 
     return items;
-  }, [filteredErrands, lists]);
+  }, [filteredErrands, lists, showCompleted]);
 
-  useEffect(() => {
-    const notCompleted = errands
-      .filter((errand) => !errand.deleted)
-      .filter((errand) => !errand.completed);
-
-    const todayDate = new Date().toISOString().split("T")[0];
-    const today = errands
-      .filter((errand) => !errand.deleted)
-      .filter((errand) => {
-        if (errand.dateErrand === "") return false;
-        const errandDate = new Date(errand.dateErrand)
-          .toISOString()
-          .split("T")[0];
-        return errandDate <= todayDate && !errand.completed;
-      });
-
-    const personal = errands
-      .filter((errand) => !errand.deleted)
-      .filter(
-        (errand) =>
-          user.id === errand.ownerId &&
-          user.id === errand.assignedId &&
-          !errand.completed
-      );
-
-    const incoming = errands
-      .filter((errand) => !errand.deleted)
-      .filter(
-        (errand) =>
-          user.id !== errand.ownerId &&
-          user.id === errand.assignedId &&
-          !errand.completed
-      );
-
-    const outgoing = errands
-      .filter((errand) => !errand.deleted)
-      .filter(
-        (errand) =>
-          user.id === errand.ownerId &&
-          user.id !== errand.assignedId &&
-          !errand.completed
-      );
-
-    const marked = errands
-      .filter((errand) => !errand.deleted)
-      .filter((errand) => errand.marked && !errand.completed);
-
-    setUncompletedErrands(notCompleted.length);
-    setTodayErrands(today.length);
-    setPersonalErrands(personal.length);
-    setIncomingErrands(incoming.length);
-    setOutgoingErrands(outgoing.length);
-    setMarkedErrands(marked.length);
-  }, [errands, user]);
+  const hasResults = searchQuery.trim() && filteredErrands.length > 0;
 
   return (
-    <View className={`flex-1 flex-row bg-[${themes[theme].background}]`}>
+    <View className={`flex-1 bg-[${themes[theme].background}]`}>
       <View
-        className="flex-1"
+        className="flex-1 pt-36"
         onStartShouldSetResponder={() => {
           if (openSwipeableRef.current) {
             openSwipeableRef.current.close();
@@ -198,43 +185,61 @@ function FilterTasksComp() {
           return false;
         }}
       >
+        {hasResults && (
+          <View className="mx-4 mb-2 p-2 flex-row items-center justify-between">
+            <View className="flex-row items-center gap-2">
+              <Text className={`text-[${themes[theme].taskSecondText}] text-base`}>
+                {completedCount} {i18n.t("completed").toLowerCase()}
+                {completedCount > 0 && "  |"}
+              </Text>
+              {completedCount > 0 && (
+                <Pressable onPress={handleDeleteAllCompleted}>
+                  <Text className={`text-[${themes[theme].blueHeadText}] font-semibold text-base`}>
+                    {i18n.t("delete")}
+                  </Text>
+                </Pressable>
+              )}
+            </View>
+            {completedCount > 0 && (
+              <Pressable
+                onPress={() => setShowCompleted(!showCompleted)}
+                className="flex-row items-center gap-1.5"
+              >
+                <Text className={`text-[${themes[theme].blueHeadText}] font-semibold text-base`}>
+                  {showCompleted ? i18n.t("hide") : i18n.t("show")}
+                </Text>
+              </Pressable>
+            )}
+          </View>
+        )}
+
         <Animated.FlatList
           itemLayoutAnimation={LinearTransition}
           data={flatListData}
           showsVerticalScrollIndicator={false}
           contentContainerStyle={{ paddingBottom: 30 }}
-          keyExtractor={(item) => item.id || "no-list"}
+          keyExtractor={(item) => item.id}
           renderItem={({ item: list, index }) => (
             <View key={list.id}>
-              {/* Header */}
+              {/* List Header */}
               <View
                 className={`${index !== 0 ? "mt-7" : "mt-3"} mb-5 flex-row justify-center items-center gap-3`}
               >
                 <Ionicons
-                  className={`bg-${list.color}-300 p-1.5 rounded-xl`}
+                  className={`${theme === "light" ? `bg-${list.color}-300` : `bg-${list.color}-600`} p-1.5 rounded-xl`}
                   name={list.icon}
                   size={19}
-                  color={`${themes[theme].text}`}
+                  color={themes[theme].text}
                 />
-                <Text
-                  className={`text-[${themes[theme].listTitle}] text-2xl font-bold`}
-                >
+                <Text className={`text-[${themes[theme].listTitle}] text-2xl font-bold`}>
                   {list.title}
                 </Text>
               </View>
 
-              {/* Uncompleted */}
+              {/* Uncompleted Errands */}
               {list.errands
                 .filter((errand) => !errand.completed)
-                .sort((a, b) => {
-                  const dateA = new Date(
-                    `${a.dateErrand}T${a.timeErrand || "20:00"}`
-                  );
-                  const dateB = new Date(
-                    `${b.dateErrand}T${b.timeErrand || "20:00"}`
-                  );
-                  return dateA - dateB;
-                })
+                .sort(sortByDate)
                 .map((errand) => (
                   <SwipeableFullErrand
                     key={errand.id}
@@ -247,71 +252,70 @@ function FilterTasksComp() {
                   />
                 ))}
 
-              {/* Completed */}
-              {list.errands
-                .filter((errand) => errand.completed)
-                .sort((a, b) => {
-                  const dateA = new Date(
-                    `${a.dateErrand}T${a.timeErrand || "20:00"}`
-                  );
-                  const dateB = new Date(
-                    `${b.dateErrand}T${b.timeErrand || "20:00"}`
-                  );
-                  return dateB - dateA;
-                })
-                .map((errand) => (
-                  <Swipeable
-                    key={errand.id}
-                    ref={(ref) => (swipeableRefs.current[errand.id] = ref)}
-                    renderRightActions={() => (
-                      <RenderRightActionsCompletedErrand
-                        errand={errand}
-                        setErrands={setErrands}
-                        onDeleteWithUndo={onDeleteWithUndo}
-                      />
-                    )}
-                    onSwipeableOpenStartDrag={() => {
-                      if (
-                        openSwipeableRef.current &&
-                        openSwipeableRef.current !==
-                          swipeableRefs.current[errand.id]
-                      ) {
-                        openSwipeableRef.current.close();
-                      }
-                      openSwipeableRef.current =
-                        swipeableRefs.current[errand.id];
-                    }}
-                  >
-                    <CompletedErrand errand={errand} />
-                  </Swipeable>
-                ))}
+              {/* Completed Errands */}
+              {showCompleted &&
+                list.errands
+                  .filter((errand) => errand.completed)
+                  .sort(sortByDateDesc)
+                  .map((errand) => (
+                    <Swipeable
+                      key={errand.id}
+                      ref={(ref) => (swipeableRefs.current[errand.id] = ref)}
+                      renderRightActions={() => (
+                        <RenderRightActionsCompletedErrand
+                          errand={errand}
+                          setErrands={setErrands}
+                          onDeleteWithUndo={onDeleteWithUndo}
+                        />
+                      )}
+                      onSwipeableOpenStartDrag={() => {
+                        if (
+                          openSwipeableRef.current &&
+                          openSwipeableRef.current !== swipeableRefs.current[errand.id]
+                        ) {
+                          openSwipeableRef.current.close();
+                        }
+                        openSwipeableRef.current = swipeableRefs.current[errand.id];
+                      }}
+                    >
+                      <CompletedErrand errand={errand} />
+                    </Swipeable>
+                  ))}
             </View>
           )}
           ListEmptyComponent={
-            <Text
-              className={`text-[${themes[theme].listTitle}] text-lg font-bold text-center mt-40`}
-            >
-              {i18n.t("noSearchErrands")}
-            </Text>
+            <View className="flex-1 flex-col mt-14 mx-12 justify-center items-center gap-6">
+              <Text
+                className={`text-[${themes[theme].text}] text-xl font-semibold text-center`}
+              >
+                {searchQuery.trim()
+                  ? i18n.t("noSearchErrands")
+                  : i18n.t("searchForErrands")}
+              </Text>
+            </View>
           }
         />
       </View>
 
       {possibleUndoCompleteErrand && (
-        <UndoCompleteErrandButton
-          possibleUndoCompleteErrand={possibleUndoCompleteErrand}
-          undoCompleteErrand={undoCompleteErrand}
-          openSwipeableRef={openSwipeableRef}
-          setPossibleUndoCompleteErrand={setPossibleUndoCompleteErrand}
-        />
+        <View>
+          <UndoCompleteErrandButton
+            possibleUndoCompleteErrand={possibleUndoCompleteErrand}
+            undoCompleteErrand={undoCompleteErrand}
+            openSwipeableRef={openSwipeableRef}
+            setPossibleUndoCompleteErrand={setPossibleUndoCompleteErrand}
+          />
+        </View>
       )}
       {possibleUndoDeleteErrand && (
-        <UndoDeleteErrandButton
-          possibleUndoDeleteErrand={possibleUndoDeleteErrand}
-          undoDeleteErrand={undoDeleteErrand}
-          openSwipeableRef={openSwipeableRef}
-          setPossibleUndoDeleteErrand={setPossibleUndoDeleteErrand}
-        />
+        <View>
+          <UndoDeleteErrandButton
+            possibleUndoDeleteErrand={possibleUndoDeleteErrand}
+            undoDeleteErrand={undoDeleteErrand}
+            openSwipeableRef={openSwipeableRef}
+            setPossibleUndoDeleteErrand={setPossibleUndoDeleteErrand}
+          />
+        </View>
       )}
     </View>
   );
