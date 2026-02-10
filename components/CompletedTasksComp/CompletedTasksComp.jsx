@@ -69,6 +69,7 @@ function CompletedTasksComp() {
         backgroundColor: themes[theme].background,
       },
       headerShadowVisible: false,
+      headerSearchBarOptions: null,
       headerRight: () => (
         <Ionicons name="options" color={themes[theme].blueHeadText} size={24} />
       ),

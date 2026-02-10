@@ -35,6 +35,7 @@ function DeletedTasksComp() {
         backgroundColor: themes[theme].background,
       },
       headerShadowVisible: false,
+      headerSearchBarOptions: null,
       headerRight: () => <PopupDeletedTasksScreen />,
     });
   }, [navigation, theme]);

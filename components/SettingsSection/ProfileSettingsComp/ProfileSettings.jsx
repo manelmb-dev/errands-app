@@ -41,6 +41,7 @@ function SettingsSection() {
       },
       headerBackTitleVisible: false,
       headerShadowVisible: true,
+      headerSearchBarOptions: null,
       headerLeft: () => null,
       headerRight: () => null,
     });

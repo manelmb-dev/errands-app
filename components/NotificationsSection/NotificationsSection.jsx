@@ -23,6 +23,7 @@ function NotificationsSection() {
         backgroundColor: themes[theme].background,
       },
       headerShadowVisible: true,
+      headerSearchBarOptions: null,
       headerLeft: () => (
         <View className="flex-1">
           <Text

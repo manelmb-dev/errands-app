@@ -126,6 +126,7 @@ const ViewAllListsComp = () => {
       headerBackTitle: i18n.t("back"),
       headerStyle: { backgroundColor: themes[theme].background },
       headerShadowVisible: false,
+      headerSearchBarOptions: null,
     });
   }, [navigation, theme]);
 

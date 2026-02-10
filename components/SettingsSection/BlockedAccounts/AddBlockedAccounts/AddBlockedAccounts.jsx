@@ -41,6 +41,7 @@ const AddBlockedAccounts = () => {
       },
       headerBackTitle: i18n.t("back"),
       headerShadowVisible: true,
+      headerSearchBarOptions: null,
       headerLeft: () => null,
       headerRight: () => null,
     });

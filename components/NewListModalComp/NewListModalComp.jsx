@@ -90,6 +90,7 @@ const NewListModal = () => {
         backgroundColor: themes[theme].background,
       },
       headerShadowVisible: false,
+      headerSearchBarOptions: null,
       headerLeft: () => (
         <Pressable onPress={handleCancelAlert}>
           <Text className={`text-2xl text-[${themes[theme].blueHeadText}]`}>

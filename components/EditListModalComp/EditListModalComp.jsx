@@ -71,6 +71,7 @@ const EditListModalComp = () => {
         backgroundColor: themes[theme].background,
       },
       headerShadowVisible: false,
+      headerSearchBarOptions: null,
       headerLeft: () => (
         <Pressable
           onPress={() => {

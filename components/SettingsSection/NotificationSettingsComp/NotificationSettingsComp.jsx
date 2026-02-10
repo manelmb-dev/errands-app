@@ -36,6 +36,7 @@ const NotificationSettingsComp = () => {
         backgroundColor: themes[theme].background,
       },
       headerShadowVisible: false,
+      headerSearchBarOptions: null,
       headerLeft: () => null,
       headerRight: () => null,
     });

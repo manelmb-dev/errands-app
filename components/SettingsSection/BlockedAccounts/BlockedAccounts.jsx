@@ -47,6 +47,7 @@ const BlockedAccounts = () => {
         backgroundColor: themes[theme].background,
       },
       headerShadowVisible: true,
+      headerSearchBarOptions: null,
       headerLeft: () => null,
       headerRight: () => (
         <Pressable

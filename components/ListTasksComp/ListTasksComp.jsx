@@ -75,6 +75,7 @@ function ListTasksComp() {
         backgroundColor: themes[theme].background,
       },
       headerShadowVisible: false,
+      headerSearchBarOptions: null,
       headerRight: () => (
         <ListPopup
           showCompleted={showCompleted}

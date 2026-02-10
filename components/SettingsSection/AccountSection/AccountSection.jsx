@@ -27,6 +27,7 @@ const AccountSection = () => {
         backgroundColor: themes[theme].background,
       },
       headerShadowVisible: true,
+      headerSearchBarOptions: null,
       headerBackTitleVisible: false,
     });
   }, [navigation, theme]);

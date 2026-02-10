@@ -58,6 +58,7 @@ const AssignContactSelector = () => {
         backgroundColor: themes[theme].background,
       },
       headerShadowVisible: false,
+      headerSearchBarOptions: null,
       headerLeft: () => (
         <Pressable onPress={() => navigation.goBack()}>
           <Text className={`text-2xl text-[${themes[theme].blueHeadText}]`}>

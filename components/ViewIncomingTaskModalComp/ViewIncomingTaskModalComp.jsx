@@ -47,6 +47,7 @@ const ViewIncomingTaskModal = () => {
         backgroundColor: themes[theme].background,
       },
       headerShadowVisible: false,
+      headerSearchBarOptions: null,
       headerRight: () => (
         <Pressable
           className="pl-1"

@@ -66,6 +66,7 @@ const ContactSharedPendingTasks = () => {
         backgroundColor: themes[theme].background,
       },
       headerShadowVisible: false,
+      headerSearchBarOptions: null,
       headerRight: () => null,
     });
   }, [navigation, theme]);
