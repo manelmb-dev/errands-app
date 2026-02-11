@@ -249,7 +249,8 @@ function FilterTasksComp() {
             {completedCount > 0 && (
               <Pressable
                 onPress={() => setShowCompleted(!showCompleted)}
-                className="flex-row items-center gap-1.5"
+                className="flex-row items-center"
+                hitSlop={12}
               >
                 <Text
                   className={`text-[${themes[theme].blueHeadText}] font-semibold text-base`}
