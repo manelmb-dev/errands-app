@@ -242,6 +242,7 @@ function ListTasksComp() {
                 <Pressable
                   onPress={() => setShowCompleted(!showCompleted)}
                   className="flex-row items-center"
+                  hitSlop={12}
                 >
                     <Text
                       className={`text-[${themes[theme].blueHeadText}] font-semibold text-base`}
