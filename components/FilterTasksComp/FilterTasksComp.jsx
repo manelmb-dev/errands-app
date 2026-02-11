@@ -81,6 +81,8 @@ function FilterTasksComp() {
           setSearchQuery(event.nativeEvent.text);
         },
       },
+      headerLeft: () => null,
+      headerRight: () => null,
     });
   }, [navigation, theme]);
 
