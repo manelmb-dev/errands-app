@@ -22,7 +22,11 @@ import Ionicons from "react-native-vector-icons/Ionicons";
 import { themes } from "../../../constants/themes";
 import i18n from "../../../constants/i18n";
 
-export default function ListPopup({ showCompleted, setShowCompleted }) {
+export default function ListPopup({
+  showCompleted,
+  setShowCompleted,
+  completedErrandsFlatlistDataLength,
+}) {
   const router = useRouter();
   const navigation = useNavigation();
 
@@ -31,6 +35,36 @@ export default function ListPopup({ showCompleted, setShowCompleted }) {
   const [currentList] = useAtom(currentListAtom);
   const [lists, setLists] = useAtom(listsAtom);
   const [theme] = useAtom(themeAtom);
+
+  const deleteCompletedErrandsFromList = (listId) => {
+    const updatedErrands = errands.map((errand) => {
+      if (errand.listId === listId && errand.completed && !errand.deleted) {
+        return { ...errand, deleted: true };
+      }
+      return errand;
+    });
+    setErrands(updatedErrands);
+
+    // FIRESTORE FIX THISSS
+  };
+
+  const confirmDeleteCompletedErrands = (listId) => {
+    Alert.alert(
+      `${i18n.t("deleteAll")}?`,
+      i18n.t("areYouSureDeleteAllCompletedErrands"),
+      [
+        {
+          text: i18n.t("delete"),
+          onPress: () => deleteCompletedErrandsFromList(listId),
+          style: "destructive",
+        },
+        {
+          text: i18n.t("cancel"),
+          style: "cancel",
+        },
+      ],
+    );
+  };
 
   const deleteErrandsFromList = (listId) => {
     // Delete all the errands from this list locally
@@ -144,7 +178,7 @@ export default function ListPopup({ showCompleted, setShowCompleted }) {
             shadowOpacity: 0.6,
             shadowOffset: { width: 0, height: 5 },
             shadowRadius: 40,
-            minWidth: 220,
+            minWidth: 240,
           },
           optionWrapper: {
             paddingVertical: 12,
@@ -212,6 +246,30 @@ export default function ListPopup({ showCompleted, setShowCompleted }) {
             />
           </View>
         </MenuOption> */}
+        {completedErrandsFlatlistDataLength > 0 && (
+          <MenuOption
+            onSelect={() => confirmDeleteCompletedErrands(currentList.id)}
+            customStyles={{
+              optionTouchable: {
+                activeOpacity: 70,
+                style: {
+                  overflow: "hidden",
+                },
+              },
+            }}
+          >
+            <View className="flex-row justify-between items-center">
+              <Text className="text-lg text-red-500">
+                {i18n.t("deleteCompletedErrands")}
+              </Text>
+              <Ionicons
+                name="checkmark-done-circle-outline"
+                size={20}
+                color="red"
+              />
+            </View>
+          </MenuOption>
+        )}
         <MenuOption
           onSelect={() =>
             currentList.ownerId === user.id

@@ -80,10 +80,20 @@ function ListTasksComp() {
         <ListPopup
           showCompleted={showCompleted}
           setShowCompleted={setShowCompleted}
+          completedErrandsFlatlistDataLength={
+            completedErrandsFlatlistData.length
+          }
         />
       ),
     });
-  }, [navigation, theme, currentList.title, showCompleted]);
+  }, [
+    navigation,
+    theme,
+    currentList.title,
+    showCompleted,
+    completedErrandsFlatlistData,
+    errands
+  ]);
 
   const flatListData = useMemo(
     () =>
