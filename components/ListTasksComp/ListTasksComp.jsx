@@ -41,7 +41,7 @@ function ListTasksComp() {
   const [usersSharedWith, setUsersSharedWith] = useAtom(usersSharedWithAtom);
 
   const [showUsersSharedWith, setShowUsersSharedWith] = useState(false);
-  const [showCompleted, setShowCompleted] = useState(false);
+  const [showCompleted, setShowCompleted] = useState(true);
   const [possibleUndoCompleteErrand, setPossibleUndoCompleteErrand] =
     useState(null);
   const [possibleUndoDeleteErrand, setPossibleUndoDeleteErrand] =
@@ -92,14 +92,14 @@ function ListTasksComp() {
           (errand) =>
             !errand.deleted &&
             !errand.completed &&
-            errand.listId === currentList.id
+            errand.listId === currentList.id,
         )
         .sort((a, b) => {
           const dateA = new Date(`${a.dateErrand}T${a.timeErrand || "20:00"}`);
           const dateB = new Date(`${b.dateErrand}T${b.timeErrand || "20:00"}`);
           return dateA - dateB;
         }),
-    [errands, currentList.id]
+    [errands, currentList.id],
   );
 
   const completedErrandsFlatlistData = useMemo(
@@ -109,14 +109,14 @@ function ListTasksComp() {
           (errand) =>
             !errand.deleted &&
             errand.completed &&
-            errand.listId === currentList.id
+            errand.listId === currentList.id,
         )
         .sort((a, b) => {
           const dateA = new Date(`${a.dateErrand}T${a.timeErrand || "20:00"}`);
           const dateB = new Date(`${b.dateErrand}T${b.timeErrand || "20:00"}`);
           return dateB - dateA;
         }),
-    [errands, currentList.id]
+    [errands, currentList.id],
   );
 
   return (
@@ -136,6 +136,7 @@ function ListTasksComp() {
         data={flatListData}
         keyExtractor={(item) => item.id}
         keyboardShouldPersistTaps="always"
+        contentContainerStyle={{ paddingBottom: 40 }}
         ListHeaderComponent={
           <>
             {usersSharedWith.length > 0 && (
@@ -186,15 +187,18 @@ function ListTasksComp() {
                 )}
               </>
             )}
-            {flatListData.length > 0 && (
-              <View className={`p-6`}>
-                <Text
-                  className={`text-2xl font-semibold text-[${themes[theme].text}]`}
-                >
-                  {i18n.t("pendingTasks")}
-                </Text>
-              </View>
-            )}
+            <View className={`p-6 flex-row gap-5 items-center`}>
+              <Text
+                className={`text-2xl font-semibold text-[${themes[theme].text}]`}
+              >
+                {i18n.t("pendingTasks")}
+              </Text>
+              <Text
+                className={`text-[${themes[theme].taskSecondText}] text-xl font-semibold`}
+              >
+                {flatListData.length}
+              </Text>
+            </View>
           </>
         }
         renderItem={({ item }) => {
@@ -209,73 +213,65 @@ function ListTasksComp() {
             />
           );
         }}
-        ListEmptyComponent={
-          <Text
-            className={`text-[${themes[theme].listTitle}] text-lg font-bold text-center mt-10 mb-6`}
-          >
-            {i18n.t("noPendingErrandsInThisList")}
-          </Text>
-        }
         ListFooterComponent={
-          showCompleted &&
-          (completedErrandsFlatlistData.length > 0 ? (
-            <View>
-              <View>
+          <View>
+            <View className="flex-row mt-4 mb-2 p-6 w-full justify-between">
+              <View className="flex-row gap-5 items-center">
                 <Text
-                  className={`p-6 text-[${themes[theme].listTitle}] text-2xl font-semibold`}
+                  className={`text-[${themes[theme].listTitle}] text-2xl font-semibold`}
                 >
-                  {i18n.t("completed")}
+                  {i18n.t("completedTasks")}
+                </Text>
+                <Text
+                  className={`text-[${themes[theme].taskSecondText}] text-xl font-semibold`}
+                >
+                  {completedErrandsFlatlistData.length}
                 </Text>
               </View>
-              {completedErrandsFlatlistData.map((errand) => (
-                <Swipeable
-                  key={errand.id}
-                  ref={(ref) => (swipeableRefs.current[errand.id] = ref)}
-                  renderRightActions={() => (
-                    <RenderRightActionsCompletedErrand
-                      errand={errand}
-                      setErrands={setErrands}
-                      onDeleteWithUndo={onDeleteWithUndo}
-                    />
-                  )}
-                  onSwipeableOpenStartDrag={() => {
-                    if (
-                      openSwipeableRef.current &&
-                      openSwipeableRef.current !==
-                        swipeableRefs.current[errand.id]
-                    ) {
-                      openSwipeableRef.current.close();
-                    }
-                    openSwipeableRef.current = swipeableRefs.current[errand.id];
-                  }}
-                >
-                  <CompletedErrand errand={errand} />
-                </Swipeable>
-              ))}
-              <View className="items-center">
+              {completedErrandsFlatlistData.length > 0 && (
                 <Pressable
-                  onPress={() => setShowCompleted(false)}
-                  className={`p-5 border border-[${themes[theme].borderColor}] rounded-3xl`}
+                  onPress={() => setShowCompleted(!showCompleted)}
+                  className="flex-row items-center"
                 >
-                  <Text>{i18n.t("hideCompleted")}</Text>
+                    <Text
+                      className={`text-[${themes[theme].blueHeadText}] font-semibold text-base`}
+                    >
+                      {showCompleted ? i18n.t("hide") : i18n.t("show")}
+                    </Text>
                 </Pressable>
+              )}
+            </View>
+            {showCompleted && completedErrandsFlatlistData.length > 0 && (
+              <View>
+                {completedErrandsFlatlistData.map((errand) => (
+                  <Swipeable
+                    key={errand.id}
+                    ref={(ref) => (swipeableRefs.current[errand.id] = ref)}
+                    renderRightActions={() => (
+                      <RenderRightActionsCompletedErrand
+                        errand={errand}
+                        setErrands={setErrands}
+                        onDeleteWithUndo={onDeleteWithUndo}
+                      />
+                    )}
+                    onSwipeableOpenStartDrag={() => {
+                      if (
+                        openSwipeableRef.current &&
+                        openSwipeableRef.current !==
+                          swipeableRefs.current[errand.id]
+                      ) {
+                        openSwipeableRef.current.close();
+                      }
+                      openSwipeableRef.current =
+                        swipeableRefs.current[errand.id];
+                    }}
+                  >
+                    <CompletedErrand errand={errand} />
+                  </Swipeable>
+                ))}
               </View>
-            </View>
-          ) : (
-            <View className="p-8 gap-3 items-center">
-              <Text
-                className={`text-lg font-semibold text-center text-[${themes[theme].text}]`}
-              >
-                {i18n.t("thereAreNoCompletedErrands")}
-              </Text>
-              <Pressable
-                onPress={() => setShowCompleted(false)}
-                className={`border border-[${themes[theme].borderColor}] p-3 rounded-3xl`}
-              >
-                <Text>{i18n.t("hide")}</Text>
-              </Pressable>
-            </View>
-          ))
+            )}
+          </View>
         }
       />
       <TouchableOpacity

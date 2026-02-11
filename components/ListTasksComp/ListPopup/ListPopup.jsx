@@ -186,7 +186,7 @@ export default function ListPopup({ showCompleted, setShowCompleted }) {
             </View>
           </MenuOption>
         )}
-        <MenuOption
+        {/* <MenuOption
           onSelect={() => setShowCompleted(!showCompleted)}
           customStyles={{
             optionTouchable: currentList.ownerId !== user.id && {
@@ -211,7 +211,7 @@ export default function ListPopup({ showCompleted, setShowCompleted }) {
               color={themes[theme].text}
             />
           </View>
-        </MenuOption>
+        </MenuOption> */}
         <MenuOption
           onSelect={() =>
             currentList.ownerId === user.id
