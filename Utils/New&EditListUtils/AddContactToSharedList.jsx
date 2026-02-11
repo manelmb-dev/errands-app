@@ -16,6 +16,8 @@ import Octicons from "react-native-vector-icons/Octicons";
 
 import { themes } from "../../constants/themes";
 import i18n from "../../constants/i18n";
+import { Searchbar } from "react-native-paper";
+import { Keyboard } from "react-native";
 
 const AddContactToSharedList = () => {
   const navigation = useNavigation();
@@ -54,12 +56,7 @@ const AddContactToSharedList = () => {
         backgroundColor: themes[theme].background,
       },
       headerShadowVisible: false,
-      headerSearchBarOptions: {
-        placeholder: i18n.t("search"),
-        onChangeText: (event) => {
-          setContactSearchedInput(event.nativeEvent.text.replace(/\s+/g, ""));
-        },
-      },
+      headerSearchBarOptions: null,
       headerLeft: () => null,
       headerRight: () => (
         <Pressable onPress={handleOk}>
@@ -78,7 +75,7 @@ const AddContactToSharedList = () => {
       contacts
         .filter((c) => usersSharedWith.includes(c.id))
         .sort(sortByFavoriteAndNameSurname),
-    [contacts, usersSharedWith]
+    [contacts, usersSharedWith],
   );
 
   const filteredUsersNotInSharedList = useMemo(
@@ -89,17 +86,17 @@ const AddContactToSharedList = () => {
             !usersSharedWith.includes(c.id) &&
             (c.name + c.surname)
               .toLowerCase()
-              .includes(contactSearchedInput.toLowerCase().trim())
+              .includes(contactSearchedInput.toLowerCase().trim()),
         )
         .sort(sortByFavoriteAndNameSurname),
-    [contacts, usersSharedWith, contactSearchedInput]
+    [contacts, usersSharedWith, contactSearchedInput],
   );
 
   const toggleUser = (userId) => {
     setUsersSharedWith((prev) =>
       prev.includes(userId)
         ? prev.filter((id) => id !== userId)
-        : [...prev, userId]
+        : [...prev, userId],
     );
     setCurrentList((prev) => ({
       ...prev,
@@ -122,7 +119,7 @@ const AddContactToSharedList = () => {
           <Ionicons
             name="person-circle-outline"
             size={36}
-            color={themes["light"].taskSecondText}
+            color={themes[theme].taskSecondText}
           />
         )}
         <Text className={`text-lg text-[${themes[theme].text}]`}>
@@ -144,36 +141,69 @@ const AddContactToSharedList = () => {
     </View>
   );
 
+  const clearSearch = () => {
+    Keyboard.dismiss();
+    setContactSearchedInput("");
+  };
+
   return (
-    <FlatList
-      className={`flex-1 bg-[${themes[theme].background}]`}
-      ListHeaderComponent={
-        <View>
-          {sharedUsers.length !== 0 && (
+    <View className={`flex-1 bg-[${themes[theme].background}]`}>
+      <Searchbar
+        value={contactSearchedInput}
+        onChangeText={setContactSearchedInput}
+        placeholder={i18n.t("search")}
+        placeholderTextColor={themes[theme].taskSecondText}
+        cursorColor={themes[theme].blueHeadText} // Android
+        selectionColor={themes[theme].blueHeadText} // iOS
+        onClearIconPress={clearSearch}
+        style={{
+          marginHorizontal: 16,
+          marginBottom: 12,
+          backgroundColor: themes[theme].surfaceBackground,
+        }}
+        inputStyle={{
+          color: themes[theme].text,
+          fontSize: 17,
+        }}
+        iconColor={themes[theme].taskSecondText}
+      />
+      <FlatList
+        className={`flex-1`}
+        data={filteredUsersNotInSharedList}
+        keyExtractor={(item) => item.id}
+        renderItem={({ item }) => renderContactItem({ item, isShared: false })}
+        contentContainerStyle={{ paddingBottom: 80 }}
+        keyboardShouldPersistTaps="handled"
+        ListHeaderComponent={
+          <View>
+            {sharedUsers.length !== 0 && (
+              <Text
+                className={`p-4 text-base font-semibold text-[${themes[theme].text}]`}
+              >
+                {i18n.t("sharedWith")}
+              </Text>
+            )}
+            {sharedUsers.map((contact) => (
+              <View key={contact.id}>
+                {renderContactItem({ item: contact, isShared: true })}
+              </View>
+            ))}
             <Text
               className={`p-4 text-base font-semibold text-[${themes[theme].text}]`}
             >
-              {i18n.t("sharedWith")}
+              {i18n.t("addContact")}
             </Text>
-          )}
-          {sharedUsers.map((contact) => (
-            <View key={contact.id}>
-              {renderContactItem({ item: contact, isShared: true })}
-            </View>
-          ))}
-          <Text
-            className={`p-4 text-base font-semibold text-[${themes[theme].text}]`}
-          >
-            {i18n.t("addContact")}
-          </Text>
-        </View>
-      }
-      data={filteredUsersNotInSharedList}
-      keyExtractor={(item) => item.id}
-      renderItem={({ item }) => renderContactItem({ item, isShared: false })}
-      contentContainerStyle={{ paddingBottom: 40, paddingTop: 100 }}
-      keyboardShouldPersistTaps="handled"
-    />
+          </View>
+        }
+        ListEmptyComponent={
+          <View className={`pt-10 items-center`}>
+            <Text className={`text-[${themes[theme].taskSecondText}] text-xl`}>
+              {i18n.t("noContacts")}
+            </Text>
+          </View>
+        }
+      />
+    </View>
   );
 };
 export default AddContactToSharedList;

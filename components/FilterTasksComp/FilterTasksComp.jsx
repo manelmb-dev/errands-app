@@ -1,8 +1,14 @@
 import Swipeable from "react-native-gesture-handler/ReanimatedSwipeable";
-import Animated, { LinearTransition } from "react-native-reanimated";
+import Animated, {
+  LinearTransition,
+  useAnimatedStyle,
+  useSharedValue,
+  withTiming,
+} from "react-native-reanimated";
 import { useEffect, useMemo, useRef, useState } from "react";
+import { Text, View, Pressable, Alert, Keyboard } from "react-native";
+import { Searchbar } from "react-native-paper";
 import { useNavigation } from "expo-router";
-import { Text, View, Pressable, Alert } from "react-native";
 
 import { useAtom } from "jotai";
 import { errandsAtom, listsAtom, themeAtom } from "../../constants/storeAtoms";
@@ -62,40 +68,44 @@ function FilterTasksComp() {
 
   useEffect(() => {
     navigation.setOptions({
-      headerShown: true,
+      headerShown: false,
       title: "",
-      headerBackTitle: i18n.t("back"),
-      headerTitleStyle: {
-        color: themes[theme].text,
-      },
-      headerStyle: {
-        backgroundColor: themes[theme].background,
-      },
+      headerBackTitle: "",
       headerShadowVisible: false,
-      headerSearchBarOptions: {
-        placeholder: i18n.t("search"),
-        hideWhenScrolling: false,
-        obscureBackground: false,
-        autoCapitalize: "none",
-        onChangeText: (event) => {
-          setSearchQuery(event.nativeEvent.text);
-        },
-      },
+      headerSearchBarOptions: null,
       headerLeft: () => null,
       headerRight: () => null,
     });
-  }, [navigation, theme]);
+  }, [navigation]);
+
+  const [isFocused, setIsFocused] = useState(false);
+  const focusSV = useSharedValue(0);
+
+  useEffect(() => {
+    focusSV.value = withTiming(isFocused ? 1 : 0, { duration: 160 });
+  }, [isFocused, focusSV]);
+
+  const searchAnimStyle = useAnimatedStyle(() => {
+    const v = focusSV.value;
+    return {
+      transform: [{ scale: 1 + v * 0.05 }],
+      opacity: 0.98 + v * 0.02,
+      // Android
+      elevation: 2 + v * 6,
+      // iOS
+      shadowOpacity: 0.06 + v * 0.12,
+      shadowRadius: 6 + v * 10,
+      shadowOffset: { width: 0, height: 2 + v * 6 },
+    };
+  });
 
   const filteredErrands = useMemo(() => {
-    if (!searchQuery.trim()) {
-      return [];
-    }
+    const q = searchQuery.trim().toLowerCase();
+    if (!q) return [];
 
     return errands
       .filter((errand) => !errand.deleted)
-      .filter((errand) =>
-        errand.title.toLowerCase().includes(searchQuery.toLowerCase().trim()),
-      );
+      .filter((errand) => errand.title.toLowerCase().includes(q));
   }, [searchQuery, errands]);
 
   const completedCount = useMemo(() => {
@@ -125,7 +135,7 @@ function FilterTasksComp() {
               return errand;
             });
             setErrands(updatedErrands);
-
+            // TODO: Firestore
             // FIRESTOREEEE FIXXX THIS
           },
         },
@@ -134,15 +144,16 @@ function FilterTasksComp() {
   };
 
   const flatListData = useMemo(() => {
-    const items = lists
-      .sort((a, b) => {
-        const aIsNotShared = a.usersShared?.length === 1;
-        const bIsNotShared = b.usersShared?.length === 1;
+    const sortedLists = [...lists].sort((a, b) => {
+      const aIsNotShared = a.usersShared?.length === 1;
+      const bIsNotShared = b.usersShared?.length === 1;
 
-        if (aIsNotShared && !bIsNotShared) return -1;
-        if (!aIsNotShared && bIsNotShared) return 1;
-        return 0;
-      })
+      if (aIsNotShared && !bIsNotShared) return -1;
+      if (!aIsNotShared && bIsNotShared) return 1;
+      return 0;
+    });
+
+    const items = sortedLists
       .map((list) => ({
         ...list,
         errands: filteredErrands.filter((errand) => {
@@ -174,10 +185,39 @@ function FilterTasksComp() {
 
   const hasResults = searchQuery.trim() && filteredErrands.length > 0;
 
+  const clearSearch = () => {
+    Keyboard.dismiss();
+    setSearchQuery("");
+  };
+
   return (
-    <View className="flex-1 w-full bg-[${themes[theme].background}]">
+    <View className={`flex-1 w-full bg-[${themes[theme].background}]`}>
+      <Animated.View style={searchAnimStyle} className="pt-20">
+        <Searchbar
+          autoFocus
+          value={searchQuery}
+          onChangeText={setSearchQuery}
+          placeholder={i18n.t("search")}
+          placeholderTextColor={themes[theme].taskSecondText}
+          cursorColor={themes[theme].blueHeadText} // Android
+          selectionColor={themes[theme].blueHeadText} // iOS
+          onFocus={() => setIsFocused(true)}
+          onBlur={() => setIsFocused(false)}
+          onClearIconPress={clearSearch}
+          style={{
+            marginHorizontal: 22,
+            marginBottom: 12,
+            backgroundColor: themes[theme].surfaceBackground,
+          }}
+          inputStyle={{
+            color: themes[theme].text,
+            fontSize: 17,
+          }}
+          iconColor={themes[theme].taskSecondText}
+        />
+      </Animated.View>
       <View
-        className="flex-1 w-full pt-36"
+        className="flex-1 w-full"
         onStartShouldSetResponder={() => {
           if (openSwipeableRef.current) {
             openSwipeableRef.current.close();
@@ -226,6 +266,7 @@ function FilterTasksComp() {
           data={flatListData}
           showsVerticalScrollIndicator={false}
           contentContainerStyle={{ paddingBottom: 30 }}
+          keyboardShouldPersistTaps="handled"
           keyExtractor={(item) => item.id}
           renderItem={({ item: list, index }) => (
             <View key={list.id}>

@@ -1,11 +1,13 @@
 import { useEffect, useMemo, useState } from "react";
 import {
   FlatList,
+  Keyboard,
   Pressable,
   Text,
   TouchableOpacity,
   View,
 } from "react-native";
+import { Searchbar } from "react-native-paper";
 import { useNavigation } from "expo-router";
 
 import FontAwesome6 from "react-native-vector-icons/FontAwesome6";
@@ -23,7 +25,6 @@ import {
   userAtom,
 } from "../../constants/storeAtoms";
 
-import { SafeAreaProvider } from "react-native-safe-area-context";
 import { themes } from "../../constants/themes";
 import i18n from "../../constants/i18n";
 
@@ -54,12 +55,7 @@ const AssignContactSelector = () => {
         backgroundColor: themes[theme].background,
       },
       headerShadowVisible: false,
-      headerSearchBarOptions: {
-        placeholder: i18n.t("search"),
-        onChangeText: (event) => {
-          setContactSearchedInput(event.nativeEvent.text.replace(/\s+/g, ""));
-        },
-      },
+      headerSearchBarOptions: null,
       headerLeft: () => (
         <Pressable onPress={() => navigation.goBack()}>
           <Text className={`text-2xl text-[${themes[theme].blueHeadText}]`}>
@@ -68,12 +64,14 @@ const AssignContactSelector = () => {
         </Pressable>
       ),
     });
-  }, [navigation, theme, contactSearchedInput]);
+  }, [navigation, theme]);
 
   const sortedContacts = useMemo(() => {
+    let contactsList = [];
+
     // If list is not shared
     if (listAssigned.usersShared.length === 1) {
-      return [
+      contactsList = [
         { ...user },
         ...contacts
           .filter((c) => user.favoriteUsers.includes(c.id))
@@ -85,8 +83,8 @@ const AssignContactSelector = () => {
     }
 
     // If list is shared
-    if (listAssigned.usersShared.length !== 1) {
-      return [
+    else {
+      contactsList = [
         { id: "unassigned", name: i18n.t("unassigned") },
         { ...user },
         ...contacts
@@ -114,7 +112,20 @@ const AssignContactSelector = () => {
           .sort(sortByName),
       ];
     }
-  }, [contacts, user, listAssigned.usersShared]);
+
+    // Move userAssigned to the top if it exists and is not already first
+    if (userAssigned?.id) {
+      const userAssignedIndex = contactsList.findIndex(
+        (c) => c.id === userAssigned.id,
+      );
+      if (userAssignedIndex > 0) {
+        const [assignedUser] = contactsList.splice(userAssignedIndex, 1);
+        contactsList.unshift(assignedUser);
+      }
+    }
+
+    return contactsList;
+  }, [contacts, user, listAssigned.usersShared, userAssigned]);
 
   useEffect(() => {
     setFilteredContacts(
@@ -128,8 +139,13 @@ const AssignContactSelector = () => {
     );
   }, [contactSearchedInput, sortedContacts]);
 
+  const clearSearch = () => {
+    Keyboard.dismiss();
+    setContactSearchedInput("");
+  };
+
   return (
-    <SafeAreaProvider className={`flex-1 bg-[${themes[theme].background}]`}>
+    <View className={`flex-1 bg-[${themes[theme].background}]`}>
       <Text
         className={`py-5 text-lg font-bold text-center text-[${themes[theme].text}]  ${theme === "light" ? "bg-blue-300" : "bg-blue-700"}`}
       >
@@ -140,17 +156,37 @@ const AssignContactSelector = () => {
       </Text>
       {filteredContacts.length > 0 && (
         <Text
-          className={`m-3 ml-5 text-lg text-[${themes[theme].text}] font-bold`}
+          className={`p-2 ml-5 text-lg text-[${themes[theme].text}] font-bold`}
         >
           {i18n.t("selectContact")}
         </Text>
       )}
+      <Searchbar
+        value={contactSearchedInput}
+        onChangeText={setContactSearchedInput}
+        placeholder={i18n.t("search")}
+        placeholderTextColor={themes[theme].taskSecondText}
+        cursorColor={themes[theme].blueHeadText} // Android
+        selectionColor={themes[theme].blueHeadText} // iOS
+        onClearIconPress={clearSearch}
+        style={{
+          marginHorizontal: 16,
+          marginBottom: 12,
+          backgroundColor: themes[theme].surfaceBackground,
+        }}
+        inputStyle={{
+          color: themes[theme].text,
+          fontSize: 17,
+        }}
+        iconColor={themes[theme].taskSecondText}
+      />
 
       <FlatList
         data={filteredContacts}
         keyExtractor={(item) => item.id}
+        contentContainerStyle={{ paddingBottom: 80 }}
         ListEmptyComponent={
-          <View className="pt-12 items-center">
+          <View className={`pt-12 items-center`}>
             <Text className={`text-[${themes[theme].taskSecondText}] text-xl`}>
               {i18n.t("noContacts")}
             </Text>
@@ -210,7 +246,7 @@ const AssignContactSelector = () => {
               <Ionicons
                 name="person-circle-outline"
                 size={38}
-                color={themes["light"].taskSecondText}
+                color={themes[theme].taskSecondText}
               />
               <View className="flex-1 flex-row justify-between">
                 <Text className={`text-lg text-[${themes[theme].text}]`}>
@@ -222,7 +258,7 @@ const AssignContactSelector = () => {
                     <FontAwesome6
                       name="check"
                       size={22}
-                      color={themes["light"].blueHeadText}
+                      color={themes[theme].blueHeadText}
                     />
                   )}
                   {user.favoriteUsers.includes(item.id) && (
@@ -237,7 +273,7 @@ const AssignContactSelector = () => {
           </TouchableOpacity>
         )}
       />
-    </SafeAreaProvider>
+    </View>
   );
 };
 
