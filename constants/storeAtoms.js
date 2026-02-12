@@ -242,10 +242,12 @@ export const listAssignedAtom = atom(false);
 export const contactsAtom = atom(userExample.contacts);
 export const themeAtom = atom("light");
 export const languageAtom = atom("es");
-// Messajes chat IA
-export const aiMessagesAtom = atom([]);
-// Para mantener contexto/continuidad con backend (opcional ahora, útil luego)
-export const aiThreadIdAtom = atom(null);
-// UI state
+// IA - list generator
+export const aiStepAtom = atom("prompt"); // "prompt" | "preview"
+export const aiPromptAtom = atom("");
+
+export const aiDraftAtom = atom(null); // { list, tasks } o null
+export const aiSelectedTaskIdsAtom = atom([]); // array de ids de draft tasks
+
 export const aiLoadingAtom = atom(false);
 export const aiErrorAtom = atom(null);
