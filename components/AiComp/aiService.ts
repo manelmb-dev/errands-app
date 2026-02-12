@@ -2,6 +2,15 @@ import type { AiDraft } from "./types";
 
 const uid = () => `${Date.now()}-${Math.random().toString(16).slice(2)}`;
 
+function tomorrowISO(): string {
+  const d = new Date();
+  d.setDate(d.getDate() + 1);
+  const yyyy = d.getFullYear();
+  const mm = String(d.getMonth() + 1).padStart(2, "0");
+  const dd = String(d.getDate()).padStart(2, "0");
+  return `${yyyy}-${mm}-${dd}`;
+}
+
 export async function generateDraftFromPrompt(
   prompt: string,
 ): Promise<AiDraft> {
@@ -9,8 +18,24 @@ export async function generateDraftFromPrompt(
 
   const p = prompt.toLowerCase();
 
+  if (p.includes("crea una tarea") || p.includes("creame una tarea")) {
+    return {
+      type: "task",
+      task: {
+        id: uid(),
+        title: "Traer los zapatos",
+        assignedName: "Laura Ortega",
+        dateErrand: tomorrowISO(),
+        timeErrand: "18:00",
+        priority: "medium",
+        description: "",
+      },
+    };
+  }
+
   if (p.includes("londres") || p.includes("london")) {
     return {
+      type: "list",
       list: { title: "Viaje a Londres", icon: "airplane", color: "blue" },
       tasks: [
         { id: uid(), title: "Comprar billetes de avión", priority: "high" },
@@ -39,6 +64,7 @@ export async function generateDraftFromPrompt(
 
   if (p.includes("cumple") || p.includes("fiesta") || p.includes("birthday")) {
     return {
+      type: "list",
       list: {
         title: "Cumple de mamá (fiesta en casa)",
         icon: "gift",
@@ -63,7 +89,11 @@ export async function generateDraftFromPrompt(
           title: "Preparar música/altavoz y ambiente",
           priority: "medium",
         },
-        { id: uid(), title: "Limpiar y preparar la casa", priority: "medium" },
+        {
+          id: uid(),
+          title: "Limpiar y preparar la casa",
+          priority: "medium",
+        },
         {
           id: uid(),
           title: "Comprar velas y menaje (platos/vasos)",
@@ -73,12 +103,13 @@ export async function generateDraftFromPrompt(
     };
   }
 
-  return {
-    list: { title: "Nueva lista", icon: "list", color: "green" },
-    tasks: [
-      { id: uid(), title: "Definir objetivos", priority: "medium" },
-      { id: uid(), title: "Hacer checklist de tareas", priority: "medium" },
-      { id: uid(), title: "Asignar responsables", priority: "low" },
-    ],
-  };
+    return {
+      type: "list",
+      list: { title: "Nueva lista", icon: "list", color: "green" },
+      tasks: [
+        { id: uid(), title: "Definir objetivos", priority: "medium" },
+        { id: uid(), title: "Hacer checklist de tareas", priority: "medium" },
+        { id: uid(), title: "Asignar responsables", priority: "low" },
+      ],
+    };
 }
