@@ -242,3 +242,10 @@ export const listAssignedAtom = atom(false);
 export const contactsAtom = atom(userExample.contacts);
 export const themeAtom = atom("light");
 export const languageAtom = atom("es");
+// Messajes chat IA
+export const aiMessagesAtom = atom([]);
+// Para mantener contexto/continuidad con backend (opcional ahora, útil luego)
+export const aiThreadIdAtom = atom(null);
+// UI state
+export const aiLoadingAtom = atom(false);
+export const aiErrorAtom = atom(null);
