@@ -246,7 +246,9 @@ export const languageAtom = atom("es");
 export const aiStepAtom = atom("prompt"); // "prompt" | "preview"
 export const aiPromptAtom = atom("");
 
-export const aiDraftAtom = atom(null); // { list, tasks } o null
+export const aiDraftTypeAtom = atom(null); // "list" | "task" | null
+export const aiDraftAtom = atom(null); // draft (list or task)
+
 export const aiSelectedTaskIdsAtom = atom([]); // array de ids de draft tasks
 
 export const aiLoadingAtom = atom(false);
