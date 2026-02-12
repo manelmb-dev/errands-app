@@ -1,6 +1,7 @@
 import NotificationsSection from "../../NotificationsSection/NotificationsSection";
 import SettingsSection from "../../SettingsSection/SettingsSectionComp";
 import FilterTasks from "../../FilterTasksComp/FilterTasksComp";
+import AiComp from "../../AiComp/AiComp";
 import Home from "../../Home/Home";
 
 function RenderSection({ activeSection }) {
@@ -9,6 +10,8 @@ function RenderSection({ activeSection }) {
       return <Home />;
     case "search":
       return <FilterTasks />;
+    case "ai":
+      return <AiComp />;
     case "notifications":
       return <NotificationsSection />;
     case "settings":

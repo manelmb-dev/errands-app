@@ -39,6 +39,17 @@ function BottomToolbar({ activeSection, setActiveSection }) {
         />
       </Pressable>
 
+      <Pressable
+        onPress={() => setActiveSection("ai")}
+        className="flex-1 items-center  p-2 px-4"
+      >
+        <Ionicons
+          name={activeSection === "ai" ? "sparkles" : "sparkles-outline"}
+          size={28}
+          color={themes[theme].text}
+        />
+      </Pressable>
+
       <TouchableHighlight
         onPress={() => router.push("/Modals/newTaskModal")}
         className={`items-center p-2 px-4 bg-[${themes[theme].surfaceBackground}] rounded-2xl`}
