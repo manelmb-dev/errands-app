@@ -242,14 +242,3 @@ export const listAssignedAtom = atom(false);
 export const contactsAtom = atom(userExample.contacts);
 export const themeAtom = atom("light");
 export const languageAtom = atom("es");
-// IA - list generator
-export const aiStepAtom = atom("prompt"); // "prompt" | "preview"
-export const aiPromptAtom = atom("");
-
-export const aiDraftTypeAtom = atom(null); // "list" | "task" | null
-export const aiDraftAtom = atom(null); // draft (list or task)
-
-export const aiSelectedTaskIdsAtom = atom([]); // array de ids de draft tasks
-
-export const aiLoadingAtom = atom(false);
-export const aiErrorAtom = atom(null);
