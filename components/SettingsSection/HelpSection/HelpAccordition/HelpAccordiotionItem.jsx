@@ -1,7 +1,7 @@
 import { View, Text, TouchableOpacity } from "react-native";
 import { useState } from "react";
 
-import Ionicons from "react-native-vector-icons/Ionicons";
+import { Ionicons } from "@expo/vector-icons";
 
 import { themeAtom } from "../../../../constants/storeAtoms";
 import { useAtom } from "jotai";

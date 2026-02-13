@@ -24,12 +24,12 @@ import { useEffect, useRef, useState } from "react";
 import { themeAtom } from "../../../constants/storeAtoms";
 import { useAtom } from "jotai";
 
-import Ionicons from "react-native-vector-icons/Ionicons";
+import { Ionicons } from "@expo/vector-icons";
 
 import { themes } from "../../../constants/themes";
-import i18n from "../../../constants/i18n";
 import { countryCodes } from "./countryCodes";
 import { countryNames } from "./countryNames";
+import i18n from "../../../constants/i18n";
 
 const langToTranslationCode = {
   en: "common", // default (English)

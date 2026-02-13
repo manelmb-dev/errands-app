@@ -20,9 +20,7 @@ import {
 } from "../../constants/storeAtoms";
 import { useAtom } from "jotai";
 
-import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
-import MaterialIcons from "react-native-vector-icons/MaterialIcons";
-import Ionicons from "react-native-vector-icons/Ionicons";
+import { Ionicons, MaterialCommunityIcons, MaterialIcons } from "@expo/vector-icons";
 
 import UsersOfList from "../../Utils/New&EditListUtils/UsersOfList";
 import ColorGrid from "../../Utils/New&EditListUtils/ColorGrid";

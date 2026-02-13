@@ -7,13 +7,13 @@ import {
   MenuOption,
 } from "react-native-popup-menu";
 
-import Feather from "react-native-vector-icons/Feather";
-import Ionicons from "react-native-vector-icons/Ionicons";
+import { Ionicons, Feather } from "@expo/vector-icons";
+
+import { themeAtom } from "../../../constants/storeAtoms";
+import { useAtom } from "jotai";
 
 import { themes } from "../../../constants/themes";
 import i18n from "../../../constants/i18n";
-import { useAtom } from "jotai";
-import { themeAtom } from "../../../constants/storeAtoms";
 
 export default function FilterMainTabPopup({ mainTab, setMainTab }) {
   const [theme] = useAtom(themeAtom);

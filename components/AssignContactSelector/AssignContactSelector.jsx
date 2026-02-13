@@ -10,10 +10,7 @@ import {
 import { Searchbar } from "react-native-paper";
 import { useNavigation } from "expo-router";
 
-import FontAwesome6 from "react-native-vector-icons/FontAwesome6";
-import Octicons from "react-native-vector-icons/Octicons";
-import Ionicons from "react-native-vector-icons/Ionicons";
-import Feather from "react-native-vector-icons/Feather";
+import { FontAwesome6, Octicons, Ionicons, Feather } from "@expo/vector-icons";
 
 import { useAtom } from "jotai";
 import {

@@ -1,4 +1,5 @@
-import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
+
 import i18n from "../../../constants/i18n";
 
 import { listsAtom } from "../../../constants/storeAtoms";

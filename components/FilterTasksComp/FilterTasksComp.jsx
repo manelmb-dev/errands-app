@@ -13,7 +13,7 @@ import { useNavigation } from "expo-router";
 import { useAtom } from "jotai";
 import { errandsAtom, listsAtom, themeAtom } from "../../constants/storeAtoms";
 
-import Ionicons from "react-native-vector-icons/Ionicons";
+import { Ionicons } from "@expo/vector-icons";
 
 import RenderRightActionsCompletedErrand from "../../Utils/RenderRightActionsCompletedErrand";
 import UndoCompleteErrandButton from "../../Utils/UndoCompleteErrandButton";

@@ -8,7 +8,7 @@ import {
   MenuOption,
 } from "react-native-popup-menu";
 
-import MaterialIcons from "react-native-vector-icons/MaterialIcons";
+import { MaterialIcons } from "@expo/vector-icons";
 
 import { useAtom } from "jotai";
 import {

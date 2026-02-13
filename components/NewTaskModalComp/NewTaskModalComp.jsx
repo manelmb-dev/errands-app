@@ -25,9 +25,7 @@ import {
   userAtom,
 } from "../../constants/storeAtoms";
 
-import MaterialIcons from "react-native-vector-icons/MaterialIcons";
-import FontAwesome6 from "react-native-vector-icons/FontAwesome6";
-import Ionicons from "react-native-vector-icons/Ionicons";
+import { Ionicons, MaterialIcons, FontAwesome6 } from "@expo/vector-icons";
 
 import formatDay from "../../constants/formatDay";
 import { themes } from "../../constants/themes";

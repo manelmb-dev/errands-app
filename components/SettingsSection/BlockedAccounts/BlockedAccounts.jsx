@@ -1,4 +1,5 @@
 import { useNavigation, useRouter } from "expo-router";
+import { useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -8,7 +9,6 @@ import {
   Alert,
   Platform,
 } from "react-native";
-import { useEffect, useState } from "react";
 
 import {
   contactsAtom,
@@ -18,11 +18,11 @@ import {
 } from "../../../constants/storeAtoms";
 import { useAtom } from "jotai";
 
-import Ionicons from "react-native-vector-icons/Ionicons";
+import { Ionicons } from "@expo/vector-icons";
 
-import i18n from "../../../constants/i18n";
-import { themes } from "../../../constants/themes";
 import UnblockUserPopup from "../../../Utils/Block&UnblockUsers/UnblockUserPopup";
+import { themes } from "../../../constants/themes";
+import i18n from "../../../constants/i18n";
 
 const BlockedAccounts = () => {
   const navigation = useNavigation();

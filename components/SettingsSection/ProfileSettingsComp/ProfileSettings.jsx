@@ -13,7 +13,7 @@ import * as ImagePicker from "expo-image-picker";
 import { themeAtom, userAtom } from "../../../constants/storeAtoms";
 import { useAtom } from "jotai";
 
-import Ionicons from "react-native-vector-icons/Ionicons";
+import { Ionicons } from "@expo/vector-icons";
 
 import { themes } from "../../../constants/themes";
 import i18n from "../../../constants/i18n";

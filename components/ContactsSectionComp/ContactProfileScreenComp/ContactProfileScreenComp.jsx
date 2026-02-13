@@ -2,8 +2,7 @@ import { View, Image, TouchableHighlight, Text, Alert } from "react-native";
 import { useLocalSearchParams, useNavigation } from "expo-router";
 import React, { useEffect, useState } from "react";
 
-import Ionicons from "react-native-vector-icons/Ionicons";
-import Feather from "react-native-vector-icons/Feather";
+import { Ionicons, Feather } from "@expo/vector-icons";
 
 import {
   contactsAtom,

@@ -11,7 +11,7 @@ import { useEffect } from "react";
 import { languageAtom, themeAtom, userAtom } from "../../constants/storeAtoms";
 import { useAtom } from "jotai";
 
-import Ionicons from "react-native-vector-icons/Ionicons";
+import { Ionicons } from "@expo/vector-icons";
 
 import AppearencePopupMenu from "./AppearencePopupMenu/AppearencePopupMenu";
 import LanguagePopupMenu from "./LanguagePopupMenu/LanguagePopupMenu";

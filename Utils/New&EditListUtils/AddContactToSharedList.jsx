@@ -1,6 +1,8 @@
 import { View, Text, Pressable, FlatList, Image } from "react-native";
 import { useCallback, useEffect, useMemo, useState } from "react";
+import { Searchbar } from "react-native-paper";
 import { useNavigation } from "expo-router";
+import { Keyboard } from "react-native";
 
 import {
   contactsAtom,
@@ -11,13 +13,10 @@ import {
 } from "../../constants/storeAtoms";
 import { useAtom } from "jotai";
 
-import Ionicons from "react-native-vector-icons/Ionicons";
-import Octicons from "react-native-vector-icons/Octicons";
+import { Ionicons, Octicons } from "@expo/vector-icons";
 
 import { themes } from "../../constants/themes";
 import i18n from "../../constants/i18n";
-import { Searchbar } from "react-native-paper";
-import { Keyboard } from "react-native";
 
 const AddContactToSharedList = () => {
   const navigation = useNavigation();

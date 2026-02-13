@@ -2,9 +2,7 @@ import { View, Text, Pressable, TouchableHighlight } from "react-native";
 import { useEffect, useState } from "react";
 import { useRouter } from "expo-router";
 
-// import MaterialIcons from "react-native-vector-icons/MaterialIcons";
-// import Octicons from "react-native-vector-icons/Octicons";
-import Ionicons from "react-native-vector-icons/Ionicons";
+import { Ionicons, MaterialIcons, Octicons} from "@expo/vector-icons";
 
 import { useAtom } from "jotai";
 import {

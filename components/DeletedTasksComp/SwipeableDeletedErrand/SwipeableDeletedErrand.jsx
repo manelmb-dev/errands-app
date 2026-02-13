@@ -4,8 +4,7 @@ import Animated, { FadeOut } from "react-native-reanimated";
 import { Pressable, Text, View } from "react-native";
 import React from "react";
 
-import Octicons from "react-native-vector-icons/Octicons";
-import Ionicons from "react-native-vector-icons/Ionicons";
+import { Ionicons, Octicons } from "@expo/vector-icons";
 
 import {
   contactsAtom,
@@ -16,8 +15,8 @@ import { useAtom } from "jotai";
 
 import DeletedErrandRenderRightActions from "./DeletedErrandRenderRightActions/DeletedErrandRenderRightActions";
 import { themes } from "../../../constants/themes";
-import { Alert } from "react-native";
 import i18n from "../../../constants/i18n";
+import { Alert } from "react-native";
 // import formatErrandDate from "../../../constants/formatDay";
 
 const SwipeableFullErrand = ({

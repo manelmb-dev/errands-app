@@ -1,6 +1,9 @@
 import { useLocalSearchParams, useNavigation, useRouter } from "expo-router";
 import { useCallback, useEffect, useState, useRef, useMemo } from "react";
+import DateTimePickerModal from "react-native-modal-datetime-picker";
 import { useActionSheet } from "@expo/react-native-action-sheet";
+import { useForm, Controller } from "react-hook-form";
+import deepEqual from "fast-deep-equal";
 import {
   View,
   Text,
@@ -12,9 +15,6 @@ import {
   Keyboard,
   TouchableWithoutFeedback,
 } from "react-native";
-import { useForm, Controller } from "react-hook-form";
-import DateTimePickerModal from "react-native-modal-datetime-picker";
-import deepEqual from "fast-deep-equal";
 
 import { useAtom } from "jotai";
 import {
@@ -27,16 +27,14 @@ import {
   userAtom,
 } from "../../constants/storeAtoms";
 
-import FontAwesome6 from "react-native-vector-icons/FontAwesome6";
-import Ionicons from "react-native-vector-icons/Ionicons";
-import MaterialIcons from "react-native-vector-icons/MaterialIcons";
+import { Ionicons, FontAwesome6, MaterialIcons } from "@expo/vector-icons";
 
-import { themes } from "../../constants/themes";
-import formatDay from "../../constants/formatDay";
 import {
   priorityOptions,
   repeatOptions,
 } from "../../constants/repeatPriorityOptions";
+import { themes } from "../../constants/themes";
+import formatDay from "../../constants/formatDay";
 import i18n from "../../constants/i18n";
 
 const EditTaskModal = () => {

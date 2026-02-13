@@ -5,7 +5,7 @@ import { useNavigation } from "expo-router";
 import { contactsAtom, themeAtom, userAtom } from "../../constants/storeAtoms";
 import { useAtom } from "jotai";
 
-import Ionicons from "react-native-vector-icons/Ionicons";
+import { Ionicons } from "@expo/vector-icons";
 
 import SwipeableContact from "./SwipeableContact/SwipeableContact";
 import { themes } from "../../constants/themes";

@@ -1,5 +1,5 @@
-import React from "react";
 import { Alert, TouchableOpacity, View, Text } from "react-native";
+import React from "react";
 
 import {
   Menu,
@@ -8,7 +8,7 @@ import {
   MenuOption,
 } from "react-native-popup-menu";
 
-import Ionicons from "react-native-vector-icons/Ionicons";
+import { Ionicons } from "@expo/vector-icons";
 
 import {
   errandsAtom,

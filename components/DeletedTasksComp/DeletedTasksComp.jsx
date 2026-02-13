@@ -1,17 +1,17 @@
 import Animated, { LinearTransition } from "react-native-reanimated";
 import { useEffect, useRef, useState } from "react";
-import { View, Text } from "react-native";
 import { useNavigation } from "expo-router";
+import { View, Text } from "react-native";
 
-import Ionicons from "react-native-vector-icons/Ionicons";
+import { Ionicons } from "@expo/vector-icons";
 
 import { errandsAtom, themeAtom, userAtom } from "../../constants/storeAtoms";
 import { useAtom } from "jotai";
 
-import { themes } from "../../constants/themes";
-import i18n from "../../constants/i18n";
 import SwipeableDeletedErrand from "./SwipeableDeletedErrand/SwipeableDeletedErrand";
 import PopupDeletedTasksScreen from "./PopupDeletedTasksScreen/PopupDeletedTasksScreen";
+import { themes } from "../../constants/themes";
+import i18n from "../../constants/i18n";
 
 function DeletedTasksComp() {
   const navigation = useNavigation();

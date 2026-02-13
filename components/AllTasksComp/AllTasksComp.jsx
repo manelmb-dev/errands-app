@@ -3,8 +3,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { View, Text } from "react-native";
 import { useNavigation } from "expo-router";
 
-// import Octicons from "react-native-vector-icons/Octicons";
-import Ionicons from "react-native-vector-icons/Ionicons";
+import { Ionicons, Octicons } from "@expo/vector-icons";
 
 import { useAtom } from "jotai";
 import {

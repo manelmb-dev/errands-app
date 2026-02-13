@@ -4,9 +4,7 @@ import { useRouter } from "expo-router";
 import { contactsAtom, userAtom } from "../constants/storeAtoms";
 import { useAtom } from "jotai";
 
-import MaterialDesignIcons from "@react-native-vector-icons/material-design-icons";
-import Ionicons from "react-native-vector-icons/Ionicons";
-import Octicons from "react-native-vector-icons/Octicons";
+import { Ionicons, Octicons, MaterialDesignIcons } from "@expo/vector-icons";
 
 const RenderRightActionsContact = ({
   contact,

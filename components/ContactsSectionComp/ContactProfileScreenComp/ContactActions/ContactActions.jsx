@@ -4,8 +4,7 @@ import { useRouter } from "expo-router";
 import { themeAtom, userAtom } from "../../../../constants/storeAtoms";
 import { useAtom } from "jotai";
 
-import Octicons from "react-native-vector-icons/Octicons";
-import Ionicons from "react-native-vector-icons/Ionicons";
+import { Ionicons, Octicons } from "@expo/vector-icons";
 
 import MuteOptionsPopup from "./MuteOptionsPopup/MuteOptionsPopup";
 import { themes } from "../../../../constants/themes";

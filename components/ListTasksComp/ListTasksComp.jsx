@@ -4,8 +4,7 @@ import Animated, { LinearTransition } from "react-native-reanimated";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Pressable, Text, TouchableOpacity, View } from "react-native";
 
-import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
-import Ionicons from "react-native-vector-icons/Ionicons";
+import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
 
 import {
   currentListAtom,

@@ -1,8 +1,7 @@
 import { View, Text, TouchableHighlight } from "react-native";
 import { useRouter } from "expo-router";
 
-import Ionicons from "react-native-vector-icons/Ionicons";
-import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
 
 import {
   currentListAtom,

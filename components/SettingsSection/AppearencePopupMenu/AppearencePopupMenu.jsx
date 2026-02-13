@@ -1,6 +1,6 @@
+import { View, TouchableOpacity, Text, useColorScheme } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import React, { useEffect, useState } from "react";
-import { View, TouchableOpacity, Text, useColorScheme } from "react-native";
 import {
   Menu,
   MenuTrigger,
@@ -8,8 +8,7 @@ import {
   MenuOption,
 } from "react-native-popup-menu";
 
-import Feather from "react-native-vector-icons/Feather";
-import Ionicons from "react-native-vector-icons/Ionicons";
+import { Ionicons, Feather } from "@expo/vector-icons";
 
 import { themeAtom } from "../../../constants/storeAtoms";
 import { useAtom } from "jotai";

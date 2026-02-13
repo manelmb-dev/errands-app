@@ -6,9 +6,7 @@ import React from "react";
 import { themeAtom, userAtom } from "../../../constants/storeAtoms";
 import { useAtom } from "jotai";
 
-import Ionicons from "react-native-vector-icons/Ionicons";
-import Feather from "react-native-vector-icons/Feather";
-import Octicons from "react-native-vector-icons/Octicons";
+import { Ionicons, Feather, Octicons } from "@expo/vector-icons";
 
 import RenderRightActionsContact from "../../../Utils/RenderRightActionsContact";
 import { themes } from "../../../constants/themes";

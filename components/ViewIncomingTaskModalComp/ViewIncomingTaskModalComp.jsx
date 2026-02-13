@@ -1,23 +1,21 @@
-import { useEffect, useMemo } from "react";
-import { useLocalSearchParams, useNavigation } from "expo-router";
 import { View, Text, Pressable, TextInput, Switch } from "react-native";
+import { useLocalSearchParams, useNavigation } from "expo-router";
 import { useForm, Controller } from "react-hook-form";
+import { useEffect, useMemo } from "react";
 
-import { useAtom } from "jotai";
 import { contactsAtom, themeAtom, userAtom } from "../../constants/storeAtoms";
+import { useAtom } from "jotai";
 
-import FontAwesome6 from "react-native-vector-icons/FontAwesome6";
-import Ionicons from "react-native-vector-icons/Ionicons";
-import MaterialIcons from "react-native-vector-icons/MaterialIcons";
+import { Ionicons, FontAwesome6, MaterialIcons } from "@expo/vector-icons";
 
-import { themes } from "../../constants/themes";
-import formatDayShort from "../../constants/formatDayShort";
 import {
   priorityOptions,
   repeatOptions,
 } from "../../constants/repeatPriorityOptions";
-import i18n from "../../constants/i18n";
+import formatDayShort from "../../constants/formatDayShort";
 import formatDay from "../../constants/formatDay";
+import { themes } from "../../constants/themes";
+import i18n from "../../constants/i18n";
 
 const ViewIncomingTaskModal = () => {
   const navigation = useNavigation();

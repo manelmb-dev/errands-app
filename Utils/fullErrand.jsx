@@ -14,8 +14,7 @@ import {
 } from "../constants/storeAtoms";
 import { useAtom } from "jotai";
 
-import Ionicons from "react-native-vector-icons/Ionicons";
-import Octicons from "react-native-vector-icons/Octicons";
+import { Ionicons, Octicons } from "@expo/vector-icons";
 
 import formatErrandDate from "../constants/formatErrandDate";
 import { themes } from "../constants/themes";

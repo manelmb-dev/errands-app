@@ -9,8 +9,7 @@ import {
 } from "react-native";
 import { useNavigation } from "expo-router";
 
-import FontAwesome6 from "react-native-vector-icons/FontAwesome6";
-import Ionicons from "react-native-vector-icons/Ionicons";
+import { FontAwesome6, Ionicons } from "@expo/vector-icons";
 
 import { useAtom } from "jotai";
 import {

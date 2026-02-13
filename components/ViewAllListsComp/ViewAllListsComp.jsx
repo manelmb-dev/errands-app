@@ -7,10 +7,10 @@ import {
   FlatList,
 } from "react-native";
 import { useNavigation, useRouter } from "expo-router";
-import { useAtom } from "jotai";
 import { useEffect, useMemo } from "react";
-import Ionicons from "react-native-vector-icons/Ionicons";
-import Feather from "react-native-vector-icons/Feather";
+
+import { Ionicons, Feather } from "@expo/vector-icons";
+
 import {
   currentListAtom,
   errandsAtom,
@@ -19,6 +19,8 @@ import {
   userAtom,
   usersSharedWithAtom,
 } from "../../constants/storeAtoms";
+import { useAtom } from "jotai";
+
 import { themes } from "../../constants/themes";
 import i18n from "../../constants/i18n";
 

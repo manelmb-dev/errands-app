@@ -8,8 +8,7 @@ import {
   MenuOption,
 } from "react-native-popup-menu";
 
-import Ionicons from "react-native-vector-icons/Ionicons";
-import Feather from "react-native-vector-icons/Feather";
+import { Ionicons, Feather } from "@expo/vector-icons";
 
 import { languageAtom, themeAtom } from "../../../constants/storeAtoms";
 import { useAtom } from "jotai";

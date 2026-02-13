@@ -1,8 +1,7 @@
-import { Pressable, Text, View } from "react-native";
 import Animated, { FadeOut } from "react-native-reanimated";
+import { Pressable, Text, View } from "react-native";
 
-import Octicons from "react-native-vector-icons/Octicons";
-import Ionicons from "react-native-vector-icons/Ionicons";
+import { Ionicons, Octicons } from "@expo/vector-icons";
 
 import { useAtom } from "jotai";
 import {

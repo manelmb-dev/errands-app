@@ -4,20 +4,19 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { View, Text, Pressable } from "react-native";
 import { useNavigation } from "expo-router";
 
-import Octicons from "react-native-vector-icons/Octicons";
-import Ionicons from "react-native-vector-icons/Ionicons";
+import { Ionicons, Octicons } from "@expo/vector-icons";
 
 import { errandsAtom, themeAtom, userAtom } from "../../constants/storeAtoms";
 import { useAtom } from "jotai";
 
 import RenderRightActionsCompletedErrand from "../../Utils/RenderRightActionsCompletedErrand";
 import UndoCompleteErrandButton from "../../Utils/UndoCompleteErrandButton";
+import UndoDeleteErrandButton from "../../Utils/UndoDeleteErrandButton";
 import SwipeableFullErrand from "../../Utils/SwipeableFullErrand";
 import { useErrandActions } from "../../hooks/useErrandActions";
 import CompletedErrand from "../../Utils/CompletedErrand";
 import { themes } from "../../constants/themes";
 import i18n from "../../constants/i18n";
-import UndoDeleteErrandButton from "../../Utils/UndoDeleteErrandButton";
 
 function TodayTasks() {
   const navigation = useNavigation();

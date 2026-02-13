@@ -1,9 +1,9 @@
-import { useAtom } from "jotai";
 import { View, Pressable } from "react-native";
+import { useAtom } from "jotai";
 
 import { errandsAtom } from "../../../../constants/storeAtoms";
 
-import Ionicons from "react-native-vector-icons/Ionicons";
+import { Ionicons } from "@expo/vector-icons";
 
 const DeletedErrandRenderRightActions = ({ errand }) => {
   const [, setErrands] = useAtom(errandsAtom);

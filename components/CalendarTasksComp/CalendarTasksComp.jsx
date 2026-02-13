@@ -8,13 +8,14 @@ import { useNavigation } from "expo-router";
 import { errandsAtom, themeAtom } from "../../constants/storeAtoms";
 import { useAtom } from "jotai";
 
+import { Ionicons } from "@expo/vector-icons";
+
 import UndoCompleteErrandButton from "../../Utils/UndoCompleteErrandButton";
 import SwipeableFullErrand from "../../Utils/SwipeableFullErrand";
 import { useErrandActions } from "../../hooks/useErrandActions";
 import { themes } from "../../constants/themes";
 
 import UndoDeleteErrandButton from "../../Utils/UndoDeleteErrandButton";
-import Ionicons from "react-native-vector-icons/Ionicons";
 import i18n from "../../constants/i18n";
 
 LocaleConfig.locales[i18n.locale] = {

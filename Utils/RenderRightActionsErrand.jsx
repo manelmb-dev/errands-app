@@ -1,11 +1,11 @@
 import { TouchableOpacity, View } from "react-native";
 import { router } from "expo-router";
+import { useMemo } from "react";
 
 import { listsAtom, userAtom } from "../constants/storeAtoms";
 import { useAtom } from "jotai";
 
-import Ionicons from "react-native-vector-icons/Ionicons";
-import { useMemo } from "react";
+import { Ionicons } from "@expo/vector-icons";
 
 const RenderRightActionsErrand = ({
   errand,

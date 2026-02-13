@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import { useNavigation } from "expo-router";
 import { Controller, useForm } from "react-hook-form";
+import { useNavigation } from "expo-router";
 import deepEqual from "fast-deep-equal";
 import {
   View,
@@ -22,15 +22,14 @@ import {
 } from "../../constants/storeAtoms";
 import { useAtom } from "jotai";
 
-import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
-import MaterialIcons from "react-native-vector-icons/MaterialIcons";
-import Ionicons from "react-native-vector-icons/Ionicons";
+import { Ionicons, MaterialIcons, MaterialCommunityIcons } from "@expo/vector-icons";
 
 import UsersOfList from "../../Utils/New&EditListUtils/UsersOfList";
 import ColorGrid from "../../Utils/New&EditListUtils/ColorGrid";
 import IconGrid from "../../Utils/New&EditListUtils/IconGrid";
 import { themes } from "../../constants/themes";
 import i18n from "../../constants/i18n";
+
 const EditListModalComp = () => {
   const navigation = useNavigation();
   const shouldPreventClose = useRef(true);

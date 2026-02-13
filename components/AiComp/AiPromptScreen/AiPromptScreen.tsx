@@ -14,8 +14,7 @@ import {
 import { useAtom } from "jotai";
 import { themeAtom } from "../../../constants/storeAtoms";
 
-import Ionicons from "react-native-vector-icons/Ionicons";
-import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
 
 import i18n from "../../../constants/i18n";
 import { themes } from "../../../constants/themes";

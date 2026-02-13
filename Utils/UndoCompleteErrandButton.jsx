@@ -4,7 +4,7 @@ import { View, Text, Pressable } from "react-native";
 import { themeAtom } from "../constants/storeAtoms";
 import { useAtom } from "jotai";
 
-import Octicons from "react-native-vector-icons/Octicons";
+import { Octicons } from "@expo/vector-icons";
 
 import { themes } from "../constants/themes";
 import i18n from "../constants/i18n";
