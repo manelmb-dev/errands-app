@@ -11,15 +11,14 @@ import {
   Keyboard,
 } from "react-native";
 
-import { useAtom } from "jotai";
 import { themeAtom } from "../../../constants/storeAtoms";
+import { useAtom } from "jotai";
 
 import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
 
-import i18n from "../../../constants/i18n";
-import { themes } from "../../../constants/themes";
-
 import { useAiDraftGenerator } from "../../../hooks/useAiDraftGenerator";
+import { themes } from "../../../constants/themes";
+import i18n from "../../../constants/i18n";
 
 export default function AiPromptScreen() {
   const [theme] = useAtom(themeAtom as any);
@@ -80,107 +79,103 @@ export default function AiPromptScreen() {
 
   return (
     <Pressable className="flex-1 w-full" onPress={Keyboard.dismiss}>
-      <View className={`flex-1 w-full pt-24 px-4 bg-[${t.background}]`}>
-        <View className={`flex-1 w-full pb-3`}>
-          <View className="flex-1 w-full justify-between">
-            {/* Header Section */}
-            <Animated.View
-              className="flex-1 items-center justify-center"
-              style={{ transform: [{ translateY: headerTranslateY }] }}
-            >
-              <View
-                className={`mb-3 p-3 rounded-2xl ${theme === "light" ? "bg-blue-100" : "bg-blue-900"}`}
-              >
-                <MaterialCommunityIcons
-                  name="robot-outline"
-                  size={40}
-                  color={t.blueHeadText}
-                />
-              </View>
-              <Text className={`text-3xl font-bold text-[${t.text}]`}>
-                {i18n.t("aiAssistant")}
-              </Text>
-              <Text className={`text-lg text-[${t.taskSecondText}] mt-1`}>
-                {i18n.t("aiPoweredTaskCreation")}
-              </Text>
-            </Animated.View>
-
-            {/* Input Section */}
-            <Animated.View
-              className="gap-2"
-              style={{ transform: [{ translateY: inputTranslateY }] }}
-            >
-              <View
-                className={`rounded-2xl ${theme === "light" ? "bg-gray-200" : `bg-[${t.surfaceBackground}]`} overflow-hidden`}
-              >
-                <TextInput
-                  value={prompt}
-                  onChangeText={setPrompt}
-                  placeholder={i18n.t("aiInputPlaceholder")}
-                  placeholderTextColor={t.taskSecondText}
-                  multiline
-                  numberOfLines={6}
-                  textAlignVertical="top"
-                  className={`p-3 text-xl text-[${t.text}] min-h-[80px]`}
-                />
-              </View>
-
-              {/* Generate Button */}
-              <Pressable
-                onPress={() => {
-                  Keyboard.dismiss();
-                  generate();
-                }}
-                disabled={loading || !prompt.trim()}
-                className={`rounded-2xl overflow-hidden ${
-                  loading || !prompt.trim() ? "opacity-50" : ""
-                }`}
-              >
-                <View
-                  className={`p-4 flex-row items-center justify-center gap-3 ${
-                    theme === "light" ? "bg-blue-500" : "bg-blue-600"
-                  }`}
-                >
-                  {loading ? (
-                    <>
-                      <ActivityIndicator color="#FFFFFF" />
-                      <Text className="text-white text-lg font-semibold">
-                        {i18n.t("generating")}
-                      </Text>
-                    </>
-                  ) : (
-                    <>
-                      <Ionicons name="sparkles" size={22} color="#FFFFFF" />
-                      <Text className="text-white text-lg font-semibold">
-                        {i18n.t("generateWithAi")}
-                      </Text>
-                    </>
-                  )}
-                </View>
-              </Pressable>
-
-              {/* Error Message */}
-              {error && (
-                <View
-                  className={` p-4 rounded-2xl ${theme === "light" ? "bg-red-50" : "bg-red-900/20"} border ${theme === "light" ? "border-red-200" : "border-red-800"}`}
-                >
-                  <View className="flex-row items-center gap-3">
-                    <Ionicons
-                      name="alert-circle"
-                      size={20}
-                      color={theme === "light" ? "#DC2626" : "#EF4444"}
-                    />
-                    <Text
-                      className={`flex-1 text-base ${theme === "light" ? "text-red-700" : "text-red-400"}`}
-                    >
-                      {error}
-                    </Text>
-                  </View>
-                </View>
-              )}
-            </Animated.View>
+      <View className={`flex-1 w-full pt-24 pb-3 px-4 items-center bg-[${t.background}]`}>
+        {/* Header Section */}
+        <Animated.View
+          className="flex-1 items-center justify-center max-w-[60%]"
+          style={{ transform: [{ translateY: headerTranslateY }] }}
+        >
+          <View
+            className={`mb-3 p-3 rounded-2xl ${theme === "light" ? "bg-blue-100" : "bg-blue-900"}`}
+          >
+            <MaterialCommunityIcons
+              name="robot-outline"
+              size={40}
+              color={t.blueHeadText}
+            />
           </View>
-        </View>
+          <Text className={`text-3xl font-bold text-[${t.text}]`}>
+            {i18n.t("aiAssistant")}
+          </Text>
+          <Text className={`text-lg text-[${t.taskSecondText}] text-center mt-1`}>
+            {i18n.t("aiPoweredTaskCreation")}
+          </Text>
+        </Animated.View>
+
+        {/* Input Section */}
+        <Animated.View
+          className="gap-2 w-full"
+          style={{ transform: [{ translateY: inputTranslateY }] }}
+        >
+          <View
+            className={`rounded-2xl ${theme === "light" ? "bg-gray-200" : `bg-[${t.surfaceBackground}]`} overflow-hidden`}
+          >
+            <TextInput
+              value={prompt}
+              onChangeText={setPrompt}
+              placeholder={i18n.t("aiInputPlaceholder")}
+              placeholderTextColor={t.taskSecondText}
+              multiline
+              numberOfLines={6}
+              textAlignVertical="top"
+              className={`p-3 text-xl text-[${t.text}] min-h-[80px]`}
+            />
+          </View>
+
+          {/* Generate Button */}
+          <Pressable
+            onPress={() => {
+              Keyboard.dismiss();
+              generate();
+            }}
+            disabled={loading || !prompt.trim()}
+            className={`rounded-2xl overflow-hidden ${
+              loading || !prompt.trim() ? "opacity-50" : ""
+            }`}
+          >
+            <View
+              className={`p-4 flex-row items-center justify-center gap-3 ${
+                theme === "light" ? "bg-blue-500" : "bg-blue-600"
+              }`}
+            >
+              {loading ? (
+                <>
+                  <ActivityIndicator color="#FFFFFF" />
+                  <Text className="text-white text-lg font-semibold">
+                    {i18n.t("generating")}
+                  </Text>
+                </>
+              ) : (
+                <>
+                  <Ionicons name="sparkles" size={22} color="#FFFFFF" />
+                  <Text className="text-white text-lg font-semibold">
+                    {i18n.t("generateWithAi")}
+                  </Text>
+                </>
+              )}
+            </View>
+          </Pressable>
+
+          {/* Error Message */}
+          {error && (
+            <View
+              className={` p-4 rounded-2xl ${theme === "light" ? "bg-red-50" : "bg-red-900/20"} border ${theme === "light" ? "border-red-200" : "border-red-800"}`}
+            >
+              <View className="flex-row items-center gap-3">
+                <Ionicons
+                  name="alert-circle"
+                  size={20}
+                  color={theme === "light" ? "#DC2626" : "#EF4444"}
+                />
+                <Text
+                  className={`flex-1 text-base ${theme === "light" ? "text-red-700" : "text-red-400"}`}
+                >
+                  {error}
+                </Text>
+              </View>
+            </View>
+          )}
+        </Animated.View>
       </View>
     </Pressable>
   );
