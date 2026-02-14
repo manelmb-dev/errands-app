@@ -22,6 +22,8 @@ export function useAiDraftGenerator() {
   const [error, setError] = useAtom(aiErrorAtom);
 
   const generate = async () => {
+    if (step !== "prompt") return;
+    
     const text = prompt.trim();
     if (!text || loading) return;
 
@@ -47,6 +49,7 @@ export function useAiDraftGenerator() {
   };
 
   const toggleTask = (id: string) => {
+    if (!draft || draft.type !== "list") return;
     setSelectedIds((prev: string[]) =>
       prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id],
     );
