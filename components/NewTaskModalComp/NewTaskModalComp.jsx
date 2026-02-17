@@ -41,9 +41,10 @@ const NewTaskModal = () => {
   const router = useRouter();
 
   const { contact, list } = useLocalSearchParams();
+  const contactStr = Array.isArray(contact) ? contact[0] : contact;
   const currentContact = useMemo(
-    () => contact && JSON.parse(contact),
-    [contact],
+    () => (contactStr ? JSON.parse(contactStr) : null),
+    [contactStr],
   );
   const currentList = useMemo(() => list && JSON.parse(list), [list]);
 
@@ -57,11 +58,8 @@ const NewTaskModal = () => {
   const [userAssigned, setUserAssigned] = useAtom(userAssignedAtom);
   const [listAssigned, setListAssigned] = useAtom(listAssignedAtom);
 
-  const [dateSwitchEnabled, SetDateSwitchEnabled] = useState(false);
-  const [hourSwitchEnabled, SetHourSwitchEnabled] = useState(false);
   const [isDatePickerVisible, setIsDatePickerVisible] = useState(false);
   const [isHourPickerVisible, setIsHourPickerVisible] = useState(false);
-  const [noticeSwitchEnabled, SetNoticeSwitchEnabled] = useState(false);
   const [isNoticePickerVisible, setIsNoticePickerVisible] = useState(false);
 
   const setErrandToFS = (data) => {
@@ -92,35 +90,55 @@ const NewTaskModal = () => {
       priority: "none",
       listId: "",
       completedDateErrand: "",
-      completedtimeErrand: "",
+      completedTimeErrand: "",
+      deleted: false,
+      seen: false,
     },
   });
 
   const watchedTitle = watch("title");
 
-  useEffect(() => {
-    setListAssigned(lists[0]);
-  }, [lists, setListAssigned]);
+  const hasDate = !!watch("dateErrand");
+  const hasTime = !!watch("timeErrand");
+  const hasNotice = !!watch("dateNotice");
 
   useEffect(() => {
-    if (currentContact) {
-      setUserAssigned(currentContact);
-      setListAssigned({
-        id: "unassigned",
-        title: i18n.t("shared"),
-        icon: "people",
-        color: "slate",
-      });
-    }
-  }, [currentContact, setUserAssigned, setListAssigned, setValue]);
+    const sharedList = {
+      id: "unassigned",
+      ownerId: user.id,
+      title: i18n.t("shared"),
+      icon: "people",
+      color: "slate",
+      usersShared: [user.id],
+    };
 
-  useEffect(() => {
+    // 1) If you came from a list -> fixed list and assigned "unassigned"
     if (currentList) {
       setListAssigned(currentList);
       setUserAssigned({ id: "unassigned", name: i18n.t("unassigned") });
       setValue("assignedId", "unassigned");
+      return;
     }
-  }, [currentList, user, setUserAssigned, setListAssigned, setValue]);
+
+    // 2) If you came from a contact -> fixed contact and "shared" list
+    if (currentContact) {
+      setUserAssigned(currentContact);
+      setListAssigned(sharedList);
+      return;
+    }
+
+    // 3) Default case -> assign to myself and use the default list (if available)
+    setUserAssigned(user);
+    setListAssigned(lists?.[0] ?? sharedList);
+  }, [
+    currentList,
+    currentContact,
+    lists,
+    user,
+    setListAssigned,
+    setUserAssigned,
+    setValue,
+  ]);
 
   useEffect(() => {
     navigation.setOptions({
@@ -155,12 +173,12 @@ const NewTaskModal = () => {
 
   useEffect(() => {
     setValue("assignedId", userAssigned.id);
-    setValue("listId", listAssigned.id);
+    if (listAssigned) setValue("listId", listAssigned.id);
   }, [userAssigned, listAssigned, setValue]);
 
   // Function to handle date toggle
   const toggleDateSwitch = () => {
-    if (dateSwitchEnabled) {
+    if (hasDate) {
       setValue("dateErrand", "");
       setValue("timeErrand", "");
       setValue("dateNotice", "");
@@ -168,13 +186,10 @@ const NewTaskModal = () => {
     } else {
       setIsDatePickerVisible(true);
     }
-    SetDateSwitchEnabled((previousState) => !previousState);
-    SetHourSwitchEnabled(false);
   };
 
   // Function to handle date selection Modal
   const handleDateConfirm = (date) => {
-    SetDateSwitchEnabled(true);
     const dateString = date.toISOString().split("T")[0];
     setValue("dateErrand", dateString);
     setIsDatePickerVisible(false);
@@ -182,32 +197,27 @@ const NewTaskModal = () => {
 
   // Function to handle hour toggle
   const toggleHourSwitch = () => {
-    if (hourSwitchEnabled) {
-      setValue("timeErrand", "");
-      SetHourSwitchEnabled(false);
-    } else {
-      setIsHourPickerVisible(true);
-    }
+    if (hasTime) setValue("timeErrand", "");
+    else setIsHourPickerVisible(true);
   };
 
   // Function to handle hour selection Modal
   const handleHourConfirm = (time) => {
-    !watch("dateErrand") && setValue("dateErrand", today);
+    if (!watch("dateErrand")) setValue("dateErrand", today);
+
     setValue(
       "timeErrand",
       time.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
     );
-    SetHourSwitchEnabled(true);
-    SetDateSwitchEnabled(true);
+
     setIsHourPickerVisible(false);
   };
 
   // Function to handle hour toggle
   const toggleNoticeSwitch = () => {
-    if (noticeSwitchEnabled) {
+    if (hasNotice) {
       setValue("dateNotice", "");
       setValue("timeNotice", "");
-      SetNoticeSwitchEnabled(false);
     } else {
       setIsNoticePickerVisible(true);
     }
@@ -215,21 +225,18 @@ const NewTaskModal = () => {
 
   // Function to handle hour selection Modal
   const handleNoticeConfirm = (datetime) => {
-    const dateString = datetime.toISOString().split("T")[0];
-    setValue("dateNotice", dateString);
-    const hourString = datetime.toLocaleTimeString([], {
-      hour: "2-digit",
-      minute: "2-digit",
-    });
-    setValue("timeNotice", hourString);
-    SetNoticeSwitchEnabled(true);
+    setValue("dateNotice", datetime.toISOString().split("T")[0]);
+    setValue(
+      "timeNotice",
+      datetime.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
+    );
     setIsNoticePickerVisible(false);
   };
 
   // Function to handle header cancel button
   const handleCancel = useCallback(() => {
     setUserAssigned(user);
-    setListAssigned(false);
+    setListAssigned(null);
     navigation.goBack();
   }, [navigation, setUserAssigned, user, setListAssigned]);
 
@@ -237,7 +244,7 @@ const NewTaskModal = () => {
   useEffect(() => {
     const dismissModal = navigation.addListener("beforeRemove", (e) => {
       setUserAssigned(user);
-      setListAssigned(false);
+      setListAssigned(null);
     });
     return dismissModal;
   }, [navigation, setUserAssigned, user, setListAssigned]);
@@ -270,7 +277,7 @@ const NewTaskModal = () => {
     setErrands((prevErrands) => [...prevErrands, newErrandWithId]);
 
     setUserAssigned(user);
-    setListAssigned(false);
+    setListAssigned(null);
     navigation.goBack();
   });
 
@@ -281,7 +288,7 @@ const NewTaskModal = () => {
         options,
         cancelButtonIndex: options.length - 1,
         title: i18n.t("repeat"),
-        userInterfaceStyle: theme, // para light/dark mode automático
+        userInterfaceStyle: theme,
       },
       (index) => {
         if (index === options.length - 1) return;
@@ -297,7 +304,7 @@ const NewTaskModal = () => {
         options,
         cancelButtonIndex: options.length - 1,
         title: i18n.t("priority"),
-        userInterfaceStyle: theme, // respeta dark mode
+        userInterfaceStyle: theme,
       },
       (index) => {
         if (index === options.length - 1) return;
@@ -335,7 +342,7 @@ const NewTaskModal = () => {
                 className={`p-4 pl-4 text-lg max-h-48 align-top leading-tight  text-[${themes[theme].text}]`}
                 value={value}
                 onChangeText={onChange}
-                placeholder="Descripción"
+                placeholder={i18n.t("description")}
                 placeholderTextColor={themes[theme].taskSecondText}
                 multiline={true}
               />
@@ -365,7 +372,7 @@ const NewTaskModal = () => {
                 color={themes["light"].background}
               />
               <View
-                className={`py-3 flex-1 flex-row justify-between items-center gap-2 border-b border-[${themes[theme].borderColor}]`}
+                className={`min-h-[58px] flex-1 flex-row justify-between items-center border-b border-[${themes[theme].borderColor}]`}
               >
                 <Text className={`text-[${themes[theme].text}] text-base`}>
                   {i18n.t("inCharge")}
@@ -410,7 +417,7 @@ const NewTaskModal = () => {
                 size={22}
                 color={themes["light"].background}
               />
-              <View className="py-3 gap-4 flex-1 flex-row justify-between items-center">
+              <View className="min-h-[58px] flex-1 flex-row justify-between items-center">
                 <Text className={`text-[${themes[theme].text}] text-base`}>
                   {i18n.t("list")}
                 </Text>
@@ -451,7 +458,7 @@ const NewTaskModal = () => {
                 color={themes["light"].background}
               />
               <View
-                className={`py-2 flex-1 flex-row justify-between gap-4 items-center border-b border-[${themes[theme].borderColor}]`}
+                className={`min-h-[58px] flex-1 flex-row justify-between items-center border-b border-[${themes[theme].borderColor}]`}
               >
                 <View>
                   <Text className={`text-[${themes[theme].text}] text-base`}>
@@ -465,11 +472,9 @@ const NewTaskModal = () => {
                     </Text>
                   )}
                 </View>
-                <Switch
-                  className="mr-4"
-                  value={watch("dateErrand") ? true : false}
-                  onValueChange={toggleDateSwitch}
-                />
+                <View className="mr-4">
+                  <Switch value={hasDate} onValueChange={toggleDateSwitch} />
+                </View>
               </View>
             </View>
           </TouchableHighlight>
@@ -493,7 +498,7 @@ const NewTaskModal = () => {
                 color={themes["light"].background}
               />
               <View
-                className={`py-2 flex-1 flex-row justify-between gap-4 items-center ${watch("dateErrand") && `border-b border-[${themes[theme].borderColor}]`} `}
+                className={`min-h-[58px] flex-1 flex-row justify-between items-center ${watch("dateErrand") && `border-b border-[${themes[theme].borderColor}]`} `}
               >
                 <View>
                   <Text className={`text-[${themes[theme].text}] text-base`}>
@@ -501,17 +506,15 @@ const NewTaskModal = () => {
                   </Text>
                   {watch("timeErrand") && (
                     <Text
-                      className={`text-[${themes[theme].blueHeadText}] text-lg`}
+                      className={`text-[${themes[theme].blueHeadText}] text-base`}
                     >
                       {watch("timeErrand")}
                     </Text>
                   )}
                 </View>
-                <Switch
-                  className="mr-4"
-                  value={watch("timeErrand") ? true : false}
-                  onValueChange={toggleHourSwitch}
-                />
+                <View className="mr-4">
+                  <Switch value={hasTime} onValueChange={toggleHourSwitch} />
+                </View>
               </View>
             </View>
           </TouchableHighlight>
@@ -533,7 +536,7 @@ const NewTaskModal = () => {
                   color={themes["light"].background}
                 />
                 <View
-                  className={`py-2 flex-1 flex-row justify-between gap-4 items-center ${watch("dateErrand") && `border-b border-[${themes[theme].borderColor}]`}`}
+                  className={`min-h-[58px] flex-1 flex-row justify-between items-center ${watch("dateErrand") && `border-b border-[${themes[theme].borderColor}]`}`}
                 >
                   <View>
                     <Text className={`text-[${themes[theme].text}] text-base`}>
@@ -547,11 +550,12 @@ const NewTaskModal = () => {
                       </Text>
                     )}
                   </View>
-                  <Switch
-                    className="mr-4"
-                    value={noticeSwitchEnabled}
-                    onValueChange={toggleNoticeSwitch}
-                  />
+                  <View className="mr-4">
+                    <Switch
+                      value={hasNotice}
+                      onValueChange={toggleNoticeSwitch}
+                    />
+                  </View>
                 </View>
               </View>
             </TouchableHighlight>
@@ -571,7 +575,7 @@ const NewTaskModal = () => {
                   size={23}
                   color={themes["light"].background}
                 />
-                <View className="py-4 gap-4 flex-1 flex-row justify-between items-center">
+                <View className="min-h-[58px] flex-1 flex-row justify-between items-center">
                   <Text className={`text-[${themes[theme].text}] text-base`}>
                     {i18n.t("repeat")}
                   </Text>
@@ -582,7 +586,7 @@ const NewTaskModal = () => {
                   <Text className={`text-lg text-[${themes[theme].text}]`}>
                     {
                       repeatOptions.find(
-                        (option) => option.value === watch("repeat")
+                        (option) => option.value === watch("repeat"),
                       )?.label
                     }
                   </Text>
@@ -617,23 +621,24 @@ const NewTaskModal = () => {
                 color={themes["light"].background}
               />
               <View
-                className={`py-3 flex-1 flex-row justify-between gap-4 items-center border-b border-[${themes[theme].borderColor}]`}
+                className={`min-h-[58px] flex-1 flex-row justify-between items-center border-b border-[${themes[theme].borderColor}]`}
               >
                 <Text className={`text-[${themes[theme].text}] text-base`}>
                   {i18n.t("markedSingular")}
                 </Text>
-                <Switch
-                  className="mr-4"
-                  value={watch("marked")}
-                  onChange={() => setValue("marked", !watch("marked"))}
-                />
+                <View className="mr-4">
+                  <Switch
+                    value={watch("marked")}
+                    onChange={() => setValue("marked", !watch("marked"))}
+                  />
+                </View>
               </View>
             </View>
           </TouchableHighlight>
 
           {/* Priority */}
           <TouchableHighlight
-            className={"rounded-b-xl py-0.5"}
+            className={"rounded-b-xl"}
             underlayColor={themes[theme].background}
             onPress={showPriorityActionSheet}
           >
@@ -644,7 +649,7 @@ const NewTaskModal = () => {
                 size={22}
                 color={themes["light"].background}
               />
-              <View className="py-4 gap-4 flex-1 flex-row justify-between items-center">
+              <View className="min-h-[58px] flex-1 flex-row justify-between items-center">
                 <Text className={`text-[${themes[theme].text}] text-base`}>
                   {i18n.t("priority")}
                 </Text>
