@@ -1,4 +1,23 @@
-export const themes = {
+import type { ThemeMode } from "./storeUiAtoms";
+
+export type ThemeTokens = {
+  background: string;
+  surfaceBackground: string;
+  iconColor: string;
+  blueHeadText: string;
+  text: string;
+  taskTitle: string;
+  taskSecondText: string;
+  addNewTaskText: string;
+  outgoingTaskToBg: string;
+  taskIncomingFromBg: string;
+  taskAssignedSharedListBg: string;
+  listTitle: string;
+  borderColor: string;
+  popupShadow: string;
+};
+
+export const themes: Record<ThemeMode, ThemeTokens> = {
   light: {
     background: "#F5F5F5",
     surfaceBackground: "#FFFFFF",

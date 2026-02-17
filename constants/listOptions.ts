@@ -1,0 +1,134 @@
+// constants/listOptions.ts
+export const LIST_COLORS = [
+  "slate",
+  "zinc",
+  "stone",
+  "red",
+  "orange",
+  "amber",
+  "yellow",
+  "lime",
+  "green",
+  "emerald",
+  "teal",
+  "cyan",
+  "sky",
+  "blue",
+  "indigo",
+  "violet",
+  "purple",
+  "fuchsia",
+  "pink",
+  "rose",
+] as const;
+
+export const LIST_ICONS = [
+  // People and actions
+  "list",
+  "flag",
+  "pin",
+  "star",
+  "flash",
+  "time",
+  "person",
+  "people",
+  "happy",
+  "heart",
+  "home",
+  "language",
+  "key",
+  "information-circle",
+
+  // Organization and documents
+  "calendar",
+  "clipboard",
+  "document-attach",
+  "file-tray-full",
+  "book",
+  "school",
+  "newspaper",
+
+  // Work and business
+  "briefcase",
+  "business",
+  "construct",
+  "archive",
+
+  // Nature and life
+  "globe",
+  "earth",
+  "sunny",
+  "partly-sunny",
+  "flower",
+  "paw",
+  "nutrition",
+
+  // Food and drinks
+  "restaurant",
+  "cafe",
+  "fast-food-sharp",
+  "beer",
+
+  // Creativity and science
+  "bulb",
+  "color-palette",
+  "color-wand",
+  "aperture",
+  "diamond",
+  "flame",
+
+  // Tecnology
+  "apps",
+  "camera",
+  "image",
+  "cloud",
+  "code",
+  "bug",
+
+  // Shopping
+  "bag-add",
+  "bag-check",
+  "cart-sharp",
+  "card",
+  "logo-bitcoin",
+  "logo-euro",
+
+  // Object and places
+  "storefront",
+  "bed",
+  "shirt",
+
+  // Comunication
+  "call",
+  "chatbox-ellipses",
+  "mail-unread",
+  "notifications",
+
+  // Transport
+  "rocket",
+  "airplane",
+  "car",
+  "bus",
+  "boat",
+  "bicycle",
+
+  // Sports
+  "game-controller",
+  "dice",
+  "football",
+  "basketball",
+  "american-football",
+  "tennisball",
+  "barbell",
+
+  // Tools and utilities
+  "arrow-redo",
+  "arrow-redo-circle",
+  "attach",
+  "battery-full",
+  "battery-half",
+  "disc",
+] as const;
+
+export type ListColor = (typeof LIST_COLORS)[number];
+export type ListIcon = (typeof LIST_ICONS)[number];
