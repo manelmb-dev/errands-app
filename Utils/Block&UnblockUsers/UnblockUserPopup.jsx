@@ -1,7 +1,7 @@
 import Animated, { FadeInDown, FadeOutDown } from "react-native-reanimated";
 import { View, Text, Pressable } from "react-native";
 
-import { languageAtom, themeAtom } from "../../constants/storeAtoms";
+import { languageAtom, themeAtom } from "../../constants/storeUiAtoms";
 import { useAtom } from "jotai";
 
 import { Feather } from "@expo/vector-icons";

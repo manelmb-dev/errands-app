@@ -3,7 +3,7 @@
 import Animated, { FadeInDown, FadeOutDown } from "react-native-reanimated";
 import { View, Text, Pressable } from "react-native";
 
-import { themeAtom } from "../constants/storeAtoms";
+import { themeAtom } from "../constants/storeUiAtoms";
 import { useAtom } from "jotai";
 
 import { Ionicons } from "@expo/vector-icons";

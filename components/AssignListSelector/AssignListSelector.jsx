@@ -14,11 +14,11 @@ import { FontAwesome6, Ionicons } from "@expo/vector-icons";
 import { useAtom } from "jotai";
 import {
   listAssignedAtom,
-  listsAtom,
-  themeAtom,
   userAssignedAtom,
+  listsAtom,
   userAtom,
 } from "../../constants/storeAtoms";
+import { themeAtom } from "../../constants/storeUiAtoms";
 
 import { themes } from "../../constants/themes";
 import i18n from "../../constants/i18n";

@@ -2,7 +2,8 @@ import { View, Text, Switch } from "react-native";
 import { useNavigation } from "expo-router";
 import React, { useEffect, useState } from "react";
 
-import { themeAtom, userAtom } from "../../../constants/storeAtoms";
+import { themeAtom } from "../../../constants/storeUiAtoms";
+import { userAtom } from "../../../constants/storeAtoms";
 import { useAtom } from "jotai";
 
 import { Ionicons } from "@expo/vector-icons";

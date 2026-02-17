@@ -3,7 +3,8 @@ import { Pressable, Text, View } from "react-native";
 import { useRouter } from "expo-router";
 import React from "react";
 
-import { themeAtom, userAtom } from "../../../constants/storeAtoms";
+import { themeAtom } from "../../../constants/storeUiAtoms";
+import { userAtom } from "../../../constants/storeAtoms";
 import { useAtom } from "jotai";
 
 import { Ionicons, Feather, Octicons } from "@expo/vector-icons";

@@ -1,11 +1,11 @@
 import { ScrollView, Text, View } from "react-native";
 
 import {
-  contactsAtom,
-  themeAtom,
-  userAtom,
   usersSharedWithAtom,
+  contactsAtom,
+  userAtom,
 } from "../../../constants/storeAtoms";
+import { themeAtom } from "../../../constants/storeUiAtoms";
 import { useAtom } from "jotai";
 
 import { Ionicons } from "@expo/vector-icons";

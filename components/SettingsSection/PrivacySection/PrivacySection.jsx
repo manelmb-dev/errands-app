@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { View, Text, ScrollView } from "react-native";
 
 import { useAtom } from "jotai";
-import { themeAtom } from "../../../constants/storeAtoms";
+import { themeAtom } from "../../../constants/storeUiAtoms";
 
 import { themes } from "../../../constants/themes";
 import i18n from "../../../constants/i18n";

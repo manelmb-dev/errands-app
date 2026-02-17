@@ -18,7 +18,7 @@ import { useLocalSearchParams } from "expo-router";
 import { useNavigation, useRouter } from "expo-router";
 import { useEffect, useRef, useState } from "react";
 
-import { themeAtom } from "../../../constants/storeAtoms";
+import { themeAtom } from "../../../constants/storeUiAtoms";
 import { useAtom } from "jotai";
 
 import { themes } from "../../../constants/themes";

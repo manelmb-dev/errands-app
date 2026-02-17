@@ -12,10 +12,9 @@ import { Ionicons } from "@expo/vector-icons";
 
 import {
   errandsAtom,
-  languageAtom,
-  themeAtom,
   userAtom,
 } from "../../../constants/storeAtoms";
+import { languageAtom, themeAtom } from "../../../constants/storeUiAtoms";
 import { useAtom } from "jotai";
 
 import { themes } from "../../../constants/themes";

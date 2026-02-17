@@ -1,6 +1,6 @@
 import { ScrollView, TouchableOpacity } from "react-native";
 
-import { themeAtom } from "../../constants/storeAtoms";
+import { themeAtom } from "../../constants/storeUiAtoms";
 import { useAtom } from "jotai";
 
 import { Ionicons } from "@expo/vector-icons";

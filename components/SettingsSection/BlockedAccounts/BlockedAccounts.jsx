@@ -12,11 +12,10 @@ import {
 
 import {
   contactsAtom,
-  languageAtom,
-  themeAtom,
   userAtom,
 } from "../../../constants/storeAtoms";
 import { useAtom } from "jotai";
+import { languageAtom, themeAtom } from "../../../constants/storeUiAtoms";
 
 import { Ionicons } from "@expo/vector-icons";
 

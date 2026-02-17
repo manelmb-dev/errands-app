@@ -13,11 +13,11 @@ import {
 } from "react-native";
 
 import {
-  listsAtom,
-  themeAtom,
-  userAtom,
   usersSharedWithAtom,
+  listsAtom,
+  userAtom,
 } from "../../constants/storeAtoms";
+import { themeAtom } from "../../constants/storeUiAtoms";
 import { useAtom } from "jotai";
 
 import { Ionicons, MaterialCommunityIcons, MaterialIcons } from "@expo/vector-icons";

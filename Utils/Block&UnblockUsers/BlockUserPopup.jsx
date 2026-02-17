@@ -2,7 +2,7 @@ import Animated, { FadeInDown, FadeOutDown } from "react-native-reanimated";
 import { View, Text, Pressable } from "react-native";
 
 import { useAtom } from "jotai";
-import { languageAtom, themeAtom } from "../../constants/storeAtoms";
+import { languageAtom, themeAtom } from "../../constants/storeUiAtoms";
 
 import { Ionicons } from "@expo/vector-icons";
 

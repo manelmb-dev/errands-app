@@ -7,21 +7,20 @@ import {
 } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { ActionSheetProvider } from "@expo/react-native-action-sheet";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { MenuProvider } from "react-native-popup-menu";
 import * as Localization from "expo-localization";
-import { StatusBar } from "expo-status-bar";
 import { Redirect, Stack } from "expo-router";
+import { useEffect, useState } from "react";
+import { StatusBar } from "expo-status-bar";
 
+import { languageAtom, themeAtom } from "../constants/storeUiAtoms";
 import { useAtom } from "jotai";
 
-import { languageAtom, themeAtom } from "../constants/storeAtoms";
 import { themes } from "../constants/themes";
-
-import "../App.css";
-import { useEffect, useState } from "react";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import I18n from "../constants/i18n";
+import "../App.css";
 
 export default function Layout() {
   const system = useColorScheme() ?? "light";

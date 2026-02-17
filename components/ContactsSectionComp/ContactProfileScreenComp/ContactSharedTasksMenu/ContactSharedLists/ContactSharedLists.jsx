@@ -3,13 +3,13 @@ import { View, Text, TouchableHighlight } from "react-native";
 import { useEffect, useMemo } from "react";
 
 import {
+  usersSharedWithAtom,
   currentListAtom,
   errandsAtom,
   listsAtom,
-  themeAtom,
   userAtom,
-  usersSharedWithAtom,
 } from "../../../../../constants/storeAtoms";
+import { themeAtom } from "../../../../../constants/storeUiAtoms";
 import { useAtom } from "jotai";
 
 import { Ionicons } from "@expo/vector-icons";

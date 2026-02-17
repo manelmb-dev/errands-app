@@ -5,13 +5,13 @@ import { useNavigation } from "expo-router";
 import { Keyboard } from "react-native";
 
 import {
-  contactsAtom,
-  currentListAtom,
-  themeAtom,
-  userAtom,
   usersSharedWithAtom,
+  currentListAtom,
+  contactsAtom,
+  userAtom,
 } from "../../constants/storeAtoms";
 import { useAtom } from "jotai";
+import { themeAtom } from "../../constants/storeUiAtoms";
 
 import { Ionicons, Octicons } from "@expo/vector-icons";
 

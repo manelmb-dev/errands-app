@@ -7,9 +7,9 @@ import {
   currentListAtom,
   errandsAtom,
   listsAtom,
-  themeAtom,
   userAtom,
 } from "../../../constants/storeAtoms";
+import { themeAtom } from "../../../constants/storeUiAtoms";
 import { useAtom } from "jotai";
 
 import ListPopupMenu from "./ListPopupMenu/ListPopupMenu";

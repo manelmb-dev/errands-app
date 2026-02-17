@@ -10,7 +10,8 @@ import {
 import { useEffect, useState } from "react";
 import * as ImagePicker from "expo-image-picker";
 
-import { themeAtom, userAtom } from "../../../constants/storeAtoms";
+import { themeAtom } from "../../../constants/storeUiAtoms";
+import { userAtom } from "../../../constants/storeAtoms";
 import { useAtom } from "jotai";
 
 import { Ionicons } from "@expo/vector-icons";

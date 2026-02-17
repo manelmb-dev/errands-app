@@ -3,7 +3,8 @@ import { useLocalSearchParams, useNavigation } from "expo-router";
 import { useForm, Controller } from "react-hook-form";
 import { useEffect, useMemo } from "react";
 
-import { contactsAtom, themeAtom, userAtom } from "../../constants/storeAtoms";
+import { contactsAtom, userAtom } from "../../constants/storeAtoms";
+import { themeAtom } from "../../constants/storeUiAtoms";
 import { useAtom } from "jotai";
 
 import { Ionicons, FontAwesome6, MaterialIcons } from "@expo/vector-icons";

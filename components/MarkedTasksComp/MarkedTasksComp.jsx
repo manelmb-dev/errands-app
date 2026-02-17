@@ -3,7 +3,8 @@ import { useEffect, useRef, useState } from "react";
 import { useNavigation } from "expo-router";
 import { Text, View } from "react-native";
 
-import { errandsAtom, themeAtom, userAtom } from "../../constants/storeAtoms";
+import { errandsAtom, userAtom } from "../../constants/storeAtoms";
+import { themeAtom } from "../../constants/storeUiAtoms";
 import { useAtom } from "jotai";
 
 import UndoCompleteErrandButton from "../../Utils/UndoCompleteErrandButton";

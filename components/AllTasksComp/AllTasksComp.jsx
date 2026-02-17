@@ -5,11 +5,11 @@ import { useNavigation } from "expo-router";
 
 import { Ionicons, Octicons } from "@expo/vector-icons";
 
+import { themeAtom } from "../../constants/storeUiAtoms";
 import { useAtom } from "jotai";
 import {
   errandsAtom,
   listsAtom,
-  themeAtom,
   userAtom,
 } from "../../constants/storeAtoms";
 

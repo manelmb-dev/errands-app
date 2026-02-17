@@ -8,13 +8,13 @@ import {
 } from "react-native";
 
 import {
-  contactsAtom,
-  currentListAtom,
-  themeAtom,
-  userAtom,
   usersSharedWithAtom,
+  currentListAtom,
+  contactsAtom,
+  userAtom,
 } from "../../constants/storeAtoms";
 import { useAtom } from "jotai";
+import { themeAtom } from "../../constants/storeUiAtoms";
 
 import { Ionicons } from "@expo/vector-icons";
 

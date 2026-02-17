@@ -1,6 +1,6 @@
 import { View, Text, ScrollView } from "react-native";
 
-import { themeAtom } from "../../../constants/storeAtoms";
+import { themeAtom } from "../../../constants/storeUiAtoms";
 import { useAtom } from "jotai";
 
 import { themes } from "../../../constants/themes";

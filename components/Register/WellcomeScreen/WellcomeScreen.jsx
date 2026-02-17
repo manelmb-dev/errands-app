@@ -3,7 +3,7 @@ import { useNavigation, useRouter } from "expo-router";
 import { View, Text, TouchableOpacity, Image } from "react-native";
 import { useEffect } from "react";
 
-import { themeAtom } from "../../../constants/storeAtoms";
+import { themeAtom } from "../../../constants/storeUiAtoms";
 import { useAtom } from "jotai";
 
 import { themes } from "../../../constants/themes";

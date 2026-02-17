@@ -9,10 +9,10 @@ import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
 import {
   currentListAtom,
   errandsAtom,
-  themeAtom,
   userAtom,
   usersSharedWithAtom,
 } from "../../constants/storeAtoms";
+import { themeAtom } from "../../constants/storeUiAtoms";
 import { useAtom } from "jotai";
 
 import RenderRightActionsCompletedErrand from "../../Utils/RenderRightActionsCompletedErrand";

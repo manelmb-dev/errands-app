@@ -11,9 +11,9 @@ import {
 
 import {
   contactsAtom,
-  themeAtom,
   userAtom,
 } from "../../../../constants/storeAtoms";
+import { themeAtom } from "../../../../constants/storeUiAtoms";
 import { useAtom } from "jotai";
 
 import { Ionicons } from "@expo/vector-icons";

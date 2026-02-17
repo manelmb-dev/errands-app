@@ -4,13 +4,13 @@ import { useRouter } from "expo-router";
 import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
 
 import {
+  usersSharedWithAtom,
   currentListAtom,
   errandsAtom,
   listsAtom,
-  themeAtom,
   userAtom,
-  usersSharedWithAtom,
 } from "../../../constants/storeAtoms";
+import { themeAtom } from "../../../constants/storeUiAtoms";
 import { useAtom } from "jotai";
 
 import ListPopupMenu from "../ListsSection/ListPopupMenu/ListPopupMenu";

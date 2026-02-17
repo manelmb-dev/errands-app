@@ -9,10 +9,10 @@ import {
   contactsAtom,
   errandsAtom,
   listsAtom,
-  themeAtom,
   userAtom,
 } from "../constants/storeAtoms";
 import { useAtom } from "jotai";
+import { themeAtom } from "../constants/storeUiAtoms";
 
 import { Ionicons, Octicons } from "@expo/vector-icons";
 

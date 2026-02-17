@@ -2,8 +2,9 @@ import { View, Text, TextInput, TouchableOpacity, Alert } from "react-native";
 import { useEffect, useState } from "react";
 import { useNavigation } from "expo-router";
 
+import { themeAtom } from "../../../constants/storeUiAtoms";
+import { userAtom } from "../../../constants/storeAtoms";
 import { useAtom } from "jotai";
-import { themeAtom, userAtom } from "../../../constants/storeAtoms";
 
 import { themes } from "../../../constants/themes";
 import i18n from "../../../constants/i18n";

@@ -14,12 +14,12 @@ import {
 } from "react-native";
 
 import {
+  usersSharedWithAtom,
   currentListAtom,
   listsAtom,
-  themeAtom,
   userAtom,
-  usersSharedWithAtom,
 } from "../../constants/storeAtoms";
+import { themeAtom } from "../../constants/storeUiAtoms";
 import { useAtom } from "jotai";
 
 import { Ionicons, MaterialIcons, MaterialCommunityIcons } from "@expo/vector-icons";

@@ -1,7 +1,7 @@
 import { View, Text, TouchableHighlight } from "react-native";
 import { useRouter } from "expo-router";
 
-import { themeAtom } from "../../../../constants/storeAtoms";
+import { themeAtom } from "../../../../constants/storeUiAtoms";
 import { useAtom } from "jotai";
 
 import { Ionicons } from "@expo/vector-icons";

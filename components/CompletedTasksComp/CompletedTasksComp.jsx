@@ -7,7 +7,8 @@ import { useNavigation } from "expo-router";
 
 import { Ionicons } from "@expo/vector-icons";
 
-import { errandsAtom, themeAtom } from "../../constants/storeAtoms";
+import { errandsAtom } from "../../constants/storeAtoms";
+import { themeAtom } from "../../constants/storeUiAtoms";
 import { useAtom } from "jotai";
 
 import RenderRightActionsCompletedErrand from "../../Utils/RenderRightActionsCompletedErrand";

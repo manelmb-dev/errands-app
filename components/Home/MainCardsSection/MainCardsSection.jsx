@@ -7,9 +7,9 @@ import { Ionicons, MaterialIcons, Octicons} from "@expo/vector-icons";
 import { useAtom } from "jotai";
 import {
   errandsAtom,
-  themeAtom,
   userAtom,
 } from "../../../constants/storeAtoms";
+import { themeAtom } from "../../../constants/storeUiAtoms";
 
 import { themes } from "../../../constants/themes";
 import i18n from "../../../constants/i18n";

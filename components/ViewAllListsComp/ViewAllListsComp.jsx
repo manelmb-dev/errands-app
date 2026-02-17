@@ -15,11 +15,11 @@ import {
   currentListAtom,
   errandsAtom,
   listsAtom,
-  themeAtom,
   userAtom,
   usersSharedWithAtom,
 } from "../../constants/storeAtoms";
 import { useAtom } from "jotai";
+import { themeAtom } from "../../constants/storeUiAtoms";
 
 import { themes } from "../../constants/themes";
 import i18n from "../../constants/i18n";

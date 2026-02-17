@@ -2,7 +2,7 @@ import { View, TouchableOpacity } from "react-native";
 import React from "react";
 
 import { useAtom } from "jotai";
-import { themeAtom } from "../../constants/storeAtoms";
+import { themeAtom } from "../../constants/storeUiAtoms";
 
 import { colors } from "../../constants/iconsColorsLists";
 import { themes } from "../../constants/themes";

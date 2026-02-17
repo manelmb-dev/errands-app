@@ -8,9 +8,9 @@ import { Ionicons, Octicons } from "@expo/vector-icons";
 
 import {
   contactsAtom,
-  themeAtom,
   userAtom,
 } from "../../../constants/storeAtoms";
+import { themeAtom } from "../../../constants/storeUiAtoms";
 import { useAtom } from "jotai";
 
 import DeletedErrandRenderRightActions from "./DeletedErrandRenderRightActions/DeletedErrandRenderRightActions";

@@ -11,7 +11,7 @@ import { Searchbar } from "react-native-paper";
 import { useNavigation } from "expo-router";
 
 import { useAtom } from "jotai";
-import { errandsAtom, listsAtom, themeAtom } from "../../constants/storeAtoms";
+import { errandsAtom, listsAtom } from "../../constants/storeAtoms";
 
 import { Ionicons } from "@expo/vector-icons";
 
@@ -23,6 +23,7 @@ import { useErrandActions } from "../../hooks/useErrandActions";
 import CompletedErrand from "../../Utils/CompletedErrand";
 import { themes } from "../../constants/themes";
 import i18n from "../../constants/i18n";
+import { themeAtom } from "../../constants/storeUiAtoms";
 
 const sortByDate = (a, b) => {
   const dateA = new Date(`${a.dateErrand}T${a.timeErrand || "20:00"}`);

@@ -3,7 +3,8 @@ import { LinearGradient } from "expo-linear-gradient";
 import { useNavigation } from "expo-router";
 import { useEffect } from "react";
 
-import { themeAtom, userAtom } from "../../constants/storeAtoms";
+import { themeAtom } from "../../constants/storeUiAtoms";
+import { userAtom } from "../../constants/storeAtoms";
 import { useAtom } from "jotai";
 
 import SharedListSection from "./SharedListsSection/SharedListsSection";

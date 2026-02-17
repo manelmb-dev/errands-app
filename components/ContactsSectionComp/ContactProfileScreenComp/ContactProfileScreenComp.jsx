@@ -6,9 +6,9 @@ import { Ionicons, Feather } from "@expo/vector-icons";
 
 import {
   contactsAtom,
-  themeAtom,
   userAtom,
 } from "../../../constants/storeAtoms";
+import { themeAtom } from "../../../constants/storeUiAtoms";
 import { useAtom } from "jotai";
 
 import ContactSharedTasksMenu from "./ContactSharedTasksMenu/ContactSharedTasksMenu";
@@ -21,9 +21,9 @@ import i18n from "../../../constants/i18n";
 const ContactProfileScreenComp = () => {
   const navigation = useNavigation();
 
-  const [theme] = useAtom(themeAtom);
-  const [contacts] = useAtom(contactsAtom);
   const [user, setUser] = useAtom(userAtom);
+  const [contacts] = useAtom(contactsAtom);
+  const [theme] = useAtom(themeAtom);
 
   const [showBlockedUserPopup, setShowBlockedUserPopup] = useState(false);
   const [showUnblockedUserPopup, setShowUnblockedUserPopup] = useState(false);

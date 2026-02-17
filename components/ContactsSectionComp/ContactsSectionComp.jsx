@@ -2,7 +2,8 @@ import React, { useState, useEffect, useMemo, useRef } from "react";
 import { View, FlatList, TextInput } from "react-native";
 import { useNavigation } from "expo-router";
 
-import { contactsAtom, themeAtom, userAtom } from "../../constants/storeAtoms";
+import { contactsAtom, userAtom } from "../../constants/storeAtoms";
+import { themeAtom } from "../../constants/storeUiAtoms";
 import { useAtom } from "jotai";
 
 import { Ionicons } from "@expo/vector-icons";

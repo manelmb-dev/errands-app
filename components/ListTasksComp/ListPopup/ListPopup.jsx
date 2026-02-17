@@ -12,7 +12,6 @@ import {
   currentListAtom,
   errandsAtom,
   listsAtom,
-  themeAtom,
   userAtom,
 } from "../../../constants/storeAtoms";
 import { useAtom } from "jotai";
@@ -21,6 +20,7 @@ import { Ionicons } from "@expo/vector-icons";
 
 import { themes } from "../../../constants/themes";
 import i18n from "../../../constants/i18n";
+import { themeAtom } from "../../../constants/storeUiAtoms";
 
 export default function ListPopup({
   showCompleted,

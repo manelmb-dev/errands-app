@@ -10,8 +10,9 @@ import {
 
 import { Ionicons, Feather } from "@expo/vector-icons";
 
-import { themeAtom } from "../../../constants/storeAtoms";
+import { themeAtom } from "../../../constants/storeUiAtoms";
 import { useAtom } from "jotai";
+
 import { themes } from "../../../constants/themes";
 import i18n from "../../../constants/i18n";
 

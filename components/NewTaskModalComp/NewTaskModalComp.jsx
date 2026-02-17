@@ -17,13 +17,13 @@ import DateTimePickerModal from "react-native-modal-datetime-picker";
 
 import { useAtom } from "jotai";
 import {
-  errandsAtom,
-  listAssignedAtom,
-  listsAtom,
-  themeAtom,
   userAssignedAtom,
+  listAssignedAtom,
+  errandsAtom,
+  listsAtom,
   userAtom,
 } from "../../constants/storeAtoms";
+import { themeAtom } from "../../constants/storeUiAtoms";
 
 import { Ionicons, MaterialIcons, FontAwesome6 } from "@expo/vector-icons";
 

@@ -10,12 +10,12 @@ import {
 
 import { MaterialIcons } from "@expo/vector-icons";
 
+import { themeAtom } from "../../../../constants/storeUiAtoms";
 import { useAtom } from "jotai";
 import {
-  currentListAtom,
-  themeAtom,
-  userAtom,
   usersSharedWithAtom,
+  currentListAtom,
+  userAtom,
 } from "../../../../constants/storeAtoms";
 
 import { themes } from "../../../../constants/themes";

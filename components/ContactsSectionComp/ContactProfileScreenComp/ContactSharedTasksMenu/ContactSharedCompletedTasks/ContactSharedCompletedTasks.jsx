@@ -4,7 +4,8 @@ import { useLocalSearchParams, useNavigation } from "expo-router";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { View, Text, Pressable } from "react-native";
 
-import { errandsAtom, themeAtom } from "../../../../../constants/storeAtoms";
+import { errandsAtom } from "../../../../../constants/storeAtoms";
+import { themeAtom } from "../../../../../constants/storeUiAtoms";
 import { useAtom } from "jotai";
 
 import RenderRightActionsCompletedErrand from "../../../../../Utils/RenderRightActionsCompletedErrand";
@@ -17,8 +18,8 @@ import i18n from "../../../../../constants/i18n";
 const ContactSharedCompletedTasks = () => {
   const navigation = useNavigation();
 
-  const [theme] = useAtom(themeAtom);
   const [errands, setErrands] = useAtom(errandsAtom);
+  const [theme] = useAtom(themeAtom);
 
   const { contact } = useLocalSearchParams();
   const currentContact = useMemo(() => JSON.parse(contact), [contact]);

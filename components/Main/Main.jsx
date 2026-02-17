@@ -1,7 +1,7 @@
 import { View } from "react-native";
 import { useState } from "react";
 
-import { themeAtom } from "../../constants/storeAtoms";
+import { themeAtom } from "../../constants/storeUiAtoms";
 import { useAtom } from "jotai";
 
 import RenderSection from "./RenderSection/RenderSection";

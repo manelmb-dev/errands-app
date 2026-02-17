@@ -7,7 +7,8 @@ import {
   MenuOption,
 } from "react-native-popup-menu";
 
-import { themeAtom, userAtom } from "../../../../../constants/storeAtoms";
+import { themeAtom } from "../../../../../constants/storeUiAtoms";
+import { userAtom } from "../../../../../constants/storeAtoms";
 import { useAtom } from "jotai";
 
 import { Ionicons } from "@expo/vector-icons";

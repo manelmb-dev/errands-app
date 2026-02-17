@@ -3,7 +3,7 @@ import { useNavigation } from "expo-router";
 import { useEffect } from "react";
 
 import { useAtom } from "jotai";
-import { themeAtom } from "../../../constants/storeAtoms";
+import { themeAtom } from "../../../constants/storeUiAtoms";
 
 import HelpAccordionItem from "./HelpAccordition/HelpAccordiotionItem";
 import { themes } from "../../../constants/themes";

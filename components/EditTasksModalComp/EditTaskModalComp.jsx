@@ -18,12 +18,11 @@ import {
 
 import { useAtom } from "jotai";
 import {
+  userAssignedAtom,
+  listAssignedAtom,
   contactsAtom,
   errandsAtom,
-  listAssignedAtom,
   listsAtom,
-  themeAtom,
-  userAssignedAtom,
   userAtom,
 } from "../../constants/storeAtoms";
 
@@ -36,6 +35,7 @@ import {
 import { themes } from "../../constants/themes";
 import formatDay from "../../constants/formatDay";
 import i18n from "../../constants/i18n";
+import { themeAtom } from "../../constants/storeUiAtoms";
 
 const EditTaskModal = () => {
   const { showActionSheetWithOptions } = useActionSheet();

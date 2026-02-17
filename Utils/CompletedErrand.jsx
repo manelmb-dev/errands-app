@@ -7,9 +7,9 @@ import { useAtom } from "jotai";
 import {
   contactsAtom,
   errandsAtom,
-  themeAtom,
   userAtom,
 } from "../constants/storeAtoms";
+import { themeAtom } from "../constants/storeUiAtoms";
 
 import formatCompletedErrandDate from "../constants/formatCompletedErrandDate";
 import formatErrandDate from "../constants/formatCompletedErrandDate";

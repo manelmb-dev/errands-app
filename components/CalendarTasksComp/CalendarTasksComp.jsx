@@ -5,7 +5,8 @@ import { View, Text, TouchableOpacity } from "react-native";
 import { useEffect, useRef, useState } from "react";
 import { useNavigation } from "expo-router";
 
-import { errandsAtom, themeAtom } from "../../constants/storeAtoms";
+import { errandsAtom } from "../../constants/storeAtoms";
+import { themeAtom } from "../../constants/storeUiAtoms";
 import { useAtom } from "jotai";
 
 import { Ionicons } from "@expo/vector-icons";
