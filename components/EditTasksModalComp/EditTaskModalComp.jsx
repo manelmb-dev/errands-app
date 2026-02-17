@@ -62,17 +62,12 @@ const EditTaskModal = () => {
   const [theme] = useAtom(themeAtom);
   const [, setErrands] = useAtom(errandsAtom);
 
-  const [dateSwitchEnabled, SetDateSwitchEnabled] = useState(
-    watch("dateErrand")
-  );
-  const [hourSwitchEnabled, SetHourSwitchEnabled] = useState(
-    watch("timeErrand")
-  );
+  const hasDate = !!watch("dateErrand");
+  const hasTime = !!watch("timeErrand");
+  const hasNotice = !!watch("dateNotice");
+
   const [isDatePickerVisible, setIsDatePickerVisible] = useState(false);
   const [isHourPickerVisible, setIsHourPickerVisible] = useState(false);
-  const [noticeSwitchEnabled, SetNoticeSwitchEnabled] = useState(
-    watch("dateNotice")
-  );
   const [isNoticePickerVisible, setIsNoticePickerVisible] = useState(false);
 
   const watchedTitle = watch("title");
@@ -110,31 +105,48 @@ const EditTaskModal = () => {
 
   useEffect(() => {
     const fullContact = contacts.find((c) => c.id === currentErrand.assignedId);
+
     const sharedList = {
-      title: i18n.t("shared"),
       id: "unassigned",
+      ownerId: user.id,
+      title: i18n.t("shared"),
       icon: "people",
       color: "slate",
+      usersShared: [user.id],
     };
     const fullList = lists.find((list) => list.id === currentErrand.listId);
+
     if (fullContact) {
       setUserAssigned(fullContact);
-    } else if (currentErrand.assignedId === "unassigned")
+    } else if (currentErrand.assignedId === "unassigned") {
       setUserAssigned({
         id: "unassigned",
         name: i18n.t("unassigned"),
       });
-    setListAssigned(fullList || sharedList);
-  }, [contacts, lists, currentErrand, setUserAssigned, setListAssigned]);
+    } else {
+      // fallback
+      setUserAssigned({ id: "unassigned", name: i18n.t("unassigned") });
+    }
+
+    setListAssigned(fullList ?? sharedList);
+  }, [
+    contacts,
+    lists,
+    currentErrand.assignedId,
+    currentErrand.listId,
+    user.id,
+    setUserAssigned,
+    setListAssigned,
+  ]);
 
   useEffect(() => {
     setValue("assignedId", userAssigned.id);
-    setValue("listId", listAssigned.id);
+    if (listAssigned) setValue("listId", listAssigned.id);
   }, [userAssigned, listAssigned, setValue]);
 
   // Function to handle date toggle
   const toggleDateSwitch = () => {
-    if (dateSwitchEnabled) {
+    if (hasDate) {
       setValue("dateErrand", "");
       setValue("timeErrand", "");
       setValue("dateNotice", "");
@@ -142,13 +154,10 @@ const EditTaskModal = () => {
     } else {
       setIsDatePickerVisible(true);
     }
-    SetDateSwitchEnabled((previousState) => !previousState);
-    SetHourSwitchEnabled(false);
   };
 
   // Function to handle date selection Modal
   const handleDateConfirm = (date) => {
-    SetDateSwitchEnabled(true);
     const dateString = date.toISOString().split("T")[0];
     setValue("dateErrand", dateString);
     setIsDatePickerVisible(false);
@@ -156,9 +165,8 @@ const EditTaskModal = () => {
 
   // Function to handle hour toggle
   const toggleHourSwitch = () => {
-    if (hourSwitchEnabled) {
+    if (hasTime) {
       setValue("timeErrand", "");
-      SetHourSwitchEnabled(false);
     } else {
       setIsHourPickerVisible(true);
     }
@@ -166,22 +174,21 @@ const EditTaskModal = () => {
 
   // Function to handle hour selection Modal
   const handleHourConfirm = (time) => {
-    !watch("dateErrand") && setValue("dateErrand", today);
+    if (!watch("dateErrand")) setValue("dateErrand", today);
+
     setValue(
       "timeErrand",
-      time.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })
+      time.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
     );
-    SetHourSwitchEnabled(true);
-    SetDateSwitchEnabled(true);
+
     setIsHourPickerVisible(false);
   };
 
   // Function to handle hour toggle
   const toggleNoticeSwitch = () => {
-    if (noticeSwitchEnabled) {
+    if (hasNotice) {
       setValue("dateNotice", "");
       setValue("timeNotice", "");
-      SetNoticeSwitchEnabled(false);
     } else {
       setIsNoticePickerVisible(true);
     }
@@ -191,19 +198,20 @@ const EditTaskModal = () => {
   const handleNoticeConfirm = (datetime) => {
     const dateString = datetime.toISOString().split("T")[0];
     setValue("dateNotice", dateString);
+
     const hourString = datetime.toLocaleTimeString([], {
       hour: "2-digit",
       minute: "2-digit",
     });
     setValue("timeNotice", hourString);
-    SetNoticeSwitchEnabled(true);
+
     setIsNoticePickerVisible(false);
   };
 
   // Function to handle header cancel button
   const handleCancel = useCallback(() => {
     setUserAssigned(user);
-    setListAssigned(false);
+    setListAssigned(null);
     navigation.goBack();
   }, [navigation, setUserAssigned, user, setListAssigned]);
 
@@ -211,7 +219,7 @@ const EditTaskModal = () => {
   useEffect(() => {
     const dismissModal = navigation.addListener("beforeRemove", (e) => {
       setUserAssigned(user);
-      setListAssigned(false);
+      setListAssigned(null);
     });
     return dismissModal;
   }, [navigation, setUserAssigned, user, setListAssigned]);
@@ -241,14 +249,14 @@ const EditTaskModal = () => {
     const updatedErrand = { ...data, id: currentErrand.id };
 
     setErrands((prevErrands) =>
-      prevErrands.map((e) => (e.id === updatedErrand.id ? updatedErrand : e))
+      prevErrands.map((e) => (e.id === updatedErrand.id ? updatedErrand : e)),
     );
 
     // Modify errand to DB FIRESTOREEE
     // await updateErrandInFirestore(updatedErrand);
 
     setUserAssigned(user);
-    setListAssigned(false);
+    setListAssigned(null);
     navigation.goBack();
   });
 
@@ -261,12 +269,13 @@ const EditTaskModal = () => {
         title: i18n.t("repeat"),
         options,
         cancelButtonIndex,
+        userInterfaceStyle: theme,
       },
       (selectedIndex) => {
         if (selectedIndex !== cancelButtonIndex) {
           setValue("repeat", repeatOptions[selectedIndex].value);
         }
-      }
+      },
     );
   };
 
@@ -279,12 +288,13 @@ const EditTaskModal = () => {
         title: i18n.t("priority"),
         options,
         cancelButtonIndex,
+        userInterfaceStyle: theme,
       },
       (selectedIndex) => {
         if (selectedIndex !== cancelButtonIndex) {
           setValue("priority", priorityOptions[selectedIndex].value);
         }
-      }
+      },
     );
   };
 
@@ -347,7 +357,7 @@ const EditTaskModal = () => {
                 color={themes["light"].background}
               />
               <View
-                className={`py-3 flex-1 flex-row justify-between items-center gap-2 border-b border-[${themes[theme].borderColor}]`}
+                className={`min-h-[58px] flex-1 flex-row justify-between items-center border-b border-[${themes[theme].borderColor}]`}
               >
                 <Text className={`text-[${themes[theme].text}] text-base`}>
                   {i18n.t("inCharge")}
@@ -396,12 +406,12 @@ const EditTaskModal = () => {
                 size={22}
                 color={themes["light"].background}
               />
-              <View className="py-3 flex-1 flex-row justify-between items-center">
+              <View className="min-h-[58px] flex-1 flex-row justify-between items-center">
                 <Text className={`text-[${themes[theme].text}] text-base`}>
                   {i18n.t("list")}
                 </Text>
                 <View
-                  className={`mr-4 px-2 py-1 gap-1 flex-row items-center ${listAssigned.id === "unassigned" || listAssigned === false || currentErrand.ownerId !== user.id ? `bg-[${themes[theme].surfaceBackground}]` : `${theme === "light" ? "bg-slate-300" : "bg-slate-600"}`} rounded-2xl`}
+                  className={`mr-4 px-2 py-1 gap-1 flex-row items-center ${listAssigned === null || listAssigned.id === "unassigned" || currentErrand.ownerId !== user.id ? `bg-[${themes[theme].surfaceBackground}]` : `${theme === "light" ? "bg-slate-300" : "bg-slate-600"}`} rounded-2xl`}
                 >
                   <Text className={`text-lg text-[${themes[theme].text}]`}>
                     {listAssigned ? `${listAssigned.title}` : i18n.t("shared")}
@@ -439,7 +449,7 @@ const EditTaskModal = () => {
                 color={themes["light"].background}
               />
               <View
-                className={`py-2 flex-1 flex-row justify-between gap-4 items-center border-b border-[${themes[theme].borderColor}]`}
+                className={`min-h-[58px] flex-1 flex-row justify-between items-center border-b border-[${themes[theme].borderColor}]`}
               >
                 <View>
                   <Text className={`text-[${themes[theme].text}] text-base`}>
@@ -453,11 +463,9 @@ const EditTaskModal = () => {
                     </Text>
                   )}
                 </View>
-                <Switch
-                  className="mr-4"
-                  value={watch("dateErrand") ? true : false}
-                  onValueChange={toggleDateSwitch}
-                />
+                <View className="mr-4">
+                  <Switch value={hasDate} onValueChange={toggleDateSwitch} />
+                </View>
               </View>
             </View>
           </TouchableHighlight>
@@ -481,7 +489,7 @@ const EditTaskModal = () => {
                 color={themes["light"].background}
               />
               <View
-                className={`py-2 flex-1 flex-row justify-between gap-4 items-center ${watch("dateErrand") && `border-b border-[${themes[theme].borderColor}]`}`}
+                className={`min-h-[58px] flex-1 flex-row justify-between items-center ${watch("dateErrand") && `border-b border-[${themes[theme].borderColor}]`}`}
               >
                 <View>
                   <Text className={`text-[${themes[theme].text}] text-base`}>
@@ -489,17 +497,15 @@ const EditTaskModal = () => {
                   </Text>
                   {watch("timeErrand") && (
                     <Text
-                      className={`text-[${themes[theme].blueHeadText}] text-lg`}
+                      className={`text-[${themes[theme].blueHeadText}] text-base`}
                     >
                       {watch("timeErrand")}
                     </Text>
                   )}
                 </View>
-                <Switch
-                  className="mr-4"
-                  value={watch("timeErrand") ? true : false}
-                  onValueChange={toggleHourSwitch}
-                />
+                <View className="mr-4">
+                  <Switch value={hasTime} onValueChange={toggleHourSwitch} />
+                </View>
               </View>
             </View>
           </TouchableHighlight>
@@ -521,7 +527,7 @@ const EditTaskModal = () => {
                   color={themes["light"].background}
                 />
                 <View
-                  className={`py-2 flex-1 flex-row justify-between gap-4 items-center ${watch("dateErrand") && `border-b border-[${themes[theme].borderColor}]`}`}
+                  className={`min-h-[58px] flex-1 flex-row justify-between items-center ${watch("dateErrand") && `border-b border-[${themes[theme].borderColor}]`}`}
                 >
                   <View>
                     <Text className={`text-[${themes[theme].text}] text-base`}>
@@ -535,11 +541,12 @@ const EditTaskModal = () => {
                       </Text>
                     )}
                   </View>
-                  <Switch
-                    className="mr-4"
-                    value={watch("dateNotice") ? true : false}
-                    onValueChange={toggleNoticeSwitch}
-                  />
+                  <View className="mr-4">
+                    <Switch
+                      value={hasNotice}
+                      onValueChange={toggleNoticeSwitch}
+                    />
+                  </View>
                 </View>
               </View>
             </TouchableHighlight>
@@ -559,7 +566,7 @@ const EditTaskModal = () => {
                   size={23}
                   color={themes["light"].background}
                 />
-                <View className="py-4 gap-4 flex-1 flex-row justify-between items-center">
+                <View className="min-h-[58px] flex-1 flex-row justify-between items-center">
                   <Text className={`text-[${themes[theme].text}] text-base`}>
                     {i18n.t("repeat")}
                   </Text>
@@ -570,7 +577,7 @@ const EditTaskModal = () => {
                   <Text className={`text-lg text-[${themes[theme].text}]`}>
                     {
                       repeatOptions.find(
-                        (option) => option.value === watch("repeat")
+                        (option) => option.value === watch("repeat"),
                       )?.label
                     }
                   </Text>
@@ -605,34 +612,35 @@ const EditTaskModal = () => {
                 color={themes["light"].background}
               />
               <View
-                className={`py-3 flex-1 flex-row justify-between gap-4 items-center border-b border-[${themes[theme].borderColor}]`}
+                className={`min-h-[58px] flex-1 flex-row justify-between items-center border-b border-[${themes[theme].borderColor}]`}
               >
                 <Text className={`text-[${themes[theme].text}] text-base`}>
                   {i18n.t("markedSingular")}
                 </Text>
-                <Switch
-                  className="mr-4"
-                  value={watch("marked")}
-                  onChange={() => setValue("marked", !watch("marked"))}
-                />
+                <View className="mr-4">
+                  <Switch
+                    value={watch("marked")}
+                    onChange={() => setValue("marked", !watch("marked"))}
+                  />
+                </View>
               </View>
             </View>
           </TouchableHighlight>
 
           {/* Priority */}
           <TouchableHighlight
-            className={"rounded-b-xl py-0.5"}
+            className={"rounded-b-xl"}
             underlayColor={themes[theme].background}
             onPress={showPriorityActionSheet}
           >
-            <View className={`flex-row items-center rounded-b-xl`}>
+            <View className={`flex-row items-center rounded-b-xl min-h-[58px]`}>
               <MaterialIcons
                 className="mx-4 p-1 bg-rose-500 rounded-lg "
                 name="priority-high"
                 size={22}
                 color={themes["light"].background}
               />
-              <View className="py-4 gap-4 flex-1 flex-row justify-between items-center">
+              <View className="flex-1">
                 <Text className={`text-[${themes[theme].text}] text-base`}>
                   {i18n.t("priority")}
                 </Text>
@@ -643,7 +651,7 @@ const EditTaskModal = () => {
                 <Text className={`text-lg text-[${themes[theme].text}]`}>
                   {
                     priorityOptions.find(
-                      (option) => option.value === watch("priority")
+                      (option) => option.value === watch("priority"),
                     )?.label
                   }
                 </Text>
