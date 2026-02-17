@@ -11,7 +11,7 @@ import {
   Keyboard,
 } from "react-native";
 
-import { themeAtom } from "../../../constants/storeAtoms";
+import { themeAtom } from "../../../constants/storeUiAtoms";
 import { useAtom } from "jotai";
 
 import { Ionicons, MaterialCommunityIcons } from "@expo/vector-icons";
@@ -21,9 +21,9 @@ import { themes } from "../../../constants/themes";
 import i18n from "../../../constants/i18n";
 
 export default function AiPromptScreen() {
-  const [theme] = useAtom(themeAtom as any);
+  const [theme] = useAtom(themeAtom);
 
-  const t = themes[theme as keyof typeof themes];
+  const t = themes[theme];
 
   const { prompt, setPrompt, loading, error, generate } = useAiDraftGenerator();
 
