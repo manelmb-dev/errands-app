@@ -9,23 +9,29 @@ export type DraftList = {
 };
 
 export type DraftTask = {
-  id: string; // id temporal (preview)
+  id: string;
+  ownerId: string;
+  assignedId?: string;
   title: string;
   description?: string;
-
-  // IA puede sugerir fecha/hora:
-  dateErrand?: string; // "2026-02-13" (YYYY-MM-DD)
-  timeErrand?: string; // "18:00" (HH:mm)
-
-  // Aviso (opcional):
+  dateErrand?: string;
+  timeErrand?: string;
+  completed: boolean;
   dateNotice?: string;
   timeNotice?: string;
-
+  repeat?: "never" | "daily" | "weekDays" | "weekendDays" | "weekly" | "monthly" | "yearly";
   priority?: "none" | "low" | "medium" | "high";
+  marked: boolean;
+  location?: string;
+  listId: string;
+  completedDateErrand?: string | null,
+  completedTimeErrand?: string | null,
+  completedBy?: string | null;
+  seen: boolean;
+  deleted: boolean;
 
   // A quién va asignada (por nombre, luego lo resolvemos a id):
   assignedName?: string; // "Laura Ortega"
-  assignedId?: string; // (si tu app ya lo puede resolver)
 };
 
 export type AiDraft =
