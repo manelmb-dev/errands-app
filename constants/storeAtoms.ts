@@ -1,9 +1,10 @@
 import { atom } from "jotai";
 
 import errandsData from "../errands";
+import { Contact, Errand, ID, List, User } from "./types";
 
 // User active lists
-let lists = [
+let lists: List[] = [
   {
     id: "900f87",
     ownerId: "100001",
@@ -85,7 +86,7 @@ let userExample = {
       lastSeen: "contacts",
     },
   },
-  photoURL: false,
+  photoURL: null,
   favoriteUsers: ["100002", "100004", "100006", "100008", "100012", "100016"],
   blockedUsers: ["100005", "1000015"],
   mutedUsers: {
@@ -229,14 +230,19 @@ let userExample = {
   createdAt: "2023-10-01T12:00:00.000Z",
   updatedAt: "2023-10-01T12:00:00.000Z",
   lastLogin: "2025-09-01T12:00:00.000Z",
-};
+} as const satisfies User;
 
-export const userAtom = atom(userExample);
-export const errandsAtom = atom(errandsData);
-export const listsAtom = atom(lists);
-export const usersSharedWithAtom = atom([]);
-export const currentErrandAtom = atom(null);
-export const currentListAtom = atom(null);
-export const userAssignedAtom = atom(userExample);
-export const listAssignedAtom = atom(false);
-export const contactsAtom = atom(userExample.contacts);
+export const userAtom = atom<User>(userExample);
+export const errandsAtom = atom<Errand[]>(errandsData as Errand[]);
+export const listsAtom = atom<List[]>(lists);
+
+export const usersSharedWithAtom = atom<ID[]>([]);
+export const currentErrandAtom = atom<Errand | null>(null);
+export const currentListAtom = atom<List | null>(null);
+
+export const userAssignedAtom = atom<User | { id: "unassigned"; name: string }>(
+  userExample,
+);
+export const listAssignedAtom = atom<List | null>(null);
+
+export const contactsAtom = atom<Contact[]>(userExample.contacts);

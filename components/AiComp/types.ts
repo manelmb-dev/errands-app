@@ -1,3 +1,5 @@
+import { Priority, Repeat } from "../../constants/types";
+
 export type ListIcon = string;
 export type ListColor = string;
 
@@ -7,17 +9,6 @@ export type DraftList = {
   color: ListColor;
   usersShared?: string[];
 };
-
-export type Repeat =
-  | "never"
-  | "daily"
-  | "weekDays"
-  | "weekendDays"
-  | "weekly"
-  | "monthly"
-  | "yearly";
-
-export type Priority = "none" | "low" | "medium" | "high";
 
 /**
  * A quién va asignada la tarea:
