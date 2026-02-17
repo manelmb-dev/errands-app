@@ -8,30 +8,60 @@ export type DraftList = {
   usersShared?: string[];
 };
 
+export type Repeat =
+  | "never"
+  | "daily"
+  | "weekDays"
+  | "weekendDays"
+  | "weekly"
+  | "monthly"
+  | "yearly";
+
+export type Priority = "none" | "low" | "medium" | "high";
+
+/**
+ * A quién va asignada la tarea:
+ * - unassigned: sin asignar
+ * - candidate: texto que dijo el usuario ("Laura Ortega")
+ * - resolved: ya resuelto por tu app a un id (opcional en IA, útil tras elegir en UI)
+ */
+export type AssignedUserRef =
+  | { kind: "unassigned"; id: "unassigned" }
+  | { kind: "candidate"; query: string } // "Laura Ortega"
+  | { kind: "resolved"; id: string; displayName?: string }; // id interno + nombre agenda
+
+/**
+ * A qué lista va:
+ * - unassigned: ninguna
+ * - candidate: texto que dijo el usuario ("Supermercado")
+ * - resolved: ya resuelto por tu app a listId
+ */
+export type ListRef =
+  | { kind: "unassigned"; id: "unassigned" }
+  | { kind: "candidate"; query: string } // "Supermercado"
+  | { kind: "resolved"; id: string; title?: string };
+
 export type DraftTask = {
-  id: string;
-  ownerId: string;
-  assignedId?: string;
   title: string;
+
+  // Optional
   description?: string;
+
+  // Date & time
   dateErrand?: string;
   timeErrand?: string;
-  completed: boolean;
+
+  // Notice (If user says it). Alternative: offsetMinutes.
   dateNotice?: string;
   timeNotice?: string;
-  repeat?: "never" | "daily" | "weekDays" | "weekendDays" | "weekly" | "monthly" | "yearly";
-  priority?: "none" | "low" | "medium" | "high";
-  marked: boolean;
-  location?: string;
-  listId: string;
-  completedDateErrand?: string | null,
-  completedTimeErrand?: string | null,
-  completedBy?: string | null;
-  seen: boolean;
-  deleted: boolean;
+  noticeOffsetMinutes?: number; // 60 = 1h before
 
-  // A quién va asignada (por nombre, luego lo resolvemos a id):
-  assignedName?: string; // "Laura Ortega"
+  repeat?: Repeat;
+  priority?: Priority;
+  location?: string;
+
+  assigned?: AssignedUserRef;
+  list?: ListRef;
 };
 
 export type AiDraft =
