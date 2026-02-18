@@ -17,7 +17,6 @@ export type DraftList = {
  * - resolved: ya resuelto por tu app a un id (opcional en IA, útil tras elegir en UI)
  */
 export type AssignedUserRef =
-  | { kind: "unassigned"; id: "unassigned" }
   | { kind: "candidate"; query: string } // "Laura Ortega"
   | { kind: "resolved"; id: string; displayName?: string }; // id interno + nombre agenda
 
@@ -51,8 +50,8 @@ export type DraftTask = {
   priority?: Priority;
   location?: string;
 
-  assigned?: AssignedUserRef;
-  list?: ListRef;
+  assigned?: AssignedUserRef | null;
+  list?: ListRef | null;
 };
 
 export type AiDraft =
