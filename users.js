@@ -1,6 +1,6 @@
 const users = [
   {
-    id: "100002",
+    uid: "100002",
     username: "maria456",
     name: "María",
     surname: "Fernández Martínez",
@@ -9,19 +9,6 @@ const users = [
     photoURL: false,
     favoriteUsers: [],
     blockedUsers: [],
-    contacts: [
-      "100001",
-      "100003",
-      "100004",
-      "100005",
-      "100006",
-      "100007",
-      "100008",
-      "100009",
-      "100010",
-      "100011",
-      "100012",
-    ],
     settings: {
       notifications: {
         email: true,
@@ -39,7 +26,7 @@ const users = [
     lastLogin: "2023-10-05T14:23:00.000Z",
   },
   {
-    id: "100003",
+    uid: "100003",
     username: "juan789",
     name: "Juan",
     surname: "Pérez Sánchez",
@@ -48,20 +35,6 @@ const users = [
     photoURL: false,
     favoriteUsers: [],
     blockedUsers: [],
-    contacts: [
-      "100001",
-      "100002",
-      "100004",
-      "100005",
-      "100006",
-      "100007",
-      "100008",
-      "100009",
-      "100010",
-      "100011",
-      "100012",
-      "100013",
-    ],
     settings: {
       notifications: {
         email: false,
@@ -79,7 +52,7 @@ const users = [
     lastLogin: "2023-10-04T09:15:00.000Z",
   },
   {
-    id: "100004",
+    uid: "100004",
     username: "ana321",
     name: "Ana",
     surname: "Ruiz Hernández",
@@ -88,21 +61,6 @@ const users = [
     photoURL: false,
     favoriteUsers: [],
     blockedUsers: [],
-    contacts: [
-      "100001",
-      "100002",
-      "100003",
-      "100005",
-      "100006",
-      "100007",
-      "100008",
-      "100009",
-      "100010",
-      "100011",
-      "100012",
-      "100013",
-      "100014",
-    ],
     settings: {
       notifications: {
         email: true,
@@ -120,7 +78,7 @@ const users = [
     lastLogin: "2023-10-03T18:45:00.000Z",
   },
   {
-    id: "100005",
+    uid: "100005",
     username: "lucia654",
     name: "Lucía",
     surname: "Gómez Torres",
@@ -129,22 +87,6 @@ const users = [
     photoURL: false,
     favoriteUsers: [],
     blockedUsers: [],
-    contacts: [
-      "100001",
-      "100002",
-      "100003",
-      "100004",
-      "100006",
-      "100007",
-      "100008",
-      "100009",
-      "100010",
-      "100011",
-      "100012",
-      "100013",
-      "100014",
-      "100015",
-    ],
     settings: {
       notifications: {
         email: false,
@@ -162,7 +104,7 @@ const users = [
     lastLogin: "2023-10-02T11:30:00.000Z",
   },
   {
-    id: "100006",
+    uid: "100006",
     username: "maxi456",
     name: "Maxi",
     surname: "Tarin Rojo",
@@ -171,18 +113,6 @@ const users = [
     photoURL: false,
     favoriteUsers: [],
     blockedUsers: [],
-    contacts: [
-      "100001",
-      "100003",
-      "100004",
-      "100005",
-      "100007",
-      "100008",
-      "100009",
-      "100010",
-      "100011",
-      "100012",
-    ],
     settings: {
       notifications: {
         email: true,
