@@ -36,10 +36,10 @@ const UsersOfList = () => {
   const [contacts] = useAtom(contactsAtom);
   const [currentList, setCurrentList] = useAtom(currentListAtom);
   const [usersSharedWith, setUsersSharedWith] = useAtom(usersSharedWithAtom);
-  
+
   const sharedUsers = useMemo(() => {
     return usersSharedWith
-    .map((userId) => {
+      .map((userId) => {
         // FIX THISSSS Below: contacts will have to be replaced for users collection
         const contact = contacts.find((c) => c.id === userId);
         return {
@@ -70,7 +70,7 @@ const UsersOfList = () => {
       <View className={`flex-1 bg-[${themes[theme].surfaceBackground}]`}>
         {/* Display the current user at the top */}
         <View
-          key={user.id}
+          key={user.uid}
           className="px-3 py-1 flex-row justify-between items-center"
         >
           <View className="flex-row items-center gap-3">
@@ -84,7 +84,7 @@ const UsersOfList = () => {
               {user.displayName}
             </Text>
           </View>
-          {currentList.ownerId === user.id && (
+          {currentList.ownerId === user.uid && (
             <Text
               className={`mr-2 text-base text-[${themes[theme].taskSecondText}]`}
             >
@@ -110,7 +110,7 @@ const UsersOfList = () => {
                 {contact.displayName}
               </Text>
             </View>
-            {currentList.ownerId === user.id && (
+            {currentList.ownerId === user.uid && (
               <Pressable
                 onPress={() => removeUserFromShared(contact.id)}
                 hitSlop={3}
@@ -134,7 +134,7 @@ const UsersOfList = () => {
         ))}
 
         {/* Add user button */}
-        {currentList.ownerId === user.id && (
+        {currentList.ownerId === user.uid && (
           <View>
             <TouchableHighlight
               underlayColor={themes[theme].borderColor}

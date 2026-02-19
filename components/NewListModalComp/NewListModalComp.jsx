@@ -20,7 +20,11 @@ import {
 import { themeAtom } from "../../constants/storeUiAtoms";
 import { useAtom } from "jotai";
 
-import { Ionicons, MaterialCommunityIcons, MaterialIcons } from "@expo/vector-icons";
+import {
+  Ionicons,
+  MaterialCommunityIcons,
+  MaterialIcons,
+} from "@expo/vector-icons";
 
 import UsersOfList from "../../Utils/New&EditListUtils/UsersOfList";
 import ColorGrid from "../../Utils/New&EditListUtils/ColorGrid";
@@ -39,7 +43,7 @@ const NewListModal = () => {
   const { contact } = useLocalSearchParams();
   const currentContact = useMemo(
     () => contact && JSON.parse(contact),
-    [contact]
+    [contact],
   );
 
   useEffect(() => {
@@ -67,7 +71,7 @@ const NewListModal = () => {
   const { control, handleSubmit, watch, setValue } = useForm({
     defaultValues: {
       id: "",
-      ownerId: user.id,
+      ownerId: user.uid,
       title: "",
       icon: "",
       color: "",
@@ -152,7 +156,7 @@ const NewListModal = () => {
   const handleAdd = handleSubmit((data) => {
     const updatedList = {
       ...data,
-      usersShared: [user.id, ...usersSharedWith],
+      usersShared: [user.uid, ...usersSharedWith],
     };
 
     // Add list to DB backend

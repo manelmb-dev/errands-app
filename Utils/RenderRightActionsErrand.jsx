@@ -18,14 +18,14 @@ const RenderRightActionsErrand = ({
 
   const errandList = useMemo(
     () => lists.find((list) => list.id === errand.listId),
-    [lists, errand.listId]
+    [lists, errand.listId],
   );
 
   const deleteErrand = async () => {
-    if (user.id === errand.ownerId || errandList !== undefined) {
+    if (user.uid === errand.ownerId || errandList !== undefined) {
       // Delete errand locally
       setErrands((prev) =>
-        prev.map((e) => (e.id === errand.id ? { ...e, deleted: true } : e))
+        prev.map((e) => (e.id === errand.id ? { ...e, deleted: true } : e)),
       );
 
       // Delete errand after timeout
@@ -35,12 +35,12 @@ const RenderRightActionsErrand = ({
       // await updateErrandInFirestore({ ...errand, deleted: true });
 
       // Send notification push to usersShared if errand was in a shared list
-    } else if (user.id !== errand.ownerId && errandList !== undefined) {
+    } else if (user.uid !== errand.ownerId && errandList !== undefined) {
       // Change assignedId to ownerId locally
       setErrands((prev) =>
         prev.map((e) =>
-          e.id === errand.id ? { ...e, assignedId: errand.ownerId } : e
-        )
+          e.id === errand.id ? { ...e, assignedId: errand.ownerId } : e,
+        ),
       );
       // Send notification push to ownerId
       // await sendNotificationToOwner(errand.ownerId, ...);
@@ -52,7 +52,7 @@ const RenderRightActionsErrand = ({
 
   return (
     <View className="flex-row h-full">
-      {(errand.ownerId === user.id || errandList !== undefined) && (
+      {(errand.ownerId === user.uid || errandList !== undefined) && (
         <TouchableOpacity
           className="w-20 bg-blue-600 justify-center items-center"
           activeOpacity={0.6}

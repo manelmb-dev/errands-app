@@ -27,8 +27,7 @@ const ListSharedUsers = ({ listOwner }) => {
 
   const sharedUsers = usersSharedWith.map((userId) => {
     const contact = contacts.find((c) => c.id === userId);
-    if (contact)
-      return { id: userId, displayName: contact.displayName };
+    if (contact) return { id: userId, displayName: contact.displayName };
     // FIX THISSSS Below: contacts will have to be replaced for users collection
     const unknownContact = contacts.find((c) => c.id === userId);
     if (unknownContact) return { id: userId, name: unknownContact.username };
@@ -44,7 +43,7 @@ const ListSharedUsers = ({ listOwner }) => {
       <View className={`flex-1 bg-[${themes[theme].background}]`}>
         {/* Display the current user at the top */}
         <View
-          key={user.id}
+          key={user.uid}
           className="px-3.5 py-2 flex-row justify-between items-center"
         >
           <View className="flex-row items-center gap-3">
@@ -58,7 +57,7 @@ const ListSharedUsers = ({ listOwner }) => {
               {user.displayName}
             </Text>
           </View>
-          {listOwner === user.id && (
+          {listOwner === user.uid && (
             <Text
               className={`mr-2 text-base text-[${themes[theme].taskSecondText}]`}
             >

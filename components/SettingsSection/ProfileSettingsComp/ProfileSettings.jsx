@@ -130,7 +130,7 @@ function SettingsSection() {
       // const q = query(usersRef, where("username", "==", text));
       // const querySnapshot = await getDocs(q);
 
-      // const isTaken = querySnapshot.docs.some((doc) => doc.id !== user.id);
+      // const isTaken = querySnapshot.docs.some((doc) => doc.id !== user.uid);
 
       const isTaken = users.some(
         (doc) =>

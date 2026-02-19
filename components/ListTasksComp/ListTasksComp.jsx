@@ -60,8 +60,8 @@ function ListTasksComp() {
   });
 
   useEffect(() => {
-    setUsersSharedWith(currentList.usersShared.filter((id) => id !== user.id));
-  }, [setUsersSharedWith, user.id, currentList.usersShared]);
+    setUsersSharedWith(currentList.usersShared.filter((id) => id !== user.uid));
+  }, [setUsersSharedWith, user.uid, currentList.usersShared]);
 
   useEffect(() => {
     navigation.setOptions({
@@ -91,7 +91,7 @@ function ListTasksComp() {
     currentList.title,
     showCompleted,
     completedErrandsFlatlistData,
-    errands
+    errands,
   ]);
 
   const flatListData = useMemo(
@@ -243,11 +243,11 @@ function ListTasksComp() {
                   className="flex-row items-center"
                   hitSlop={12}
                 >
-                    <Text
-                      className={`text-[${themes[theme].blueHeadText}] font-semibold text-base`}
-                    >
-                      {showCompleted ? i18n.t("hide") : i18n.t("show")}
-                    </Text>
+                  <Text
+                    className={`text-[${themes[theme].blueHeadText}] font-semibold text-base`}
+                  >
+                    {showCompleted ? i18n.t("hide") : i18n.t("show")}
+                  </Text>
                 </Pressable>
               )}
             </View>

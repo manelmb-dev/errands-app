@@ -61,7 +61,7 @@ const ViewAllListsComp = () => {
           style: "destructive",
         },
         { text: i18n.t("cancel"), style: "cancel" },
-      ]
+      ],
     );
   };
 
@@ -74,10 +74,10 @@ const ViewAllListsComp = () => {
         ? {
             ...list,
             usersShared: list.usersShared.filter(
-              (userId) => userId !== user.id
+              (userId) => userId !== user.uid,
             ),
           }
-        : list
+        : list,
     );
     setLists(updatedLists);
 
@@ -102,22 +102,22 @@ const ViewAllListsComp = () => {
 
   const ownLists = useMemo(
     () =>
-      lists.filter((l) => l.ownerId === user.id && l.usersShared.length === 1),
-    [lists, user.id]
+      lists.filter((l) => l.ownerId === user.uid && l.usersShared.length === 1),
+    [lists, user.uid],
   );
 
   const sharedLists = useMemo(
     () =>
       lists
         .filter(
-          (l) => l.usersShared.length > 1 && l.usersShared.includes(user.id)
+          (l) => l.usersShared.length > 1 && l.usersShared.includes(user.uid),
         )
         .sort((a, b) => {
-          const aIsOwner = a.ownerId === user.id ? 0 : 1;
-          const bIsOwner = b.ownerId === user.id ? 0 : 1;
+          const aIsOwner = a.ownerId === user.uid ? 0 : 1;
+          const bIsOwner = b.ownerId === user.uid ? 0 : 1;
           return aIsOwner - bIsOwner;
         }),
-    [lists, user.id]
+    [lists, user.uid],
   );
 
   useEffect(() => {
@@ -149,7 +149,7 @@ const ViewAllListsComp = () => {
           {item.title}
         </Text>
       </View>
-      {item.ownerId === user.id ? (
+      {item.ownerId === user.uid ? (
         <View className="flex-row gap-4">
           <Pressable
             onPress={() => {
@@ -192,7 +192,7 @@ const ViewAllListsComp = () => {
       onPress={() => {
         setCurrentList({
           id: "",
-          ownerId: user.id,
+          ownerId: user.uid,
           title: "",
           icon: "",
           color: "",

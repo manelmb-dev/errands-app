@@ -4,10 +4,7 @@ import React, { useEffect, useState } from "react";
 
 import { Ionicons, Feather } from "@expo/vector-icons";
 
-import {
-  contactsAtom,
-  userAtom,
-} from "../../../constants/storeAtoms";
+import { contactsAtom, userAtom } from "../../../constants/storeAtoms";
 import { themeAtom } from "../../../constants/storeUiAtoms";
 import { useAtom } from "jotai";
 
@@ -80,7 +77,7 @@ const ContactProfileScreenComp = () => {
         return {
           ...prev,
           blockedUsers: prev.blockedUsers.filter(
-            (id) => id !== currentContact.id
+            (id) => id !== currentContact.id,
           ),
         };
       }
@@ -96,14 +93,14 @@ const ContactProfileScreenComp = () => {
         ...prev,
         blockedUsers: [...prev.blockedUsers, currentContact.id],
         favoriteUsers: prev.favoriteUsers.filter(
-          (id) => id !== currentContact.id
+          (id) => id !== currentContact.id,
         ),
       };
     });
 
     // TODO: FIRESTORE UPDATEEE FIX THISSS
     // setUser((prev) =>
-    //   prev.map((user) => (user.id === updatedUser.id ? updatedUser : user))
+    //   prev.map((user) => (user.uid === updatedUser.uid ? updatedUser : user))
     // );
   };
 

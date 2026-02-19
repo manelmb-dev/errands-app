@@ -28,7 +28,8 @@ export default function SharedListSection() {
   const [, setUsersSharedWith] = useAtom(usersSharedWithAtom);
 
   const sharedLists = lists.filter(
-    (list) => list.usersShared.length > 1 && list.usersShared.includes(user.id),
+    (list) =>
+      list.usersShared.length > 1 && list.usersShared.includes(user.uid),
   );
 
   return (
@@ -107,7 +108,7 @@ export default function SharedListSection() {
               onPress={() => {
                 setCurrentList({
                   id: "",
-                  ownerId: user.id,
+                  ownerId: user.uid,
                   title: "",
                   icon: "",
                   color: "",

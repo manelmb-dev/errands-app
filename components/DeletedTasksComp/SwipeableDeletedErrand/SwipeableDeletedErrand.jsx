@@ -6,10 +6,7 @@ import React from "react";
 
 import { Ionicons, Octicons } from "@expo/vector-icons";
 
-import {
-  contactsAtom,
-  userAtom,
-} from "../../../constants/storeAtoms";
+import { contactsAtom, userAtom } from "../../../constants/storeAtoms";
 import { themeAtom } from "../../../constants/storeUiAtoms";
 import { useAtom } from "jotai";
 
@@ -30,11 +27,11 @@ const SwipeableFullErrand = ({
   const [contacts] = useAtom(contactsAtom);
 
   const assignedContact = contacts.find(
-    (contact) => contact.id.toString() === errand.assignedId.toString()
+    (contact) => contact.id.toString() === errand.assignedId.toString(),
   );
 
   const creatorContact = contacts.find(
-    (contact) => contact.id.toString() === errand.ownerId.toString()
+    (contact) => contact.id.toString() === errand.ownerId.toString(),
   );
 
   const restoreErrand = async (errandId) => {
@@ -80,7 +77,7 @@ const SwipeableFullErrand = ({
           onPress: () => restoreErrand(errandId),
           style: "default",
         },
-      ]
+      ],
     );
   };
 
@@ -151,40 +148,42 @@ const SwipeableFullErrand = ({
                 {errand.title}
               </Text>
 
-              {user.id !== errand.ownerId && user.id === errand.assignedId && (
-                <View className="flex-row">
-                  <View
-                    className={`flex-row my-0.5 px-2 p-0.5 bg-[${themes[theme].taskIncomingFromBg}] rounded-lg items-center gap-2`}
-                  >
-                    <Ionicons
-                      name="send"
-                      size={10}
-                      color="#6E727A"
-                      style={{ transform: [{ rotateY: "180deg" }] }}
-                    />
-                    <Text
-                      className={`text-sm text-[${themes[theme].taskSecondText}]`}
+              {user.uid !== errand.ownerId &&
+                user.uid === errand.assignedId && (
+                  <View className="flex-row">
+                    <View
+                      className={`flex-row my-0.5 px-2 p-0.5 bg-[${themes[theme].taskIncomingFromBg}] rounded-lg items-center gap-2`}
                     >
-                      {creatorContact.displayName}
-                    </Text>
+                      <Ionicons
+                        name="send"
+                        size={10}
+                        color="#6E727A"
+                        style={{ transform: [{ rotateY: "180deg" }] }}
+                      />
+                      <Text
+                        className={`text-sm text-[${themes[theme].taskSecondText}]`}
+                      >
+                        {creatorContact.displayName}
+                      </Text>
+                    </View>
                   </View>
-                </View>
-              )}
+                )}
 
-              {errand.ownerId === user.id && user.id !== errand.assignedId && (
-                <View className="flex-row">
-                  <View
-                    className={`flex-row my-0.5 px-2 p-0.5 bg-[${themes[theme].outgoingTaskToBg}] rounded-lg items-center gap-2`}
-                  >
-                    <Ionicons name="send" size={10} color="#6E727A" />
-                    <Text
-                      className={`text-sm text-[${themes[theme].taskSecondText}]`}
+              {errand.ownerId === user.uid &&
+                user.uid !== errand.assignedId && (
+                  <View className="flex-row">
+                    <View
+                      className={`flex-row my-0.5 px-2 p-0.5 bg-[${themes[theme].outgoingTaskToBg}] rounded-lg items-center gap-2`}
                     >
-                      {assignedContact.displayName}
-                    </Text>
+                      <Ionicons name="send" size={10} color="#6E727A" />
+                      <Text
+                        className={`text-sm text-[${themes[theme].taskSecondText}]`}
+                      >
+                        {assignedContact.displayName}
+                      </Text>
+                    </View>
                   </View>
-                </View>
-              )}
+                )}
             </View>
 
             {/* Status icons */}

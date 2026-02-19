@@ -10,10 +10,7 @@ import {
 
 import { Ionicons } from "@expo/vector-icons";
 
-import {
-  errandsAtom,
-  userAtom,
-} from "../../../constants/storeAtoms";
+import { errandsAtom, userAtom } from "../../../constants/storeAtoms";
 import { languageAtom, themeAtom } from "../../../constants/storeUiAtoms";
 import { useAtom } from "jotai";
 
@@ -27,13 +24,13 @@ export default function PopupDeletedTasksScreen() {
   const [errands, setErrands] = useAtom(errandsAtom);
 
   const totalErrandsDeleted = errands.filter(
-    (errand) => errand.deleted && errand.ownerId === user.id,
+    (errand) => errand.deleted && errand.ownerId === user.uid,
   ).length;
 
   const deleteAllDeletedErrands = () => {
     //delete deleted errands locally
     setErrands((prev) =>
-      prev.filter((e) => !e.deleted && e.ownerId === user.id),
+      prev.filter((e) => !e.deleted && e.ownerId === user.uid),
     );
 
     // TODO: FIRESTORE UPDATEEE

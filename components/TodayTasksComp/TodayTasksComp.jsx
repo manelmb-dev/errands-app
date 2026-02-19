@@ -111,21 +111,21 @@ function TodayTasks() {
     return (
       selectedTabObj?.errandsList?.filter(
         (errand) =>
-          errand.assignedId === user.id || errand.assignedId === "unassigned",
+          errand.assignedId === user.uid || errand.assignedId === "unassigned",
       ) || []
     );
-  }, [selectedTabObj, user.id]);
+  }, [selectedTabObj, user.uid]);
 
   const errandsOutgoingFromMe = useMemo(() => {
     return (
       selectedTabObj?.errandsList?.filter(
         (errand) =>
-          errand.ownerId === user.id &&
-          errand.assignedId !== user.id &&
+          errand.ownerId === user.uid &&
+          errand.assignedId !== user.uid &&
           errand.assignedId !== "unassigned",
       ) || []
     );
-  }, [selectedTabObj, user.id]);
+  }, [selectedTabObj, user.uid]);
 
   const todayDateFormatted = new Date().toLocaleDateString(i18n.locale, {
     weekday: "long",

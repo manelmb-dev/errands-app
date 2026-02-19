@@ -62,7 +62,7 @@ export type UserSettings = {
 export type ISODateString = string;
 
 export type User = {
-  id: ID;
+  uid: ID;
   username: string;
   displayName: string;
   name: string;

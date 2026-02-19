@@ -4,11 +4,7 @@ import { Pressable, Text, View } from "react-native";
 import { Ionicons, Octicons } from "@expo/vector-icons";
 
 import { useAtom } from "jotai";
-import {
-  contactsAtom,
-  errandsAtom,
-  userAtom,
-} from "../constants/storeAtoms";
+import { contactsAtom, errandsAtom, userAtom } from "../constants/storeAtoms";
 import { themeAtom } from "../constants/storeUiAtoms";
 
 import formatCompletedErrandDate from "../constants/formatCompletedErrandDate";
@@ -33,15 +29,15 @@ function CompletedErrand({ errand }) {
   ];
 
   const assignedContact = contacts.find(
-    (contact) => contact.id.toString() === errand.assignedId.toString()
+    (contact) => contact.id.toString() === errand.assignedId.toString(),
   );
 
   const creatorContact = contacts.find(
-    (contact) => contact.id.toString() === errand.ownerId.toString()
+    (contact) => contact.id.toString() === errand.ownerId.toString(),
   );
 
   const repeatOptionSelected = repeatOptions.find(
-    (option) => option.value === errand.repeat
+    (option) => option.value === errand.repeat,
   );
 
   const uncompleteErrand = () => {
@@ -58,7 +54,7 @@ function CompletedErrand({ errand }) {
           };
         }
         return e;
-      })
+      }),
     );
   };
 
@@ -76,7 +72,7 @@ function CompletedErrand({ errand }) {
         />
         <View className="flex-1 flex-shrink">
           <Text className="text-[#6E727A] flex-shrink">{errand.title}</Text>
-          {user.id !== errand.ownerId && user.id === errand.assignedId && (
+          {user.uid !== errand.ownerId && user.uid === errand.assignedId && (
             <View className="flex-row">
               <View
                 className={`flex-row my-0.5 px-2 p-1 bg-[${themes[theme].taskIncomingFromBg}] rounded-lg items-center gap-2`}
@@ -92,8 +88,8 @@ function CompletedErrand({ errand }) {
               </View>
             </View>
           )}
-          {errand.ownerId === user.id &&
-            user.id !== errand.assignedId &&
+          {errand.ownerId === user.uid &&
+            user.uid !== errand.assignedId &&
             errand.assignedId !== "unassigned" && (
               <View className="flex-row">
                 <View

@@ -65,7 +65,7 @@ let lists: List[] = [
 
 // User active
 let userExample = {
-  id: "100001",
+  uid: "100001",
   username: "manelmb9",
   displayName: "Manel Martinez Bel",
   name: "Manel",

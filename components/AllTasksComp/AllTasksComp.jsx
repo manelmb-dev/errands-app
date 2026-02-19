@@ -82,8 +82,8 @@ function AllTasksComp() {
   //         .filter((errand) => !errand.deleted)
   //         .filter(
   //           (errand) =>
-  //             user.id === errand.ownerId &&
-  //             user.id === errand.assignedId &&
+  //             user.uid === errand.ownerId &&
+  //             user.uid === errand.assignedId &&
   //             !errand.completed
   //         ),
   //     },
@@ -94,8 +94,8 @@ function AllTasksComp() {
   //         .filter((errand) => !errand.deleted)
   //         .filter(
   //           (errand) =>
-  //             user.id !== errand.ownerId &&
-  //             user.id === errand.assignedId &&
+  //             user.uid !== errand.ownerId &&
+  //             user.uid === errand.assignedId &&
   //             !errand.completed
   //         ),
   //     },
@@ -106,8 +106,8 @@ function AllTasksComp() {
   //         .filter((errand) => !errand.deleted)
   //         .filter(
   //           (errand) =>
-  //             user.id === errand.ownerId &&
-  //             user.id !== errand.assignedId &&
+  //             user.uid === errand.ownerId &&
+  //             user.uid !== errand.assignedId &&
   //             !errand.completed
   //         ),
   //     },

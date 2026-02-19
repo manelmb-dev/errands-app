@@ -22,7 +22,11 @@ import {
 import { themeAtom } from "../../constants/storeUiAtoms";
 import { useAtom } from "jotai";
 
-import { Ionicons, MaterialIcons, MaterialCommunityIcons } from "@expo/vector-icons";
+import {
+  Ionicons,
+  MaterialIcons,
+  MaterialCommunityIcons,
+} from "@expo/vector-icons";
 
 import UsersOfList from "../../Utils/New&EditListUtils/UsersOfList";
 import ColorGrid from "../../Utils/New&EditListUtils/ColorGrid";
@@ -56,8 +60,8 @@ const EditListModalComp = () => {
   const watchedTitle = watch("title");
 
   useEffect(() => {
-    setUsersSharedWith(currentList.usersShared.filter((id) => id !== user.id));
-  }, [setUsersSharedWith, currentList.usersShared, user.id]);
+    setUsersSharedWith(currentList.usersShared.filter((id) => id !== user.uid));
+  }, [setUsersSharedWith, currentList.usersShared, user.uid]);
 
   useEffect(() => {
     navigation.setOptions({
@@ -141,7 +145,7 @@ const EditListModalComp = () => {
         onDiscard();
       }
     },
-    [watch]
+    [watch],
   );
 
   // Function to handle changes in list
@@ -149,14 +153,14 @@ const EditListModalComp = () => {
     const updatedList = {
       ...data,
       id: currentList.id,
-      usersShared: [user.id, ...usersSharedWith],
+      usersShared: [user.uid, ...usersSharedWith],
     };
 
     setCurrentList(updatedList);
 
     // Update list locally
     setLists((prevLists) =>
-      prevLists.map((l) => (l.id === updatedList.id ? updatedList : l))
+      prevLists.map((l) => (l.id === updatedList.id ? updatedList : l)),
     );
 
     // FIRESTONE UPDATEEE FIXX THIS

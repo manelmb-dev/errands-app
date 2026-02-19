@@ -36,13 +36,13 @@ export default function ListSection() {
 
   const ownNotSahredLists = lists.filter(
     (list) =>
-      list.ownerId === user.id &&
+      list.ownerId === user.uid &&
       list.usersShared.length === 1 &&
-      list.usersShared[0] === user.id,
+      list.usersShared[0] === user.uid,
   );
 
   const totalErrandsDeleted = errands.filter(
-    (errand) => errand.ownerId === user.id && errand.deleted,
+    (errand) => errand.ownerId === user.uid && errand.deleted,
   ).length;
 
   return (
@@ -187,7 +187,7 @@ export default function ListSection() {
                       {
                         errands.filter(
                           (errand) =>
-                            errand.ownerId === user.id &&
+                            errand.ownerId === user.uid &&
                             errand.deleted === true,
                         ).length
                       }

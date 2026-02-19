@@ -51,7 +51,7 @@ const ContactSharedLists = () => {
     return lists.filter(
       (list) =>
         list.usersShared.includes(currentContact.id) &&
-        list.usersShared.includes(user.id),
+        list.usersShared.includes(user.uid),
     );
   }, [lists, currentContact, user]);
 
@@ -131,7 +131,7 @@ const ContactSharedLists = () => {
               onPress={() => {
                 setCurrentList({
                   id: "",
-                  ownerId: user.id,
+                  ownerId: user.uid,
                   title: "",
                   icon: "",
                   color: "",
@@ -181,7 +181,7 @@ const ContactSharedLists = () => {
             onPress={() => {
               setCurrentList({
                 id: "",
-                ownerId: user.id,
+                ownerId: user.uid,
                 title: "",
                 icon: "",
                 color: "",

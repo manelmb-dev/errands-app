@@ -109,14 +109,14 @@ const EditTaskModal = () => {
 
     const sharedList = {
       id: "unassigned",
-      ownerId: user.id,
+      ownerId: user.uid,
       title: i18n.t("shared"),
       icon: "people",
       color: "slate",
-      usersShared: [user.id],
+      usersShared: [user.uid],
     };
     const fullList = lists.find((list) => list.id === currentErrand.listId);
-    if (currentErrand.assignedId === user.id) {
+    if (currentErrand.assignedId === user.uid) {
       setUserAssigned(user);
     } else if (fullContact) {
       setUserAssigned(fullContact);
@@ -136,7 +136,7 @@ const EditTaskModal = () => {
     lists,
     currentErrand.assignedId,
     currentErrand.listId,
-    user.id,
+    user.uid,
     setUserAssigned,
     setListAssigned,
   ]);
@@ -372,7 +372,7 @@ const EditTaskModal = () => {
                     numberOfLines={1}
                     ellipsizeMode="tail"
                   >
-                    {userAssigned.id === user.id
+                    {userAssigned.id === user.uid
                       ? `${userAssigned.name} (${i18n.t("me")})`
                       : `${userAssigned.displayName}`}
                   </Text>
@@ -392,7 +392,7 @@ const EditTaskModal = () => {
             underlayColor={themes[theme].background}
             onPress={() => {
               Keyboard.dismiss();
-              if (currentErrand.ownerId === user.id) {
+              if (currentErrand.ownerId === user.uid) {
                 router.push({
                   pathname: "/Modals/assignListModal",
                 });
@@ -413,12 +413,12 @@ const EditTaskModal = () => {
                   {i18n.t("list")}
                 </Text>
                 <View
-                  className={`mr-4 px-2 py-1 gap-1 flex-row items-center ${listAssigned === null || listAssigned.id === "unassigned" || currentErrand.ownerId !== user.id ? `bg-[${themes[theme].surfaceBackground}]` : `${theme === "light" ? "bg-slate-300" : "bg-slate-600"}`} rounded-2xl`}
+                  className={`mr-4 px-2 py-1 gap-1 flex-row items-center ${listAssigned === null || listAssigned.id === "unassigned" || currentErrand.ownerId !== user.uid ? `bg-[${themes[theme].surfaceBackground}]` : `${theme === "light" ? "bg-slate-300" : "bg-slate-600"}`} rounded-2xl`}
                 >
                   <Text className={`text-lg text-[${themes[theme].text}]`}>
                     {listAssigned ? `${listAssigned.title}` : i18n.t("shared")}
                   </Text>
-                  {currentErrand.ownerId === user.id && (
+                  {currentErrand.ownerId === user.uid && (
                     <Ionicons
                       name="chevron-forward"
                       size={18}

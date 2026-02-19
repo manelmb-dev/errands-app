@@ -4,11 +4,7 @@ import { useLocalSearchParams, useNavigation } from "expo-router";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { View, Text, Pressable } from "react-native";
 
-import {
-  errandsAtom,
-  listsAtom,
-  userAtom,
-} from "../../constants/storeAtoms";
+import { errandsAtom, listsAtom, userAtom } from "../../constants/storeAtoms";
 import { themeAtom } from "../../constants/storeUiAtoms";
 import { useAtom } from "jotai";
 
@@ -93,11 +89,11 @@ const SharedTasksComp = () => {
 
     if (mainTab === "outgoing") {
       baseList = baseList.filter(
-        (e) => e.ownerId === user.id && e.assignedId !== user.id,
+        (e) => e.ownerId === user.uid && e.assignedId !== user.uid,
       );
     } else if (mainTab === "incoming") {
       baseList = baseList.filter(
-        (e) => e.ownerId !== user.id && e.assignedId === user.id,
+        (e) => e.ownerId !== user.uid && e.assignedId === user.uid,
       );
     }
 
@@ -251,7 +247,7 @@ const SharedTasksComp = () => {
                   onCompleteWithUndo={onCompleteWithUndo}
                   onDeleteWithUndo={onDeleteWithUndo}
                 />
-              )
+              ),
             )}
           </View>
         )}

@@ -43,16 +43,16 @@ function FullErrand({
   });
 
   const assignedContact = useMemo(() => {
-    if (errand.assignedId === user.id) return user;
+    if (errand.assignedId === user.uid) return user;
 
     const contact = contacts.find(
-      (contact) => contact.id === errand.assignedId
+      (contact) => contact.id === errand.assignedId,
     );
     if (contact) return contact;
 
     // FIX THISSSS Below: contacts will have to be replaced for users collection
     const unknownContact = contacts.find(
-      (user) => user.id === errand.assignedId
+      (user) => user.uid === errand.assignedId,
     );
     if (unknownContact) {
       return { id: errand.assignedId, name: unknownContact.username };
@@ -120,8 +120,8 @@ function FullErrand({
               completed: true,
               completedDateErrand: formattedDate,
               completedTimeErrand: formattedTime,
-              completedBy: user.id,
-          }
+              completedBy: user.uid,
+            }
           : e,
       ),
     );
@@ -132,7 +132,7 @@ function FullErrand({
       completed: true,
       completedDateErrand: formattedDate,
       completedTimeErrand: formattedTime,
-      completedBy: user.id,
+      completedBy: user.uid,
     });
 
     // Send notifications if needed to all the users
@@ -149,7 +149,7 @@ function FullErrand({
     }
 
     const pathname =
-      errand.ownerId === user.id || errandList !== undefined
+      errand.ownerId === user.uid || errandList !== undefined
         ? "Modals/editTaskModal"
         : "Modals/viewIncomingTaskModal";
 
@@ -157,7 +157,7 @@ function FullErrand({
       pathname,
       params: { errand: JSON.stringify(errand) },
     });
-  }, [errand, user.id, openSwipeableRef, swipeableRefs, errandList]);
+  }, [errand, user.uid, openSwipeableRef, swipeableRefs, errandList]);
 
   return (
     <Animated.View exiting={FadeOut}>
@@ -189,8 +189,8 @@ function FullErrand({
               {errand.title}
             </Text>
 
-            {user.id !== errand.ownerId &&
-              user.id === errand.assignedId &&
+            {user.uid !== errand.ownerId &&
+              user.uid === errand.assignedId &&
               errandList === undefined && (
                 <View
                   className={`self-start flex-row my-0.5 p-2 py-0.5 bg-[${themes[theme].taskIncomingFromBg}] rounded-lg items-center gap-2 max-w-full`}
@@ -206,8 +206,8 @@ function FullErrand({
                 </View>
               )}
 
-            {errand.ownerId === user.id &&
-              user.id !== errand.assignedId &&
+            {errand.ownerId === user.uid &&
+              user.uid !== errand.assignedId &&
               assignedContact !== undefined &&
               errandList === undefined && (
                 <View
@@ -264,7 +264,7 @@ function FullErrand({
                 className={`py-1 px-0.5 rounded-lg items-center justify-center min-w-[88px] ${new Date(`${errand.dateErrand}T${errand.timeErrand || "24:00"}`) < new Date() ? `${theme === "light" ? "bg-red-100" : "bg-red-950 "}` : `${theme === "light" ? "bg-gray-200" : "bg-neutral-800 "}`}`}
                 onPress={() => {
                   if (
-                    errand.ownerId === user.id ||
+                    errand.ownerId === user.uid ||
                     (errandList && errandList.usersShared.length > 1)
                   ) {
                     setIsDateTimePickerVisible(true);
@@ -287,7 +287,7 @@ function FullErrand({
                 activeOpacity={0.6}
                 className={`py-1 px-1 rounded-full items-center justify-center border border-dashed ${theme === "light" ? "border-gray-400" : "border-neutral-700"}`}
                 onPress={() => {
-                  if (errand.ownerId === user.id) {
+                  if (errand.ownerId === user.uid) {
                     setIsDateTimePickerVisible(true);
                   } else {
                     router.push({

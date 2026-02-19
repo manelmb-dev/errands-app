@@ -53,8 +53,8 @@ export const useSharedSlides = (errands, user) => {
       e.dateErrand &&
       e.dateTime <= endOfWeek &&
       !e.deleted &&
-      e.ownerId === user.id &&
-      e.assignedId !== user.id &&
+      e.ownerId === user.uid &&
+      e.assignedId !== user.uid &&
       (errandList(e) === undefined || errandList(e).usersShared.length === 1),
   );
 
@@ -64,8 +64,8 @@ export const useSharedSlides = (errands, user) => {
       e.dateErrand &&
       e.dateTime <= endOfWeek &&
       !e.deleted &&
-      e.ownerId !== user.id &&
-      e.assignedId === user.id &&
+      e.ownerId !== user.uid &&
+      e.assignedId === user.uid &&
       (errandList(e) === undefined || errandList(e).usersShared.length === 1),
   );
 
@@ -86,7 +86,7 @@ export const useSharedSlides = (errands, user) => {
   const incomingOverdue = getOverdue(incomingErrands, rightNow);
 
   const incomingCompleted = completedSharedErrands.filter(
-    (e) => e.ownerId !== user.id && e.assignedId === user.id,
+    (e) => e.ownerId !== user.uid && e.assignedId === user.uid,
   );
 
   // Outgoing errands
@@ -95,7 +95,7 @@ export const useSharedSlides = (errands, user) => {
   const outgoingOverdue = getOverdue(outgoingErrands, rightNow);
 
   const outgoingCompleted = completedSharedErrands.filter(
-    (e) => e.ownerId === user.id && e.assignedId !== user.id,
+    (e) => e.ownerId === user.uid && e.assignedId !== user.uid,
   );
 
   const sharedCards = [

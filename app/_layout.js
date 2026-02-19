@@ -67,7 +67,7 @@ export default function Layout() {
     loadPreferences();
   }, [setLanguage, setTheme, system]);
 
-  useDeviceContactsSync(ready && !!user?.id);
+  useDeviceContactsSync(ready && !!user?.uid);
 
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>

@@ -75,8 +75,8 @@ const NewTaskModal = () => {
   const { control, handleSubmit, watch, setValue } = useForm({
     defaultValues: {
       id: "",
-      ownerId: user.id,
-      assignedId: user.id,
+      ownerId: user.uid,
+      assignedId: user.uid,
       title: "",
       description: "",
       dateErrand: "",
@@ -105,11 +105,11 @@ const NewTaskModal = () => {
   useEffect(() => {
     const sharedList = {
       id: "unassigned",
-      ownerId: user.id,
+      ownerId: user.uid,
       title: i18n.t("shared"),
       icon: "people",
       color: "slate",
-      usersShared: [user.id],
+      usersShared: [user.uid],
     };
 
     // 1) If you came from a list -> fixed list and assigned "unassigned"
@@ -385,7 +385,7 @@ const NewTaskModal = () => {
                     numberOfLines={1}
                     ellipsizeMode="tail"
                   >
-                    {userAssigned.id === user.id
+                    {userAssigned.id === user.uid
                       ? `${userAssigned.name} (${i18n.t("me")})`
                       : `${userAssigned.displayName}`}
                   </Text>
