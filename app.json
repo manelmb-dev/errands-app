@@ -37,7 +37,8 @@
     },
     "plugins": [
       "expo-router",
-      "expo-localization"
+      "expo-localization",
+      "./plugins/withContactsPermissionStrings"
     ]
   }
 }

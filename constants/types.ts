@@ -2,12 +2,12 @@ export type ID = string;
 
 export type Contact = {
   id: ID;
-  name: string;
+  displayName: string; // use for matching AI
+  name?: string;
   surname?: string;
-  phoneNumber?: string;
-  email?: string;
+  phoneNumbers: string[];
+  emails?: string[];
   username?: string;
-  // más adelante: displayName (agenda) etc.
 };
 
 export type List = {

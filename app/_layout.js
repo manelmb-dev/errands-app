@@ -16,8 +16,10 @@ import { useEffect, useState } from "react";
 import { StatusBar } from "expo-status-bar";
 
 import { languageAtom, themeAtom } from "../constants/storeUiAtoms";
+import { userAtom } from "../constants/storeAtoms";
 import { useAtom } from "jotai";
 
+import { useDeviceContactsSync } from "../hooks/useDeviceContactsSync";
 import { themes } from "../constants/themes";
 import I18n from "../constants/i18n";
 import "../App.css";
@@ -26,6 +28,7 @@ export default function Layout() {
   const system = useColorScheme() ?? "light";
   const [theme, setTheme] = useAtom(themeAtom);
   const [, setLanguage] = useAtom(languageAtom);
+  const [user, setUser] = useAtom(userAtom)
 
   const [ready, setReady] = useState(false);
 
@@ -64,6 +67,8 @@ export default function Layout() {
     loadPreferences();
   }, [setLanguage, setTheme, system]);
 
+  useDeviceContactsSync(ready && !!user?.id);
+
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <SafeAreaProvider>
@@ -77,7 +82,7 @@ export default function Layout() {
             <ActionSheetProvider>
               <View className={`flex-1 bg-[${themes[theme].background}]`}>
                 {ready ? (
-                  userExists === true ? (
+                  user && userExists === true ? (
                     <Stack />
                   ) : (
                     <>

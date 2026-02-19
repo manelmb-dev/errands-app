@@ -33,6 +33,8 @@ PODS:
     - ExpoModulesCore
   - ExpoCalendar (15.0.8):
     - ExpoModulesCore
+  - ExpoContacts (15.0.11):
+    - ExpoModulesCore
   - ExpoFileSystem (19.0.21):
     - ExpoModulesCore
   - ExpoFont (14.0.11):
@@ -2121,6 +2123,7 @@ DEPENDENCIES:
   - Expo (from `../node_modules/expo`)
   - ExpoAsset (from `../node_modules/expo-asset/ios`)
   - ExpoCalendar (from `../node_modules/expo-calendar/ios`)
+  - ExpoContacts (from `../node_modules/expo-contacts/ios`)
   - ExpoFileSystem (from `../node_modules/expo-file-system/ios`)
   - ExpoFont (from `../node_modules/expo-font/ios`)
   - ExpoHead (from `../node_modules/expo-router/ios`)
@@ -2235,6 +2238,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/expo-asset/ios"
   ExpoCalendar:
     :path: "../node_modules/expo-calendar/ios"
+  ExpoContacts:
+    :path: "../node_modules/expo-contacts/ios"
   ExpoFileSystem:
     :path: "../node_modules/expo-file-system/ios"
   ExpoFont:
@@ -2419,6 +2424,7 @@ SPEC CHECKSUMS:
   Expo: 58cbcad4f708fc1b41d861586310ac1903282d85
   ExpoAsset: f867e55ceb428aab99e1e8c082b5aee7c159ea18
   ExpoCalendar: b35805a0a9e3f46a4cef0cbfdf36673b4c973c63
+  ExpoContacts: 1c976e6c0b9be9b256ea038eba5c86f5707a73ce
   ExpoFileSystem: 858a44267a3e6e9057e0888ad7c7cfbf55d52063
   ExpoFont: f543ce20a228dd702813668b1a07b46f51878d47
   ExpoHead: 4425246bc93411f0fe7f6945f95f698e91db8780

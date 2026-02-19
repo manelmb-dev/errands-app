@@ -22,6 +22,7 @@
     "eslint-config-expo": "~10.0.0",
     "expo-calendar": "~15.0.7",
     "expo-constants": "~18.0.9",
+    "expo-contacts": "~15.0.11",
     "expo-image-picker": "~17.0.8",
     "expo-linear-gradient": "~15.0.8",
     "expo-linking": "~8.0.8",
@@ -52,7 +53,8 @@
     "react-native-vector-icons": "^10.2.0",
     "react-native-web": "^0.21.0",
     "react-native-worklets": "0.5.1",
-    "tailwindcss-react-native": "^1.7.10"
+    "tailwindcss-react-native": "^1.7.10",
+    "expo": "~54.0.32"
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",
