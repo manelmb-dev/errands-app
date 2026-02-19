@@ -1,4 +1,5 @@
 import { useRouter } from "expo-router";
+import { useMemo } from "react";
 import {
   Pressable,
   ScrollView,
@@ -35,15 +36,19 @@ const UsersOfList = () => {
   const [contacts] = useAtom(contactsAtom);
   const [currentList, setCurrentList] = useAtom(currentListAtom);
   const [usersSharedWith, setUsersSharedWith] = useAtom(usersSharedWithAtom);
-
-  const sharedUsers = usersSharedWith.map((userId) => {
-    const contact = contacts.find((c) => c.id === userId);
-    if (contact)
-      return { id: userId, displayName: contact.displayName };
-    // FIX THISSSS Below: contacts will have to be replaced for users collection
-    const unknownContact = contacts.find((c) => c.id === userId);
-    if (unknownContact) return { id: userId, name: unknownContact.username };
-  });
+  
+  const sharedUsers = useMemo(() => {
+    return usersSharedWith
+    .map((userId) => {
+        // FIX THISSSS Below: contacts will have to be replaced for users collection
+        const contact = contacts.find((c) => c.id === userId);
+        return {
+          id: userId,
+          displayName: contact?.displayName ?? i18n.t("unknownUser"),
+        };
+      })
+      .sort(sortByNameSurname);
+  }, [usersSharedWith, contacts]);
 
   const removeUserFromShared = (userId) => {
     setUsersSharedWith((prev) => prev.filter((id) => id !== userId));
@@ -89,7 +94,7 @@ const UsersOfList = () => {
         </View>
 
         {/* Display the shared users */}
-        {sharedUsers.sort(sortByNameSurname).map((contact) => (
+        {sharedUsers.map((contact) => (
           <View
             key={contact.id}
             className="px-3 py-1 flex-row justify-between items-center"
