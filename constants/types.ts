@@ -74,6 +74,7 @@ export type ISODateString = string;
 export type User = {
   id: ID;
   username: string;
+  displayName: string;
   name: string;
   surname: string;
   email?: string;
