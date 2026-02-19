@@ -165,7 +165,7 @@ const SwipeableFullErrand = ({
                     <Text
                       className={`text-sm text-[${themes[theme].taskSecondText}]`}
                     >
-                      {creatorContact.name} {creatorContact.surname}
+                      {creatorContact.displayName}
                     </Text>
                   </View>
                 </View>
@@ -180,7 +180,7 @@ const SwipeableFullErrand = ({
                     <Text
                       className={`text-sm text-[${themes[theme].taskSecondText}]`}
                     >
-                      {assignedContact.name} {assignedContact.surname}
+                      {assignedContact.displayName}
                     </Text>
                   </View>
                 </View>

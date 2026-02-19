@@ -103,7 +103,7 @@ const ViewIncomingTaskModal = () => {
               <Text
                 className={`text-lg font-semibold text-[${themes[theme].text}]`}
               >
-                {ownerCurrentErrand.name} {ownerCurrentErrand.surname}
+                {ownerCurrentErrand.displayName}
               </Text>
             </View>
           </View>

@@ -14,8 +14,8 @@ import { themes } from "../../../constants/themes";
 import i18n from "../../../constants/i18n";
 
 const sortByNameSurname = (a, b) => {
-  const fullNameA = `${a.name ?? ""}${a.surname ?? ""}`.toLowerCase();
-  const fullNameB = `${b.name ?? ""}${b.surname ?? ""}`.toLowerCase();
+  const fullNameA = a.displayName.toLowerCase();
+  const fullNameB = b.displayName.toLowerCase();
   return fullNameA.localeCompare(fullNameB);
 };
 
@@ -28,7 +28,7 @@ const ListSharedUsers = ({ listOwner }) => {
   const sharedUsers = usersSharedWith.map((userId) => {
     const contact = contacts.find((c) => c.id === userId);
     if (contact)
-      return { id: userId, name: contact.name, surname: contact.surname };
+      return { id: userId, displayName: contact.displayName };
     // FIX THISSSS Below: contacts will have to be replaced for users collection
     const unknownContact = contacts.find((c) => c.id === userId);
     if (unknownContact) return { id: userId, name: unknownContact.username };
@@ -55,7 +55,7 @@ const ListSharedUsers = ({ listOwner }) => {
               color={themes["light"].taskSecondText}
             />
             <Text className={`text-lg text-[${themes[theme].text}]`}>
-              {user.name} {user.surname}
+              {user.displayName}
             </Text>
           </View>
           {listOwner === user.id && (
@@ -81,7 +81,7 @@ const ListSharedUsers = ({ listOwner }) => {
                 color={themes["light"].taskSecondText}
               />
               <Text className={`text-lg text-[${themes[theme].text}]`}>
-                {contact.name} {contact.surname || ""}
+                {contact.displayName}
               </Text>
             </View>
             {listOwner === contact.id && (

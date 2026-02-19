@@ -38,7 +38,7 @@ const ContactProfileScreenComp = () => {
 
   useEffect(() => {
     navigation.setOptions({
-      title: currentContact.name + " " + currentContact.surname,
+      title: currentContact.displayName,
       headerBackTitle: i18n.t("back"),
       headerTitleStyle: {
         color: themes[theme].text,
@@ -54,7 +54,7 @@ const ContactProfileScreenComp = () => {
 
   const confirmBlockContact = () => {
     Alert.alert(
-      `${i18n.t("blockUserQuestion")} ${currentContact.name} ${currentContact.surname}?`,
+      `${i18n.t("blockUserQuestion")} ${currentContact.displayName}?`,
       `${i18n.t("blockUserText")}`,
       [
         { text: i18n.t("cancel") },
@@ -63,7 +63,7 @@ const ContactProfileScreenComp = () => {
           onPress: toggleBlockContact,
           style: "destructive",
         },
-      ]
+      ],
     );
   };
 

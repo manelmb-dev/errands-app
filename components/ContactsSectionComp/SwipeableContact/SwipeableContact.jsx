@@ -71,7 +71,7 @@ const SwipeableContact = ({ contact, openSwipeableRef, swipeableRefs }) => {
             className="text-lg font-semibold flex-shrink"
             style={{ color: themes[theme].text }}
           >
-            {contact.name} {contact.surname}
+            {contact.displayName}
           </Text>
         </View>
         <View className="flex-row items-center gap-3 flex-shrink-0">

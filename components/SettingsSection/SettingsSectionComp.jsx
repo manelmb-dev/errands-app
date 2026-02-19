@@ -129,7 +129,7 @@ function SettingsSectionComp() {
               <View className="justify-center">
                 <Text
                   className={`text-2xl font-semibold text-[${themes[theme].text}]`}
-                >{`${user.name} ${user.surname}`}</Text>
+                >{user.displayName}</Text>
                 <Text
                   className={`text-lg  text-[${themes[theme].taskSecondText}]`}
                 >

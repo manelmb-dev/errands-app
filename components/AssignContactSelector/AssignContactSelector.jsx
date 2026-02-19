@@ -25,8 +25,7 @@ import { themeAtom } from "../../constants/storeUiAtoms";
 import { themes } from "../../constants/themes";
 import i18n from "../../constants/i18n";
 
-const sortByName = (a, b) =>
-  a.name.localeCompare(b.name) || a.surname?.localeCompare(b.surname);
+const sortByName = (a, b) => a.displayName.localeCompare(b.displayName);
 
 const AssignContactSelector = () => {
   const navigation = useNavigation();
@@ -82,7 +81,7 @@ const AssignContactSelector = () => {
     // If list is shared
     else {
       contactsList = [
-        { id: "unassigned", name: i18n.t("unassigned") },
+        { id: "unassigned", displayName: i18n.t("unassigned") },
         { ...user },
         ...contacts
           .filter(
@@ -98,7 +97,7 @@ const AssignContactSelector = () => {
               !user.favoriteUsers.includes(c.id),
           )
           .sort(sortByName),
-        // FIX THISSSS Below: contacts will have to be users
+        // FIX THISSSS TODO Below: contacts will have to be users
         ...contacts
           .filter(
             (c) =>
@@ -127,8 +126,7 @@ const AssignContactSelector = () => {
   useEffect(() => {
     setFilteredContacts(
       sortedContacts.filter((contact) => {
-        const fullName =
-          contact.name + (contact.surname ? " " + contact.surname : "");
+        const fullName = contact.displayName;
         return fullName
           .toLowerCase()
           .includes(contactSearchedInput.toLowerCase());
@@ -148,8 +146,7 @@ const AssignContactSelector = () => {
       >
         {userAssigned.id === user.id
           ? i18n.t("errandForMe")
-          : userAssigned.name +
-            (userAssigned.surname ? ` ${userAssigned.surname}` : "")}
+          : userAssigned.displayName}
       </Text>
       {filteredContacts.length > 0 && (
         <Text
@@ -247,7 +244,7 @@ const AssignContactSelector = () => {
               />
               <View className="flex-1 flex-row justify-between">
                 <Text className={`text-lg text-[${themes[theme].text}]`}>
-                  {item.name} {item.surname}{" "}
+                  {item.displayName}{" "}
                   {item.id === user.id && `(${i18n.t("me")})`}
                 </Text>
                 <View className="flex-row gap-4">

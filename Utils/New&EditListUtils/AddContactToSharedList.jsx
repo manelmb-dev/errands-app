@@ -35,8 +35,8 @@ const AddContactToSharedList = () => {
     if (!user.favoriteUsers.includes(a.id) && user.favoriteUsers.includes(b.id))
       return 1;
 
-    const fullNameA = `${a.name ?? ""}${a.surname ?? ""}`.toLowerCase();
-    const fullNameB = `${b.name ?? ""}${b.surname ?? ""}`.toLowerCase();
+    const fullNameA = a.displayName.toLowerCase();
+    const fullNameB = b.displayName.toLowerCase();
     return fullNameA.localeCompare(fullNameB);
   };
 
@@ -83,7 +83,7 @@ const AddContactToSharedList = () => {
         .filter(
           (c) =>
             !usersSharedWith.includes(c.id) &&
-            (c.name + c.surname)
+            c.displayName
               .toLowerCase()
               .includes(contactSearchedInput.toLowerCase().trim()),
         )
@@ -122,7 +122,7 @@ const AddContactToSharedList = () => {
           />
         )}
         <Text className={`text-lg text-[${themes[theme].text}]`}>
-          {item.name} {item.surname}
+          {item.displayName}
         </Text>
       </View>
       <View className="mr-3 flex-row items-center gap-4">

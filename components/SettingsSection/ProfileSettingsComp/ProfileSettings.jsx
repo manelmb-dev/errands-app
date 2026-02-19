@@ -98,8 +98,22 @@ function SettingsSection() {
     }
   };
 
+  const buildDisplayName = (name, surname) =>
+    `${(name ?? "").trim()} ${(surname ?? "").trim()}`.trim();
+
   const handleChange = (field, value) => {
-    setFormData((prev) => ({ ...prev, [field]: value }));
+    setFormData((prev) => {
+      const updatedUser = { ...prev, [field]: value };
+
+      if (field === "name" || field === "surname") {
+        updatedUser.displayName = buildDisplayName(
+          updatedUser.name,
+          updatedUser.surname,
+        );
+      }
+
+      return updatedUser;
+    });
   };
 
   const handleChangeUsername = async (text) => {
@@ -193,7 +207,7 @@ function SettingsSection() {
               className={`p-5 text-lg leading-tight text-[${themes[theme].text}]`}
               placeholder={i18n.t("surname")}
               placeholderTextColor="red"
-              value={formData.surname.trim()}
+              value={formData.surname ?? ""}
               onChangeText={(text) => handleChange("surname", text)}
             />
           </View>

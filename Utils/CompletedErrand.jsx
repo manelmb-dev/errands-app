@@ -87,7 +87,7 @@ function CompletedErrand({ errand }) {
                   ellipsizeMode="tail"
                   className={`flex-shrink text-sm text-[${themes[theme].taskSecondText}]`}
                 >
-                  {creatorContact.name} {creatorContact.surname}
+                  {creatorContact.displayName}
                 </Text>
               </View>
             </View>
@@ -109,7 +109,7 @@ function CompletedErrand({ errand }) {
                     ellipsizeMode="tail"
                     className={`flex-shrink text-sm text-[${themes[theme].taskSecondText}]`}
                   >
-                    {assignedContact.name} {assignedContact.surname}
+                    {assignedContact.displayName}
                   </Text>
                 </View>
               </View>

@@ -28,14 +28,11 @@ const BlockUserPopup = ({ user, setShowBlockedUserPopup }) => {
         <View className="flex-1">
           {lang === "en" ? (
             <Text className="text-gray-800 text-base font-semibold">
-              {user.name}
-              {user.surname ? " " + user.surname : ""}{" "}
-              {i18n.t("userHasBeenBlocked")}.
+              {user.displayName} {i18n.t("userHasBeenBlocked")}.
             </Text>
           ) : (
             <Text className="text-gray-800 text-base font-semibold">
-              {i18n.t("userHasBeenBlocked")} {user.name}
-              {user.surname ? " " + user.surname : ""}.
+              {i18n.t("userHasBeenBlocked")} {user.displayName}.
             </Text>
           )}
         </View>

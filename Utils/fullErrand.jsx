@@ -20,6 +20,8 @@ import formatErrandDate from "../constants/formatErrandDate";
 import { themes } from "../constants/themes";
 import i18n from "../constants/i18n";
 
+// TODO: fix problems with id's because of the mock errands. the id of the contacts of the mock errands does not match any id of the contacts
+
 function FullErrand({
   errand,
   openSwipeableRef,
@@ -199,8 +201,7 @@ function FullErrand({
                     numberOfLines={1}
                     ellipsizeMode="tail"
                   >
-                    {creatorContact.name}
-                    {creatorContact.surname ? ` ${creatorContact.surname}` : ""}
+                    {creatorContact.displayName}
                   </Text>
                 </View>
               )}
@@ -222,10 +223,7 @@ function FullErrand({
                     numberOfLines={1}
                     ellipsizeMode="tail"
                   >
-                    {assignedContact.name}
-                    {assignedContact.surname
-                      ? ` ${assignedContact.surname}`
-                      : ""}
+                    {assignedContact.displayName}
                   </Text>
                 </View>
               )}
@@ -246,10 +244,7 @@ function FullErrand({
                     numberOfLines={1}
                     ellipsizeMode="tail"
                   >
-                    {assignedContact.name}
-                    {assignedContact.surname
-                      ? ` ${assignedContact.surname}`
-                      : ""}
+                    {assignedContact.displayName}
                   </Text>
                 </View>
               )}

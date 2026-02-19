@@ -65,7 +65,7 @@ const AddBlockedAccounts = () => {
 
   const confirmBlockContact = (contact) => {
     Alert.alert(
-      `${i18n.t("blockUserQuestion")} ${contact.name}${contact.surname ? ` ${contact.surname}` : ""}?`,
+      `${i18n.t("blockUserQuestion")} ${contact.displayName}?`,
       `${i18n.t("blockUserText")}`,
       [
         { text: i18n.t("cancel") },
@@ -74,7 +74,7 @@ const AddBlockedAccounts = () => {
           onPress: () => blockUser(contact.id),
           style: "destructive",
         },
-      ]
+      ],
     );
   };
 
@@ -104,7 +104,7 @@ const AddBlockedAccounts = () => {
                   className={`text-lg font-semibold text-[${themes[theme].text}]`}
                   numberOfLines={1}
                 >
-                  {item.name} {item.surname}
+                  {item.displayName}
                 </Text>
                 {item.username && (
                   <Text

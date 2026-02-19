@@ -27,9 +27,9 @@ import { themeAtom } from "../../constants/storeUiAtoms";
 
 import { Ionicons, MaterialIcons, FontAwesome6 } from "@expo/vector-icons";
 
-import formatDay from "../../constants/formatDay";
-import { themes } from "../../constants/themes";
 import i18n from "../../constants/i18n";
+import { themes } from "../../constants/themes";
+import formatDay from "../../constants/formatDay";
 import {
   priorityOptions,
   repeatOptions,
@@ -115,7 +115,7 @@ const NewTaskModal = () => {
     // 1) If you came from a list -> fixed list and assigned "unassigned"
     if (currentList) {
       setListAssigned(currentList);
-      setUserAssigned({ id: "unassigned", name: i18n.t("unassigned") });
+      setUserAssigned({ id: "unassigned", displayName: i18n.t("unassigned") });
       setValue("assignedId", "unassigned");
       return;
     }
@@ -387,7 +387,7 @@ const NewTaskModal = () => {
                   >
                     {userAssigned.id === user.id
                       ? `${userAssigned.name} (${i18n.t("me")})`
-                      : `${userAssigned.name}${userAssigned.surname ? ` ${userAssigned.surname}` : ""}`}
+                      : `${userAssigned.displayName}`}
                   </Text>
                   <Ionicons
                     name="chevron-forward"

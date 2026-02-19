@@ -43,7 +43,7 @@ const ContactsSectionComp = () => {
     const query = searchQuery.toLowerCase();
     return contacts
       .filter((c) =>
-        `${c.name} ${c.surnames} ${c.alias}`.toLowerCase().includes(query)
+        `${c.displayName}`.toLowerCase().includes(query)
       )
       .sort((a, b) => {
         if (
@@ -56,7 +56,7 @@ const ContactsSectionComp = () => {
           user.favoriteUsers.includes(b.id)
         )
           return 1;
-        return a.name.localeCompare(b.name);
+        return a.displayName.localeCompare(b.displayName);
       });
   }, [contacts, searchQuery, user]);
 

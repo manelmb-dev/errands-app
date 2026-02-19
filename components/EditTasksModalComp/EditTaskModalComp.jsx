@@ -25,6 +25,7 @@ import {
   listsAtom,
   userAtom,
 } from "../../constants/storeAtoms";
+import { themeAtom } from "../../constants/storeUiAtoms";
 
 import { Ionicons, FontAwesome6, MaterialIcons } from "@expo/vector-icons";
 
@@ -35,7 +36,6 @@ import {
 import { themes } from "../../constants/themes";
 import formatDay from "../../constants/formatDay";
 import i18n from "../../constants/i18n";
-import { themeAtom } from "../../constants/storeUiAtoms";
 
 const EditTaskModal = () => {
   const { showActionSheetWithOptions } = useActionSheet();
@@ -105,6 +105,7 @@ const EditTaskModal = () => {
 
   useEffect(() => {
     const fullContact = contacts.find((c) => c.id === currentErrand.assignedId);
+    console.log(fullContact);
 
     const sharedList = {
       id: "unassigned",
@@ -115,13 +116,14 @@ const EditTaskModal = () => {
       usersShared: [user.id],
     };
     const fullList = lists.find((list) => list.id === currentErrand.listId);
-
-    if (fullContact) {
+    if (currentErrand.assignedId === user.id) {
+      setUserAssigned(user);
+    } else if (fullContact) {
       setUserAssigned(fullContact);
     } else if (currentErrand.assignedId === "unassigned") {
       setUserAssigned({
         id: "unassigned",
-        name: i18n.t("unassigned"),
+        displayName: i18n.t("unassigned"),
       });
     } else {
       // fallback
@@ -372,7 +374,7 @@ const EditTaskModal = () => {
                   >
                     {userAssigned.id === user.id
                       ? `${userAssigned.name} (${i18n.t("me")})`
-                      : `${userAssigned.name}${userAssigned.surname ? ` ${userAssigned.surname}` : ""}`}
+                      : `${userAssigned.displayName}`}
                   </Text>
                   <Ionicons
                     name="chevron-forward"

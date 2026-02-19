@@ -96,7 +96,7 @@ const BlockedAccounts = () => {
 
   const confirmUnblockAccount = (account) => {
     Alert.alert(
-      `${lang === "es" ? "¿" : ""}${i18n.t("unblock")} ${account.name}${account.surname ? ` ${account.surname}` : ""}${account.username ? ` (@${account.username})` : ""}?`,
+      `${lang === "es" ? "¿" : ""}${i18n.t("unblock")} ${account.displayName}${account.username ? ` (@${account.username})` : ""}?`,
       `${i18n.t("unblockText")}`,
       [
         { text: i18n.t("cancel") },
@@ -105,7 +105,7 @@ const BlockedAccounts = () => {
           onPress: () => unblockAccount(account),
           style: "destructive",
         },
-      ]
+      ],
     );
   };
 
@@ -116,8 +116,9 @@ const BlockedAccounts = () => {
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => (
           <Pressable
-            className={`w-full py-2.5 px-4 flex-row items-center justify-between bg-[${themes[theme].background}] border-b ${theme === "light" ? "border-gray-300" : "border-gray-700"
-              }`}
+            className={`w-full py-2.5 px-4 flex-row items-center justify-between bg-[${themes[theme].background}] border-b ${
+              theme === "light" ? "border-gray-300" : "border-gray-700"
+            }`}
             onPress={() => {
               router.push({
                 pathname: `/contactProfileScreen`,
@@ -136,7 +137,7 @@ const BlockedAccounts = () => {
                   className={`text-lg font-semibold text-[${themes[theme].text}]`}
                   numberOfLines={1}
                 >
-                  {item.name} {item.surname}
+                  {item.displayName}
                 </Text>
                 {item.username && (
                   <Text
