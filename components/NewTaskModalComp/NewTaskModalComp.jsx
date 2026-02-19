@@ -75,7 +75,7 @@ const NewTaskModal = () => {
   const { control, handleSubmit, watch, setValue } = useForm({
     defaultValues: {
       id: "",
-      ownerId: user.uid,
+      ownerUid: user.uid,
       assignedId: user.uid,
       title: "",
       description: "",
@@ -105,7 +105,7 @@ const NewTaskModal = () => {
   useEffect(() => {
     const sharedList = {
       id: "unassigned",
-      ownerId: user.uid,
+      ownerUid: user.uid,
       title: i18n.t("shared"),
       icon: "people",
       color: "slate",

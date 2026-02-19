@@ -63,9 +63,9 @@ function FullErrand({
   const creatorContact = useMemo(
     () =>
       contacts.find(
-        (contact) => contact.uid.toString() === errand.ownerId.toString(),
+        (contact) => contact.uid.toString() === errand.ownerUid.toString(),
       ),
-    [contacts, errand.ownerId],
+    [contacts, errand.ownerUid],
   );
 
   const errandList = useMemo(
@@ -149,7 +149,7 @@ function FullErrand({
     }
 
     const pathname =
-      errand.ownerId === user.uid || errandList !== undefined
+      errand.ownerUid === user.uid || errandList !== undefined
         ? "Modals/editTaskModal"
         : "Modals/viewIncomingTaskModal";
 
@@ -189,7 +189,7 @@ function FullErrand({
               {errand.title}
             </Text>
 
-            {user.uid !== errand.ownerId &&
+            {user.uid !== errand.ownerUid &&
               user.uid === errand.assignedId &&
               errandList === undefined && (
                 <View
@@ -206,7 +206,7 @@ function FullErrand({
                 </View>
               )}
 
-            {errand.ownerId === user.uid &&
+            {errand.ownerUid === user.uid &&
               user.uid !== errand.assignedId &&
               assignedContact !== undefined &&
               errandList === undefined && (
@@ -264,7 +264,7 @@ function FullErrand({
                 className={`py-1 px-0.5 rounded-lg items-center justify-center min-w-[88px] ${new Date(`${errand.dateErrand}T${errand.timeErrand || "24:00"}`) < new Date() ? `${theme === "light" ? "bg-red-100" : "bg-red-950 "}` : `${theme === "light" ? "bg-gray-200" : "bg-neutral-800 "}`}`}
                 onPress={() => {
                   if (
-                    errand.ownerId === user.uid ||
+                    errand.ownerUid === user.uid ||
                     (errandList && errandList.usersShared.length > 1)
                   ) {
                     setIsDateTimePickerVisible(true);
@@ -287,7 +287,7 @@ function FullErrand({
                 activeOpacity={0.6}
                 className={`py-1 px-1 rounded-full items-center justify-center border border-dashed ${theme === "light" ? "border-gray-400" : "border-neutral-700"}`}
                 onPress={() => {
-                  if (errand.ownerId === user.uid) {
+                  if (errand.ownerUid === user.uid) {
                     setIsDateTimePickerVisible(true);
                   } else {
                     router.push({

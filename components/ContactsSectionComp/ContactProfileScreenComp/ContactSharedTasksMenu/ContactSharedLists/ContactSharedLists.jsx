@@ -131,7 +131,7 @@ const ContactSharedLists = () => {
               onPress={() => {
                 setCurrentList({
                   id: "",
-                  ownerId: user.uid,
+                  ownerUid: user.uid,
                   title: "",
                   icon: "",
                   color: "",
@@ -181,7 +181,7 @@ const ContactSharedLists = () => {
             onPress={() => {
               setCurrentList({
                 id: "",
-                ownerId: user.uid,
+                ownerUid: user.uid,
                 title: "",
                 icon: "",
                 color: "",

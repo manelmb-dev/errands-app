@@ -192,7 +192,7 @@ export default function ListPopup({
           },
         }}
       >
-        {currentList.ownerId === user.uid && (
+        {currentList.ownerUid === user.uid && (
           <MenuOption
             onSelect={() => {
               router.push("/Modals/editListModal");
@@ -223,7 +223,7 @@ export default function ListPopup({
         {/* <MenuOption
           onSelect={() => setShowCompleted(!showCompleted)}
           customStyles={{
-            optionTouchable: currentList.ownerId !== user.uid && {
+            optionTouchable: currentList.ownerUid !== user.uid && {
               activeOpacity: 70,
               style: {
                 borderTopLeftRadius: 10,
@@ -272,7 +272,7 @@ export default function ListPopup({
         )}
         <MenuOption
           onSelect={() =>
-            currentList.ownerId === user.uid
+            currentList.ownerUid === user.uid
               ? confirmDeleteList(currentList.id)
               : confirmLeaveList(currentList.id)
           }
@@ -294,13 +294,13 @@ export default function ListPopup({
         >
           <View className="flex-row justify-between items-center">
             <Text className={`text-lg text-red-500`}>
-              {currentList.ownerId === user.uid
+              {currentList.ownerUid === user.uid
                 ? i18n.t("deleteList")
                 : i18n.t("leaveList")}
             </Text>
             <Ionicons
               name={
-                currentList.ownerId === user.uid
+                currentList.ownerUid === user.uid
                   ? "trash-outline"
                   : "exit-outline"
               }

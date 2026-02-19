@@ -29,20 +29,20 @@ export default function ListSection() {
     (e) =>
       !e.deleted &&
       !e.completed &&
-      e.ownerId !== e.assignedId &&
+      e.ownerUid !== e.assignedId &&
       e.assignedId !== "unassigned" &&
       e.listId === "unassigned",
   ).length;
 
   const ownNotSahredLists = lists.filter(
     (list) =>
-      list.ownerId === user.uid &&
+      list.ownerUid === user.uid &&
       list.usersShared.length === 1 &&
       list.usersShared[0] === user.uid,
   );
 
   const totalErrandsDeleted = errands.filter(
-    (errand) => errand.ownerId === user.uid && errand.deleted,
+    (errand) => errand.ownerUid === user.uid && errand.deleted,
   ).length;
 
   return (
@@ -187,7 +187,7 @@ export default function ListSection() {
                       {
                         errands.filter(
                           (errand) =>
-                            errand.ownerId === user.uid &&
+                            errand.ownerUid === user.uid &&
                             errand.deleted === true,
                         ).length
                       }

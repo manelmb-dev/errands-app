@@ -108,7 +108,7 @@ export default function SharedListSection() {
               onPress={() => {
                 setCurrentList({
                   id: "",
-                  ownerId: user.uid,
+                  ownerUid: user.uid,
                   title: "",
                   icon: "",
                   color: "",

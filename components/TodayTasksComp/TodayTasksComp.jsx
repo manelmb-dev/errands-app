@@ -120,7 +120,7 @@ function TodayTasks() {
     return (
       selectedTabObj?.errandsList?.filter(
         (errand) =>
-          errand.ownerId === user.uid &&
+          errand.ownerUid === user.uid &&
           errand.assignedId !== user.uid &&
           errand.assignedId !== "unassigned",
       ) || []

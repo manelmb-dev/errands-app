@@ -192,7 +192,7 @@ function ListTasksComp() {
                   </View>
                 </TouchableOpacity>
                 {showUsersSharedWith && (
-                  <ListSharedUsers listOwner={currentList.ownerId} />
+                  <ListSharedUsers listOwner={currentList.ownerUid} />
                 )}
               </>
             )}

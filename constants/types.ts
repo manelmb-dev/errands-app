@@ -2,7 +2,7 @@ export type ID = string;
 
 export type List = {
   id: ID;
-  ownerId: ID;
+  ownerUid: ID;
   title: string;
   icon: string;
   color: string;
@@ -22,7 +22,7 @@ export type Priority = "none" | "low" | "medium" | "high";
 
 export type Errand = {
   id: ID;
-  ownerId: ID;
+  ownerUid: ID;
   assignedId?: ID | "unassigned";
   listId?: ID | "unassigned";
   title: string;

@@ -84,7 +84,7 @@ const UsersOfList = () => {
               {user.displayName}
             </Text>
           </View>
-          {currentList.ownerId === user.uid && (
+          {currentList.ownerUid === user.uid && (
             <Text
               className={`mr-2 text-base text-[${themes[theme].taskSecondText}]`}
             >
@@ -110,7 +110,7 @@ const UsersOfList = () => {
                 {contact.displayName}
               </Text>
             </View>
-            {currentList.ownerId === user.uid && (
+            {currentList.ownerUid === user.uid && (
               <Pressable
                 onPress={() => removeUserFromShared(contact.uid)}
                 hitSlop={3}
@@ -123,7 +123,7 @@ const UsersOfList = () => {
                 />
               </Pressable>
             )}
-            {currentList.ownerId === contact.uid && (
+            {currentList.ownerUid === contact.uid && (
               <Text
                 className={`mr-2 text-base text-[${themes[theme].taskSecondText}]`}
               >
@@ -134,7 +134,7 @@ const UsersOfList = () => {
         ))}
 
         {/* Add user button */}
-        {currentList.ownerId === user.uid && (
+        {currentList.ownerUid === user.uid && (
           <View>
             <TouchableHighlight
               underlayColor={themes[theme].borderColor}

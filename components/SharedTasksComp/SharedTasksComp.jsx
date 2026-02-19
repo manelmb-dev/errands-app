@@ -83,17 +83,17 @@ const SharedTasksComp = () => {
     let baseList = errands.filter(
       (e) =>
         !e.deleted &&
-        e.ownerId !== e.assignedId &&
+        e.ownerUid !== e.assignedId &&
         (errandList(e) === undefined || errandList(e).usersShared.length === 1),
     );
 
     if (mainTab === "outgoing") {
       baseList = baseList.filter(
-        (e) => e.ownerId === user.uid && e.assignedId !== user.uid,
+        (e) => e.ownerUid === user.uid && e.assignedId !== user.uid,
       );
     } else if (mainTab === "incoming") {
       baseList = baseList.filter(
-        (e) => e.ownerId !== user.uid && e.assignedId === user.uid,
+        (e) => e.ownerUid !== user.uid && e.assignedId === user.uid,
       );
     }
 

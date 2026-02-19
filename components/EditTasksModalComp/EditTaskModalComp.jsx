@@ -104,12 +104,14 @@ const EditTaskModal = () => {
   }, [navigation, theme, handleOk, watchedTitle, handleCancelAlert]);
 
   useEffect(() => {
-    const fullContact = contacts.find((c) => c.uid === currentErrand.assignedId);
+    const fullContact = contacts.find(
+      (c) => c.uid === currentErrand.assignedId,
+    );
     console.log(fullContact);
 
     const sharedList = {
       id: "unassigned",
-      ownerId: user.uid,
+      ownerUid: user.uid,
       title: i18n.t("shared"),
       icon: "people",
       color: "slate",
@@ -392,7 +394,7 @@ const EditTaskModal = () => {
             underlayColor={themes[theme].background}
             onPress={() => {
               Keyboard.dismiss();
-              if (currentErrand.ownerId === user.uid) {
+              if (currentErrand.ownerUid === user.uid) {
                 router.push({
                   pathname: "/Modals/assignListModal",
                 });
@@ -413,12 +415,12 @@ const EditTaskModal = () => {
                   {i18n.t("list")}
                 </Text>
                 <View
-                  className={`mr-4 px-2 py-1 gap-1 flex-row items-center ${listAssigned === null || listAssigned.id === "unassigned" || currentErrand.ownerId !== user.uid ? `bg-[${themes[theme].surfaceBackground}]` : `${theme === "light" ? "bg-slate-300" : "bg-slate-600"}`} rounded-2xl`}
+                  className={`mr-4 px-2 py-1 gap-1 flex-row items-center ${listAssigned === null || listAssigned.id === "unassigned" || currentErrand.ownerUid !== user.uid ? `bg-[${themes[theme].surfaceBackground}]` : `${theme === "light" ? "bg-slate-300" : "bg-slate-600"}`} rounded-2xl`}
                 >
                   <Text className={`text-lg text-[${themes[theme].text}]`}>
                     {listAssigned ? `${listAssigned.title}` : i18n.t("shared")}
                   </Text>
-                  {currentErrand.ownerId === user.uid && (
+                  {currentErrand.ownerUid === user.uid && (
                     <Ionicons
                       name="chevron-forward"
                       size={18}

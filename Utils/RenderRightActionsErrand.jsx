@@ -22,7 +22,7 @@ const RenderRightActionsErrand = ({
   );
 
   const deleteErrand = async () => {
-    if (user.uid === errand.ownerId || errandList !== undefined) {
+    if (user.uid === errand.ownerUid || errandList !== undefined) {
       // Delete errand locally
       setErrands((prev) =>
         prev.map((e) => (e.id === errand.id ? { ...e, deleted: true } : e)),
@@ -35,24 +35,24 @@ const RenderRightActionsErrand = ({
       // await updateErrandInFirestore({ ...errand, deleted: true });
 
       // Send notification push to usersShared if errand was in a shared list
-    } else if (user.uid !== errand.ownerId && errandList !== undefined) {
-      // Change assignedId to ownerId locally
+    } else if (user.uid !== errand.ownerUid && errandList !== undefined) {
+      // Change assignedId to ownerUid locally
       setErrands((prev) =>
         prev.map((e) =>
-          e.id === errand.id ? { ...e, assignedId: errand.ownerId } : e,
+          e.id === errand.id ? { ...e, assignedId: errand.ownerUid } : e,
         ),
       );
-      // Send notification push to ownerId
-      // await sendNotificationToOwner(errand.ownerId, ...);
+      // Send notification push to ownerUid
+      // await sendNotificationToOwner(errand.ownerUid, ...);
 
       // TODO: FIRESTORE UPDATEEE
-      // await updateErrandInFirestore({ ...errand, assignedId: errand.ownerId });
+      // await updateErrandInFirestore({ ...errand, assignedId: errand.ownerUid });
     }
   };
 
   return (
     <View className="flex-row h-full">
-      {(errand.ownerId === user.uid || errandList !== undefined) && (
+      {(errand.ownerUid === user.uid || errandList !== undefined) && (
         <TouchableOpacity
           className="w-20 bg-blue-600 justify-center items-center"
           activeOpacity={0.6}

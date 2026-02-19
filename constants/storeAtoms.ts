@@ -7,7 +7,7 @@ import { Errand, ID, List, User } from "./types";
 let lists: List[] = [
   {
     id: "900f87",
-    ownerId: "100001",
+    ownerUid: "100001",
     title: "Personal",
     icon: "person",
     color: "blue",
@@ -15,7 +15,7 @@ let lists: List[] = [
   },
   {
     id: "fsdf724",
-    ownerId: "100006",
+    ownerUid: "100006",
     title: "Cena fin de año",
     icon: "beer",
     color: "fuchsia",
@@ -23,7 +23,7 @@ let lists: List[] = [
   },
   {
     id: "12439l",
-    ownerId: "100001",
+    ownerUid: "100001",
     title: "Supermercado",
     icon: "restaurant",
     color: "yellow",
@@ -31,7 +31,7 @@ let lists: List[] = [
   },
   {
     id: "9dsmnb",
-    ownerId: "100001",
+    ownerUid: "100001",
     title: "Trabajo",
     icon: "business",
     color: "orange",
@@ -39,7 +39,7 @@ let lists: List[] = [
   },
   {
     id: "9dwe32",
-    ownerId: "100001",
+    ownerUid: "100001",
     title: "Universidad",
     icon: "book",
     color: "green",
@@ -47,7 +47,7 @@ let lists: List[] = [
   },
   {
     id: "po2531",
-    ownerId: "100001",
+    ownerUid: "100001",
     title: "Comprar casa",
     icon: "home",
     color: "lime",
@@ -55,7 +55,7 @@ let lists: List[] = [
   },
   {
     id: "vi83724",
-    ownerId: "100002",
+    ownerUid: "100002",
     title: "Viaje Japón",
     icon: "airplane",
     color: "blue",

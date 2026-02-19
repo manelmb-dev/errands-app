@@ -31,7 +31,7 @@ const SwipeableFullErrand = ({
   );
 
   const creatorContact = contacts.find(
-    (contact) => contact.uid.toString() === errand.ownerId.toString(),
+    (contact) => contact.uid.toString() === errand.ownerUid.toString(),
   );
 
   const restoreErrand = async (errandId) => {
@@ -148,7 +148,7 @@ const SwipeableFullErrand = ({
                 {errand.title}
               </Text>
 
-              {user.uid !== errand.ownerId &&
+              {user.uid !== errand.ownerUid &&
                 user.uid === errand.assignedId && (
                   <View className="flex-row">
                     <View
@@ -169,7 +169,7 @@ const SwipeableFullErrand = ({
                   </View>
                 )}
 
-              {errand.ownerId === user.uid &&
+              {errand.ownerUid === user.uid &&
                 user.uid !== errand.assignedId && (
                   <View className="flex-row">
                     <View

@@ -65,7 +65,7 @@ const ViewIncomingTaskModal = () => {
   }, [navigation, theme, watchedTitle]);
 
   const ownerCurrentErrand = contacts.find(
-    (contact) => contact.uid === currentErrand.ownerId
+    (contact) => contact.uid === currentErrand.ownerUid,
   );
 
   return (
@@ -118,7 +118,7 @@ const ViewIncomingTaskModal = () => {
               <Text
                 className={`text-lg ${
                   new Date(
-                    `${currentErrand.dateErrand}T${currentErrand.timeErrand || "24:00"}`
+                    `${currentErrand.dateErrand}T${currentErrand.timeErrand || "24:00"}`,
                   ) < new Date()
                     ? `${theme === "light" ? "text-red-500" : "text-red-700 "}`
                     : `text-[${themes[theme].text}]`
@@ -130,7 +130,7 @@ const ViewIncomingTaskModal = () => {
                 <Text
                   className={`text-lg ${
                     new Date(
-                      `${currentErrand.dateErrand}T${currentErrand.timeErrand || "24:00"}`
+                      `${currentErrand.dateErrand}T${currentErrand.timeErrand || "24:00"}`,
                     ) < new Date()
                       ? `${theme === "light" ? "text-red-500" : "text-red-700 "}`
                       : `text-[${themes[theme].text}]`

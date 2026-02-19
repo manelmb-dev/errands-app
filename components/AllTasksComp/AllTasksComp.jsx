@@ -7,11 +7,7 @@ import { Ionicons, Octicons } from "@expo/vector-icons";
 
 import { themeAtom } from "../../constants/storeUiAtoms";
 import { useAtom } from "jotai";
-import {
-  errandsAtom,
-  listsAtom,
-  userAtom,
-} from "../../constants/storeAtoms";
+import { errandsAtom, listsAtom, userAtom } from "../../constants/storeAtoms";
 
 import UndoCompleteErrandButton from "../../Utils/UndoCompleteErrandButton";
 import UndoDeleteErrandButton from "../../Utils/UndoDeleteErrandButton";
@@ -82,7 +78,7 @@ function AllTasksComp() {
   //         .filter((errand) => !errand.deleted)
   //         .filter(
   //           (errand) =>
-  //             user.uid === errand.ownerId &&
+  //             user.uid === errand.ownerUid &&
   //             user.uid === errand.assignedId &&
   //             !errand.completed
   //         ),
@@ -94,7 +90,7 @@ function AllTasksComp() {
   //         .filter((errand) => !errand.deleted)
   //         .filter(
   //           (errand) =>
-  //             user.uid !== errand.ownerId &&
+  //             user.uid !== errand.ownerUid &&
   //             user.uid === errand.assignedId &&
   //             !errand.completed
   //         ),
@@ -106,7 +102,7 @@ function AllTasksComp() {
   //         .filter((errand) => !errand.deleted)
   //         .filter(
   //           (errand) =>
-  //             user.uid === errand.ownerId &&
+  //             user.uid === errand.ownerUid &&
   //             user.uid !== errand.assignedId &&
   //             !errand.completed
   //         ),

@@ -102,7 +102,9 @@ const ViewAllListsComp = () => {
 
   const ownLists = useMemo(
     () =>
-      lists.filter((l) => l.ownerId === user.uid && l.usersShared.length === 1),
+      lists.filter(
+        (l) => l.ownerUid === user.uid && l.usersShared.length === 1,
+      ),
     [lists, user.uid],
   );
 
@@ -113,8 +115,8 @@ const ViewAllListsComp = () => {
           (l) => l.usersShared.length > 1 && l.usersShared.includes(user.uid),
         )
         .sort((a, b) => {
-          const aIsOwner = a.ownerId === user.uid ? 0 : 1;
-          const bIsOwner = b.ownerId === user.uid ? 0 : 1;
+          const aIsOwner = a.ownerUid === user.uid ? 0 : 1;
+          const bIsOwner = b.ownerUid === user.uid ? 0 : 1;
           return aIsOwner - bIsOwner;
         }),
     [lists, user.uid],
@@ -149,7 +151,7 @@ const ViewAllListsComp = () => {
           {item.title}
         </Text>
       </View>
-      {item.ownerId === user.uid ? (
+      {item.ownerUid === user.uid ? (
         <View className="flex-row gap-4">
           <Pressable
             onPress={() => {
@@ -192,7 +194,7 @@ const ViewAllListsComp = () => {
       onPress={() => {
         setCurrentList({
           id: "",
-          ownerId: user.uid,
+          ownerUid: user.uid,
           title: "",
           icon: "",
           color: "",

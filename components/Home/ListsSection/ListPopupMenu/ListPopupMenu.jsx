@@ -60,7 +60,7 @@ export default function ListPopupMenu() {
           onSelect={() => {
             setCurrentList({
               id: "",
-              ownerId: user.uid,
+              ownerUid: user.uid,
               title: "",
               icon: "",
               color: "",

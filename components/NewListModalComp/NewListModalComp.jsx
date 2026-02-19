@@ -71,7 +71,7 @@ const NewListModal = () => {
   const { control, handleSubmit, watch, setValue } = useForm({
     defaultValues: {
       id: "",
-      ownerId: user.uid,
+      ownerUid: user.uid,
       title: "",
       icon: "",
       color: "",
