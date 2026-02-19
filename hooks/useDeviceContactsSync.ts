@@ -64,10 +64,6 @@ export function useDeviceContactsSync(enabled: boolean) {
         })
         .filter((c) => c.phoneNumbers.length > 0);
 
-        console.log("res: ", res)
-        console.log("mapped: ", mapped);
-
-
       setContacts(mapped);
     })();
 
