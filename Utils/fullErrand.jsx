@@ -43,22 +43,22 @@ function FullErrand({
   });
 
   const assignedContact = useMemo(() => {
-    if (errand.assignedId === user.uid) return user;
+    if (errand.assignedUid === user.uid) return user;
 
     const contact = contacts.find(
-      (contact) => contact.uid === errand.assignedId,
+      (contact) => contact.uid === errand.assignedUid,
     );
     if (contact) return contact;
 
     // FIX THISSSS Below: contacts will have to be replaced for users collection
     const unknownContact = contacts.find(
-      (user) => user.uid === errand.assignedId,
+      (user) => user.uid === errand.assignedUid,
     );
     if (unknownContact) {
-      return { id: errand.assignedId, name: unknownContact.username };
+      return { id: errand.assignedUid, name: unknownContact.username };
     }
     return null;
-  }, [contacts, errand.assignedId, user]);
+  }, [contacts, errand.assignedUid, user]);
 
   const creatorContact = useMemo(
     () =>
@@ -190,7 +190,7 @@ function FullErrand({
             </Text>
 
             {user.uid !== errand.ownerUid &&
-              user.uid === errand.assignedId &&
+              user.uid === errand.assignedUid &&
               errandList === undefined && (
                 <View
                   className={`self-start flex-row my-0.5 p-2 py-0.5 bg-[${themes[theme].taskIncomingFromBg}] rounded-lg items-center gap-2 max-w-full`}
@@ -207,7 +207,7 @@ function FullErrand({
               )}
 
             {errand.ownerUid === user.uid &&
-              user.uid !== errand.assignedId &&
+              user.uid !== errand.assignedUid &&
               assignedContact !== undefined &&
               errandList === undefined && (
                 <View

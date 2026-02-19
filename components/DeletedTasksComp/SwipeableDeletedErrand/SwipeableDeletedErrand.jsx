@@ -27,7 +27,7 @@ const SwipeableFullErrand = ({
   const [contacts] = useAtom(contactsAtom);
 
   const assignedContact = contacts.find(
-    (contact) => contact.uid.toString() === errand.assignedId.toString(),
+    (contact) => contact.uid.toString() === errand.assignedUid.toString(),
   );
 
   const creatorContact = contacts.find(
@@ -149,7 +149,7 @@ const SwipeableFullErrand = ({
               </Text>
 
               {user.uid !== errand.ownerUid &&
-                user.uid === errand.assignedId && (
+                user.uid === errand.assignedUid && (
                   <View className="flex-row">
                     <View
                       className={`flex-row my-0.5 px-2 p-0.5 bg-[${themes[theme].taskIncomingFromBg}] rounded-lg items-center gap-2`}
@@ -170,7 +170,7 @@ const SwipeableFullErrand = ({
                 )}
 
               {errand.ownerUid === user.uid &&
-                user.uid !== errand.assignedId && (
+                user.uid !== errand.assignedUid && (
                   <View className="flex-row">
                     <View
                       className={`flex-row my-0.5 px-2 p-0.5 bg-[${themes[theme].outgoingTaskToBg}] rounded-lg items-center gap-2`}

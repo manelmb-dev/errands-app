@@ -29,7 +29,7 @@ function CompletedErrand({ errand }) {
   ];
 
   const assignedContact = contacts.find(
-    (contact) => contact.uid.toString() === errand.assignedId.toString(),
+    (contact) => contact.uid.toString() === errand.assignedUid.toString(),
   );
 
   const creatorContact = contacts.find(
@@ -73,7 +73,7 @@ function CompletedErrand({ errand }) {
         />
         <View className="flex-1 flex-shrink">
           <Text className="text-[#6E727A] flex-shrink">{errand.title}</Text>
-          {user.uid !== errand.ownerUid && user.uid === errand.assignedId && (
+          {user.uid !== errand.ownerUid && user.uid === errand.assignedUid && (
             <View className="flex-row">
               <View
                 className={`flex-row my-0.5 px-2 p-1 bg-[${themes[theme].taskIncomingFromBg}] rounded-lg items-center gap-2`}
@@ -90,8 +90,8 @@ function CompletedErrand({ errand }) {
             </View>
           )}
           {errand.ownerUid === user.uid &&
-            user.uid !== errand.assignedId &&
-            errand.assignedId !== "unassigned" && (
+            user.uid !== errand.assignedUid &&
+            errand.assignedUid !== "unassigned" && (
               <View className="flex-row">
                 <View
                   className={`flex-row my-0.5 px-2 p-1 bg-[${themes[theme].outgoingTaskToBg}] rounded-lg items-center gap-2`}

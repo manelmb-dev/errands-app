@@ -36,17 +36,17 @@ const RenderRightActionsErrand = ({
 
       // Send notification push to usersShared if errand was in a shared list
     } else if (user.uid !== errand.ownerUid && errandList !== undefined) {
-      // Change assignedId to ownerUid locally
+      // Change assignedUid to ownerUid locally
       setErrands((prev) =>
         prev.map((e) =>
-          e.id === errand.id ? { ...e, assignedId: errand.ownerUid } : e,
+          e.id === errand.id ? { ...e, assignedUid: errand.ownerUid } : e,
         ),
       );
       // Send notification push to ownerUid
       // await sendNotificationToOwner(errand.ownerUid, ...);
 
       // TODO: FIRESTORE UPDATEEE
-      // await updateErrandInFirestore({ ...errand, assignedId: errand.ownerUid });
+      // await updateErrandInFirestore({ ...errand, assignedUid: errand.ownerUid });
     }
   };
 

@@ -29,8 +29,8 @@ export default function ListSection() {
     (e) =>
       !e.deleted &&
       !e.completed &&
-      e.ownerUid !== e.assignedId &&
-      e.assignedId !== "unassigned" &&
+      e.ownerUid !== e.assignedUid &&
+      e.assignedUid !== "unassigned" &&
       e.listId === "unassigned",
   ).length;
 

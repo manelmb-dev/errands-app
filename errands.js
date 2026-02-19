@@ -25,7 +25,7 @@ const errandsData = [
   {
     id: "122648720482",
     ownerUid: "100002",
-    assignedId: "100001",
+    assignedUid: "100001",
     title: "Pick up documents",
     description: "Pick up lawyer documents from the office.",
     dateErrand: today,
@@ -47,7 +47,7 @@ const errandsData = [
   {
     id: "123321789987",
     ownerUid: "100001",
-    assignedId: "100002",
+    assignedUid: "100002",
     title: "Pick up dry cleaning",
     description: "Pick up the dry cleaning from the shop on Main Street.",
     dateErrand: yesterday,
@@ -69,7 +69,7 @@ const errandsData = [
   {
     id: "982323289987",
     ownerUid: "100001",
-    assignedId: "100004",
+    assignedUid: "100004",
     title: "Pick up kitchen supplies",
     description: "",
     dateErrand: "2024-03-25",
@@ -91,7 +91,7 @@ const errandsData = [
   {
     id: "1rewf332441789987",
     ownerUid: "100001",
-    assignedId: "100001",
+    assignedUid: "100001",
     title: "Study for exam",
     description: "",
     dateErrand: twoDaysLater,
@@ -113,7 +113,7 @@ const errandsData = [
   {
     id: "123321784353",
     ownerUid: "100001",
-    assignedId: "100001",
+    assignedUid: "100001",
     title: "Buy groceries",
     description: "Buy milk, eggs, bread, and vegetables from the supermarket.",
     dateErrand: yesterday,
@@ -135,7 +135,7 @@ const errandsData = [
   {
     id: "13432fgdtr489987",
     ownerUid: "100003",
-    assignedId: "100001",
+    assignedUid: "100001",
     title: "Submit final project",
     description: "",
     dateErrand: yesterday,
@@ -157,7 +157,7 @@ const errandsData = [
   {
     id: "13432489987",
     ownerUid: "100001",
-    assignedId: "100001",
+    assignedUid: "100001",
     title: "Evaluate project report",
     description: "Submit the quarterly project report to the manager.",
     dateErrand: twoDaysAgo,
@@ -179,7 +179,7 @@ const errandsData = [
   {
     id: "187656541789987",
     ownerUid: "100001",
-    assignedId: "100001",
+    assignedUid: "100001",
     title: "Call plumber",
     description: "",
     dateErrand: today,
@@ -201,7 +201,7 @@ const errandsData = [
   {
     id: "18drewq41723987",
     ownerUid: "100001",
-    assignedId: "100004",
+    assignedUid: "100004",
     title: "Send project report",
     description: "Report of the sections.",
     dateErrand: today,
@@ -223,7 +223,7 @@ const errandsData = [
   {
     id: "187656541723987",
     ownerUid: "100001",
-    assignedId: "100001",
+    assignedUid: "100001",
     title: "Send email to CEO",
     description: "Report of the month revenue.",
     dateErrand: today,
@@ -245,7 +245,7 @@ const errandsData = [
   {
     id: "123323575487",
     ownerUid: "100001",
-    assignedId: "100001",
+    assignedUid: "100001",
     title: "Attend weekly meeting",
     description: "",
     dateErrand: tomorrow,
@@ -267,7 +267,7 @@ const errandsData = [
   {
     id: "1231242fdw987",
     ownerUid: "100001",
-    assignedId: "100001",
+    assignedUid: "100001",
     title: "Invite Alex's family",
     description: "His parents and his siblings.",
     dateErrand: today,
@@ -289,7 +289,7 @@ const errandsData = [
   {
     id: "12332fdwsfdw987",
     ownerUid: "100001",
-    assignedId: "100001",
+    assignedUid: "100001",
     title: "Prepare Alex birthday party",
     description: "Plan and organize the birthday party for Alex.",
     dateErrand: twoDaysLater,
@@ -311,7 +311,7 @@ const errandsData = [
   {
     id: "1rewf341789987",
     ownerUid: "100001",
-    assignedId: "100001",
+    assignedUid: "100001",
     title: "Study for test",
     description: "",
     dateErrand: threeDaysLater,
@@ -333,7 +333,7 @@ const errandsData = [
   {
     id: "152dfwfw789987",
     ownerUid: "100001",
-    assignedId: "100005",
+    assignedUid: "100005",
     title: "Feed the horse",
     description: "",
     dateErrand: threeDaysLater,
@@ -355,7 +355,7 @@ const errandsData = [
   {
     id: "152dfw56454987",
     ownerUid: "100006",
-    assignedId: "100001",
+    assignedUid: "100001",
     title: "Walk the cat",
     description: "Take the cat for a walk around the park.",
     dateErrand: fourDaysLater,
@@ -377,7 +377,7 @@ const errandsData = [
   {
     id: "152dfwfw7123189987",
     ownerUid: "100003",
-    assignedId: "100001",
+    assignedUid: "100001",
     title: "Walk the dog",
     description: "Take the dog for a walk around the park.",
     dateErrand: threeDaysAgo,
@@ -399,7 +399,7 @@ const errandsData = [
   {
     id: "152dfw5126454987",
     ownerUid: "100006",
-    assignedId: "100001",
+    assignedUid: "100001",
     title: "Walk the rabbit",
     description: "",
     dateErrand: fourDaysLater,
@@ -422,7 +422,7 @@ const errandsData = [
   {
     id: "152d3243423987",
     ownerUid: "100006",
-    assignedId: "100001",
+    assignedUid: "100001",
     title: "Walk the rabbit",
     description: "",
     dateErrand: fourDaysLater,
@@ -445,7 +445,7 @@ const errandsData = [
   {
     id: "152213af454987",
     ownerUid: "100001",
-    assignedId: "100001",
+    assignedUid: "100001",
     title: "Pick up clothes",
     description: "",
     dateErrand: fourDaysLater,
@@ -468,7 +468,7 @@ const errandsData = [
   {
     id: "152980923987",
     ownerUid: "100001",
-    assignedId: "100001",
+    assignedUid: "100001",
     title: "Pick up tennis balls",
     description: "",
     dateErrand: today,
@@ -491,7 +491,7 @@ const errandsData = [
   {
     id: "15oyuo923987",
     ownerUid: "100001",
-    assignedId: "100001",
+    assignedUid: "100001",
     title: "Agreed terms with owner",
     description: "",
     dateErrand: today,
@@ -513,7 +513,7 @@ const errandsData = [
   {
     id: "15293lkas87",
     ownerUid: "100001",
-    assignedId: "unassigned",
+    assignedUid: "unassigned",
     title: "Get certificate",
     description: "",
     dateErrand: today,
@@ -535,7 +535,7 @@ const errandsData = [
   {
     id: "qwrkhh0923987",
     ownerUid: "100001",
-    assignedId: "unassigned",
+    assignedUid: "unassigned",
     title: "Order new doors",
     description: "",
     dateErrand: today,
@@ -557,7 +557,7 @@ const errandsData = [
   {
     id: "dlñask923987",
     ownerUid: "100001",
-    assignedId: "100001",
+    assignedUid: "100001",
     title: "Sign bank papers",
     description: "Bring DNI and job contract to the bank.",
     dateErrand: tomorrow,
@@ -579,7 +579,7 @@ const errandsData = [
   {
     id: "dlñfksafdjf987",
     ownerUid: "100002",
-    assignedId: "unassigned",
+    assignedUid: "unassigned",
     title: "Bring documents to the city hall",
     description: "",
     dateErrand: tomorrow,
@@ -601,7 +601,7 @@ const errandsData = [
   {
     id: "37249flka987",
     ownerUid: "100002",
-    assignedId: "100001",
+    assignedUid: "100001",
     title: "Get last 3 work payrolls",
     description: "",
     dateErrand: today,
@@ -623,7 +623,7 @@ const errandsData = [
   {
     id: "3fdsfska987",
     ownerUid: "100006",
-    assignedId: "100001",
+    assignedUid: "100001",
     title: "Bring 2 chairs",
     description: "",
     dateErrand: tomorrow,
@@ -645,7 +645,7 @@ const errandsData = [
   {
     id: "3724342rdf987",
     ownerUid: "100004",
-    assignedId: "100001",
+    assignedUid: "100001",
     title: "Pick up sushi for dinner",
     description: "Go to Kamikaze and pick up the ordered sushi",
     dateErrand: tomorrow,
@@ -667,7 +667,7 @@ const errandsData = [
   {
     id: "234fdsa987",
     ownerUid: "100001",
-    assignedId: "100004",
+    assignedUid: "100004",
     title: "Get wine from supermarket",
     description: "White wine, red wine, sparkling wine",
     dateErrand: tomorrow,
@@ -689,7 +689,7 @@ const errandsData = [
   {
     id: "2ksajfdljkfd87",
     ownerUid: "100001",
-    assignedId: "100004",
+    assignedUid: "100004",
     title: "Rice",
     description: "",
     dateErrand: tomorrow,
@@ -711,7 +711,7 @@ const errandsData = [
   {
     id: "2fdsfskfd87",
     ownerUid: "100004",
-    assignedId: "100001",
+    assignedUid: "100001",
     title: "Chicken",
     description: "",
     dateErrand: tomorrow,
@@ -733,7 +733,7 @@ const errandsData = [
   {
     id: "22342rfwljkfd87",
     ownerUid: "100003",
-    assignedId: "unassigned",
+    assignedUid: "unassigned",
     title: "Avocado",
     description: "",
     dateErrand: tomorrow,
@@ -755,7 +755,7 @@ const errandsData = [
   {
     id: "2ksa4329jkfd87",
     ownerUid: "100001",
-    assignedId: "unassigned",
+    assignedUid: "unassigned",
     title: "Cheese",
     description: "",
     dateErrand: tomorrow,
@@ -777,7 +777,7 @@ const errandsData = [
   {
     id: "2ksadadsaakfd87",
     ownerUid: "100003",
-    assignedId: "100004",
+    assignedUid: "100004",
     title: "Wine",
     description: "",
     dateErrand: tomorrow,

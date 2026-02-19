@@ -111,7 +111,8 @@ function TodayTasks() {
     return (
       selectedTabObj?.errandsList?.filter(
         (errand) =>
-          errand.assignedId === user.uid || errand.assignedId === "unassigned",
+          errand.assignedUid === user.uid ||
+          errand.assignedUid === "unassigned",
       ) || []
     );
   }, [selectedTabObj, user.uid]);
@@ -121,8 +122,8 @@ function TodayTasks() {
       selectedTabObj?.errandsList?.filter(
         (errand) =>
           errand.ownerUid === user.uid &&
-          errand.assignedId !== user.uid &&
-          errand.assignedId !== "unassigned",
+          errand.assignedUid !== user.uid &&
+          errand.assignedUid !== "unassigned",
       ) || []
     );
   }, [selectedTabObj, user.uid]);

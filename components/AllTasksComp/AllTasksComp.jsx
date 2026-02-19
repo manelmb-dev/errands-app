@@ -79,7 +79,7 @@ function AllTasksComp() {
   //         .filter(
   //           (errand) =>
   //             user.uid === errand.ownerUid &&
-  //             user.uid === errand.assignedId &&
+  //             user.uid === errand.assignedUid &&
   //             !errand.completed
   //         ),
   //     },
@@ -91,7 +91,7 @@ function AllTasksComp() {
   //         .filter(
   //           (errand) =>
   //             user.uid !== errand.ownerUid &&
-  //             user.uid === errand.assignedId &&
+  //             user.uid === errand.assignedUid &&
   //             !errand.completed
   //         ),
   //     },
@@ -103,7 +103,7 @@ function AllTasksComp() {
   //         .filter(
   //           (errand) =>
   //             user.uid === errand.ownerUid &&
-  //             user.uid !== errand.assignedId &&
+  //             user.uid !== errand.assignedUid &&
   //             !errand.completed
   //         ),
   //     },

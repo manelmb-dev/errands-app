@@ -23,7 +23,7 @@ export type Priority = "none" | "low" | "medium" | "high";
 export type Errand = {
   id: ID;
   ownerUid: ID;
-  assignedId?: ID | "unassigned";
+  assignedUid?: ID | "unassigned";
   listId?: ID | "unassigned";
   title: string;
   description?: string;

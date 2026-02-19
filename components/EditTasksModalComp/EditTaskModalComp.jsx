@@ -105,7 +105,7 @@ const EditTaskModal = () => {
 
   useEffect(() => {
     const fullContact = contacts.find(
-      (c) => c.uid === currentErrand.assignedId,
+      (c) => c.uid === currentErrand.assignedUid,
     );
     console.log(fullContact);
 
@@ -118,11 +118,11 @@ const EditTaskModal = () => {
       usersShared: [user.uid],
     };
     const fullList = lists.find((list) => list.id === currentErrand.listId);
-    if (currentErrand.assignedId === user.uid) {
+    if (currentErrand.assignedUid === user.uid) {
       setUserAssigned(user);
     } else if (fullContact) {
       setUserAssigned(fullContact);
-    } else if (currentErrand.assignedId === "unassigned") {
+    } else if (currentErrand.assignedUid === "unassigned") {
       setUserAssigned({
         id: "unassigned",
         displayName: i18n.t("unassigned"),
@@ -136,7 +136,7 @@ const EditTaskModal = () => {
   }, [
     contacts,
     lists,
-    currentErrand.assignedId,
+    currentErrand.assignedUid,
     currentErrand.listId,
     user.uid,
     setUserAssigned,
@@ -144,7 +144,7 @@ const EditTaskModal = () => {
   ]);
 
   useEffect(() => {
-    setValue("assignedId", userAssigned.uid);
+    setValue("assignedUid", userAssigned.uid);
     if (listAssigned) setValue("listId", listAssigned.id);
   }, [userAssigned, listAssigned, setValue]);
 

@@ -76,7 +76,7 @@ const NewTaskModal = () => {
     defaultValues: {
       id: "",
       ownerUid: user.uid,
-      assignedId: user.uid,
+      assignedUid: user.uid,
       title: "",
       description: "",
       dateErrand: "",
@@ -116,7 +116,7 @@ const NewTaskModal = () => {
     if (currentList) {
       setListAssigned(currentList);
       setUserAssigned({ id: "unassigned", displayName: i18n.t("unassigned") });
-      setValue("assignedId", "unassigned");
+      setValue("assignedUid", "unassigned");
       return;
     }
 
@@ -172,7 +172,7 @@ const NewTaskModal = () => {
   }, [navigation, theme, handleAdd, watchedTitle, handleCancelAlert]);
 
   useEffect(() => {
-    setValue("assignedId", userAssigned.uid);
+    setValue("assignedUid", userAssigned.uid);
     if (listAssigned) setValue("listId", listAssigned.id);
   }, [userAssigned, listAssigned, setValue]);
 
