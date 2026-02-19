@@ -70,10 +70,10 @@ const AssignContactSelector = () => {
       contactsList = [
         { ...user },
         ...contacts
-          .filter((c) => user.favoriteUsers.includes(c.id))
+          .filter((c) => user.favoriteUsers.includes(c.uid))
           .sort(sortByName),
         ...contacts
-          .filter((c) => !user.favoriteUsers.includes(c.id))
+          .filter((c) => !user.favoriteUsers.includes(c.uid))
           .sort(sortByName),
       ];
     }
@@ -86,33 +86,33 @@ const AssignContactSelector = () => {
         ...contacts
           .filter(
             (c) =>
-              listAssigned.usersShared.includes(c.id) &&
-              user.favoriteUsers.includes(c.id),
+              listAssigned.usersShared.includes(c.uid) &&
+              user.favoriteUsers.includes(c.uid),
           )
           .sort(sortByName),
         ...contacts
           .filter(
             (c) =>
-              listAssigned.usersShared.includes(c.id) &&
-              !user.favoriteUsers.includes(c.id),
+              listAssigned.usersShared.includes(c.uid) &&
+              !user.favoriteUsers.includes(c.uid),
           )
           .sort(sortByName),
         // FIX THISSSS TODO Below: contacts will have to be users
         ...contacts
           .filter(
             (c) =>
-              listAssigned.usersShared.includes(c.id) &&
-              !contacts.some((existing) => existing.id === c.id) &&
-              c.id !== user.uid,
+              listAssigned.usersShared.includes(c.uid) &&
+              !contacts.some((existing) => existing.uid === c.uid) &&
+              c.uid !== user.uid,
           )
           .sort(sortByName),
       ];
     }
 
     // Move userAssigned to the top if it exists and is not already first
-    if (userAssigned?.id) {
+    if (userAssigned?.uid) {
       const userAssignedIndex = contactsList.findIndex(
-        (c) => c.id === userAssigned.id,
+        (c) => c.uid === userAssigned.uid,
       );
       if (userAssignedIndex > 0) {
         const [assignedUser] = contactsList.splice(userAssignedIndex, 1);
@@ -144,7 +144,7 @@ const AssignContactSelector = () => {
       <Text
         className={`py-5 text-lg font-bold text-center text-[${themes[theme].text}]  ${theme === "light" ? "bg-blue-300" : "bg-blue-700"}`}
       >
-        {userAssigned.id === user.uid
+        {userAssigned.uid === user.uid
           ? i18n.t("errandForMe")
           : userAssigned.displayName}
       </Text>
@@ -177,7 +177,7 @@ const AssignContactSelector = () => {
 
       <FlatList
         data={filteredContacts}
-        keyExtractor={(item) => item.id}
+        keyExtractor={(item) => item.uid}
         contentContainerStyle={{ paddingBottom: 80 }}
         ListEmptyComponent={
           <View className={`pt-12 items-center`}>
@@ -193,8 +193,8 @@ const AssignContactSelector = () => {
             onPress={() => {
               // If assigned list is unassigned, current user assigned is not the user and the user presses on self the assigned list will be the first user list
               if (
-                item.id === user.uid &&
-                userAssigned.id !== user.uid &&
+                item.uid === user.uid &&
+                userAssigned.uid !== user.uid &&
                 listAssigned.id === "unassigned"
               ) {
                 setUserAssigned(item);
@@ -202,15 +202,15 @@ const AssignContactSelector = () => {
               }
               // If assigned list is a shared list, current user assigned is not the user and the user presses on self only will change the user assigned
               else if (
-                item.id === user.uid &&
-                userAssigned.id !== user.uid &&
+                item.uid === user.uid &&
+                userAssigned.uid !== user.uid &&
                 listAssigned.usersShared.length !== 1
               ) {
                 setUserAssigned(item);
               }
               // If assigned list is NOT a shared list, the user presses on a contact the user assgined will be the contact selected and the list assigned will be the general shared list
               else if (
-                item.id !== user.uid &&
+                item.uid !== user.uid &&
                 listAssigned.usersShared.length === 1
               ) {
                 setUserAssigned(item);
@@ -222,7 +222,7 @@ const AssignContactSelector = () => {
               }
               // If assigned list is a shared list, the user presses on a contact only the user assgined will be changed for the contact selected
               else if (
-                item.id !== user.uid &&
+                item.uid !== user.uid &&
                 listAssigned.usersShared.length !== 1
               ) {
                 setUserAssigned(item);
@@ -232,7 +232,7 @@ const AssignContactSelector = () => {
           >
             <View
               className={`h-full px-4 flex-row gap-5 items-center ${
-                userAssigned.id === item.id &&
+                userAssigned.uid === item.uid &&
                 `${theme === "light" ? "bg-slate-300" : "bg-gray-800"}`
               }`}
             >
@@ -245,20 +245,20 @@ const AssignContactSelector = () => {
               <View className="flex-1 flex-row justify-between">
                 <Text className={`text-lg text-[${themes[theme].text}]`}>
                   {item.displayName}{" "}
-                  {item.id === user.uid && `(${i18n.t("me")})`}
+                  {item.uid === user.uid && `(${i18n.t("me")})`}
                 </Text>
                 <View className="flex-row gap-4">
-                  {userAssigned.id === item.id && (
+                  {userAssigned.uid === item.uid && (
                     <FontAwesome6
                       name="check"
                       size={22}
                       color={themes[theme].blueHeadText}
                     />
                   )}
-                  {user.favoriteUsers.includes(item.id) && (
+                  {user.favoriteUsers.includes(item.uid) && (
                     <Octicons name="star-fill" size={25} color="#FFD700" />
                   )}
-                  {item.id === user.uid && (
+                  {item.uid === user.uid && (
                     <Feather name="user" size={25} color={themes[theme].text} />
                   )}
                 </View>

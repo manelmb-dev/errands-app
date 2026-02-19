@@ -48,7 +48,7 @@ const NewListModal = () => {
 
   useEffect(() => {
     if (currentContact) {
-      setUsersSharedWith([currentContact.id]);
+      setUsersSharedWith([currentContact.uid]);
     }
   }, [currentContact, setUsersSharedWith]);
 

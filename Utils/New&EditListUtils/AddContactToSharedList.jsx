@@ -30,9 +30,9 @@ const AddContactToSharedList = () => {
   const [contactSearchedInput, setContactSearchedInput] = useState("");
 
   const sortByFavoriteAndNameSurname = (a, b) => {
-    if (user.favoriteUsers.includes(a.id) && !user.favoriteUsers.includes(b.id))
+    if (user.favoriteUsers.includes(a.uid) && !user.favoriteUsers.includes(b.uid))
       return -1;
-    if (!user.favoriteUsers.includes(a.id) && user.favoriteUsers.includes(b.id))
+    if (!user.favoriteUsers.includes(a.uid) && user.favoriteUsers.includes(b.uid))
       return 1;
 
     const fullNameA = a.displayName.toLowerCase();
@@ -72,7 +72,7 @@ const AddContactToSharedList = () => {
   const sharedUsers = useMemo(
     () =>
       contacts
-        .filter((c) => usersSharedWith.includes(c.id))
+        .filter((c) => usersSharedWith.includes(c.uid))
         .sort(sortByFavoriteAndNameSurname),
     [contacts, usersSharedWith],
   );
@@ -82,7 +82,7 @@ const AddContactToSharedList = () => {
       contacts
         .filter(
           (c) =>
-            !usersSharedWith.includes(c.id) &&
+            !usersSharedWith.includes(c.uid) &&
             c.displayName
               .toLowerCase()
               .includes(contactSearchedInput.toLowerCase().trim()),
@@ -126,10 +126,10 @@ const AddContactToSharedList = () => {
         </Text>
       </View>
       <View className="mr-3 flex-row items-center gap-4">
-        {user.favoriteUsers.includes(item.id) && (
+        {user.favoriteUsers.includes(item.uid) && (
           <Octicons name="star-fill" size={20} color="#FFD700" />
         )}
-        <Pressable onPress={() => toggleUser(item.id)} hitSlop={8}>
+        <Pressable onPress={() => toggleUser(item.uid)} hitSlop={8}>
           <Octicons
             name={isShared ? "check-circle-fill" : "circle"}
             size={20}
@@ -169,7 +169,7 @@ const AddContactToSharedList = () => {
       <FlatList
         className={`flex-1`}
         data={filteredUsersNotInSharedList}
-        keyExtractor={(item) => item.id}
+        keyExtractor={(item) => item.uid}
         renderItem={({ item }) => renderContactItem({ item, isShared: false })}
         contentContainerStyle={{ paddingBottom: 80 }}
         keyboardShouldPersistTaps="handled"
@@ -183,7 +183,7 @@ const AddContactToSharedList = () => {
               </Text>
             )}
             {sharedUsers.map((contact) => (
-              <View key={contact.id}>
+              <View key={contact.uid}>
                 {renderContactItem({ item: contact, isShared: true })}
               </View>
             ))}

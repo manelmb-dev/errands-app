@@ -41,7 +41,7 @@ const UsersOfList = () => {
     return usersSharedWith
       .map((userId) => {
         // FIX THISSSS Below: contacts will have to be replaced for users collection
-        const contact = contacts.find((c) => c.id === userId);
+        const contact = contacts.find((c) => c.uid === userId);
         return {
           id: userId,
           displayName: contact?.displayName ?? i18n.t("unknownUser"),
@@ -96,7 +96,7 @@ const UsersOfList = () => {
         {/* Display the shared users */}
         {sharedUsers.map((contact) => (
           <View
-            key={contact.id}
+            key={contact.uid}
             className="px-3 py-1 flex-row justify-between items-center"
           >
             <View className="flex-row items-center gap-3">
@@ -112,7 +112,7 @@ const UsersOfList = () => {
             </View>
             {currentList.ownerId === user.uid && (
               <Pressable
-                onPress={() => removeUserFromShared(contact.id)}
+                onPress={() => removeUserFromShared(contact.uid)}
                 hitSlop={3}
               >
                 <Ionicons
@@ -123,7 +123,7 @@ const UsersOfList = () => {
                 />
               </Pressable>
             )}
-            {currentList.ownerId === contact.id && (
+            {currentList.ownerId === contact.uid && (
               <Text
                 className={`mr-2 text-base text-[${themes[theme].taskSecondText}]`}
               >

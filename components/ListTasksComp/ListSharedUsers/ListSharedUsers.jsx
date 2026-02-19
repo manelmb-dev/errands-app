@@ -26,10 +26,10 @@ const ListSharedUsers = ({ listOwner }) => {
   const [usersSharedWith] = useAtom(usersSharedWithAtom);
 
   const sharedUsers = usersSharedWith.map((userId) => {
-    const contact = contacts.find((c) => c.id === userId);
+    const contact = contacts.find((c) => c.uid === userId);
     if (contact) return { id: userId, displayName: contact.displayName };
     // FIX THISSSS Below: contacts will have to be replaced for users collection
-    const unknownContact = contacts.find((c) => c.id === userId);
+    const unknownContact = contacts.find((c) => c.uid === userId);
     if (unknownContact) return { id: userId, name: unknownContact.username };
   });
 
@@ -69,7 +69,7 @@ const ListSharedUsers = ({ listOwner }) => {
         {/* Display the shared users */}
         {sharedUsers.sort(sortByNameSurname).map((contact) => (
           <View
-            key={contact.id}
+            key={contact.uid}
             className="px-3.5 py-2 flex-row justify-between items-center"
           >
             <View className="flex-row items-center gap-3">
@@ -83,7 +83,7 @@ const ListSharedUsers = ({ listOwner }) => {
                 {contact.displayName}
               </Text>
             </View>
-            {listOwner === contact.id && (
+            {listOwner === contact.uid && (
               <Text
                 className={`mr-2 text-base text-[${themes[theme].taskSecondText}]`}
               >

@@ -172,7 +172,7 @@ const NewTaskModal = () => {
   }, [navigation, theme, handleAdd, watchedTitle, handleCancelAlert]);
 
   useEffect(() => {
-    setValue("assignedId", userAssigned.id);
+    setValue("assignedId", userAssigned.uid);
     if (listAssigned) setValue("listId", listAssigned.id);
   }, [userAssigned, listAssigned, setValue]);
 
@@ -385,7 +385,7 @@ const NewTaskModal = () => {
                     numberOfLines={1}
                     ellipsizeMode="tail"
                   >
-                    {userAssigned.id === user.uid
+                    {userAssigned.uid === user.uid
                       ? `${userAssigned.name} (${i18n.t("me")})`
                       : `${userAssigned.displayName}`}
                   </Text>

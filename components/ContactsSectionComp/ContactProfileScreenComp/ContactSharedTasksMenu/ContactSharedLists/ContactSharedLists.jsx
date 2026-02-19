@@ -50,7 +50,7 @@ const ContactSharedLists = () => {
   const sharedLists = useMemo(() => {
     return lists.filter(
       (list) =>
-        list.usersShared.includes(currentContact.id) &&
+        list.usersShared.includes(currentContact.uid) &&
         list.usersShared.includes(user.uid),
     );
   }, [lists, currentContact, user]);

@@ -65,7 +65,7 @@ const BlockedAccounts = () => {
   console.log(Platform)
 
   const blockedContacts = contacts.filter((c) =>
-    user.blockedUsers.includes(c.id)
+    user.blockedUsers.includes(c.uid)
   );
 
   const unblockAccount = (account) => {
@@ -73,7 +73,7 @@ const BlockedAccounts = () => {
     setShowUnblockedUserPopup(true);
 
     const updatedBlockedUsers = user.blockedUsers.filter(
-      (id) => id !== account.id
+      (id) => id !== account.uid
     );
 
     setUser((prev) => ({
@@ -113,7 +113,7 @@ const BlockedAccounts = () => {
     <View className={`flex-1 py-4 bg-[${themes[theme].background}]`}>
       <FlatList
         data={blockedContacts}
-        keyExtractor={(item) => item.id}
+        keyExtractor={(item) => item.uid}
         renderItem={({ item }) => (
           <Pressable
             className={`w-full py-2.5 px-4 flex-row items-center justify-between bg-[${themes[theme].background}] border-b ${

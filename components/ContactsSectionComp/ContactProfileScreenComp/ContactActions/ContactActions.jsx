@@ -17,17 +17,17 @@ const ContactActions = ({ currentContact }) => {
   const [theme] = useAtom(themeAtom);
   const [user, setUser] = useAtom(userAtom);
 
-  const isContactFavorite = user.favoriteUsers.includes(currentContact.id);
+  const isContactFavorite = user.favoriteUsers.includes(currentContact.uid);
 
   const toggleFavoriteContact = () => {
     let updatedFavoriteUsers;
 
     if (isContactFavorite) {
       updatedFavoriteUsers = user.favoriteUsers.filter(
-        (id) => id !== currentContact.id
+        (id) => id !== currentContact.uid
       );
     } else {
-      updatedFavoriteUsers = [...user.favoriteUsers, currentContact.id];
+      updatedFavoriteUsers = [...user.favoriteUsers, currentContact.uid];
     }
     const updatedUser = {
       ...user,
@@ -38,7 +38,7 @@ const ContactActions = ({ currentContact }) => {
 
     // TODO: FIRESTORE UPDATEEE FIX THISSS
     // setUser((prev) =>
-    //   prev.map((c) => (c.id === updatedContact.id ? updatedContact : c))
+    //   prev.map((c) => (c.uid === updatedContact.uid ? updatedContact : c))
     // );
   };
 

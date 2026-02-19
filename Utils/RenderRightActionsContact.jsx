@@ -20,10 +20,10 @@ const RenderRightActionsContact = ({
 
     if (isContactFavorite) {
       updatedFavoriteUsers = user.favoriteUsers.filter(
-        (id) => id !== contact.id
+        (id) => id !== contact.uid
       );
     } else {
-      updatedFavoriteUsers = [...user.favoriteUsers, contact.id];
+      updatedFavoriteUsers = [...user.favoriteUsers, contact.uid];
     }
     const updatedUser = {
       ...user,
@@ -36,7 +36,7 @@ const RenderRightActionsContact = ({
 
     // TODO: FIRESTORE UPDATEEE FIX THISSS
     // setUser((prev) =>
-    //   prev.map((c) => (c.id === updatedContact.id ? updatedContact : c))
+    //   prev.map((c) => (c.uid === updatedContact.uid ? updatedContact : c))
     // );
   };
 

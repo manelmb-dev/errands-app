@@ -65,7 +65,7 @@ const ViewIncomingTaskModal = () => {
   }, [navigation, theme, watchedTitle]);
 
   const ownerCurrentErrand = contacts.find(
-    (contact) => contact.id === currentErrand.ownerId
+    (contact) => contact.uid === currentErrand.ownerId
   );
 
   return (

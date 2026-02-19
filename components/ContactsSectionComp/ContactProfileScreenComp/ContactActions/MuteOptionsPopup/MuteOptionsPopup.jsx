@@ -21,7 +21,7 @@ export default function MainPopupPage({ currentContact }) {
   const [user, setUser] = useAtom(userAtom);
 
   const [muteSettings, setMuteSettings] = useState(() => {
-    const override = user.mutedUsers?.[currentContact.id] ?? {};
+    const override = user.mutedUsers?.[currentContact.uid] ?? {};
     return {
       muteAll: override.muteAll ?? false,
       muteMessages: override.muteMessages ?? false,
@@ -32,7 +32,7 @@ export default function MainPopupPage({ currentContact }) {
   });
 
   useEffect(() => {
-    if (!currentContact?.id) return;
+    if (!currentContact?.uid) return;
 
     const hasAnyMute = Object.values(muteSettings).some((v) => v);
 
@@ -40,9 +40,9 @@ export default function MainPopupPage({ currentContact }) {
       const updatedMutedUsers = { ...prev.mutedUsers };
 
       if (hasAnyMute) {
-        updatedMutedUsers[currentContact.id] = muteSettings;
+        updatedMutedUsers[currentContact.uid] = muteSettings;
       } else {
-        delete updatedMutedUsers[currentContact.id];
+        delete updatedMutedUsers[currentContact.uid];
       }
 
       return {
@@ -50,7 +50,7 @@ export default function MainPopupPage({ currentContact }) {
         mutedUsers: updatedMutedUsers,
       };
     });
-  }, [muteSettings, currentContact.id, setUser]);
+  }, [muteSettings, currentContact.uid, setUser]);
 
   const toggleMute = (key) => {
     setMuteSettings((prev) => {

@@ -17,7 +17,7 @@ export type DeviceContact = {
 };
 
 export type AppUserMini = {
-  id: string;
+  uid: string;
   displayName: string;
   phoneE164: string; // for matching
   userName: string;

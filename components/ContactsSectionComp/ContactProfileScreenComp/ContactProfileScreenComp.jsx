@@ -29,9 +29,9 @@ const ContactProfileScreenComp = () => {
   const parsedContact = JSON.parse(contact);
 
   const currentContact =
-    contacts.find((c) => c.id === parsedContact.id) || parsedContact;
+    contacts.find((c) => c.uid === parsedContact.uid) || parsedContact;
 
-  const isContactBlocked = user.blockedUsers.includes(currentContact.id);
+  const isContactBlocked = user.blockedUsers.includes(currentContact.uid);
 
   useEffect(() => {
     navigation.setOptions({
@@ -77,7 +77,7 @@ const ContactProfileScreenComp = () => {
         return {
           ...prev,
           blockedUsers: prev.blockedUsers.filter(
-            (id) => id !== currentContact.id,
+            (id) => id !== currentContact.uid,
           ),
         };
       }
@@ -91,9 +91,9 @@ const ContactProfileScreenComp = () => {
 
       return {
         ...prev,
-        blockedUsers: [...prev.blockedUsers, currentContact.id],
+        blockedUsers: [...prev.blockedUsers, currentContact.uid],
         favoriteUsers: prev.favoriteUsers.filter(
-          (id) => id !== currentContact.id,
+          (id) => id !== currentContact.uid,
         ),
       };
     });

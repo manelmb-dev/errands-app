@@ -88,15 +88,15 @@ const ContactSharedPendingTasks = () => {
       )
       .filter(
         (errand) =>
-          errand.ownerId === currentContact.id ||
-          errand.assignedId === currentContact.id,
+          errand.ownerId === currentContact.uid ||
+          errand.assignedId === currentContact.uid,
       );
   }, [errands, currentContact]);
 
   const filteredErrands = useMemo(() => {
     const baseList = contactSharedPendingErrands.filter((errand) => {
-      const incomingTask = errand.ownerId === currentContact.id;
-      const outgoingTask = errand.assignedId === currentContact.id;
+      const incomingTask = errand.ownerId === currentContact.uid;
+      const outgoingTask = errand.assignedId === currentContact.uid;
 
       if (filterTab === "incoming" && !incomingTask) return false;
       if (filterTab === "outgoing" && !outgoingTask) return false;

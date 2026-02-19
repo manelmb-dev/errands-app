@@ -71,7 +71,7 @@ function SettingsSection() {
 
     //   try {
     //     // Upload photo to firebase storage
-    //     const fileName = `profilePhotos/${formData.id}.jpg`;
+    //     const fileName = `profilePhotos/${formData.uid}.jpg`;
     //     const ref = storage().ref(fileName);
 
     //     await ref.putFile(imageUri);
@@ -130,12 +130,12 @@ function SettingsSection() {
       // const q = query(usersRef, where("username", "==", text));
       // const querySnapshot = await getDocs(q);
 
-      // const isTaken = querySnapshot.docs.some((doc) => doc.id !== user.uid);
+      // const isTaken = querySnapshot.docs.some((doc) => doc.uid !== user.uid);
 
       const isTaken = users.some(
         (doc) =>
           doc.username.toLowerCase() === lowerCaseUsername &&
-          doc.id !== formData.id,
+          doc.uid !== formData.uid,
       );
 
       setUsernameTaken(isTaken);

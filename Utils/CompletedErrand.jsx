@@ -29,11 +29,11 @@ function CompletedErrand({ errand }) {
   ];
 
   const assignedContact = contacts.find(
-    (contact) => contact.id.toString() === errand.assignedId.toString(),
+    (contact) => contact.uid.toString() === errand.assignedId.toString(),
   );
 
   const creatorContact = contacts.find(
-    (contact) => contact.id.toString() === errand.ownerId.toString(),
+    (contact) => contact.uid.toString() === errand.ownerId.toString(),
   );
 
   const repeatOptionSelected = repeatOptions.find(
@@ -41,6 +41,7 @@ function CompletedErrand({ errand }) {
   );
 
   const uncompleteErrand = () => {
+    // TODO:
     // FIRESTONEEE UPDATE
     setErrands((prevErrands) =>
       prevErrands.map((e) => {

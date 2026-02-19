@@ -18,11 +18,11 @@ const SwipeableContact = ({ contact, openSwipeableRef, swipeableRefs }) => {
   const [theme] = useAtom(themeAtom);
   const [user] = useAtom(userAtom);
 
-  const isContactFavorite = user.favoriteUsers.includes(contact.id);
+  const isContactFavorite = user.favoriteUsers.includes(contact.uid);
 
   return (
     <Swipeable
-      ref={(ref) => (swipeableRefs.current[contact.id] = ref)}
+      ref={(ref) => (swipeableRefs.current[contact.uid] = ref)}
       renderRightActions={() => (
         <RenderRightActionsContact
           contact={contact}
@@ -33,11 +33,11 @@ const SwipeableContact = ({ contact, openSwipeableRef, swipeableRefs }) => {
       onSwipeableOpenStartDrag={() => {
         if (
           openSwipeableRef.current &&
-          openSwipeableRef.current !== swipeableRefs.current[contact.id]
+          openSwipeableRef.current !== swipeableRefs.current[contact.uid]
         ) {
           openSwipeableRef.current.close();
         }
-        openSwipeableRef.current = swipeableRefs.current[contact.id];
+        openSwipeableRef.current = swipeableRefs.current[contact.uid];
       }}
     >
       <Pressable
@@ -47,7 +47,7 @@ const SwipeableContact = ({ contact, openSwipeableRef, swipeableRefs }) => {
         onPress={() => {
           if (
             openSwipeableRef.current &&
-            openSwipeableRef.current !== swipeableRefs.current[contact.id]
+            openSwipeableRef.current !== swipeableRefs.current[contact.uid]
           ) {
             openSwipeableRef.current.close();
             openSwipeableRef.current = null;

@@ -46,7 +46,7 @@ function FullErrand({
     if (errand.assignedId === user.uid) return user;
 
     const contact = contacts.find(
-      (contact) => contact.id === errand.assignedId,
+      (contact) => contact.uid === errand.assignedId,
     );
     if (contact) return contact;
 
@@ -63,7 +63,7 @@ function FullErrand({
   const creatorContact = useMemo(
     () =>
       contacts.find(
-        (contact) => contact.id.toString() === errand.ownerId.toString(),
+        (contact) => contact.uid.toString() === errand.ownerId.toString(),
       ),
     [contacts, errand.ownerId],
   );

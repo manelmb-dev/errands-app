@@ -104,7 +104,7 @@ const EditTaskModal = () => {
   }, [navigation, theme, handleOk, watchedTitle, handleCancelAlert]);
 
   useEffect(() => {
-    const fullContact = contacts.find((c) => c.id === currentErrand.assignedId);
+    const fullContact = contacts.find((c) => c.uid === currentErrand.assignedId);
     console.log(fullContact);
 
     const sharedList = {
@@ -142,7 +142,7 @@ const EditTaskModal = () => {
   ]);
 
   useEffect(() => {
-    setValue("assignedId", userAssigned.id);
+    setValue("assignedId", userAssigned.uid);
     if (listAssigned) setValue("listId", listAssigned.id);
   }, [userAssigned, listAssigned, setValue]);
 
@@ -372,7 +372,7 @@ const EditTaskModal = () => {
                     numberOfLines={1}
                     ellipsizeMode="tail"
                   >
-                    {userAssigned.id === user.uid
+                    {userAssigned.uid === user.uid
                       ? `${userAssigned.name} (${i18n.t("me")})`
                       : `${userAssigned.displayName}`}
                   </Text>

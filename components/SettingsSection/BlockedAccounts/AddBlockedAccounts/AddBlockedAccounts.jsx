@@ -48,7 +48,7 @@ const AddBlockedAccounts = () => {
   }, [navigation, theme, router]);
 
   const unBlockedContacts = contacts.filter(
-    (c) => !user.blockedUsers.includes(c.id)
+    (c) => !user.blockedUsers.includes(c.uid)
   );
 
   const blockUser = (accountId) => {
@@ -71,7 +71,7 @@ const AddBlockedAccounts = () => {
         { text: i18n.t("cancel") },
         {
           text: i18n.t("block"),
-          onPress: () => blockUser(contact.id),
+          onPress: () => blockUser(contact.uid),
           style: "destructive",
         },
       ],
@@ -82,7 +82,7 @@ const AddBlockedAccounts = () => {
     <View className={`flex-1 py-4 bg-[${themes[theme].background}]`}>
       <FlatList
         data={unBlockedContacts}
-        keyExtractor={(item) => item.id}
+        keyExtractor={(item) => item.uid}
         renderItem={({ item }) => (
           <Pressable
             className={`w-full py-2.5 px-4 flex-row items-center justify-between bg-[${themes[theme].background}] border-b border-[${themes[theme].borderColor}]`}

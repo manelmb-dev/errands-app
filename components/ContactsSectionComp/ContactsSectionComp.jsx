@@ -47,13 +47,13 @@ const ContactsSectionComp = () => {
       )
       .sort((a, b) => {
         if (
-          user.favoriteUsers.includes(a.id) &&
-          !user.favoriteUsers.includes(b.id)
+          user.favoriteUsers.includes(a.uid) &&
+          !user.favoriteUsers.includes(b.uid)
         )
           return -1;
         if (
-          !user.favoriteUsers.includes(a.id) &&
-          user.favoriteUsers.includes(b.id)
+          !user.favoriteUsers.includes(a.uid) &&
+          user.favoriteUsers.includes(b.uid)
         )
           return 1;
         return a.displayName.localeCompare(b.displayName);
@@ -87,7 +87,7 @@ const ContactsSectionComp = () => {
 
       <FlatList
         data={filteredContacts}
-        keyExtractor={(item) => item.id}
+        keyExtractor={(item) => item.uid}
         renderItem={({ item }) => (
           <SwipeableContact
             contact={item}
