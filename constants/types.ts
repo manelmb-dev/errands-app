@@ -1,15 +1,5 @@
 export type ID = string;
 
-export type Contact = {
-  id: ID;
-  displayName: string; // use for matching AI
-  name?: string;
-  surname?: string;
-  phoneNumbers: string[];
-  emails?: string[];
-  username?: string;
-};
-
 export type List = {
   id: ID;
   ownerId: ID;
@@ -92,7 +82,6 @@ export type User = {
       muteChangesInErrands: boolean;
     }
   >;
-  contacts: Contact[];
   settings: UserSettings;
   createdAt: ISODateString;
   updatedAt: ISODateString;
