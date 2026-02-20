@@ -29,6 +29,7 @@
     "expo-linking": "~8.0.8",
     "expo-localization": "~17.0.7",
     "expo-router": "~6.0.8",
+    "expo-sqlite": "~16.0.10",
     "expo-status-bar": "~3.0.8",
     "firebase": "^11.10.0",
     "i18n-js": "^4.5.1",
