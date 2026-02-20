@@ -27,10 +27,10 @@ const ListSharedUsers = ({ listOwner }) => {
 
   const sharedUsers = usersSharedWith.map((userId) => {
     const contact = contacts.find((c) => c.uid === userId);
-    if (contact) return { id: userId, displayName: contact.displayName };
+    if (contact) return { uid: userId, displayName: contact.displayName };
     // FIX THISSSS Below: contacts will have to be replaced for users collection
     const unknownContact = contacts.find((c) => c.uid === userId);
-    if (unknownContact) return { id: userId, name: unknownContact.username };
+    if (unknownContact) return { uid: userId, name: unknownContact.username };
   });
 
   return (

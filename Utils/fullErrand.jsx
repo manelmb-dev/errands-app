@@ -55,7 +55,7 @@ function FullErrand({
       (user) => user.uid === errand.assignedUid,
     );
     if (unknownContact) {
-      return { id: errand.assignedUid, name: unknownContact.username };
+      return { uid: errand.assignedUid, name: unknownContact.username };
     }
     return null;
   }, [contacts, errand.assignedUid, user]);

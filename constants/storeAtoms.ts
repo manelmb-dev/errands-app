@@ -140,7 +140,7 @@ export const usersSharedWithAtom = atom<ID[]>([]);
 export const currentErrandAtom = atom<Errand | null>(null);
 export const currentListAtom = atom<List | null>(null);
 
-export const userAssignedAtom = atom<User | { id: "unassigned"; name: string }>(
+export const userAssignedAtom = atom<User | { uid: "unassigned"; name: string }>(
   userExample,
 );
 export const listAssignedAtom = atom<List | null>(null);

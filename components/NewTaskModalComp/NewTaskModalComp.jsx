@@ -115,7 +115,7 @@ const NewTaskModal = () => {
     // 1) If you came from a list -> fixed list and assigned "unassigned"
     if (currentList) {
       setListAssigned(currentList);
-      setUserAssigned({ id: "unassigned", displayName: i18n.t("unassigned") });
+      setUserAssigned({ uid: "unassigned", displayName: i18n.t("unassigned") });
       setValue("assignedUid", "unassigned");
       return;
     }

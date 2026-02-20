@@ -81,7 +81,7 @@ const AssignContactSelector = () => {
     // If list is shared
     else {
       contactsList = [
-        { id: "unassigned", displayName: i18n.t("unassigned") },
+        { uid: "unassigned", displayName: i18n.t("unassigned") },
         { ...user },
         ...contacts
           .filter(

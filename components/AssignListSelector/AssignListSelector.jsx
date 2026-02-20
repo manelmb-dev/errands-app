@@ -99,7 +99,7 @@ const AssignContactSelector = () => {
                 else if (item.usersShared.length > 1) {
                   setListAssigned(item);
                   setUserAssigned({
-                    id: "unassigned",
+                    uid: "unassigned",
                     name: i18n.t("unassigned"),
                   });
                 }

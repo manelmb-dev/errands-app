@@ -124,12 +124,12 @@ const EditTaskModal = () => {
       setUserAssigned(fullContact);
     } else if (currentErrand.assignedUid === "unassigned") {
       setUserAssigned({
-        id: "unassigned",
+        uid: "unassigned",
         displayName: i18n.t("unassigned"),
       });
     } else {
       // fallback
-      setUserAssigned({ id: "unassigned", name: i18n.t("unassigned") });
+      setUserAssigned({ uid: "unassigned", name: i18n.t("unassigned") });
     }
 
     setListAssigned(fullList ?? sharedList);

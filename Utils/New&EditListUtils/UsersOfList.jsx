@@ -43,7 +43,7 @@ const UsersOfList = () => {
         // FIX THISSSS Below: contacts will have to be replaced for users collection
         const contact = contacts.find((c) => c.uid === userId);
         return {
-          id: userId,
+          uid: userId,
           displayName: contact?.displayName ?? i18n.t("unknownUser"),
         };
       })

@@ -18,7 +18,7 @@ export type DraftList = {
  */
 export type AssignedUserRef =
   | { kind: "candidate"; query: string } // "Laura Ortega"
-  | { kind: "resolved"; id: string; displayName?: string }; // id interno + nombre agenda
+  | { kind: "resolved"; uid: string; displayName?: string }; // id interno + nombre agenda
 
 /**
  * A qué lista va:
@@ -27,9 +27,9 @@ export type AssignedUserRef =
  * - resolved: ya resuelto por tu app a listId
  */
 export type ListRef =
-  | { kind: "unassigned"; id: "unassigned" }
+  | { kind: "unassigned"; uid: "unassigned" }
   | { kind: "candidate"; query: string } // "Supermercado"
-  | { kind: "resolved"; id: string; title?: string };
+  | { kind: "resolved"; uid: string; title?: string };
 
 export type DraftTask = {
   title: string;
