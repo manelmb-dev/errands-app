@@ -1,3 +1,5 @@
+import { Timestamp } from "firebase/firestore";
+
 export type ID = string;
 
 export type List = {
@@ -59,16 +61,14 @@ export type UserSettings = {
   };
 };
 
-export type ISODateString = string;
-
 export type User = {
   uid: ID;
   username: string;
   displayName: string;
   name: string;
-  surname: string;
+  surname?: string;
   email?: string;
-  phoneNumber?: string;
+  phoneE164: string;
   photoURL?: string | null;
   favoriteUsers: ID[];
   blockedUsers: ID[];
@@ -83,7 +83,9 @@ export type User = {
     }
   >;
   settings: UserSettings;
-  createdAt: ISODateString;
-  updatedAt: ISODateString;
-  lastLogin?: ISODateString;
+  createdAt: Timestamp;
+  updatedAt: Timestamp;
+  lastLogin?: Timestamp;
+  disabledAt?: Timestamp | null;
+  deletedAt?: Timestamp | null;
 };

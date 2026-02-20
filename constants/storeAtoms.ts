@@ -1,4 +1,5 @@
 import { atom } from "jotai";
+import { Timestamp } from "firebase/firestore";
 
 import errandsData from "../errands";
 import { Errand, ID, List, User } from "./types";
@@ -71,7 +72,7 @@ let userExample = {
   name: "Manel",
   surname: "Martinez Bel",
   email: "manel.mb@example.com",
-  phoneNumber: "+34-600-123-456",
+  phoneE164: "+34600123456",
   settings: {
     notifications: {
       notificationsEnabled: true,
@@ -127,9 +128,11 @@ let userExample = {
       muteChangesInErrands: true,
     },
   },
-  createdAt: "2023-10-01T12:00:00.000Z",
-  updatedAt: "2023-10-01T12:00:00.000Z",
-  lastLogin: "2025-09-01T12:00:00.000Z",
+  createdAt: Timestamp.fromDate(new Date("2023-10-01T12:00:00.000Z")),
+  updatedAt: Timestamp.fromDate(new Date("2024-12-15T10:30:00.000Z")),
+  lastLogin: Timestamp.fromDate(new Date("2026-02-16T08:45:00.000Z")),
+  disabledAt: null,
+  deletedAt: null,
 } as const satisfies User;
 
 export const userAtom = atom<User>(userExample);
@@ -140,7 +143,7 @@ export const usersSharedWithAtom = atom<ID[]>([]);
 export const currentErrandAtom = atom<Errand | null>(null);
 export const currentListAtom = atom<List | null>(null);
 
-export const userAssignedAtom = atom<User | { uid: "unassigned"; name: string }>(
-  userExample,
-);
+export const userAssignedAtom = atom<
+  User | { uid: "unassigned"; name: string }
+>(userExample);
 export const listAssignedAtom = atom<List | null>(null);
