@@ -138,23 +138,23 @@ export default function VerifyCodeScreen() {
       await auth().signInWithCredential(credential);
 
       // Luego consulta si el número ya está vinculado a una cuenta
-      const phoneFull = `+${callingCode}${phone}`;
+      const fullPhone = `+${callingCode}${phone}`;
       const response = await fetch("http://127.0.0.1:5000/check-phone", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ phone: phoneFull }),
+        body: JSON.stringify({ phone: fullPhone }),
       });
 
       const data = await response.json();
       if (data.exists) {
         router.push({
           pathname: "/chooseAccountOption",
-          params: { phone: phoneFull },
+          params: { phone: fullPhone },
         });
       } else {
         router.push({
           pathname: "/completeAccount",
-          params: { phone: phoneFull },
+          params: { phone: fullPhone },
         });
       }
     } catch (error) {

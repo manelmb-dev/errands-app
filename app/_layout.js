@@ -38,7 +38,7 @@ export default function Layout() {
     const loadPreferences = async () => {
       const savedTheme = await AsyncStorage.getItem("themePreference");
       const savedLang = await AsyncStorage.getItem("languagePreference");
-      const phone = await AsyncStorage.getItem("userPhoneNumber");
+      const phone = await AsyncStorage.getItem("userPhoneE164");
 
       // Language
       const supportedLanguages = ["es", "en", "ca"];

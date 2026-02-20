@@ -81,7 +81,7 @@ const AccountSection = () => {
             <Text
               className={`px-4 pb-4 text-lg font-medium text-[${themes[theme].taskSecondText}]`}
             >
-              {user.phoneNumber}
+              {user.phoneE164}
             </Text>
           </View>
 
